@@ -23,7 +23,7 @@ jobs:
           source-directory: 'output'
           destination-github-username: SeOinm
           destination-repository-name: Final-6-6PM
-          user-email: ${{ secrets.TOKEN_ANATJDLS0716}}
+          user-email: ${{ secrets.EMAIL_ANATJDLS0716}}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
       - name: Test get variable exported by push-to-another-repository
