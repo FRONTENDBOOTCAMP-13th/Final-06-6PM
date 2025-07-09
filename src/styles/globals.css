@@ -4,16 +4,27 @@
   --font-sans: "Pretendard Variable", sans-serif;
 
   --color-primary: #1b4b37;
+  --color-primary-hover: #163d2e;
   --color-secondary: #388a68;
+  --color-secondary-hover: #2d7052;
   --color-bg: #f9fdf8;
+  --color-bg-hover: #eef9ee;
   --color-text: #1e1e1e;
+  --color-text-hover: #000000;
   --color-cancel: #a0a0a0;
+  --color-cancel-hover: #8a8a8a;
   --color-success: #4ebb8e;
+  --color-success-hover: #3da471;
   --color-disabled: #d3d3d3;
+  --color-disabled-hover: #c0c0c0;
   --color-fail: #e04f4f;
+  --color-fail-hover: #c73f3f;
   --color-warn: #f7c73a;
+  --color-warn-hover: #e0b832;
   --color-info: #4f9ee0;
+  --color-info-hover: #3b8dce;
   --color-white: #ffffff;
+  --color-white-hover: #f0f0f0;
   --color-black: #000000;
 
   --text-10: 0.625rem;
