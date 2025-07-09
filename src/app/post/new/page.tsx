@@ -1,1 +1,4 @@
-//여행지 등록, 상세조회, 수정
+// 여행지등록
+export default function TravelAddPage() {
+  return <h2>여행지등록</h2>;
+}

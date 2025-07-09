@@ -1,1 +1,4 @@
-//자유게시판 목록
+// 자유게시판 목록
+export default function FreePage() {
+  return <h2>자유게시판</h2>;
+}
