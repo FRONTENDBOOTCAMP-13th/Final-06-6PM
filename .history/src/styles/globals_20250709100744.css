@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Pretendard Variable", sans-serif;
+  --font-adelle: "adelle-sans", sans-serif;
+  --font-newbery: "newbery-sans-pro", sans-serif;
+  --font-gastro: "gastromond", sans-serif;
+
+  --color-primary: #1b4b37;
+  --color-secondary: #388a68;
+}
