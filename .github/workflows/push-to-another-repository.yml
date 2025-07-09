@@ -22,7 +22,7 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: SeOinm
-          destination-repository-name: Final-6-6PM
+          destination-repository-name: Final-06-6PM
           user-email: ${{ secrets.EMAIL_ANATJDLS0716}}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: develop
