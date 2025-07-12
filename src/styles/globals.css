@@ -3,35 +3,44 @@
 @theme {
   --font-sans: "Pretendard Variable", sans-serif;
 
-  --color-primary: #1b4b37;
-  --color-primary-hover: #163d2e;
-  --color-secondary: #388a68;
-  --color-secondary-hover: #2d7052;
-  --color-bg: #f9fdf8;
-  --color-bg-hover: #eef9ee;
-  --color-text: #1e1e1e;
-  --color-text-hover: #000000;
-  --color-cancel: #a0a0a0;
-  --color-cancel-hover: #8a8a8a;
-  --color-success: #4ebb8e;
-  --color-success-hover: #3da471;
-  --color-disabled: #d3d3d3;
-  --color-disabled-hover: #c0c0c0;
-  --color-fail: #e04f4f;
-  --color-fail-hover: #c73f3f;
-  --color-warn: #f7c73a;
-  --color-warn-hover: #e0b832;
-  --color-info: #4f9ee0;
-  --color-info-hover: #3b8dce;
-  --color-white: #ffffff;
-  --color-white-hover: #f0f0f0;
-  --color-black: #000000;
+  /* 기본색상 */
+  --color-travel-primary100: #1b4b37;
+  --color-travel-primary200: #163d2e;
+  --color-travel-primary-light100: #5fa185;
+  --color-travel-secondary100: #388a68;
+  --color-travel-secondary200: #2d7052;
+
+  --color-travel-bg100: #f9fdfb;
+  --color-travel-bg200: #eef9ee;
+  --color-travel-text100: #1e1e1e;
+  --color-travel-text200: #000000;
+
+  /* 상태 색상 */
+  --color-travel-success100: #4ebb8e;
+  --color-travel-success200: #3da471;
+  --color-travel-fail100: #e04f4f;
+  --color-travel-fail200: #c73f3f;
+  --color-travel-warn100: #f7c73a;
+  --color-travel-warn200: #e0b832;
+  --color-travel-info100: #4f9ee0;
+  --color-travel-info200: #3b8dce;
+
+  /* 회색계열  */
+  --color-travel-gray100: #f5f5f5;
+  --color-travel-gray200: #e0e0e0;
+  --color-travel-gray300: #cccccc;
+  --color-travel-gray400: #b0b0b0;
+  --color-travel-gray500: #949494;
+  --color-travel-gray600: #707070;
+  --color-travel-gray700: #4d4d4d;
 
   --text-10: 0.625rem;
   --text-12: 0.75rem;
   --text-14: 0.875rem;
   --text-16: 1rem;
+  --text-18: 1.125rem;
   --text-20: 1.25rem;
   --text-24: 1.5rem;
+  --text-28: 1.75rem;
   --text-32: 2rem;
 }
