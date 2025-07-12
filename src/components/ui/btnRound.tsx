@@ -10,7 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "md" | "lg";
 }
 
-export default function Button({
+export default function ButtonRounded({
   children,
   variant = "primary",
   size = "md",
@@ -29,9 +29,9 @@ export default function Button({
   };
 
   const btnSize = {
-    sm: "py-1 px-2.5 text-12 rounded-sm min-w-10",
-    md: "py-2 px-3 text-14 rounded-md min-w-12",
-    lg: "py-2 px-5 text-16 rounded-lg min-w-14",
+    sm: "py-1 px-3 text-12 rounded-[1.25rem] min-w-12",
+    md: "py-2 px-4 text-14 rounded-3xl min-w-14",
+    lg: "py-2 px-5 text-16 rounded-4xl min-w-16",
   };
 
   return (

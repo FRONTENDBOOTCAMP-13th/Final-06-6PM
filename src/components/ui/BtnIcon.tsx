@@ -10,7 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "md" | "lg";
 }
 
-export default function Button({
+export default function ButtonIcon({
   children,
   variant = "primary",
   size = "md",
@@ -36,7 +36,7 @@ export default function Button({
   return (
     <>
       <button
-        className={`${btnType[variant]} ${btnSize[size]} ${className} cursor-pointer transition-colors duration-200`}
+        className={`${btnType[variant]} ${btnSize[size]} ${className} cursor-pointer transition-colors duration-200 font-sans`}
         {...rest}
       >
         {children}
