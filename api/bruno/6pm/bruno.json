@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "6PM api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
