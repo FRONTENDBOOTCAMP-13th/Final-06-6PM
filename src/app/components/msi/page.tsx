@@ -3,10 +3,10 @@ import FreeItem from "@/components/ui/freeItem";
 
 export default function ComponentPage() {
   return (
-    <div className="flex flex-col gap-4 items-center p-4 ">
-      <div>
+    <div className="flex flex-col gap-4 items-center">
+      <div className="w-full">
         <h2 className="mb-2">Comment Item</h2>
-        <div className="bg-travel-gray100 p-4">
+        <div>
           <CommentItem
             author="작성자"
             content="댓글내용 댓글내용 댓글내용 댓글내용 댓글내용 댓글내용"
@@ -16,7 +16,7 @@ export default function ComponentPage() {
       </div>
       <div>
         <h2 className="mb-2">Free Item</h2>
-        <div className="bg-travel-gray100 p-4">
+        <div>
           <FreeItem
             title="제목입니다"
             author="작성자"

@@ -68,9 +68,9 @@ export default function TravelPage() {
   }, [selectedAreaCode]);
 
   return (
-    <div className="p-10 space-y-4">
+    <div className="space-y-4">
       <h2 className="text-20 font-bold">공공데이터 연습</h2>
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap">
         {areaList.map((area) => (
           <button
             key={area.code}
@@ -86,20 +86,22 @@ export default function TravelPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {travelDataArray.map((data, idx) => (
           <div
             key={idx}
-            className="py-4 px-6 border border-gray-300 rounded-2xl flex flex-col items-center gap-4"
+            className="p-4 border border-gray-300 rounded-2xl flex flex-col items-center gap-4"
           >
-            {data.firstimage && (
+            {data.firstimage ? (
               <Image
                 src={data.firstimage}
                 alt={data.title}
                 width={400}
                 height={300}
-                className="object-cover rounded-2xl"
+                className="aspect-[4/3] object-cover rounded-2xl"
               />
+            ) : (
+              <div className="w-full aspect-[4/3] rounded-2xl bg-travel-gray200"></div>
             )}
 
             <h3 className="font-bold text-14">{data.title}</h3>
