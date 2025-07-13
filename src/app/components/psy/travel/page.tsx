@@ -1,7 +1,7 @@
 "use client";
 
 import useTravelInstance from "@/hook/useTravelInstance";
-import { AreaProps } from "@/types/travelApi";
+import { AreaProps, AreaTravelProps } from "@/types/travelApi";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -21,7 +21,7 @@ export default function TravelPage() {
 
   const [areaList, setAreaList] = useState<AreaProps[]>([]);
   const [selectedAreaCode, setSelectedAreaCode] = useState<number>(1);
-  const [travelDataArray, setTravelDataArray] = useState<any[]>([]);
+  const [travelDataArray, setTravelDataArray] = useState<AreaTravelProps[]>([]);
 
   // 1-지역코드조회
   const fetchAreaList = async () => {
@@ -45,7 +45,7 @@ export default function TravelPage() {
   /* contenttypeid = 관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점)
    */
   const fetchTravelList = async (areaCode: number) => {
-    const dataURL = `/areaBasedList2?serviceKey=${api_key}&areaCode=${areaCode}&numOfRows=3&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentTypeId=12&_type=json`;
+    const dataURL = `/areaBasedList2?serviceKey=${api_key}&areaCode=${areaCode}&numOfRows=6&pageNo=5&MobileOS=ETC&MobileApp=AppTest&contentTypeId=12&_type=json`;
 
     try {
       const res = await travelInstance.get(dataURL);
