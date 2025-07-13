@@ -1,28 +1,23 @@
-import {
-  CalendarDays,
-  MessageCircleMore,
-  Search,
-  UserRoundIcon,
-} from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <>
-      <h1>Final-6-6pm</h1>
-      <h2>팀원 : 박선영, 남주성, 차형주, 송아현, 문서인</h2>
-      파이팅..! ~ 힘내자..!
-      <div className="p-4 bg-primary">
-        <h3 className="text-white">test</h3>
-      </div>
-      <div>
-        <h4>아이콘예시</h4>
-        <div className="flex items-center gap-4">
-          <Search className="w-4 h-4"></Search>
-          <UserRoundIcon className="w-4 h-4"></UserRoundIcon>
-          <MessageCircleMore className="w-4 h-4"></MessageCircleMore>
-          <CalendarDays className="w-4 h-4"></CalendarDays>
-        </div>
-      </div>
-    </>
+    <ul className="space-y-4">
+      <li className="p-2 bg-travel-primary100 text-white">
+        <Link href="/components/njs">남주성</Link>
+      </li>
+      <li className="p-2 bg-travel-primary100 text-white">
+        <Link href="/components/msi">문서인</Link>
+      </li>
+      <li className="p-2 bg-travel-primary100 text-white">
+        <Link href="/components/psy">박선영</Link>
+      </li>
+      <li className="p-2 bg-travel-primary100 text-white">
+        <Link href="/components/sah">송아현</Link>
+      </li>
+      <li className="p-2 bg-travel-primary100 text-white">
+        <Link href="/components/chj">차형주</Link>
+      </li>
+    </ul>
   );
 }
