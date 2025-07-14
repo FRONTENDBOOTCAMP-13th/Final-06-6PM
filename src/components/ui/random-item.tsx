@@ -1,6 +1,7 @@
 import React from "react";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
+import Button from "@/components/ui/Btn";
 
 interface RandomItemProps {
   image: string;
@@ -24,18 +25,19 @@ export default function RandomItem({
         className="object-cover"
         draggable={false}
       />
-
-      <div className="absolute inset-0 bg-black/40" />
-      <div className="relative z-10 text-white p-5 w-full">
-        <div className="font-bold text-16 mb-1">{title}</div>
-        <div className="flex items-center text-12 mb-1">
-          <MapPin className="w-4 h-4 mr-1 text-white" />
-          {location}
+      <div className="absolute left-0 top-0 inset-0 bg-black/40" />
+      <div className="relative z-10 p-5 w-full">
+        <div className="text-white space-y-1 mb-3">
+          <div className="font-bold text-20">{title}</div>
+          <div className="flex items-center gap-1 text-14">
+            <MapPin className="w-4 h-4 text-white" />
+            {location}
+          </div>
+          <div className="text-14 line-clamp-2">{desc}</div>
         </div>
-        <div className="text-12 line-clamp-2 mb-3">{desc}</div>
-        <button className="bg-travel-bg100 text-travel-text200 text-12 px-3 py-1 rounded transition cursor-pointer">
+        <Button variant="outline" size="sm">
           더 알아보기
-        </button>
+        </Button>
       </div>
     </div>
   );
