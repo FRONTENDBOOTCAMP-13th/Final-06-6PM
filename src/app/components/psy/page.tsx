@@ -1,9 +1,10 @@
 import Button from "@/components/ui/btn";
 import ButtonRounded from "@/components/ui/btnRound";
+import Link from "next/link";
 
 export default function ComponentPage() {
   return (
-    <div className="flex flex-col gap-4 items-center p-4">
+    <div className="flex flex-col gap-4 items-center">
       <div>
         <h2 className="mb-2">기본형 버튼</h2>
         <div className="flex gap-2 items-center flex-wrap">
@@ -40,6 +41,12 @@ export default function ComponentPage() {
           <ButtonRounded>메인컬러</ButtonRounded>
         </div>
       </div>
+      <Link
+        href="/components/psy/travel"
+        className="p-2 bg-travel-primary100 text-white  w-full"
+      >
+        여행
+      </Link>
     </div>
   );
 }
