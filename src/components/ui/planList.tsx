@@ -1,8 +1,13 @@
 import { Plus } from "lucide-react";
 import PlanListItem, { PlanListItemProps } from "./planListItem";
 import ButtonRounded from "./btnRound";
+import Image from "next/image";
 
-export default function PlanList(planListData: PlanListItemProps[]) {
+type PlanListDataProps = {
+  planListData: PlanListItemProps[];
+};
+
+export default function PlanList({ planListData }: PlanListDataProps) {
   const planListDataArray: PlanListItemProps[] = [
     { id: 1, title: "성산일출봉", tag: "관광지" },
     { id: 2, title: "성산일출봉", tag: "관광지" },
@@ -10,18 +15,18 @@ export default function PlanList(planListData: PlanListItemProps[]) {
   return (
     // 나중에 지도 API 연동 예정
     <div className="w-full bg-travel-bg100 rounded-2xl shadow-lg overflow-hidden space-y-4">
-      <div>
-        <div className="w-full h-48 bg-travel-gray200 rounded-lg flex items-center justify-center">
-          <img
-            src="/gwak.png"
-            alt="지도 영역"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        </div>
+      <div className="w-full bg-travel-gray200 rounded-2xl">
+        <Image
+          width={400}
+          height={300}
+          src="/gwak.png"
+          alt="지도 영역"
+          className="object-cover rounded-2xl"
+        />
       </div>
 
       {/* planListItem 컴포넌트 사용 */}
-      <div>
+      <div className="space-y-2">
         {planListDataArray.map((item, index) => (
           <PlanListItem
             key={item.id}
@@ -32,17 +37,15 @@ export default function PlanList(planListData: PlanListItemProps[]) {
         ))}
       </div>
 
-      {/* 일정 등록 버튼 */}
-      <div className="flex justify-center">
-        <ButtonRounded
-          size="lg"
-          variant="fill"
-          className="flex items-center gap-1"
-        >
-          <Plus className="w-4 h-4" />
-          일정 등록하기
-        </ButtonRounded>
-      </div>
+      {/* 등록 버튼 */}
+      <ButtonRounded
+        size="md"
+        variant="fill"
+        className="flex items-center gap-1 mx-auto"
+      >
+        <Plus className="text-white w-4 h-4 " />
+        일정 등록하기
+      </ButtonRounded>
     </div>
   );
 }
