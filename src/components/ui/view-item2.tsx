@@ -46,19 +46,15 @@ export default function ViewItem2({
         </div>
       </div>
       <div className="flex items-center mb-2 pl-0">
-        {[...Array(5)].map(
-          (
-            _,
-            i //도움 좀 받았습니다 ,,
-          ) => (
-            <Star
-              key={i}
-              className="w-4 h-4 text-travel-warn100"
-              fill="currentColor"
-            />
-          )
-        )}
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            className="w-4 h-4 text-travel-warn100"
+            fill="currentColor"
+          />
+        ))}
       </div>
+
       <div className="flex gap-3 mb-2">
         <div className="flex-1 h-28 bg-travel-gray200 rounded-lg" />
         <div className="flex-1 h-28 bg-travel-gray200 rounded-lg" />
