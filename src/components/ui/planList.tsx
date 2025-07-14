@@ -2,15 +2,14 @@ import { Plus } from "lucide-react";
 import PlanListItem, { PlanListItemProps } from "./planListItem";
 import ButtonRounded from "./btnRound";
 
-const planListData: PlanListItemProps[] = [
-  { id: 1, title: "성산일출봉", tag: "관광지" },
-  { id: 2, title: "성산일출봉", tag: "관광지" },
-];
-
 export default function PlanList(planListData: PlanListItemProps[]) {
+  const planListDataArray: PlanListItemProps[] = [
+    { id: 1, title: "성산일출봉", tag: "관광지" },
+    { id: 2, title: "성산일출봉", tag: "관광지" },
+  ];
   return (
     // 나중에 지도 API 연동 예정
-    <div className="w-full max-w-md mx-auto bg-travel-bg100 rounded-2xl shadow-lg overflow-hidden">
+    <div className="w-full bg-travel-bg100 rounded-2xl shadow-lg overflow-hidden space-y-4">
       <div>
         <div className="w-full h-48 bg-travel-gray200 rounded-lg flex items-center justify-center">
           <img
@@ -22,8 +21,8 @@ export default function PlanList(planListData: PlanListItemProps[]) {
       </div>
 
       {/* planListItem 컴포넌트 사용 */}
-      <div className="pb-4">
-        {planListData.map((item, index) => (
+      <div>
+        {planListDataArray.map((item, index) => (
           <PlanListItem
             key={item.id}
             number={index + 1}
@@ -34,7 +33,7 @@ export default function PlanList(planListData: PlanListItemProps[]) {
       </div>
 
       {/* 일정 등록 버튼 */}
-      <div className="px-6 pb-6 flex justify-center">
+      <div className="flex justify-center">
         <ButtonRounded
           size="lg"
           variant="fill"
