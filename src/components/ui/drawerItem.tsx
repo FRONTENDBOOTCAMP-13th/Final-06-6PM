@@ -38,7 +38,7 @@ const LocationCard = ({
         <img
           src={imageUrl}
           alt={imageAlt}
-          className="w-full h-48 object-cover rounded-xl"
+          className="w-full object-cover rounded-lg bg-travel-gray200" // 이미지 못불러올시 회색
         />
       </div>
 
