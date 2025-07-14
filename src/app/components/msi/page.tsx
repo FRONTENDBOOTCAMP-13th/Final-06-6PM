@@ -33,7 +33,10 @@ export default function ComponentPage() {
         <h2>Select Menu - 3</h2>
         <SelectMenu3 />
       </div>
-
+      <div className="w-full">
+        <h2>Select Menu - 2</h2>
+        <SelectMenu2 />
+      </div>
     </div>
   );
 }
