@@ -9,13 +9,13 @@ interface LocationCardProps {
   description?: string;
 }
 
-const LocationCard = ({
+export default function LocationCard({
   title = "무슨해변",
   location = "제주특별자치도 서귀포시",
   imageUrl = "/gwak.png",
   imageAlt = "무슨해변 - 빨간 등대와 바다 풍경",
   description = "섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 어쩌구저쩌구",
-}: LocationCardProps) => {
+}: LocationCardProps) {
   // 변수를 입력해주고 타입을 프롭스로 지정하고 안에있는 div들에게 반환
   return (
     <div className="w-full max-w-md mx-auto bg-travel-bg100 rounded-2xl shadow-lg overflow-hidden">
@@ -55,6 +55,4 @@ const LocationCard = ({
       </div>
     </div>
   );
-};
-
-export default LocationCard;
+}
