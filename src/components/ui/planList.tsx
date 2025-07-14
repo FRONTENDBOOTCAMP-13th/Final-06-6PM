@@ -1,11 +1,13 @@
 import { Plus } from "lucide-react";
-import PlanListItem from "./planListItem";
+import PlanListItem, { PlanListItemProps } from "./planListItem";
 import ButtonRounded from "./btnRound";
-import { PlanListItemProps } from "./planListItem";
 
+const planListData: PlanListItemProps[] = [
+  { id: 1, title: "성산일출봉", tag: "관광지" },
+  { id: 2, title: "성산일출봉", tag: "관광지" },
+];
 
-function planListItem ({ id: 1, title: "성산일출봉", tag: "관광지" },
-      { id: 2, title: "성산일출봉", tag: "관광지" }: PlanListItemProps) {
+export default function PlanList(planListData: PlanListItemProps[]) {
   return (
     // 나중에 지도 API 연동 예정
     <div className="w-full max-w-md mx-auto bg-travel-bg100 rounded-2xl shadow-lg overflow-hidden">
@@ -21,7 +23,7 @@ function planListItem ({ id: 1, title: "성산일출봉", tag: "관광지" },
 
       {/* planListItem 컴포넌트 사용 */}
       <div className="pb-4">
-        {planListItem.map((item, index) => (
+        {planListData.map((item, index) => (
           <PlanListItem
             key={item.id}
             number={index + 1}
@@ -45,5 +47,3 @@ function planListItem ({ id: 1, title: "성산일출봉", tag: "관광지" },
     </div>
   );
 }
-
-export default planListItem;

@@ -1,10 +1,11 @@
-interface PlanListItemProps {
-  number: number;
+export type PlanListItemProps = {
+  id?: number;
+  number?: number;
   title: string;
   tag: string;
-}
+};
 
-const PlanListItem = ({ number, title, tag }: PlanListItemProps) => {
+const PlanListItem = ({ id, number, title, tag }: PlanListItemProps) => {
   return (
     <div className="flex items-center gap-2 px-6 py-3">
       {/* 숫자 */}
