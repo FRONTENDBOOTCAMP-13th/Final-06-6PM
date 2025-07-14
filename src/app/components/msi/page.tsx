@@ -1,5 +1,7 @@
 import CommentItem from "@/components/ui/commentItem";
 import FreeItem from "@/components/ui/freeItem";
+import SelectMenu3 from "@/components/ui/selectMenu3";
+import SelectMenu2 from "@/components/ui/selectMenu2";
 
 export default function ComponentPage() {
   return (
@@ -26,6 +28,14 @@ export default function ComponentPage() {
             comment={13}
           />
         </div>
+      </div>
+      <div className="w-full">
+        <h2>Select Menu - 3</h2>
+        <SelectMenu3 />
+      </div>
+      <div className="w-full">
+        <h2>Select Menu - 2</h2>
+        <SelectMenu2 />
       </div>
     </div>
   );
