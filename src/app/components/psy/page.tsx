@@ -1,5 +1,5 @@
-import Button from "@/components/ui/Btn";
-import ButtonRounded from "@/components/ui/BtnRounded";
+import Button from "@/components/ui/btn";
+import ButtonRounded from "@/components/ui/btnRound";
 
 export default function ComponentPage() {
   return (

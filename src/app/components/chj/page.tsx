@@ -1,13 +1,13 @@
+import ProfileCard from "@/components/ui/profileItem";
+
 export default function ComponentPage() {
   return (
-    <div className="flex flex-col gap-4 items-center p-4">
+    <div className="flex flex-col gap-4 items-center p-4  max-w-[500px] mx-auto">
       <div>
-        <h2 className="mb-2">컴포넌트 명</h2>
-        <div></div>
-      </div>
-      <div>
-        <h2 className="mb-2">컴포넌트 명</h2>
-        <div></div>
+        <h2 className="mb-2">ProfileItem</h2>
+        <div>
+          <ProfileCard userName="여행덕후"></ProfileCard>
+        </div>
       </div>
     </div>
   );

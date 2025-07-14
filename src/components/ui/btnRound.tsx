@@ -18,13 +18,14 @@ export default function ButtonRounded({
   ...rest
 }: ButtonProps & { className?: string }) {
   const btnType = {
-    info: "bg-info text-white hover:bg-info-hover",
-    warn: "bg-warn text-white hover:bg-warn-hover",
-    fail: "bg-fail text-white hover:bg-fail-hover",
-    success: "bg-success text-white hover:bg-success-hover",
-    outline: "bg-white color-text border border-disabled hover:bg-white-hover",
-    fill: "bg-text text-white hover:bg-text-hover",
-    primary: "bg-primary text-white hover:bg-primary-hover",
+    info: "bg-travel-info100 text-white hover:bg-travel-info200",
+    warn: "bg-travel-warn100 text-white hover:bg-travel-warn200",
+    fail: "bg-travel-fail100 text-white hover:bg-travel-fail200",
+    success: "bg-travel-success100 text-white hover:bg-travel-success200",
+    outline:
+      "bg-white color-text border border-travel-gray300 hover:bg-travel-gray100",
+    fill: "bg-travel-text100 text-white hover:bg-travel-text200",
+    primary: "bg-travel-primary100 text-white hover:bg-travel-primary200",
   };
 
   const btnSize = {
@@ -36,7 +37,7 @@ export default function ButtonRounded({
   return (
     <>
       <button
-        className={`${btnType[variant]} ${btnSize[size]} ${className} cursor-pointer transition-colors duration-200`}
+        className={`${btnType[variant]} ${btnSize[size]} ${className} cursor-pointer transition-colors duration-200 font-sans`}
         {...rest}
       >
         {children}
