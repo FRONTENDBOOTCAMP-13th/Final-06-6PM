@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import ButtonRounded from "@/components/ui/btnRound";
 
-const ScheduleRegister = () => {
+export default function ScheduleRegister() {
   return (
     <div className="w-full max-w-md mx-auto bg-travel-bg100 rounded-2xl shadow-lg">
       {/* 일정을 등록해주세용 */}
@@ -22,6 +22,4 @@ const ScheduleRegister = () => {
       </div>
     </div>
   );
-};
-
-export default ScheduleRegister;
+}
