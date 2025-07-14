@@ -1,51 +1,59 @@
-import { MapPin, X, Star } from "lucide-react";
+"use client";
+
+import ButtonRounded from "@/components/ui/btnRound";
+import { MapPin, X, Star, Bookmark } from "lucide-react";
+import Image from "next/image";
 
 type Props = {
   userName: string;
+  imgURL?: string;
   location: string;
   content: string;
   tags: string[];
   onEdit?: () => void;
-  onClose?: () => void;
+  onDelete?: () => void;
 };
 
 export default function ViewItem2({
   userName,
+  imgURL = "/gwak.png",
   location,
   content,
   tags,
   onEdit,
-  onClose,
+  onDelete,
 }: Props) {
+  const openModal = () => {
+    console.log("모달창");
+  };
+
   return (
-    <div className="relative rounded-xl bg-travel-bg100 shadow p-4 w-full max-w-xl">
-      <div className="absolute top-4 right-4 flex flex-col items-end gap-1 z-10">
-        <button
-          className="p-1 rounded-full"
-          onClick={onClose}
-          type="button"
-          aria-label="닫기"
-        >
-          <X className="w-5 h-5 text-travel-gray600" />
-        </button>
-        <button
-          className="text-12 px-3 py-1 rounded-full border bg-travel-bg100 text-travel-gray700"
-          onClick={onEdit}
-          type="button"
-        >
-          수정
-        </button>
-      </div>
-      <div className="mb-2">
-        <div className="font-medium text-16 text-travel-gray700">
-          {userName}
+    <div className="relative rounded-xl bg-white shadow p-4 w-full max-w-xl">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-3">
+          <Image
+            width={40}
+            height={40}
+            src={imgURL}
+            alt={userName}
+            className="w-10 h-10 rounded-full bg-travel-gray300"
+          />
+          <div>
+            <p className="font-medium text-16 text-travel-gray700">
+              {userName}
+            </p>
+            <button
+              className="flex items-center text-12 text-travel-info100 cursor-pointer"
+              onClick={() => openModal()}
+            >
+              <MapPin className="w-4 h-4 mr-1" />
+              {location}
+            </button>
+          </div>
         </div>
-        <div className="flex items-center text-12 text-travel-info100">
-          <MapPin className="w-4 h-4 mr-1" />
-          {location}
-        </div>
+        <Bookmark className="w-6 h-6 text-travel-gray400" />
       </div>
-      <div className="flex items-center mb-2 pl-0">
+      <div className="flex items-center my-2 gap-0.5">
         {[...Array(5)].map((_, i) => (
           <Star
             key={i}
@@ -68,6 +76,26 @@ export default function ViewItem2({
             #{tag}
           </span>
         ))}
+      </div>
+      <div className="flex gap-1 justify-end">
+        <ButtonRounded
+          className="text-12 px-3 py-1 rounded-full border bg-travel-bg100 text-travel-gray700"
+          onClick={onEdit}
+          type="button"
+          size="sm"
+          variant="outline"
+        >
+          수정
+        </ButtonRounded>
+        <ButtonRounded
+          className="text-12 px-3 py-1 rounded-full border bg-travel-bg100 text-travel-gray700"
+          onClick={onDelete}
+          type="button"
+          size="sm"
+          variant="outline"
+        >
+          삭제
+        </ButtonRounded>
       </div>
     </div>
   );
