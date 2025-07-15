@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 type Props = {
   userName: string;
@@ -35,20 +36,27 @@ export default function ViewItem({
   comments,
   date,
 }: Props) {
+  const [isBookmarkToggled, setIsBookmarkToggled] = useState(false);
+
   const openModal = () => {
     console.log("모달창");
   };
   const slideDrawer = () => {
     console.log("드로워");
   };
-  const bookmarkToggle = () => {
-    console.log("북마크");
-  };
+
+  function handleBookmarkClick() {
+    setIsBookmarkToggled(!isBookmarkToggled);
+  }
 
   const pathname = usePathname();
   const isList = pathname === "/feed";
   const listClass = `relative w-full space-y-3 ${
     isList ? "rounded-xl bg-white shadow p-4" : ""
+  }`;
+
+  const listTextClass = `text-14 text-travel-text100 ${
+    isList ? "line-clamp-3" : ""
   }`;
 
   return (
@@ -108,9 +116,7 @@ export default function ViewItem({
             className=" bg-travel-gray200 rounded-lg object-cover aspect-square"
           />
         </div>
-        <div className="text-14 text-travel-text200 line-clamp-3">
-          {content}
-        </div>
+        <div className={listTextClass}>{content}</div>
         <div className="flex flex-wrap gap-1">
           {tags.map((tag) => (
             <span key={tag} className="text-12 text-travel-info100">
@@ -134,8 +140,14 @@ export default function ViewItem({
             {comments}
           </span>
         </div>
-        <button onClick={() => bookmarkToggle()} className="cursor-pointer">
-          <Bookmark className="w-6 h-6 text-gray-400" fill="currentColor" />
+        <button onClick={handleBookmarkClick}>
+          <Bookmark
+            className={`w-7 h-7 ${
+              isBookmarkToggled
+                ? "text-amber-300 fill-current"
+                : "text-travel-gray400 fill-current"
+            }`}
+          />
         </button>
       </div>
     </div>
