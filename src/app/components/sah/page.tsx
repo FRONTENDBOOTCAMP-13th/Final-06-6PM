@@ -3,12 +3,16 @@
 import { useState } from "react";
 import Input from "@/components/ui/input";
 import Textarea from "@/components/ui/textarea";
+import SearchInput from "@/components/ui/search-input";
 
 export default function ComponentPage() {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValueSm, setInputValueSm] = useState("");
   const [inputValueMd, setInputValueMd] = useState("");
   const [inputValueLg, setInputValueLg] = useState("");
   const [textareaValue, setTextareaValue] = useState("");
+  const [searchValueSm, setSearchValueSm] = useState("");
+  const [searchValueMd, setSearchValueMd] = useState("");
+  const [searchValueLg, setSearchValueLg] = useState("");
 
   return (
     <div className="flex flex-col gap-8 items-center">
@@ -17,8 +21,8 @@ export default function ComponentPage() {
         <Input
           size="sm"
           placeholder="default-input-sm"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={inputValueSm}
+          onChange={(e) => setInputValueSm(e.target.value)}
         />
       </div>
 
@@ -48,6 +52,34 @@ export default function ComponentPage() {
           placeholder="text text text text text text text text text text text"
           value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
+        />
+      </div>
+
+      <div className="w-full">
+        <h2 className="mb-2 text-xl font-bold">Search-Input-sm</h2>
+        <SearchInput
+          size="sm"
+          placeholder="search-input-sm"
+          value={searchValueSm}
+          onChange={(e) => setSearchValueSm(e.target.value)}
+        />
+      </div>
+      <div className="w-full">
+        <h2 className="mb-2 text-xl font-bold">Search-Input-md</h2>
+        <SearchInput
+          size="md"
+          placeholder="search-input-md"
+          value={searchValueMd}
+          onChange={(e) => setSearchValueMd(e.target.value)}
+        />
+      </div>
+      <div className="w-full">
+        <h2 className="mb-2 text-xl font-bold">Search-Input-lg</h2>
+        <SearchInput
+          size="lg"
+          placeholder="search-input-lg"
+          value={searchValueLg}
+          onChange={(e) => setSearchValueLg(e.target.value)}
         />
       </div>
     </div>
