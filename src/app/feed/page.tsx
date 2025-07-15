@@ -60,9 +60,9 @@ export default function FeedPage() {
       />
 
       {/* 셀렉트창 및 필터 */}
-      <div className="flex items-center mt-2">
+      <div className="flex flex-col min-[430px]:flex-row items-start min-[430px]:items-center gap-y-1 mt-2 px-0.5">
         <DropdownItem label="오래된순" />
-        <div className="flex flex-start items-center gap-2 before:content-['|'] before:ml-2 before:text-travel-gray400 ">
+        <div className="flex flex-wrap flex-start items-center gap-2 before:hidden min-[430px]:before:block  before:content-['|'] before:ml-2 before:text-travel-gray400 ">
           <TagItem>전체</TagItem>
           <TagItem variant="outline">전체리뷰</TagItem>
           <TagItem variant="outline">일별리뷰</TagItem>
@@ -71,7 +71,7 @@ export default function FeedPage() {
       </div>
 
       {/* 내용 */}
-      <div className="flex flex-col gap-8 mt-7">
+      <div className="flex flex-col gap-6 mt-7">
         {dummyData.map((item, index) => (
           <ViewItem key={index} {...item} onClick={() => setSelectItem(true)} />
         ))}
