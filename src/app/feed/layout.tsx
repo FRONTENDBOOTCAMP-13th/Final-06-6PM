@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import "../../styles/globals.css";
+import { ChevronLeft } from "lucide-react";
 
 export default function NavbarLayout({
   children,
@@ -8,7 +9,13 @@ export default function NavbarLayout({
 }>) {
   return (
     <div>
-      <div className="relative w-full p-4 pb-25">{children}</div>
+      <div className="w-full relative my-6 px-4">
+        <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer">
+          <ChevronLeft />
+        </button>
+        <p className="text-center">살펴보기</p>
+      </div>
+      <div className="relative w-full px-4 pb-25">{children}</div>
       <Navbar />
     </div>
   );
