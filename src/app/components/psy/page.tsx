@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function ComponentPage() {
   return (
-    <div className="flex flex-col gap-4 items-center">
-      <div>
+    <div className="flex flex-col gap-8 items-center">
+      <div className="w-full">
         <h2 className="mb-2">기본형 버튼</h2>
         <div className="flex gap-2 items-center flex-wrap">
           <Button variant="info" size="sm">
@@ -23,7 +23,7 @@ export default function ComponentPage() {
           <Button>메인컬러</Button>
         </div>
       </div>
-      <div>
+      <div className="w-full">
         <h2 className="mb-2">라운드형 버튼</h2>
         <div className="flex gap-2  items-center flex-wrap">
           <ButtonRounded variant="info" size="sm">
