@@ -13,9 +13,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-type Props = {
+export type ViewItemProps = {
   userName: string;
-  imgURL?: string;
+  userImgURL?: string;
   location: string;
   content: string;
   tags: string[];
@@ -23,11 +23,12 @@ type Props = {
   likes: number;
   comments: number;
   date: string;
+  onClick?: () => void;
 };
 
 export default function ViewItem({
   userName,
-  imgURL = "/gwak.png",
+  userImgURL = "/gwak.png",
   location,
   content,
   tags,
@@ -35,20 +36,28 @@ export default function ViewItem({
   likes,
   comments,
   date,
-}: Props) {
+  onClick,
+}: ViewItemProps) {
   const [isBookmarkToggled, setIsBookmarkToggled] = useState(false);
 
+  // 모달
   const openModal = () => {
-    console.log("모달창");
+    if (typeof onClick === "function") {
+      onClick();
+    }
   };
+
+  // 드로워
   const slideDrawer = () => {
     console.log("드로워");
   };
 
-  function handleBookmarkClick() {
+  // 북마크 클릭 토글
+  const handleBookmarkClick = () => {
     setIsBookmarkToggled(!isBookmarkToggled);
-  }
+  };
 
+  // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
   const pathname = usePathname();
   const isList = pathname === "/feed";
   const listClass = `relative w-full space-y-3 ${
@@ -62,11 +71,12 @@ export default function ViewItem({
   return (
     <div className={listClass}>
       <div className="flex items-center justify-between">
+        {/* 사용자이미지/이름/방문장소 */}
         <div className="flex items-center gap-3">
           <Image
             width={40}
             height={40}
-            src={imgURL}
+            src={userImgURL}
             alt={userName}
             className="w-10 h-10 rounded-full bg-travel-gray300"
           />
@@ -76,17 +86,21 @@ export default function ViewItem({
             </p>
             <button
               className="flex items-center text-12 text-travel-info100 cursor-pointer"
-              onClick={() => openModal()}
+              onClick={openModal}
             >
               <MapPin className="w-4 h-4 mr-1" />
               {location}
             </button>
           </div>
         </div>
+
+        {/* 수정/삭제 모달창 버튼*/}
         <button onClick={() => slideDrawer()} className="cursor-pointer">
           <EllipsisVertical className="w-6 h-6 text-travel-gray400" />
         </button>
       </div>
+
+      {/* 별점 및 방문날짜 */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           {[...Array(5)].map((_, i) => (
@@ -99,6 +113,8 @@ export default function ViewItem({
         </div>
         <span className="text-12 text-gray-600">{date}</span>
       </div>
+
+      {/* 리뷰내용 */}
       <div className="space-y-2">
         <div className="grid grid-cols-2 gap-3">
           <Image
@@ -125,6 +141,8 @@ export default function ViewItem({
           ))}
         </div>
       </div>
+
+      {/* 리뷰관련요소 */}
       <div className="flex justify-between items-center text-travel-gray600 text-12">
         <div className="flex gap-4 items-center">
           <span className="flex items-center gap-1">
