@@ -3,6 +3,9 @@
 @theme {
   --font-sans: "Pretendard Variable", sans-serif;
 
+  /* 브레이크포인트 */
+  --breakpoint-xs: 26.875rem;
+
   /* 기본색상 */
   --color-travel-primary100: #1b4b37;
   --color-travel-primary200: #163d2e;
