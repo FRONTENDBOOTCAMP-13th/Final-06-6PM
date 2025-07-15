@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Star, Bookmark } from "lucide-react";
 
-export default function toggledComponents() {
+export default function ToggledComponents() {
   const [isStarToggled, setIsStarToggled] = useState(false);
   const [isBookmarkToggled, setIsBookmarkToggled] = useState(false);
 
