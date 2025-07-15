@@ -1,14 +1,54 @@
 "use client";
 
+import ModalItem from "@/components/Modal";
 import DropdownItem from "@/components/ui/dropdownItem";
 import SearchInput from "@/components/ui/search-input";
 import TagItem from "@/components/ui/tagItem";
-import ViewItem from "@/components/ui/viewItem";
+import ViewItem, { ViewItemProps } from "@/components/ui/viewItem";
 import { useState } from "react";
+
+// 더미데이터
+const dummyData: ViewItemProps[] = [
+  {
+    userName: "주먹밥쿵야",
+    userImgURL: "/images/user1.png",
+    location: "제주도",
+    content: "1번 내용입니다.",
+    tags: ["맛집", "자연", "풍경"],
+    views: 123,
+    likes: 45,
+    comments: 12,
+    date: "2025-07-15",
+  },
+  {
+    userName: "하츄핑",
+    userImgURL: "/images/user2.png",
+    location: "부산",
+    content: "2번 내용입니다.",
+    tags: ["해변", "카페", "바다"],
+    views: 456,
+    likes: 78,
+    comments: 34,
+    date: "2025-07-14",
+  },
+  {
+    userName: "숀",
+    userImgURL: "/images/user3.png",
+    location: "강릉",
+    content: "3번 내용입니다.",
+    tags: ["카페", "감성", "동해"],
+    views: 789,
+    likes: 90,
+    comments: 56,
+    date: "2025-07-13",
+  },
+];
 
 // 살펴보기 게시판 목록
 export default function FeedPage() {
   const [searchValue, setSearchValue] = useState("");
+  const [selectItem, setSelectItem] = useState(false);
+
   return (
     <>
       {/* 검색바 */}
@@ -32,46 +72,13 @@ export default function FeedPage() {
 
       {/* 내용 */}
       <div className="flex flex-col gap-8 mt-7">
-        <ViewItem
-          userName={"닉네임"}
-          imgURL={"/gwak.png"}
-          location={"제주도"}
-          content={
-            "내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 "
-          }
-          tags={["맛집", "#좋아요", "몰라"]}
-          views={200}
-          likes={100}
-          comments={100}
-          date={"2025-07-15"}
-        />
-        <ViewItem
-          userName={"닉네임"}
-          imgURL={"/gwak.png"}
-          location={"제주도"}
-          content={
-            "내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 "
-          }
-          tags={["맛집", "#좋아요", "몰라"]}
-          views={200}
-          likes={100}
-          comments={100}
-          date={"2025-07-15"}
-        />
-        <ViewItem
-          userName={"닉네임"}
-          imgURL={"/gwak.png"}
-          location={"제주도"}
-          content={
-            "내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 "
-          }
-          tags={["맛집", "#좋아요", "몰라"]}
-          views={200}
-          likes={100}
-          comments={100}
-          date={"2025-07-15"}
-        />
+        {dummyData.map((item, index) => (
+          <ViewItem key={index} {...item} onClick={() => setSelectItem(true)} />
+        ))}
       </div>
+
+      {/* 모달 */}
+      {selectItem && <ModalItem onClose={() => setSelectItem(false)} />}
     </>
   );
 }
