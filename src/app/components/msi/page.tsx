@@ -2,6 +2,7 @@ import CommentItem from "@/components/ui/commentItem";
 import FreeItem from "@/components/ui/freeItem";
 import SelectMenu3 from "@/components/ui/selectMenu3";
 import SelectMenu2 from "@/components/ui/selectMenu2";
+import TagItem from "@/components/ui/tagItem";
 
 export default function ComponentPage() {
   return (
@@ -32,6 +33,19 @@ export default function ComponentPage() {
       <div className="w-full">
         <h2>Select Menu - 2</h2>
         <SelectMenu2 />
+      </div>
+      <div className="w-full">
+        <h2>tag Item</h2>
+        <TagItem>전체</TagItem>
+        <TagItem variant="success">맛집</TagItem>
+        <TagItem variant="fail">숙박</TagItem>
+        <TagItem variant="warn">축제</TagItem>
+        <TagItem variant="info">관광지</TagItem>
+        <TagItem variant="outline">관광지</TagItem>
+        <TagItem variant="fill">관광지</TagItem>
+
+        <TagItem variant="outline" closeIcon>관광지 </TagItem>
+        <TagItem variant="outline" closeIcon>기이이이이인 관광지 </TagItem>
       </div>
     </div>
   );
