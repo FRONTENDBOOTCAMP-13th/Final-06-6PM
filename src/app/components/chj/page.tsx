@@ -1,5 +1,6 @@
 import ProfileCard from "@/components/ui/profileItem";
 import DrawerItem from "@/components/ui/drawerItem";
+import PlanList from "@/components/ui/planList";
 
 export default function ComponentPage() {
   return (
@@ -12,7 +13,7 @@ export default function ComponentPage() {
         <div>
           <h2 className="mb-2">DrawerItem</h2>
           <div>
-            <DrawerItem />
+            <PlanList />
           </div>
         </div>
       </div>
