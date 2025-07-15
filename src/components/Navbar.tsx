@@ -13,28 +13,28 @@ export default function Navbar() {
           <span className="whitespace-nowrap">홈</span>
         </Link>
         <Link
-          href="/post"
+          href="/feed"
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <LayoutList />
           <span className="whitespace-nowrap">살펴보기</span>
         </Link>
         <Link
-          href="/post/new"
+          href="/plan"
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <SquarePen />
           <span className="whitespace-nowrap">기록하기</span>
         </Link>
         <Link
-          href="/free"
+          href="/photomap"
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <Map />
           <span className="whitespace-nowrap">지도생성</span>
         </Link>
         <Link
-          href="/profile"
+          href="/mypage"
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <UserRound />
