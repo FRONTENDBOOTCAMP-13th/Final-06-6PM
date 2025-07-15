@@ -2,7 +2,7 @@ import React from "react";
 
 interface InputProps {
   size?: "sm" | "md" | "lg";
-  placeholder?: string;
+  placeholder: string;
   className?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -27,7 +27,7 @@ export default function Input({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-text100 ${inputSize[size]} ${className}`}
+      className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
     />
   );
 }
