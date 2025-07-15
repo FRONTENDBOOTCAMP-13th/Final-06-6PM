@@ -1,6 +1,15 @@
 "use client";
 
-import { MapPin, Eye, Heart, MessageCircleMore, Bookmark } from "lucide-react";
+import {
+  MapPin,
+  Eye,
+  Heart,
+  MessageCircleMore,
+  Bookmark,
+  EllipsisIcon,
+  EllipsisVertical,
+  Star,
+} from "lucide-react";
 import Image from "next/image";
 
 type Props = {
@@ -29,9 +38,16 @@ export default function ViewItem({
   const openModal = () => {
     console.log("모달창");
   };
+  const slideDrawer = () => {
+    console.log("드로워");
+  };
+  const bookmarkToggle = () => {
+    console.log("북마크");
+  };
+
   return (
-    <div className="relative rounded-xl bg-white shadow p-4 w-full max-w-xl">
-      <div className="flex items-center justify-between mb-2">
+    <div className="relative rounded-xl bg-white shadow p-4 w-full space-y-3">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Image
             width={40}
@@ -41,7 +57,7 @@ export default function ViewItem({
             className="w-10 h-10 rounded-full bg-travel-gray300"
           />
           <div>
-            <p className="font-medium text-16 text-travel-gray700">
+            <p className="font-medium text-16 text-travel-text100">
               {userName}
             </p>
             <button
@@ -53,9 +69,23 @@ export default function ViewItem({
             </button>
           </div>
         </div>
-        <Bookmark className="w-6 h-6 text-travel-gray400" />
+        <button onClick={() => slideDrawer()} className="cursor-pointer">
+          <EllipsisVertical className="w-6 h-6 text-travel-gray400" />
+        </button>
       </div>
-      <div className="space-y-2 my-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-0.5">
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              className="w-4 h-4 text-travel-warn100"
+              fill="currentColor"
+            />
+          ))}
+        </div>
+        <span className="text-12 text-gray-600">{date}</span>
+      </div>
+      <div className="space-y-2">
         <div className="grid grid-cols-2 gap-3">
           <Image
             width={200}
@@ -98,7 +128,9 @@ export default function ViewItem({
             {comments}
           </span>
         </div>
-        <span>{date}</span>
+        <button onClick={() => bookmarkToggle()} className="cursor-pointer">
+          <Bookmark className="w-6 h-6 text-gray-400" fill="currentColor" />
+        </button>
       </div>
     </div>
   );
