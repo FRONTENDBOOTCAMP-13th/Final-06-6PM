@@ -3,6 +3,7 @@ import FreeItem from "@/components/ui/freeItem";
 import SelectMenu3 from "@/components/ui/selectMenu3";
 import SelectMenu2 from "@/components/ui/selectMenu2";
 import TagItem from "@/components/ui/tagItem";
+import DropdownItem from "@/components/ui/dropdownItem";
 
 export default function ComponentPage() {
   return (
@@ -46,6 +47,10 @@ export default function ComponentPage() {
 
         <TagItem variant="outline" closeIcon>관광지 </TagItem>
         <TagItem variant="outline" closeIcon>기이이이이인 관광지 </TagItem>
+      </div>
+      <div className="w-full">
+        <h2>Select Item</h2>
+        <DropdownItem label="오래된순" />
       </div>
     </div>
   );
