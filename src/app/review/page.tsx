@@ -1,4 +1,5 @@
-// 후기 작성
+import { redirect } from "next/navigation";
+
 export default function ReviewPage() {
-  return <h2>후기작성</h2>;
+  redirect("/review/new");
 }
