@@ -8,16 +8,16 @@ interface DropdownItemProps {
 }
 
 export default function DropdownItem({ label }: DropdownItemProps) {
-  const toggle = () => {
+  const openDropdown = () => {
     console.log("드롭다운 창이 뜹니다.");
   };
 
   return (
     <>
-      <div onClick={toggle} className="cursor-pointer">
+      <div className="cursor-pointer">
         <TagItem>
           {label}
-          <ChevronDown className="w-3 h-3" />
+          <ChevronDown onClick={openDropdown} className="w-3 h-3" />
         </TagItem>
       </div>
     </>

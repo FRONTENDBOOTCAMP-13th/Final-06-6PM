@@ -1,3 +1,5 @@
+"use client"
+
 import { X } from 'lucide-react';
 
 interface TagItemProps {
@@ -25,12 +27,16 @@ export default function TagItem({children, variant = "primary", className = "", 
     primary: "bg-travel-primary100 border border-travel-primary200 text-white",
   };
 
+  const remove = () => {
+    console.log("삭제됩니다.");
+  };
+
   return (
     <div 
       className={`${btnType[variant]} ${className} py-1 px-2.5 text-12 rounded-2xl cursor-pointer font-sans inline-flex items-center leading-none gap-1.5`}
     >
       {children}
-      {closeIcon && <X className="w-3 h-3"/>}
+      {closeIcon && <X onClick={remove} className="w-3 h-3"/>}
     </div>
   );
 }
