@@ -18,8 +18,8 @@ export default function Textarea({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={`p-3 text-12 rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-text100 ${className}`}
-      style={{ width: "380px", height: "120px" }}
+      rows={4}
+      className={`p-3 text-12 rounded-lg border w-full border-travel-gray400 bg-white text-travel-text100 placeholder-travel-text100 ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
     />
   );
 }
