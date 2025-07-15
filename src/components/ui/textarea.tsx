@@ -19,7 +19,7 @@ export default function Textarea({
       value={value}
       onChange={onChange}
       rows={4}
-      className={`p-3 text-12 rounded-lg border w-full border-travel-gray400 bg-white text-travel-text100 placeholder-travel-text100 ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
+      className={`p-3 text-12 rounded-lg border w-full border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
     />
   );
 }
