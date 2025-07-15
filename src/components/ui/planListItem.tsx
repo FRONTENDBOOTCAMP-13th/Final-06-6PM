@@ -5,7 +5,7 @@ export type PlanListItemProps = {
   tag: string;
 };
 
-const PlanListItem = ({ number, title, tag }: PlanListItemProps) => {
+function PlanListItem({ number, title, tag }: PlanListItemProps) {
   return (
     <div className="flex items-center gap-2 text-travel-text100">
       {/* 숫자 */}
@@ -20,6 +20,6 @@ const PlanListItem = ({ number, title, tag }: PlanListItemProps) => {
       </span>
     </div>
   );
-};
+}
 
 export default PlanListItem;
