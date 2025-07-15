@@ -10,6 +10,7 @@ import {
   Star,
 } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 type Props = {
   userName: string;
@@ -44,8 +45,14 @@ export default function ViewItem({
     console.log("북마크");
   };
 
+  const pathname = usePathname();
+  const isList = pathname === "/feed";
+  const listClass = `relative w-full space-y-3 ${
+    isList ? "rounded-xl bg-white shadow p-4" : ""
+  }`;
+
   return (
-    <div className="relative rounded-xl bg-white shadow p-4 w-full space-y-3">
+    <div className={listClass}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Image
