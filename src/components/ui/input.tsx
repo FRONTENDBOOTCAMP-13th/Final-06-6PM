@@ -22,12 +22,17 @@ export default function Input({
   };
 
   return (
-    <input
-      type="text"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
-    />
+    <>
+      <label htmlFor="userId" className="sr-only">
+        userId
+      </label>
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
+      />
+    </>
   );
 }
