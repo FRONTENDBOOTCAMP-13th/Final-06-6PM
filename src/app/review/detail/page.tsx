@@ -22,7 +22,9 @@ export default function ReviewDetailPage() {
 
         <div className="grid grid-cols-1 gap-2 p-4">
           {/* 셀렉트박스 :: 커스텀 드롭다운 필요*/}
-          <label htmlFor="daily-review"></label>
+          <label htmlFor="daily-review" className="sr-only">
+            일자별목록선택
+          </label>
           <select
             name="daily-review"
             id="daily-review"
