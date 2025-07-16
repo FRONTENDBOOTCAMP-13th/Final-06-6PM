@@ -1,4 +1,6 @@
-// 지도만들기 게시판 목록
-export default function FeedPage() {
-  return <h2>지도만들기 게시판</h2>;
+import { redirect } from "next/navigation";
+
+// 지도생성게시판
+export default function ReviewPage() {
+  redirect("/photomap/view");
 }
