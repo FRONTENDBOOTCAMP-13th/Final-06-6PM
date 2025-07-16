@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Input from "@/components/ui/input";
 import Textarea from "@/components/ui/textarea";
-import SearchInput from "@/components/ui/search-input";
+import SearchInput from "@/components/ui/searchInput";
 
 export default function ComponentPage() {
   const [inputValueSm, setInputValueSm] = useState("");
