@@ -20,7 +20,7 @@ export default function MypageBookmarkPage() {
       </div>
 
       <h3 className="my-4 font-semibold">전체 도시</h3>
-      <div className=" bg-white shadow-xl rounded-2xl overflow-hidden">
+      <div className=" bg-white rounded-2xl overflow-hidden">
         <SelectMenu2 />
 
         <div className="p-4 grid grid-cols-1 gap-2">
