@@ -1,6 +1,7 @@
 "use client";
 
 import ModalItem from "@/components/Modal";
+import ButtonRounded from "@/components/ui/btnRound";
 import DropdownItem from "@/components/ui/dropdownItem";
 import SearchInput from "@/components/ui/searchInput";
 import TagItem from "@/components/ui/tagItem";
@@ -53,7 +54,7 @@ export default function FeedPage() {
     <>
       {/* 검색바 */}
       <SearchInput
-        size="sm"
+        size="md"
         placeholder="가고 싶은 국내 여행지의 리뷰를 살펴보세요"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
@@ -63,7 +64,9 @@ export default function FeedPage() {
         <DropdownItem label="오래된순" />
         <div className="flex flex-wrap flex-start items-center gap-2 before:hidden xs:before:block before:content-['|'] before:ml-2 before:text-travel-gray400 ">
           <TagItem>전체</TagItem>
-          <TagItem variant="outline">전체리뷰</TagItem>
+          <ButtonRounded variant="outline" size="sm">
+            전체리뷰
+          </ButtonRounded>
           <TagItem variant="outline">일별리뷰</TagItem>
           <TagItem variant="outline">장소별리뷰</TagItem>
         </div>

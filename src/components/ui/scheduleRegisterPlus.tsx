@@ -1,7 +1,6 @@
-import { CalendarDays} from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import ScheduleRegister from "@/components/ui/scheduleRegister";
 import PlanList from "@/components/ui/planList";
-
 
 interface ScheduleRegisterPlusProps {
   day: number;
@@ -9,7 +8,11 @@ interface ScheduleRegisterPlusProps {
   daylist?: any[];
 }
 
-export default function ScheduleRegisterPlus({day, date, daylist}: ScheduleRegisterPlusProps) {
+export default function ScheduleRegisterPlus({
+  day,
+  date,
+  daylist,
+}: ScheduleRegisterPlusProps) {
   return (
     <div className="w-full rounded-2xl border border-travel-gray200 bg-white p-5">
       <div className="flex items-center gap-2 mb-3">
@@ -18,8 +21,11 @@ export default function ScheduleRegisterPlus({day, date, daylist}: ScheduleRegis
         <p className="text-14">({date})</p>
       </div>
 
-      {daylist?.length ? <PlanList planListData={daylist}/> : <ScheduleRegister />}
-
+      {daylist?.length ? (
+        <PlanList planListData={daylist} />
+      ) : (
+        <ScheduleRegister />
+      )}
     </div>
   );
 }

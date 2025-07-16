@@ -7,7 +7,7 @@ export default function ReviewSuccessPage() {
     <div className="flex flex-col items-center justify-center gap-4 overflow-hidden h-dvh">
       {/* 참고 : 현재 상위요소 레이아웃 border로 인한 success 페이지 세로스크롤 생김 */}
       <div className="font-medium text-center text-travel-text100">
-        <CircleCheckBig className="mx-auto w-14 h-14 text-travel-success100" />
+        <CircleCheckBig className="mx-auto w-14 h-14 text-travel-primary200" />
         <h2 className="my-2 font-semibold text-28 text-travel-primary200">
           기록 완료!
         </h2>

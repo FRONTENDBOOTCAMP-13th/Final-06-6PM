@@ -19,7 +19,7 @@ export default function LocationInfoCard({
   imageAlt = "성산일출봉 이미지",
 }: LocationInfoCardProps) {
   return (
-    <div className="w-full bg-travel-bg100 rounded-2xl shadow-lg">
+    <div className="w-full bg-white rounded-2xl shadow-lg">
       {/* 컨테이너 박스 */}
       <div className="p-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
         {/* 이미지 삽입 */}

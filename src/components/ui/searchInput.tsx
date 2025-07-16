@@ -30,12 +30,14 @@ export default function SearchInput({
 
   return (
     <>
-      <label htmlFor="search" className="sr-only">
-        search
-      </label>
       <div className="relative">
+        <label htmlFor="searchLocation" className="sr-only">
+          search
+        </label>
         <input
           type="search"
+          name="searchLocation"
+          id="searchLocation"
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -44,7 +46,7 @@ export default function SearchInput({
         <button
           type="submit"
           className={
-            "absolute right-3 top-1 /2 -translate-y-1/2 text-travel-text100 cursor-pointer"
+            "absolute right-3 top-1/2 -translate-y-1/2 text-travel-text100 cursor-pointer"
           }
         >
           <Search className={`${iconSize[size]} stroke-2`} />

@@ -85,7 +85,7 @@ export default function ViewItem({
               {userName}
             </p>
             <button
-              className="flex items-center text-12 text-travel-info100 cursor-pointer"
+              className="flex items-center text-14 text-travel-info100 cursor-pointer"
               onClick={openModal}
             >
               <MapPin className="w-4 h-4 mr-1" />
@@ -111,11 +111,11 @@ export default function ViewItem({
             />
           ))}
         </div>
-        <span className="text-12 text-gray-600">{date}</span>
+        <span className="text-14 text-gray-600">{date}</span>
       </div>
 
       {/* 리뷰내용 */}
-      <div className="space-y-2">
+      <div className="space-y-2 text-14">
         <div className="grid grid-cols-2 gap-3">
           <Image
             width={200}
@@ -135,7 +135,7 @@ export default function ViewItem({
         <div className={listTextClass}>{content}</div>
         <div className="flex flex-wrap gap-1">
           {tags.map((tag) => (
-            <span key={tag} className="text-12 text-travel-info100">
+            <span key={tag} className="text-travel-info100">
               #{tag}
             </span>
           ))}
@@ -143,7 +143,7 @@ export default function ViewItem({
       </div>
 
       {/* 리뷰관련요소 */}
-      <div className="flex justify-between items-center text-travel-gray600 text-12">
+      <div className="flex justify-between items-center text-travel-gray600 text-14">
         <div className="flex gap-4 items-center">
           <span className="flex items-center gap-1">
             <Eye className="w-4 h-4" />

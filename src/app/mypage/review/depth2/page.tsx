@@ -43,7 +43,7 @@ export default function MypageReviewPage() {
           <ChevronDown className="w-4 h-4 text-travel-gray600" />
         </div>
       </div>
-      <div className=" m-2 bg-white">
+      <div className=" m-2 bg-white rounded-2xl overflow-hidden">
         <div>
           <SelectMenu3 />
         </div>

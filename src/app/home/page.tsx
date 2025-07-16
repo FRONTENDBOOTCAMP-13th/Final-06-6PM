@@ -1,5 +1,5 @@
 "use client";
-import { CalendarDays, PencilLine, ThumbsUp, MapPin, Sun } from "lucide-react";
+import { CalendarDays, ThumbsUp, MapPin, Sun, NotebookPen } from "lucide-react";
 import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
 import LocationDrawer from "@/components/ui/drawerItem";
@@ -9,14 +9,14 @@ export default function HomePage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center bg-travel-bg200">
-      <div className="w-full max-w-xl px-6 pt-10 pb-6 relative">
+    <div className="min-h-screen w-full flex flex-col items-center bg-travel-bg100">
+      <div className="w-full px-4 pt-10 pb-6 relative">
         <div className="flex flex-col gap-1 mt-2">
-          <div className="flex items-center gap-1 text-14 text-travel-text100">
+          <div className="flex items-center gap-1 text-16 text-travel-text100">
             <MapPin className="w-4 h-4 mr-1" />
             서울시 마포구
           </div>
-          <div className="text-20 font-bold text-travel-text100 mt-1">
+          <div className="text-24 font-bold text-travel-text100">
             2025년 7월 10일 (수)
           </div>
         </div>
@@ -26,25 +26,25 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="w-full max-w-xl flex-1 px-6 py-7 bg-white rounded-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] mt-6 flex flex-col space-y-8">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-14 font-bold mb-2 text-travel-text100">
+      <div className="w-full flex-1 px-4 py-7 bg-white rounded-t-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] flex flex-col space-y-8">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-18 font-bold mb-2 text-travel-text100">
             <CalendarDays className="w-6 h-6" />
             예정된 여행
           </div>
           <DayItem name="제주도" period="2025.07.12 ~ 2025.07.15." dday="D-2" />
           <DayItem empty />
         </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-14 font-bold mb-2 text-travel-text100">
-            <PencilLine className="w-6 h-6" />
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-18 font-bold mb-2 text-travel-text100">
+            <NotebookPen className="w-6 h-6" />
             이전에 다녀온 여행을 기록해보세요!
           </div>
           <DayItem name="부산" period="2025.05.08 ~ 2025.05.12." />
           <DayItem empty />
         </div>
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-14 font-bold mb-2 text-travel-text100">
+          <div className="flex items-center gap-2 text-18 font-bold mb-2 text-travel-text100">
             <ThumbsUp className="w-5 h-5" />
             랜덤 여행지 추천
           </div>

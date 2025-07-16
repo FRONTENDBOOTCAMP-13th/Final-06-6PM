@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { X } from 'lucide-react';
+import { X } from "lucide-react";
 
 interface TagItemProps {
   variant?:
@@ -16,7 +16,12 @@ interface TagItemProps {
   closeIcon?: boolean;
 }
 
-export default function TagItem({children, variant = "primary", className = "", closeIcon = false}: TagItemProps) {
+export default function TagItem({
+  children,
+  variant = "primary",
+  className = "",
+  closeIcon = false,
+}: TagItemProps) {
   const btnType = {
     info: "bg-travel-info100 border border-travel-info200 text-white",
     warn: "bg-travel-warn100 border border-travel-warn200 text-white",
@@ -32,11 +37,11 @@ export default function TagItem({children, variant = "primary", className = "", 
   };
 
   return (
-    <div 
-      className={`${btnType[variant]} ${className} py-1 px-2.5 text-12 rounded-2xl cursor-pointer font-sans inline-flex items-center leading-none gap-1.5`}
+    <div
+      className={`${btnType[variant]} ${className} py-1.5 px-3 text-[13px] rounded-2xl cursor-pointer font-sans inline-flex items-center leading-none gap-1.5`}
     >
       {children}
-      {closeIcon && <X onClick={remove} className="w-3 h-3"/>}
+      {closeIcon && <X onClick={remove} className="w-3 h-3" />}
     </div>
   );
 }

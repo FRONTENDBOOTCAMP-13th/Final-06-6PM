@@ -9,7 +9,7 @@ export default function MenubarLayout({
 }>) {
   return (
     <div>
-      <div className="w-full relative my-5 px-4">
+      <div className="w-full relative py-5 px-4">
         <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer">
           <ChevronLeft />
         </button>
