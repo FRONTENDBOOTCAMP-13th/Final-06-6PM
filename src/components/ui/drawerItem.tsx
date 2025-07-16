@@ -1,9 +1,13 @@
-import Button from "@/components/ui/btn";
+// src/components/ui/drawerItem.tsx
+"use client";
+import Button from "@/components/ui/Btn";
 import { ChevronDown, MapPin } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
 
-interface LocationCardProps {
-  // 선택적 타입지정
+interface LocationDrawerProps {
+  open: boolean;
+  onClose: () => void;
   title?: string;
   location?: string;
   imageUrl?: string;
@@ -11,48 +15,69 @@ interface LocationCardProps {
   description?: string;
 }
 
-export default function LocationCard({
+export default function LocationDrawer({
+  open,
+  onClose,
   title = "무슨해변",
   location = "제주특별자치도 서귀포시",
   imageUrl = "/gwak.png",
   imageAlt = "무슨해변 - 빨간 등대와 바다 풍경",
-  description = "섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 어쩌구저쩌구",
-}: LocationCardProps) {
-  // 변수를 입력해주고 타입을 프롭스로 지정하고 안에있는 div들에게 반환
-  return (
-    <div className="w-full bg-white rounded-t-2xl shadow-lg p-6">
-      {/* 화살표 */}
-      <ChevronDown className="w-6 h-6 text-travel-gray600 mx-auto" />
+  description = "섬 전체가 하나의 거대한 관광자원인 제주도. ...",
+}: LocationDrawerProps) {
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
-      <div className="flex flex-col gap-4">
-        {/* 제목 */}
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[200] flex flex-col justify-end items-center">
+      <div
+        className="absolute inset-0 bg-black/80 transition-opacity"
+        onClick={onClose}
+      />
+
+      <div
+        className={`
+          relative w-full max-w-xl mx-auto bg-white rounded-t-2xl shadow-xl
+          p-6 pb-8 flex flex-col gap-4
+          animate-drawer-slideup
+        `}
+      >
+        <button
+          className="flex justify-center w-full cursor-pointer mb-2"
+          onClick={onClose}
+          aria-label="아래로 내리기"
+        >
+          <ChevronDown className="w-6 h-6 text-travel-gray600" />
+        </button>
+
         <div>
           <h2 className="text-24 font-bold text-travel-text200 mb-1.5">
             {title}
           </h2>
-          <div className="flex items-center text-travel-gray600">
+          <div className="flex items-center text-travel-gray600 mb-2">
             <MapPin className="w-4 h-4 mr-1" />
             <span className="text-14">{location}</span>
           </div>
+          <Image
+            src={imageUrl}
+            alt={imageAlt}
+            className="w-full h-[180px] object-cover rounded-lg bg-travel-gray200"
+          />
+          <p className="text-14 text-travel-text100 line-clamp-4 mt-3">
+            {description}
+          </p>
         </div>
-        {/* 이미지 */}
-        <Image
-          width={200}
-          height={190}
-          src={imageUrl}
-          alt={imageAlt}
-          className="max-h-[190px] aspect-[5/3] w-full object-cover rounded-lg overflow-hidden bg-travel-gray200" // 이미지 못불러올시 회색
-        />
-        {/* 설명 */}
-        <p className="text-14 text-travel-text100 line-clamp-4">
-          {description}
-        </p>
-      </div>
 
-      {/* 버튼 */}
-      <Button size="lg" variant="primary" className="w-full mt-7">
-        북마크 저장하기
-      </Button>
+        <Button size="lg" variant="primary" className="w-full mt-4">
+          북마크 저장하기
+        </Button>
+      </div>
     </div>
   );
 }
