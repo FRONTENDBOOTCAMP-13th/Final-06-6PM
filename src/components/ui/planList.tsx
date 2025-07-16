@@ -3,11 +3,8 @@ import PlanListItem, { PlanListItemProps } from "./planListItem";
 import ButtonRounded from "./btnRound";
 import Image from "next/image";
 
-type PlanListDataProps = {
-  planListData: PlanListItemProps[];
-};
 
-export default function PlanList({ planListData }: PlanListDataProps) {
+export default function PlanList() {
   const planListDataArray: PlanListItemProps[] = [
     { id: 1, title: "성산일출봉", tag: "관광지" },
     { id: 2, title: "성산일출봉", tag: "관광지" },
