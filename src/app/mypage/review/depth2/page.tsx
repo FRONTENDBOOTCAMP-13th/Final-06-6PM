@@ -11,7 +11,7 @@ export default function MypageReviewPage() {
       <h2>마이페이지/리뷰</h2>
 
       {/* 셀렉트박스 :: 커스텀 드롭다운 필요*/}
-      <div className="relative">
+      <div className="relative mb-2">
         <label htmlFor="daily-review"></label>
         <select
           name="daily-review"
@@ -43,7 +43,7 @@ export default function MypageReviewPage() {
           <ChevronDown className="w-4 h-4 text-travel-gray600" />
         </div>
       </div>
-      <div className=" m-2 bg-white rounded-2xl overflow-hidden">
+      <div className="bg-white rounded-2xl overflow-hidden">
         <div>
           <SelectMenu3 />
         </div>
