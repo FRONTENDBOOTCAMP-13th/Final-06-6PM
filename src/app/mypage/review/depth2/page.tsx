@@ -12,11 +12,11 @@ export default function MypageReviewPage() {
       <div className="flex items-center gap-2 m-4">
         <DropdownItem label="제주도 여행" />
       </div>
-      <div className=" m-2 bg-white text-center">
+      <div className=" m-2 bg-white">
         <div>
           <SelectMenu3 />
         </div>
-        <div className="m-4 grid grid-cols-1 gap-2 shadow-xl rounded-2xl">
+        <div className="m-4 grid grid-cols-1 gap-2 shadow-[0_0_10px_rgba(0,0,0,0.3)] rounded-2xl">
           <ViewItem
             userName={"닉네임"}
             userImgURL={"/gwak.png"}
@@ -31,7 +31,7 @@ export default function MypageReviewPage() {
             date={"2025-07-15"}
           />
         </div>
-        <div className="m-4 grid grid-cols-1 gap-2 shadow-xl rounded-2xl">
+        <div className="m-4 grid grid-cols-1 gap-2 shadow-[0_0_10px_rgba(0,0,0,0.3)] rounded-2xl">
           <ViewItem
             userName={"닉네임"}
             userImgURL={"/gwak.png"}
@@ -46,7 +46,7 @@ export default function MypageReviewPage() {
             date={"2025-07-15"}
           />
         </div>
-        <div className="m-4 grid grid-cols-1 gap-2 shadow-xl rounded-2xl">
+        <div className="m-4 grid grid-cols-1 gap-2 shadow-[0_0_10px_rgba(0,0,0,0.3)] rounded-2xl">
           <ViewItem
             userName={"닉네임"}
             userImgURL={"/gwak.png"}

@@ -23,7 +23,7 @@ export default function MypageBookmarkPage() {
       <div className=" bg-white shadow-xl rounded-2xl overflow-hidden">
         <SelectMenu2 />
 
-        <div className="p-4 grid grid-cols-1 gap-2">
+        <div className="m-4 grid grid-cols-1 gap-2 shadow-[0_0_10px_rgba(0,0,0,0.3)] rounded-2xl">
           <ViewItem
             userName={"닉네임"}
             userImgURL={"/gwak.png"}
