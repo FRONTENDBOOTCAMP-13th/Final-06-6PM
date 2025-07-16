@@ -30,9 +30,9 @@ const dummyList = [
 
 const listData = (
   <>
-    {dummyList.map((item, idx) => (
+    {dummyList.map((item) => (
       <li
-        key={idx}
+        key={item.days}
         onClick={() => {}}
         className="space-y-1 px-4 py-2 hover:bg-travel-success100/20 cursor-default"
       >
@@ -55,7 +55,7 @@ export default function ReviewDetailPage() {
   };
 
   const [selectOpen, setSelectOpen] = useState(false);
-  const [selectList, setSelectList] = useState("일정을 선택하세요");
+  const [selectList, setSelectList] = useState(dummyList[0]);
 
   return (
     <>
@@ -64,12 +64,18 @@ export default function ReviewDetailPage() {
 
         <div className="grid grid-cols-1 gap-2 p-4">
           {/* 셀렉트박스 커스텀 */}
-          <div className="text-travel-gray700 text-14 relative">
+          <div className="text-travel-gray700 text-12 relative">
             <div
               onClick={() => setSelectOpen((prev) => !prev)}
               className="bg-white text-travel-text100 flex items-center justify-between py-2 px-4 border rounded-lg border-travel-gray400"
             >
-              <p>{selectList}</p>
+              <div>
+                <p className="text-16 font-medium flex items-center gap-1">
+                  <CalendarDays />
+                  <span>{selectList.days}</span>
+                </p>
+                <p>방문 장소: {selectList.places}</p>
+              </div>
               <ChevronDown
                 className={`duration-300 transition-transform ${
                   selectOpen ? "rotate-180" : ""
@@ -77,7 +83,7 @@ export default function ReviewDetailPage() {
               />
             </div>
             {selectOpen && (
-              <ul className="border rounded-lg border-travel-gray400 bg-white absolute top-[42px] left-0 w-full shadow-xl">
+              <ul className="border rounded-lg border-travel-gray400 bg-white absolute top-[59px] left-0 w-full shadow-xl">
                 {listData}
               </ul>
             )}
