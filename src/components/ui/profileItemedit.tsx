@@ -12,7 +12,7 @@ interface ProfileCardProps {
   totalLikes?: number;
 }
 
-export default function ProfileCard({
+export default function ProfileCardEdit({
   profileImage = "/gwak.png",
   userName = "사용자",
   description = "새로운 곳을 발견하는 것을 좋아하는 자유로운 여행자 입니다. 어디로든 떠나요~",

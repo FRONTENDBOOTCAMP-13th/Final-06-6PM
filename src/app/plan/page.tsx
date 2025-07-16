@@ -1,6 +1,6 @@
 "use client";
 
-import SearchInput from "@/components/ui/search-input";
+import SearchInput from "@/components/ui/searchInput";
 import { useState } from "react";
 import Image from "next/image";
 

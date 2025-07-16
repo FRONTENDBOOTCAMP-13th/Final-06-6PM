@@ -43,7 +43,9 @@ export default function SearchInput({
         />
         <button
           type="submit"
-          className={`absolute right-3 top-1/2 -translate-y-1/2 text-travel-text100 cursor-pointer`}
+          className={
+            "absolute right-3 top-1 /2 -translate-y-1/2 text-travel-text100 cursor-pointer"
+          }
         >
           <Search className={`${iconSize[size]} stroke-2`} />
         </button>

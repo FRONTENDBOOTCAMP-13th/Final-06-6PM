@@ -1,16 +1,16 @@
 "use client";
 
 import DayItem from "@/components/ui/dayItem";
-import ProfileCard from "@/components/ui/profileItemedit";
 import SelectMenu2 from "@/components/ui/selectMenu2";
 import BookmarkItem from "@/components/ui/bookmarkItem";
+import ProfileCardEdit from "@/components/ui/profileItemedit";
 
 export default function MypagePage() {
   return (
     <>
       <div className="flex flex-col gap-5 items-center">
         <div className="w-full">
-          <ProfileCard userName="여행덕후"></ProfileCard>
+          <ProfileCardEdit userName="여행덕후"></ProfileCardEdit>
         </div>
         <div className="w-full flex flex-col gap-5">
           <BookmarkItem type="bookmark" count={2} />

@@ -2,7 +2,7 @@
 
 import ModalItem from "@/components/Modal";
 import DropdownItem from "@/components/ui/dropdownItem";
-import SearchInput from "@/components/ui/search-input";
+import SearchInput from "@/components/ui/searchInput";
 import TagItem from "@/components/ui/tagItem";
 import ViewItem, { ViewItemProps } from "@/components/ui/viewItem";
 import { useState } from "react";
