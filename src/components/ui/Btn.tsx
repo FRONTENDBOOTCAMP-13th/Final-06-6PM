@@ -31,7 +31,7 @@ export default function Button({
   const btnSize = {
     sm: "py-1 px-2.5 text-12 rounded-sm min-w-10",
     md: "py-2 px-3 text-14 rounded-md min-w-12",
-    lg: "py-2 px-5 text-16 rounded-lg min-w-14",
+    lg: "py-2.5 px-5 text-16 rounded-lg min-w-14",
   };
 
   return (
