@@ -11,7 +11,7 @@ export default function FeedViewPage() {
 
   return (
     <>
-      <div className="px-2 relative">
+      <div className="p-4 relative bg-white rounded-2xl">
         {/* 내용 */}
         <div className="flex flex-col gap-8">
           <ViewItem

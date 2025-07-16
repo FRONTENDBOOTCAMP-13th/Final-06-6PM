@@ -14,7 +14,7 @@ export default function PlanList({ planListData }: PlanListDataProps) {
   ];
   return (
     // 나중에 지도 API 연동 예정
-    <div className="w-full bg-travel-bg100 rounded-2xl shadow-lg overflow-hidden space-y-4">
+    <div className="w-full rounded-2xl not-only-of-type:overflow-hidden space-y-4">
       <div className="w-full bg-travel-gray200 rounded-2xl">
         <Image
           width={400}

@@ -4,6 +4,7 @@ import ProfileCard from "@/components/ui/profileItem";
 import SelectMenu2 from "@/components/ui/selectMenu2";
 import BookmarkItem from "@/components/ui/bookmarkItem";
 import DayItem from "@/components/ui/dayItem";
+import Link from "next/link";
 
 export default function MypagePage() {
   return (
@@ -13,8 +14,12 @@ export default function MypagePage() {
           <ProfileCard userName="여행덕후" />
         </div>
         <div className="w-full flex flex-col gap-5">
-          <BookmarkItem type="bookmark" count={2} />
-          <BookmarkItem type="review" count={4} />
+          <Link href="/mypage/bookmark">
+            <BookmarkItem type="bookmark" count={2} />
+          </Link>
+          <Link href="/mypage/review">
+            <BookmarkItem type="review" count={4} />
+          </Link>
         </div>
       </div>
       <div className="bg-white shadow-xl rounded-2xl overflow-hidden mt-5">

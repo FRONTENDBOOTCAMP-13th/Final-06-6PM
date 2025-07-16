@@ -7,14 +7,14 @@
   --breakpoint-xs: 26.875rem;
 
   /* 기본색상 */
-  --color-travel-primary100: #1b4b37;
-  --color-travel-primary200: #163d2e;
-  --color-travel-primary-light100: #5fa185;
-  --color-travel-secondary100: #388a68;
-  --color-travel-secondary200: #2d7052;
+  --color-travel-primary100: #287fd3;
+  --color-travel-primary200: #0a69c4;
+  --color-travel-primary-light100: #4597e7;
+  --color-travel-secondary100: #57a2ea;
+  --color-travel-secondary200: #3284d4;
 
-  --color-travel-bg100: #f9fdfb;
-  --color-travel-bg200: #eef9ee;
+  --color-travel-bg100: #deefff;
+  --color-travel-bg200: #b5dbff;
   --color-travel-text100: #1e1e1e;
   --color-travel-text200: #000000;
 
