@@ -21,6 +21,19 @@ export default function ReviewDetailPage() {
         <SelectMenu3 />
 
         <div className="grid grid-cols-1 gap-2 p-4">
+          {/* 셀렉트박스 :: 커스텀 드롭다운 필요*/}
+          <label htmlFor="daily-review"></label>
+          <select
+            name="daily-review"
+            id="daily-review"
+            className="border border-travel-gray400 py-2 px-2 rounded-lg"
+          >
+            <option value="">1일차 (2025.07.12)</option>
+            <option value="">2일차 (2025.07.12)</option>
+            <option value="">3일차 (2025.07.12)</option>
+            <option value="">4일차 (2025.07.12)</option>
+          </select>
+
           {/* 이번 여행은 어떠셨나요 */}
           <div className="flex flex-col items-center gap-1">
             <h3 className="font-semibold text-18">이번 여행은 어떠셨나요?</h3>
