@@ -13,7 +13,7 @@ export default function NavbarLayout({
         <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer">
           <ChevronLeft />
         </button>
-        <p className="text-center">기록하기</p>
+        <p className="text-center">마이페이지</p>
       </div>
       <div className="relative w-full px-4 pb-25">{children}</div>
       <Navbar />
