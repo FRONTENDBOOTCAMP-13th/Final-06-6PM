@@ -11,7 +11,7 @@ import {
   Plane,
   Star,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const dummyList = [
   {
@@ -31,13 +31,14 @@ const dummyList = [
 // 여행기록_세부사항선택하기
 export default function ReviewDetailPage() {
   const [isStarToggled, setIsStarToggled] = useState(false);
+  const [selectOpen, setSelectOpen] = useState(false);
+  const [selectList, setSelectList] = useState(dummyList[0]);
+
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const handleStarClick = () => {
     setIsStarToggled(!isStarToggled);
   };
-
-  const [selectOpen, setSelectOpen] = useState(false);
-  const [selectList, setSelectList] = useState(dummyList[0]);
 
   const listData = (
     <>
@@ -60,12 +61,26 @@ export default function ReviewDetailPage() {
     </>
   );
 
+  // select 바깥요소 클릭 시 셀렉창 닫기
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(e.target as Node)) {
+        setSelectOpen(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClick);
+    return () => {
+      document.body.removeEventListener("click", handleClick);
+    };
+  }, []);
+
   return (
     <>
       <div className="mt-5 overflow-hidden bg-white shadow-xl rounded-2xl">
         <SelectMenu3 />
 
-        <div className="grid grid-cols-1 gap-2 p-4">
+        <div className="grid grid-cols-1 gap-2 p-4" ref={selectRef}>
           {/* 셀렉트박스 커스텀 */}
           <div className="text-travel-gray700 text-12 relative">
             <div
