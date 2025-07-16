@@ -8,15 +8,15 @@ export default function NavbarLayout({
 }>) {
   return (
     <div>
-      <div className="w-full relative my-5 px-4">
-        {/* <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer">
+      <div className="relative w-full px-4 my-5">
+        {/* <button className="absolute -translate-y-1/2 cursor-pointer left-4 top-1/2">
           <ChevronLeft />
         </button> */}
         <p className="text-center">기록하기</p>
       </div>
       <div className="relative w-full px-4 pb-25">
         <div>
-          <h2 className="text-28 text-travel-primary200 font-semibold">
+          <h2 className="font-semibold text-28 text-travel-primary200">
             여행일정
           </h2>
           <p className="text-16 text-travel-gray700">

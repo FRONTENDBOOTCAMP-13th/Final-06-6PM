@@ -1,8 +1,8 @@
 import DayItem from "@/components/ui/dayItem";
 import DropdownItem from "@/components/ui/dropdownItem";
 
-// 자유게시판 목록
-export default function FreeAddPage() {
+// 여행기록_일정선택하기
+export default function ReviewPlanPage() {
   return (
     <>
       <div className="flex flex-row-reverse mt-3 mb-4">
