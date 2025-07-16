@@ -2,7 +2,7 @@ import React from "react";
 import DropdownItem from "@/components/ui/dropdownItem";
 import TagItem from "@/components/ui/tagItem";
 import SelectMenu2 from "@/components/ui/selectMenu2";
-import LocationInfoCard from "@/components/ui/placePlus";
+import ViewItem from "@/components/ui/viewItem";
 
 // 마이페이지/북마크
 export default function MypageBookmarkPage() {
@@ -24,14 +24,19 @@ export default function MypageBookmarkPage() {
         <SelectMenu2 />
 
         <div className="p-4 grid grid-cols-1 gap-2">
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
+          <ViewItem
+            userName={"닉네임"}
+            userImgURL={"/gwak.png"}
+            location={"제주도"}
+            content={
+              "내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 "
+            }
+            tags={["맛집", "#좋아요", "몰라"]}
+            views={200}
+            likes={100}
+            comments={100}
+            date={"2025-07-15"}
+          />
         </div>
       </div>
     </>

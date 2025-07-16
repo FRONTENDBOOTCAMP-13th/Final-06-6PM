@@ -59,7 +59,7 @@ export default function ViewItem({
 
   // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
   const pathname = usePathname();
-  const isList = pathname === "/feed";
+  const isList = pathname !== "/feed";
   const listClass = `relative w-full space-y-3 ${
     isList ? "rounded-xl bg-white shadow p-4" : ""
   }`;

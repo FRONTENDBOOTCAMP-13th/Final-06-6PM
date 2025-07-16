@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-4 bg-travel-primary-light100 max-h-21">
+    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-4 bg-travel-primary-light100 max-h-21 z-20">
       <div className="grid items-center grid-cols-5 gap-3 mx-auto w-fit">
         <Link
-          href="/"
+          href="/home"
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <Home />

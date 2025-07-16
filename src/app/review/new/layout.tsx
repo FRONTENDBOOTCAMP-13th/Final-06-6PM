@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import "../../../styles/globals.css";
-import { ChevronLeft } from "lucide-react";
 
 export default function NavbarLayout({
   children,
