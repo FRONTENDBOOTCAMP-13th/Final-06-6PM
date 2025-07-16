@@ -21,7 +21,7 @@ export default function ProfileCard({
 }: ProfileCardProps) {
   return (
     <div className="relative bg-white rounded-2xl py-8 px-5 text-center font-sans flex flex-col items-center gap-4 shadow">
-      <div className="absolute top-8 right-5 text-16 cursor-pointer text-travel-gray700">
+      <div className="absolute top-4 right-4 text-16 cursor-pointer text-travel-gray700">
         <Settings></Settings>
       </div>
       <div className="w-25 h-25">
