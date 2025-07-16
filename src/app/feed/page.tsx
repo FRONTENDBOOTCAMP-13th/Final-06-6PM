@@ -43,6 +43,17 @@ const dummyData: ViewItemProps[] = [
     comments: 56,
     date: "2025-07-13",
   },
+  {
+    userName: "듀..가나디",
+    userImgURL: "/images/user4.png",
+    location: "서울",
+    content: "4번 내용입니다.",
+    tags: ["맛집", "카페", "힐링"],
+    views: 129,
+    likes: 40,
+    comments: 76,
+    date: "2025-07-14",
+  },
 ];
 
 // 살펴보기 게시판 목록
