@@ -1,7 +1,7 @@
 import React from "react";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
-import Button from "@/components/ui/Btn";
+import Button from "@/components/ui/btn";
 
 interface RandomItemProps {
   image: string;

@@ -1,4 +1,4 @@
-import DayItem from "@/components/ui/day-item";
+import DayItem from "@/components/ui/dayItem";
 
 export default function ComponentPage() {
   return (

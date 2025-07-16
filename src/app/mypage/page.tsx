@@ -1,5 +1,5 @@
+import DayItem from "@/components/ui/dayItem";
 import ProfileCard from "@/components/ui/profileItem";
-import DayItem from "@/components/ui/day-item";
 import SelectMenu2 from "@/components/ui/selectMenu2";
 
 export default function MypagePage() {
