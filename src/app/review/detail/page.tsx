@@ -28,24 +28,6 @@ const dummyList = [
   },
 ];
 
-const listData = (
-  <>
-    {dummyList.map((item) => (
-      <li
-        key={item.days}
-        onClick={() => {}}
-        className="space-y-1 px-4 py-2 hover:bg-travel-success100/20 cursor-default"
-      >
-        <p className="text-16 font-medium flex items-center gap-1">
-          <CalendarDays />
-          <span>{item.days}</span>
-        </p>
-        <p>방문 장소: {item.places}</p>
-      </li>
-    ))}
-  </>
-);
-
 // 여행기록_세부사항선택하기
 export default function ReviewDetailPage() {
   const [isStarToggled, setIsStarToggled] = useState(false);
@@ -56,6 +38,27 @@ export default function ReviewDetailPage() {
 
   const [selectOpen, setSelectOpen] = useState(false);
   const [selectList, setSelectList] = useState(dummyList[0]);
+
+  const listData = (
+    <>
+      {dummyList.map((item) => (
+        <li
+          key={item.days}
+          onClick={() => {
+            setSelectList(item);
+            setSelectOpen((prev) => !prev);
+          }}
+          className="space-y-1 px-4 py-2 hover:bg-travel-info100/20 cursor-default"
+        >
+          <p className="text-16 font-medium flex items-center gap-1">
+            <CalendarDays />
+            <span>{item.days}</span>
+          </p>
+          <p>방문 장소: {item.places}</p>
+        </li>
+      ))}
+    </>
+  );
 
   return (
     <>
@@ -76,11 +79,7 @@ export default function ReviewDetailPage() {
                 </p>
                 <p>방문 장소: {selectList.places}</p>
               </div>
-              <ChevronDown
-                className={`duration-300 transition-transform ${
-                  selectOpen ? "rotate-180" : ""
-                }`}
-              />
+              <ChevronDown />
             </div>
             {selectOpen && (
               <ul className="border rounded-lg border-travel-gray400 bg-white absolute top-[59px] left-0 w-full shadow-xl">
