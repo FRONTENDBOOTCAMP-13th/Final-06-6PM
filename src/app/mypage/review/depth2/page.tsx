@@ -2,6 +2,7 @@ import DropdownItem from "@/components/ui/dropdownItem";
 import Input from "@/components/ui/input";
 import SelectMenu3 from "@/components/ui/selectMenu3";
 import ViewItem from "@/components/ui/viewItem";
+import { ChevronDown } from "lucide-react";
 
 // 마이페이지/리뷰
 export default function MypageReviewPage() {
@@ -9,8 +10,38 @@ export default function MypageReviewPage() {
     <>
       <h2>마이페이지/리뷰</h2>
 
-      <div className="flex items-center gap-2 m-4">
-        <DropdownItem label="제주도 여행" />
+      {/* 셀렉트박스 :: 커스텀 드롭다운 필요*/}
+      <div className="relative">
+        <label htmlFor="daily-review"></label>
+        <select
+          name="daily-review"
+          id="daily-review"
+          className="w-full border border-travel-gray400 py-3 px-4 rounded-lg 
+               bg-white text-travel-text100 text-14
+               focus:outline-none focus:border-travel-primary100 focus:ring-2 focus:ring-travel-primary100
+               hover:border-travel-primary100
+               appearance-none cursor-pointer"
+        >
+          <option value="날짜선택" className="text-travel-gray500">
+            날짜를 선택하세요
+          </option>
+          <option value="day1" className="py-2">
+            1일차 (2025.07.12)
+          </option>
+          <option value="day2" className="py-2">
+            2일차 (2025.07.13)
+          </option>
+          <option value="day3" className="py-2">
+            3일차 (2025.07.14)
+          </option>
+          <option value="day4" className="py-2">
+            4일차 (2025.07.15)
+          </option>
+        </select>
+
+        <div className="absolute top-4 right-0 flex items-center px-3 pointer-events-none">
+          <ChevronDown className="w-4 h-4 text-travel-gray600" />
+        </div>
       </div>
       <div className=" m-2 bg-white">
         <div>
