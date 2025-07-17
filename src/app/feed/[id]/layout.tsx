@@ -18,7 +18,7 @@ export default function RootLayout({
             type="text"
             placeholder="댓글을 입력해주세요."
             id="feedMessage"
-            className="w-full py-2 pl-4 pr-10 rounded-full border border-travel-info100 bg-white text-travel-text100 placeholder-travel-gray500  focus:outline-travel-info200 focus:bg-blue-100 focus:text-travel-info200 transition duration-200 text-14"
+            className="w-full py-2 pl-4 pr-10 rounded-full border border-travel-info100 bg-white text-travel-text100 placeholder-travel-gray500  focus:outline-travel-info200 focus:bg-[#f4faff] focus:text-travel-info200 transition duration-200 text-14"
           />
           <button
             type="submit"

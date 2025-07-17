@@ -11,7 +11,7 @@ import {
   Plane,
   Star,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const dummyList = [
   {
@@ -28,41 +28,59 @@ const dummyList = [
   },
 ];
 
-const listData = (
-  <>
-    {dummyList.map((item) => (
-      <li
-        key={item.days}
-        onClick={() => {}}
-        className="space-y-1 px-4 py-2 hover:bg-travel-success100/20 cursor-default"
-      >
-        <p className="text-16 font-medium flex items-center gap-1">
-          <CalendarDays />
-          <span>{item.days}</span>
-        </p>
-        <p>방문 장소: {item.places}</p>
-      </li>
-    ))}
-  </>
-);
-
 // 여행기록_세부사항선택하기
 export default function ReviewDetailPage() {
   const [isStarToggled, setIsStarToggled] = useState(false);
+  const [selectOpen, setSelectOpen] = useState(false);
+  const [selectList, setSelectList] = useState(dummyList[0]);
+
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const handleStarClick = () => {
     setIsStarToggled(!isStarToggled);
   };
 
-  const [selectOpen, setSelectOpen] = useState(false);
-  const [selectList, setSelectList] = useState(dummyList[0]);
+  const listData = (
+    <>
+      {dummyList.map((item) => (
+        <li
+          key={item.days}
+          onClick={() => {
+            setSelectList(item);
+            setSelectOpen((prev) => !prev);
+          }}
+          className="space-y-1 px-4 py-2 hover:bg-travel-info100/20 cursor-default"
+        >
+          <p className="text-16 font-medium flex items-center gap-1">
+            <CalendarDays />
+            <span>{item.days}</span>
+          </p>
+          <p>방문 장소: {item.places}</p>
+        </li>
+      ))}
+    </>
+  );
+
+  // select 바깥요소 클릭 시 셀렉창 닫기
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(e.target as Node)) {
+        setSelectOpen(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClick);
+    return () => {
+      document.body.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <>
       <div className="mt-5 overflow-hidden bg-white shadow-xl rounded-2xl">
         <SelectMenu3 />
 
-        <div className="grid grid-cols-1 gap-2 p-4">
+        <div className="grid grid-cols-1 gap-2 p-4" ref={selectRef}>
           {/* 셀렉트박스 커스텀 */}
           <div className="text-travel-gray700 text-12 relative">
             <div
@@ -76,11 +94,7 @@ export default function ReviewDetailPage() {
                 </p>
                 <p>방문 장소: {selectList.places}</p>
               </div>
-              <ChevronDown
-                className={`duration-300 transition-transform ${
-                  selectOpen ? "rotate-180" : ""
-                }`}
-              />
+              <ChevronDown />
             </div>
             {selectOpen && (
               <ul className="border rounded-lg border-travel-gray400 bg-white absolute top-[59px] left-0 w-full shadow-xl">

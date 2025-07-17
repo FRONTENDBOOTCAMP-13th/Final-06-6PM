@@ -43,6 +43,17 @@ const dummyData: ViewItemProps[] = [
     comments: 56,
     date: "2025-07-13",
   },
+  {
+    userName: "듀..가나디",
+    userImgURL: "/images/user4.png",
+    location: "서울",
+    content: "4번 내용입니다.",
+    tags: ["맛집", "카페", "힐링"],
+    views: 129,
+    likes: 40,
+    comments: 76,
+    date: "2025-07-14",
+  },
 ];
 
 // 살펴보기 게시판 목록
@@ -60,9 +71,9 @@ export default function FeedPage() {
         onChange={(e) => setSearchValue(e.target.value)}
       />
       {/* 셀렉트창 및 필터 */}
-      <div className="flex flex-col-reverse xs:flex-row items-start xs:items-center gap-y-1 mt-2 px-0.5">
+      <div className="flex flex-col-reverse xs:flex-row items-end xs:items-center gap-y-3 my-3 px-0.5">
         <DropdownItem label="오래된순" />
-        <div className="flex flex-wrap flex-start items-center gap-2 before:hidden xs:before:block before:content-['|'] before:ml-2 before:text-travel-gray400 ">
+        <div className="flex w-full xs:w-fit flex-start items-center gap-0.5 before:hidden xs:before:block before:content-['|'] before:mx-1 before:text-travel-gray400 ">
           <TagItem>전체</TagItem>
           <ButtonRounded variant="outline" size="sm">
             전체리뷰
@@ -72,7 +83,7 @@ export default function FeedPage() {
         </div>
       </div>
       {/* 내용 */}
-      <div className="flex flex-col gap-6 mt-7">
+      <div className="flex flex-col gap-6">
         {dummyData.map((item, index) => (
           <ViewItem key={index} {...item} onClick={() => setSelectItem(true)} />
         ))}

@@ -11,7 +11,7 @@ export default function FeedViewPage() {
 
   return (
     <>
-      <div className="p-4 relative bg-white rounded-2xl">
+      <div className="py-6 px-4 relative bg-white rounded-2xl">
         {/* 내용 */}
         <div className="flex flex-col gap-8">
           <ViewItem
@@ -37,6 +37,14 @@ export default function FeedViewPage() {
             "여기 진짜 힐링 그 자체네요 사진만 봐도 여유로워요. 혹시 여긴 어떻게 가면 되나요? 대중교통 가능한가요?"
           }
         />{" "}
+        <hr className="my-6 text-travel-gray200" />
+        <CommentItem
+          author={"오둥이"}
+          date={"2024-07-18"}
+          content={
+            "여기 진짜 힐링 그 자체네요 사진만 봐도 여유로워요. 혹시 여긴 어떻게 가면 되나요? 대중교통 가능한가요?"
+          }
+        />
         <hr className="my-6 text-travel-gray200" />
         <CommentItem
           author={"오둥이"}
