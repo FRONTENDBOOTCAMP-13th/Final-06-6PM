@@ -1,23 +1,25 @@
+import TagItem from "@/components/ui/tagItem";
+
 export type PlanListItemProps = {
   id?: number;
   number?: number;
-  title: string;
-  tag: string;
+  place: string;
+  tag?: string;
 };
 
-function PlanListItem({ number, title, tag }: PlanListItemProps) {
+function PlanListItem({ number, place, tag }: PlanListItemProps) {
   return (
     <div className="flex items-center gap-2 text-travel-text100">
       {/* 숫자 */}
-      <div className="w-6 h-6 bg-travel-gray200  rounded-full flex items-center justify-center text-14 font-bold">
+      <div className="text-center rounded-full size-6 bg-travel-gray200 text-14">
         {number}
       </div>
 
       {/* 관광지명과 태그 */}
-      <span className="text-16 font-medium">{title}</span>
-      <span className="text-10 text-white bg-travel-secondary200 px-2 py-1 rounded-4xl">
-        {tag}
-      </span>
+      <div className="font-medium leading-none contents">
+        <span>{place}</span>
+        <TagItem variant="primary">{tag}</TagItem>
+      </div>
     </div>
   );
 }

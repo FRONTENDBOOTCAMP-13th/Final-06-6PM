@@ -26,15 +26,13 @@ export default function BookmarkItem({ type, count = 0 }: BookmarkItemProps) {
   const { icon, label } = itemInfo(type);
 
   return (
-    <div className="flex items-center justify-between w-full rounded-lg bg-white shadow py-7 px-6">
-      <div className="flex items-center gap-2 min-w-0">
+    <div className="flex items-center justify-between w-full px-6 bg-white rounded-lg shadow py-7">
+      <div className="flex items-center min-w-0 gap-2">
         {icon}
-        <span className="text-14 text-travel-text100 font-medium truncate">
-          {label}
-        </span>
+        <span className="font-medium text-16 text-travel-text100">{label}</span>
       </div>
       {count > 0 && (
-        <span className="text-travel-fail100 font-bold text-16 ml-2">
+        <span className="ml-2 font-bold text-travel-fail100 text-16">
           {count}
         </span>
       )}
