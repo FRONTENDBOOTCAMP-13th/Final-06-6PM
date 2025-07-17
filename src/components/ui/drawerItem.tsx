@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/Btn";
+import Button from "@/components/ui/btn";
 import { ChevronDown, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";

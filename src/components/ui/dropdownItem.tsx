@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ChevronDown } from "lucide-react";
 import TagItem from "@/components/ui/tagItem";

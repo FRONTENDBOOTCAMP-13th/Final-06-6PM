@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/ui/Btn";
+import Button from "@/components/ui/btn";
 import { ChevronDown } from "lucide-react";
 
 export default function drawerBtn() {
