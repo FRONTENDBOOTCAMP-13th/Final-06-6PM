@@ -1,0 +1,16 @@
+meta {
+  name: 여행후기 목록조회-전체
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{url}}/posts?type=reviewAll&custom={"parent_id":2}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  type: reviewAll
+  custom: {"parent_id":2}
+}

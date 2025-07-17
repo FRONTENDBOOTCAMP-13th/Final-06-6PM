@@ -1,0 +1,15 @@
+meta {
+  name: 여행계획 목록상세조회
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{url}}/posts/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 
+}
