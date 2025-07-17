@@ -9,26 +9,24 @@ export default function HomePage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center bg-travel-bg100">
-      <div className="w-full px-4 pt-10 pb-6 relative">
-        <div className="flex flex-col gap-1 mt-2">
-          <div className="flex items-center gap-1 text-16 text-travel-text100">
+    <div className="min-h-screen w-full flex flex-col items-center bg-[url(/images/bg-default.png)] bg-center bg-cover bg-no-repeat">
+      <div className="relative w-full px-4 pt-10 pb-6 text-white">
+        <div className="flex flex-col gap-1 mt-2 ">
+          <div className="flex items-center gap-1 text-16">
             <MapPin className="w-4 h-4 mr-1" />
             서울시 마포구
           </div>
-          <div className="text-24 font-bold text-travel-text100">
-            2025년 7월 10일 (수)
-          </div>
+          <div className="font-bold text-24">2025년 7월 10일 (수)</div>
         </div>
-        <div className="absolute right-6 top-6 flex items-center gap-1 text-14 text-travel-text100">
+        <div className="absolute flex items-center gap-1 right-6 top-6 text-14">
           <Sun className="w-4 h-4 mr-1" />
           맑음 28°C
         </div>
       </div>
 
-      <div className="w-full flex-1 px-4 py-7 bg-white rounded-t-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] flex flex-col space-y-8">
+      <div className="w-full flex-1 px-4 py-7 bg-white/65 rounded-t-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] flex flex-col space-y-8">
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-18 font-bold mb-2 text-travel-text100">
+          <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
             <CalendarDays className="w-6 h-6" />
             예정된 여행
           </div>
@@ -36,7 +34,7 @@ export default function HomePage() {
           <DayItem empty />
         </div>
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-18 font-bold mb-2 text-travel-text100">
+          <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
             <NotebookPen className="w-6 h-6" />
             이전에 다녀온 여행을 기록해보세요!
           </div>
@@ -44,7 +42,7 @@ export default function HomePage() {
           <DayItem empty />
         </div>
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-18 font-bold mb-2 text-travel-text100">
+          <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
             <ThumbsUp className="w-5 h-5" />
             랜덤 여행지 추천
           </div>
@@ -63,7 +61,7 @@ export default function HomePage() {
         title="무슨해변"
         location="제주특별자치도 서귀포시"
         imageUrl="/sea.img"
-        description="섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인"
+        description="섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인..."
       />
     </div>
   );
