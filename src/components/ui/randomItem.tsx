@@ -8,6 +8,7 @@ interface RandomItemProps {
   title: string;
   location: string;
   desc: string;
+  onMoreClick?: () => void;
 }
 
 export default function RandomItem({
@@ -17,7 +18,7 @@ export default function RandomItem({
   desc,
 }: RandomItemProps) {
   return (
-    <div className="relative rounded-xl overflow-hidden shadow-lg w-full flex items-end h-[180px]">
+    <div className="relative rounded-xl overflow-hidden shadow-lg w-full flex items-end min-h-[220px]">
       <Image
         src={image}
         alt={title}
@@ -25,17 +26,17 @@ export default function RandomItem({
         className="object-cover"
         draggable={false}
       />
-      <div className="absolute left-0 top-0 inset-0 bg-black/40" />
-      <div className="relative z-10 p-5 w-full">
-        <div className="text-white space-y-1 mb-3">
-          <div className="font-bold text-20">{title}</div>
-          <div className="flex items-center gap-1 text-14">
+      <div className="absolute inset-0 top-0 left-0 bg-black/40" />
+      <div className="relative z-10 w-full p-5">
+        <div className="mb-3 space-y-1 text-white">
+          <h3 className="font-bold text-20">{title}</h3>
+          <p className="flex items-center gap-1 text-14">
             <MapPin className="w-4 h-4 text-white" />
             {location}
-          </div>
-          <div className="text-14 line-clamp-2">{desc}</div>
+          </p>
+          <p className="text-14 line-clamp-3">{desc}</p>
         </div>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="md" className="float-right">
           더 알아보기
         </Button>
       </div>

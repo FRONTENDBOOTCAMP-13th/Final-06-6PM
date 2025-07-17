@@ -1,4 +1,3 @@
-// src/components/ui/drawerItem.tsx
 "use client";
 import Button from "@/components/ui/btn";
 import { ChevronDown, MapPin } from "lucide-react";
@@ -22,7 +21,7 @@ export default function LocationDrawer({
   location = "제주특별자치도 서귀포시",
   imageUrl = "/gwak.png",
   imageAlt = "무슨해변 - 빨간 등대와 바다 풍경",
-  description = "섬 전체가 하나의 거대한 관광자원인 제주도. ...",
+  description = "섬 전체가 하나의 거대한 관광자원인 제주도.",
 }: LocationDrawerProps) {
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
@@ -42,11 +41,17 @@ export default function LocationDrawer({
       />
 
       <div
-        className={`
-          relative w-full max-w-xl mx-auto bg-white rounded-t-2xl shadow-xl
-          p-6 pb-8 flex flex-col gap-4
+        className="
+          relative w-full
+          max-w-[430px]
+          mx-auto
+          bg-white
+          rounded-t-2xl
+          shadow-xl
+          p-6 pb-8
+          flex flex-col gap-4
           animate-drawer-slideup
-        `}
+        "
       >
         <button
           className="flex justify-center w-full cursor-pointer mb-2"
@@ -67,6 +72,8 @@ export default function LocationDrawer({
           <Image
             src={imageUrl}
             alt={imageAlt}
+            width={360}
+            height={180}
             className="w-full h-[180px] object-cover rounded-lg bg-travel-gray200"
           />
           <p className="text-14 text-travel-text100 line-clamp-4 mt-3">
