@@ -1,18 +1,24 @@
 import React from "react";
 
 interface InputProps {
+  id?: string;
+  name?: string;
   size?: "sm" | "md" | "lg";
-  placeholder: string;
+  type?: string;
+  placeholder?: string;
   className?: string;
-  value?: string;
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
+  id = "inputId",
+  name = "name",
   size = "md",
-  placeholder,
+  type = "text",
+  placeholder = "내용을 입력하세요",
   className = "",
-  value,
+  defaultValue,
   onChange,
 }: InputProps) {
   const inputSize = {
@@ -23,13 +29,15 @@ export default function Input({
 
   return (
     <>
-      <label htmlFor="userId" className="sr-only">
-        userId
+      <label htmlFor={id} className="sr-only">
+        {id}
       </label>
       <input
-        type="text"
+        id={id}
+        type={type}
+        name={name}
         placeholder={placeholder}
-        value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
       />

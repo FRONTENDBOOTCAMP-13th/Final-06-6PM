@@ -4,18 +4,18 @@ import Link from "next/link";
 import React from "react";
 
 export interface ProfileItemProps {
-  profileImage?: string;
+  imgUrl?: string;
   userName: string;
-  description?: string;
+  desc?: string;
   postsCount?: number;
   likesCount?: number;
   totalLikes?: number;
 }
 
 export default function ProfileItem({
-  profileImage = "/images/user2.png",
+  imgUrl = "/images/user2.png",
   userName = "사용자",
-  description = "사용자 소개글입니다. 사용자 소개글입니다. 사용자 소개글입니다. 사용자 소개글입니다.",
+  desc = "사용자 소개글입니다. 사용자 소개글입니다. 사용자 소개글입니다. 사용자 소개글입니다.",
   postsCount = 0,
   likesCount = 0,
   totalLikes = 0,
@@ -29,25 +29,28 @@ export default function ProfileItem({
         <Settings className="size-6" />
       </Link>
 
+      {/* 프로필이미지 */}
       <div className="overflow-hidden rounded-full w-25 h-25 bg-travel-gray200 aspect-square">
-        {profileImage && (
+        {imgUrl && (
           <Image
             width={100}
             height={100}
-            src={profileImage}
+            src={imgUrl}
             alt={userName}
             className="object-cover w-full h-full"
           />
         )}
       </div>
 
+      {/* 프로필기본내용 */}
       <div className="space-y-1">
-        <h2 className="font-semibold text-24">{userName}</h2>
+        <h2 className="font-semibold text-20">{userName}</h2>
         <p className="px-3 break-keep text-travel-gray700 line-clamp-3">
-          {description}
+          {desc}
         </p>
       </div>
 
+      {/* 작성한글/좋아요/조회수 */}
       <div className="flex items-center justify-center gap-8">
         <div className="space-y-1">
           <p className="font-semibold text-24 text-travel-success100">
