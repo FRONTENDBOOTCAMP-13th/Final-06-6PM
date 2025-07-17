@@ -3,7 +3,7 @@
 import DayItem from "@/components/ui/dayItem";
 import SelectMenu2 from "@/components/ui/selectMenu2";
 import BookmarkItem from "@/components/ui/bookmarkItem";
-import ProfileCardEdit from "@/components/ui/profileItemedit";
+import ProfileCardEdit from "@/components/ui/profileItemEdit";
 
 export default function MypagePage() {
   return (

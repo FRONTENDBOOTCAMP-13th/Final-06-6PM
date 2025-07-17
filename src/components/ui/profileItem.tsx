@@ -1,8 +1,9 @@
 import { Settings } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-interface ProfileCardProps {
+export interface ProfileCardProps {
   profileImage?: string;
   userName: string;
   description?: string;
@@ -20,10 +21,13 @@ export default function ProfileCard({
   totalLikes = 100,
 }: ProfileCardProps) {
   return (
-    <div className="relative bg-white rounded-2xl py-8 px-5 text-center font-sans flex flex-col items-center gap-4 shadow">
-      <div className="absolute top-4 right-4 text-16 cursor-pointer text-travel-gray700">
+    <div className="relative bg-white rounded-xl py-8 px-5 text-center font-sans flex flex-col items-center gap-4 shadow">
+      <Link
+        href="/mypage/edit"
+        className="absolute top-4 right-4 text-16 cursor-pointer text-travel-gray700"
+      >
         <Settings></Settings>
-      </div>
+      </Link>
       <div className="w-25 h-25">
         {profileImage ? (
           <Image
