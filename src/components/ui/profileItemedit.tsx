@@ -3,15 +3,7 @@ import React, { useState } from "react";
 import Input from "@/components/ui/input";
 import { Camera } from "lucide-react";
 import Link from "next/link";
-
-interface ProfileCardProps {
-  profileImage?: string;
-  userName: string;
-  description?: string;
-  postsCount?: number;
-  likesCount?: number;
-  totalLikes?: number;
-}
+import { ProfileCardProps } from "@/components/ui/profileItem";
 
 export default function ProfileCardEdit({
   profileImage = "/gwak.png",

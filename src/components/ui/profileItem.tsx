@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface ProfileCardProps {
+export interface ProfileCardProps {
   profileImage?: string;
   userName: string;
   description?: string;
