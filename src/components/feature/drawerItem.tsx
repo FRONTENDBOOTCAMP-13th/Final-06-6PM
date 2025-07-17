@@ -29,12 +29,9 @@ export default function DrawerItem({
 
   return (
     <div>
-      <button
-        onClick={() => setOpen(true)}
-        className="px-4 py-1 text-white rounded-2xl text-16 bg-travel-primary100"
-      >
-        DrawerItem
-      </button>
+      <Button size="md" variant="outline" onClick={() => setOpen(true)}>
+        더 알아보기
+      </Button>
 
       <Dialog open={open} onClose={setOpen} className="relative z-30">
         <DialogBackdrop

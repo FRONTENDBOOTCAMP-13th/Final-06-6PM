@@ -1,6 +1,7 @@
 import BookmarkItem from "@/components/ui/bookmarkItem";
 import DayItem from "@/components/ui/dayItem";
 import DrawerItem from "@/components/feature/drawerItem";
+import RandomItem from "@/components/ui/randomItem";
 
 export default function ComponentPage() {
   return (
@@ -38,6 +39,17 @@ export default function ComponentPage() {
           desc={
             "섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 섬 전체가 하나의 거대한 관광자원인 제주도"
           }
+        />
+      </div>
+
+      {/* RandomItem */}
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">RandomItem</h2>
+        <RandomItem
+          image="/images/sea.png"
+          title="무슨해변"
+          location="제주특별자치도 서귀포시"
+          desc="기차에서 바다를 감상하는 특별한 해변! 인생사진 남기기 좋은 스팟."
         />
       </div>
     </div>

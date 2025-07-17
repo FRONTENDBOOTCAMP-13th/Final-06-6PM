@@ -1,5 +1,5 @@
 import DropdownItem from "@/components/ui/dropdownItem";
-import Input from "@/components/feature/input";
+import Input from "@/components/ui/input";
 
 import ReviewWrite from "@/components/ui/reviewItem";
 import ScheduleRegister from "@/components/feature/scheduleRegister";
