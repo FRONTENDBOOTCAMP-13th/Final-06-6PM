@@ -38,7 +38,7 @@ export default function TagItem({
 
   return (
     <div
-      className={`${btnType[variant]} ${className} py-1.5 px-3 text-[13px] rounded-2xl cursor-pointer font-sans inline-flex items-center leading-none gap-1.5`}
+      className={`${btnType[variant]} ${className} py-1.5 px-3 text-[13px] rounded-2xl cursor-pointer font-sans grid items-center leading-none gap-1.5`}
     >
       {children}
       {closeIcon && <X onClick={remove} className="w-3 h-3" />}

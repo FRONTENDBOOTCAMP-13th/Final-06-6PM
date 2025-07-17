@@ -106,14 +106,15 @@ export default function TravelPage() {
             onClick={() => regionClick(destination.name)}
             className="cursor-pointer"
           >
-            <div className="relative aspect-square rounded-lg overflow-hidden hover:scale-105">
+            <div className="relative aspect-square rounded-lg overflow-hidden group">
               <Image
                 width={400}
                 height={300}
                 src={destination.image}
                 alt={destination.name}
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full z-5 transition-transform duration-300 group-hover:scale-105"
               />
+
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4">
                 <h3 className="text-white text-20">{destination.name}</h3>
