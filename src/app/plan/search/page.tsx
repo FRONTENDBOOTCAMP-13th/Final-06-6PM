@@ -2,7 +2,7 @@
 
 import Button from "@/components/ui/btn";
 import PlacePlusItem from "@/components/feature/placePlusItem";
-import SearchInput from "@/components/ui/searchInput";
+import SearchInput from "@/components/form/searchInput";
 import TagItem from "@/components/ui/tagItem";
 import { Bookmark, CalendarDays, Search } from "lucide-react";
 import { useState } from "react";

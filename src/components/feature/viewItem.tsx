@@ -1,17 +1,11 @@
 "use client";
 
-import {
-  MapPin,
-  Eye,
-  Heart,
-  MessageCircleMore,
-  Bookmark,
-  EllipsisVertical,
-  Star,
-} from "lucide-react";
+import DrawerBtn from "@/components/feature/drawerBtn";
+import ModalItem from "@/components/feature/locationModal";
+import ToggleIcon from "@/components/feature/toggleComponents";
+import { Eye, Heart, MessageCircleMore, Star } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 export type ViewItemProps = {
   userName: string;
@@ -38,25 +32,6 @@ export default function ViewItem({
   date,
   onClick,
 }: ViewItemProps) {
-  const [isBookmarkToggled, setIsBookmarkToggled] = useState(false);
-
-  // 모달
-  const openModal = () => {
-    if (typeof onClick === "function") {
-      onClick();
-    }
-  };
-
-  // 드로워
-  const slideDrawer = () => {
-    console.log("드로워");
-  };
-
-  // 북마크 클릭 토글
-  const handleBookmarkClick = () => {
-    setIsBookmarkToggled(!isBookmarkToggled);
-  };
-
   // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
   const pathname = usePathname();
   const SubPageClass = pathname.startsWith("/feed/");
@@ -84,20 +59,12 @@ export default function ViewItem({
             <p className="font-medium text-16 text-travel-text100">
               {userName}
             </p>
-            <button
-              className="flex items-center text-14 text-travel-info100 cursor-pointer"
-              onClick={openModal}
-            >
-              <MapPin className="w-4 h-4 mr-1" />
-              {location}
-            </button>
+            <ModalItem location={location} />
           </div>
         </div>
 
         {/* 수정/삭제 모달창 버튼*/}
-        <button onClick={() => slideDrawer()} className="cursor-pointer">
-          <EllipsisVertical className="w-6 h-6 text-travel-gray400" />
-        </button>
+        <DrawerBtn />
       </div>
 
       {/* 별점 및 방문날짜 */}
@@ -111,7 +78,7 @@ export default function ViewItem({
             />
           ))}
         </div>
-        <span className="text-14 text-gray-600">{date}</span>
+        <span className="text-gray-600 text-14">{date}</span>
       </div>
 
       {/* 리뷰내용 */}
@@ -122,14 +89,14 @@ export default function ViewItem({
             height={200}
             src="/"
             alt="이미지"
-            className=" bg-travel-gray200 rounded-lg object-cover aspect-square"
+            className="object-cover rounded-lg bg-travel-gray200 aspect-square"
           />
           <Image
             width={200}
             height={200}
             src="/gwak.png"
             alt=""
-            className=" bg-travel-gray200 rounded-lg object-cover aspect-square"
+            className="object-cover rounded-lg bg-travel-gray200 aspect-square"
           />
         </div>
         <div className={listTextClass}>{content}</div>
@@ -143,8 +110,8 @@ export default function ViewItem({
       </div>
 
       {/* 리뷰관련요소 */}
-      <div className="flex justify-between items-center text-travel-gray600 text-14">
-        <div className="flex gap-4 items-center">
+      <div className="flex items-center justify-between text-travel-gray600 text-14">
+        <div className="flex items-center gap-4">
           <span className="flex items-center gap-1">
             <Eye className="w-4 h-4" />
             {views}
@@ -158,15 +125,8 @@ export default function ViewItem({
             {comments}
           </span>
         </div>
-        <button onClick={handleBookmarkClick}>
-          <Bookmark
-            className={`w-7 h-7 ${
-              isBookmarkToggled
-                ? "text-amber-300 fill-current"
-                : "text-travel-gray400 fill-current"
-            }`}
-          />
-        </button>
+
+        <ToggleIcon type="book" />
       </div>
     </div>
   );

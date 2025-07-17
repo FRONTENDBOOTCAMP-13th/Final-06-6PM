@@ -2,7 +2,7 @@
 
 import ModalItem from "@/components/Modal";
 import CommentItem from "@/components/ui/commentItem";
-import ViewItem from "@/components/ui/viewItem";
+import ViewItem from "@/components/feature/viewItem";
 import { useState } from "react";
 
 // 살펴보기 게시판 목록

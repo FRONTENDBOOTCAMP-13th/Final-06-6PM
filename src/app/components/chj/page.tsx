@@ -5,6 +5,7 @@ import DrawerSelectImg from "@/components/feature/drawerSelectImg";
 import PlacePlusItem from "@/components/feature/placePlusItem";
 import PlanListItem from "@/components/ui/planListItem";
 import PlanList from "@/components/feature/planList";
+import ReviewWrite from "@/components/ui/reviewItem";
 
 export default function ComponentPage() {
   return (
@@ -48,6 +49,12 @@ export default function ComponentPage() {
       <div className="w-full py-4 space-y-4">
         <h2 className="font-bold">PlanList</h2>
         <PlanList />
+      </div>
+
+      {/* ReviewWrite */}
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">ReviewWrite</h2>
+        <ReviewWrite />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
 import LocationDrawer from "@/components/feature/drawerItem";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function HomePage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -38,8 +39,9 @@ export default function HomePage() {
             <NotebookPen className="size-6" />
             이전에 다녀온 여행을 기록해보세요!
           </div>
-          <DayItem place="부산" period="2025.05.08 ~ 2025.05.12." />
-          <DayItem place="부산" period="2025.05.08 ~ 2025.05.12." />
+          <Link href="/review">
+            <DayItem place="부산" period="2025.05.08 ~ 2025.05.12." />
+          </Link>
         </div>
         <div className="space-y-2">
           <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">

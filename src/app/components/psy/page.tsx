@@ -1,3 +1,4 @@
+import ModalItem from "@/components/feature/locationModal";
 import Button from "@/components/ui/btn";
 import ButtonRounded from "@/components/ui/btnRound";
 import Link from "next/link";
@@ -43,6 +44,12 @@ export default function ComponentPage() {
           <ButtonRounded variant="fill">필</ButtonRounded>
           <ButtonRounded>메인컬러</ButtonRounded>
         </div>
+      </div>
+
+      {/* BtnRoundend */}
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">ModalItem</h2>
+        <ModalItem location={"대전"} />
       </div>
 
       {/* 테스트페이지 */}

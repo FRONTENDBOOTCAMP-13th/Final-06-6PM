@@ -7,7 +7,7 @@ import {
   DialogPanel,
   TransitionChild,
 } from "@headlessui/react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, EllipsisVerticalIcon } from "lucide-react";
 import Button from "@/components/ui/btn";
 
 export default function DrawerBtn() {
@@ -23,13 +23,9 @@ export default function DrawerBtn() {
 
   return (
     <div>
-      <button
-        onClick={() => setOpen(true)}
-        className="px-4 py-1 text-white rounded-2xl text-16 bg-travel-primary100"
-      >
-        DrawerBtn
+      <button onClick={() => setOpen(true)}>
+        <EllipsisVerticalIcon className="cursor-pointer size-6 text-travel-gray400" />
       </button>
-
       <Dialog open={open} onClose={setOpen} className="relative z-30">
         <DialogBackdrop
           transition

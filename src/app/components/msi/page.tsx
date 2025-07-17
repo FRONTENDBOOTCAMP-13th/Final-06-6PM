@@ -1,7 +1,7 @@
 import CommentItem from "@/components/ui/commentItem";
 import FreeItem from "@/components/ui/freeItem";
-import SelectMenu3 from "@/components/ui/selectMenu3";
-import SelectMenu2 from "@/components/ui/selectMenu2";
+import SelectMenu3 from "@/components/feature/selectMenu3";
+import SelectMenu2 from "@/components/feature/selectMenu2";
 import TagItem from "@/components/ui/tagItem";
 import DropdownItem from "@/components/ui/dropdownItem";
 
@@ -33,33 +33,38 @@ export default function ComponentPage() {
           comment={13}
         />
       </div>
-      <div className="w-full">
-        <h2>Select Menu - 3</h2>
+
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">Select Menu - 3</h2>
         <SelectMenu3 />
       </div>
-      <div className="w-full">
-        <h2>Select Menu - 2</h2>
+
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">Select Menu - 2</h2>
         <SelectMenu2 />
       </div>
-      <div className="w-full">
-        <h2>tag Item</h2>
-        <TagItem>전체</TagItem>
-        <TagItem variant="success">맛집</TagItem>
-        <TagItem variant="fail">숙박</TagItem>
-        <TagItem variant="warn">축제</TagItem>
-        <TagItem variant="info">관광지</TagItem>
-        <TagItem variant="outline">관광지</TagItem>
-        <TagItem variant="fill">관광지</TagItem>
 
-        <TagItem variant="outline" closeIcon>
-          관광지{" "}
-        </TagItem>
-        <TagItem variant="outline" closeIcon>
-          기이이이이인 관광지{" "}
-        </TagItem>
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">tag Item</h2>
+        <div className="flex flex-wrap gap-1">
+          <TagItem>전체</TagItem>
+          <TagItem variant="success">맛집</TagItem>
+          <TagItem variant="fail">숙박</TagItem>
+          <TagItem variant="warn">축제</TagItem>
+          <TagItem variant="info">관광지</TagItem>
+          <TagItem variant="outline">관광지</TagItem>
+          <TagItem variant="fill">관광지</TagItem>
+          <TagItem variant="outline" closeIcon>
+            관광지{" "}
+          </TagItem>
+          <TagItem variant="outline" closeIcon>
+            기이이이이인 관광지{" "}
+          </TagItem>
+        </div>
       </div>
-      <div className="w-full">
-        <h2>Select Item</h2>
+
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">Select Item</h2>
         <DropdownItem label="오래된순" />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import DropdownItem from "@/components/ui/dropdownItem";
 import TagItem from "@/components/ui/tagItem";
-import SelectMenu2 from "@/components/ui/selectMenu2";
+import SelectMenu2 from "@/components/feature/selectMenu2";
 import PlacePlusItem from "@/components/feature/placePlusItem";
 
 // 마이페이지/북마크

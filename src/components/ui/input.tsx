@@ -7,6 +7,7 @@ interface InputProps {
   type?: string;
   placeholder?: string;
   className?: string;
+  value?: string;
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -18,6 +19,7 @@ export default function Input({
   type = "text",
   placeholder = "내용을 입력하세요",
   className = "",
+  value,
   defaultValue,
   onChange,
 }: InputProps) {
