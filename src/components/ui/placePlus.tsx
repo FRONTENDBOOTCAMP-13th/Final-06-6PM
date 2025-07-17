@@ -19,9 +19,9 @@ export default function LocationInfoCard({
   imageAlt = "성산일출봉 이미지",
 }: LocationInfoCardProps) {
   return (
-    <div className="w-full bg-white rounded-2xl shadow-lg">
+    <div className="w-full bg-white rounded-2xl shadow-[0_0_10px_rgba(0,0,0,0.3)]">
       {/* 컨테이너 박스 */}
-      <div className="p-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+      <div className="p-4 grid grid-cols-[auto_1fr_auto] items-center gap-0.5">
         {/* 이미지 삽입 */}
         <Image
           width={70}
@@ -30,7 +30,7 @@ export default function LocationInfoCard({
           alt={imageAlt}
           className="aspect-square object-cover overflow-hidden rounded-lg bg-travel-gray200" // 이미지 못불러올시 회색
         />
-        <div className="space-y-2 max-w-[240px]">
+        <div className="space-y-2 max-w-[240px] overflow-hidden">
           <h2 className="text-16 font-bold text-travel-text200">{title}</h2>
 
           <p className="text-travel-gray600 text-14 whitespace-nowrap truncate">
@@ -46,7 +46,7 @@ export default function LocationInfoCard({
           </div>
         </div>
         {/* +버튼 */}
-        <Plus className="w-5 h-5 text-travel-gray700" />
+        <Plus className="w-5 h-5 right-4 text-travel-gray700" />
       </div>
     </div>
   );
