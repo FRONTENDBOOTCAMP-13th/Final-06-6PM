@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <div className="relative w-full max-w-[430px] mx-auto min-h-screen bg-travel-bg100">
+        <div className="absolute w-full max-w-[430px] left-1/2 -translate-x-1/2 min-h-screen bg-travel-bg100">
           {children}
         </div>
       </body>

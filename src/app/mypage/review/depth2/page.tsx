@@ -1,5 +1,5 @@
 import DropdownItem from "@/components/ui/dropdownItem";
-import Input from "@/components/ui/input";
+import Input from "@/components/feature/input";
 import SelectMenu3 from "@/components/ui/selectMenu3";
 import ViewItem from "@/components/ui/viewItem";
 import { ChevronDown } from "lucide-react";

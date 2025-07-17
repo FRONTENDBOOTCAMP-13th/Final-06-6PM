@@ -1,6 +1,6 @@
 "use client";
 
-import Input from "@/components/ui/input";
+import Input from "@/components/feature/input";
 import SelectMenu3 from "@/components/ui/selectMenu3";
 import TagItem from "@/components/ui/tagItem";
 import Textarea from "@/components/ui/textarea";

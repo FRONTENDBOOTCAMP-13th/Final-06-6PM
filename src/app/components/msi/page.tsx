@@ -7,17 +7,23 @@ import DropdownItem from "@/components/ui/dropdownItem";
 
 export default function ComponentPage() {
   return (
-    <div className="flex flex-col gap-8 items-center">
-      <div className="w-full">
-        <h2 className="mb-2">Comment Item</h2>
+    <div className="flex flex-col items-center">
+      {/* CommentItem */}
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">CommentItem</h2>
         <CommentItem
-          author="작성자"
-          content="댓글내용 댓글내용 댓글내용 댓글내용 댓글내용 댓글내용"
+          imgUrl="/images/user4.png"
+          author="문서인"
+          content="바다 보면서 먹는 회는 진짜 최고였어요. 또 가고 싶네요! 
+          산책로가 잘 정비되어 있어서 가족끼리 걷기 너무 좋았어요.  
+          숙소 뷰가 미쳤어요... 아침에 창문 열자마자 감탄함."
           date="2025-07-13"
         />
       </div>
-      <div className="w-full">
-        <h2 className="mb-2">Free Item</h2>
+
+      {/* FreeItem :: 07-18기준 사용하지 않는 컴포넌트*/}
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">FreeItem</h2>
         <FreeItem
           title="제목입니다"
           author="작성자"
@@ -45,8 +51,12 @@ export default function ComponentPage() {
         <TagItem variant="outline">관광지</TagItem>
         <TagItem variant="fill">관광지</TagItem>
 
-        <TagItem variant="outline" closeIcon>관광지 </TagItem>
-        <TagItem variant="outline" closeIcon>기이이이이인 관광지 </TagItem>
+        <TagItem variant="outline" closeIcon>
+          관광지{" "}
+        </TagItem>
+        <TagItem variant="outline" closeIcon>
+          기이이이이인 관광지{" "}
+        </TagItem>
       </div>
       <div className="w-full">
         <h2>Select Item</h2>

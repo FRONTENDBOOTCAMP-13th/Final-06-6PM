@@ -2,7 +2,7 @@
 import { CalendarDays, ThumbsUp, MapPin, Sun, NotebookPen } from "lucide-react";
 import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
-import LocationDrawer from "@/components/ui/drawerItem";
+import LocationDrawer from "@/components/feature/drawerItem";
 import { useState } from "react";
 
 export default function HomePage() {

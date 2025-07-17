@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/ui/btn";
-import Input from "@/components/ui/input";
+import Input from "@/components/feature/input";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";

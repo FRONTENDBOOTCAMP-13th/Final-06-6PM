@@ -4,10 +4,11 @@ import Link from "next/link";
 
 export default function ComponentPage() {
   return (
-    <div className="flex flex-col gap-8 items-center">
-      <div className="w-full">
-        <h2 className="mb-2">기본형 버튼</h2>
-        <div className="flex gap-2 items-center flex-wrap">
+    <div className="flex flex-col items-center">
+      {/* Btn */}
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">Btn</h2>
+        <div className="flex flex-wrap items-center gap-2">
           <Button variant="info" size="sm">
             안내
           </Button>
@@ -23,9 +24,11 @@ export default function ComponentPage() {
           <Button>메인컬러</Button>
         </div>
       </div>
-      <div className="w-full">
-        <h2 className="mb-2">라운드형 버튼</h2>
-        <div className="flex gap-2  items-center flex-wrap">
+
+      {/* BtnRoundend */}
+      <div className="w-full py-4 space-y-4">
+        <h2 className="font-bold">BtnRoundend</h2>
+        <div className="flex flex-wrap items-center gap-2">
           <ButtonRounded variant="info" size="sm">
             안내
           </ButtonRounded>
@@ -41,9 +44,11 @@ export default function ComponentPage() {
           <ButtonRounded>메인컬러</ButtonRounded>
         </div>
       </div>
+
+      {/* 테스트페이지 */}
       <Link
         href="/components/psy/travel"
-        className="p-2 bg-travel-primary100 text-white  w-full"
+        className="w-full p-2 text-white bg-travel-primary100"
       >
         여행
       </Link>

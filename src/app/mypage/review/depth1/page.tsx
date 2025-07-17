@@ -1,8 +1,8 @@
 import DropdownItem from "@/components/ui/dropdownItem";
-import Input from "@/components/ui/input";
+import Input from "@/components/feature/input";
 
 import ReviewWrite from "@/components/ui/reviewItem";
-import ScheduleRegister from "@/components/ui/scheduleRegister";
+import ScheduleRegister from "@/components/feature/scheduleRegister";
 import SelectMenu3 from "@/components/ui/selectMenu3";
 import ViewItem from "@/components/ui/viewItem";
 import { ChevronDown } from "lucide-react";
