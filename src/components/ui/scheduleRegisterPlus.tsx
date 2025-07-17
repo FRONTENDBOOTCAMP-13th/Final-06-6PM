@@ -2,10 +2,16 @@ import { CalendarDays } from "lucide-react";
 import ScheduleRegister from "@/components/ui/scheduleRegister";
 import PlanList from "@/components/ui/planList";
 
+interface DayListItem {
+  id: number;
+  title: string;
+  tag: string;
+ }
+
 interface ScheduleRegisterPlusProps {
   day: number;
   date: string;
-  daylist?: any[];
+  daylist?: DayListItem[][];
 }
 
 export default function ScheduleRegisterPlus({
@@ -22,7 +28,7 @@ export default function ScheduleRegisterPlus({
       </div>
 
       {daylist?.length ? (
-        <PlanList planListData={daylist} />
+        <PlanList />
       ) : (
         <ScheduleRegister />
       )}
