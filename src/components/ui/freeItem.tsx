@@ -28,7 +28,7 @@ export default function FreeItem({
           태그2
         </ButtonRounded>
       </div>
-      <h3 className="text-16 text-travel-primary100 font-bold">{title}</h3>
+      <h3 className="font-bold text-16 text-travel-primary100">{title}</h3>
       <p className="text-14">{content}</p>
       <div className="flex items-center justify-between text-12 text-travel-gray700">
         <p className="flex divide-x divide-travel-gray500">

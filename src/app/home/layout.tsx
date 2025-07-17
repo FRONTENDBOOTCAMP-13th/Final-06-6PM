@@ -8,7 +8,7 @@ export default function NavbarLayout({
 }>) {
   return (
     <div>
-      <div className="relative w-full pb-25">{children}</div>
+      <div className="relative w-full pb-20">{children}</div>
       <Navbar />
     </div>
   );

@@ -29,14 +29,14 @@ export default function SelectMenu3() {
 
   return (
     <div>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 divide-x divide-travel-gray100">
         {data.map((item) => (
           <div
             key={item.id}
             className={`text-14 flex flex-col items-center p-1.5 gap-1.5 cursor-pointer ${
               tab === item.id
-                ? "text-white bg-travel-secondary100"
-                : "text-travel-gray400 bg-white"
+                ? "text-white bg-travel-secondary100  border-b border-b-travel-secondary200"
+                : "text-travel-gray400 bg-white border-b border-b-travel-gray200"
             }`}
             onClick={() => setTab(item.id)}
           >

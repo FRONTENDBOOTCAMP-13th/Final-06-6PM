@@ -16,8 +16,8 @@ export default function Input({
   onChange,
 }: InputProps) {
   const inputSize = {
-    sm: "px-4 py-3 text-12",
-    md: "px-4 py-3.5 text-14",
+    sm: "px-4 py-3 text-14",
+    md: "px-4 py-3.5 text-16",
     lg: "px-4 py-4 text-16",
   };
 
