@@ -63,7 +63,7 @@ export default function HomePage() {
         title="무슨해변"
         location="제주특별자치도 서귀포시"
         imageUrl="/sea.img"
-        description="섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인..."
+        description="섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인"
       />
     </div>
   );
