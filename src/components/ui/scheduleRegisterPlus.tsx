@@ -1,6 +1,6 @@
 import { CalendarDays } from "lucide-react";
-import ScheduleRegister from "@/components/ui/scheduleRegister";
-import PlanList from "@/components/ui/planList";
+import ScheduleRegister from "@/components/feature/scheduleRegister";
+import PlanList from "@/components/feature/planList";
 
 export interface DayListItem {
   id: number;

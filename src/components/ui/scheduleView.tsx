@@ -1,5 +1,5 @@
 import { CalendarDays } from "lucide-react";
-import PlanList from "@/components/ui/planList";
+import PlanList from "@/components/feature/planList";
 
 export interface DayListItem {
   id: number;
