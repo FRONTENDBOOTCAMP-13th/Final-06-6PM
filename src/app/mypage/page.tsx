@@ -1,7 +1,7 @@
 "use client";
 
-import ProfileCard from "@/components/ui/profileItem";
-import SelectMenu2 from "@/components/ui/selectMenu2";
+import ProfileItem from "@/components/ui/profileItem";
+import SelectMenu2 from "@/components/feature/selectMenu2";
 import BookmarkItem from "@/components/ui/bookmarkItem";
 import DayItem from "@/components/ui/dayItem";
 import Link from "next/link";
@@ -11,7 +11,7 @@ export default function MypagePage() {
     <>
       <div className="flex flex-col gap-5 items-center">
         <div className="w-full">
-          <ProfileCard userName="여행덕후" />
+          <ProfileItem userName="여행덕후" />
         </div>
         <div className="w-full flex flex-col gap-5">
           <Link href="/mypage/bookmark">

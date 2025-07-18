@@ -1,8 +1,8 @@
 "use client";
 
 import Button from "@/components/ui/btn";
-import LocationInfoCard from "@/components/ui/placePlus";
-import SearchInput from "@/components/ui/searchInput";
+import PlacePlusItem from "@/components/feature/placePlusItem";
+import SearchInput from "@/components/form/searchInput";
 import TagItem from "@/components/ui/tagItem";
 import { Bookmark, CalendarDays, Search } from "lucide-react";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export default function TravelRegister2Page() {
           <h2 className="text-18 font-semibold py-2">나의 북마크</h2>
         </div>
         <p className="text-16 text-travel-text100">저장된 북마크가 없습니다.</p>
-        <LocationInfoCard />
+        <PlacePlusItem />
         <Button variant="outline" className="text-14 my-2">
           북마크 더보기
         </Button>
@@ -45,10 +45,10 @@ export default function TravelRegister2Page() {
           <h2 className="text-18 font-semibold py-2">제주도 모든 장소</h2>
         </div>
         <div className="flex flex-col gap-2">
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
-          <LocationInfoCard />
+          <PlacePlusItem />
+          <PlacePlusItem />
+          <PlacePlusItem />
+          <PlacePlusItem />
         </div>
 
         <div className="flex flex-col items-center justify-center mt-3 gap-1">

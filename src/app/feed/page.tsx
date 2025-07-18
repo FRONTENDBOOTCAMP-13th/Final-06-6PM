@@ -1,12 +1,8 @@
-"use client";
-
-import ModalItem from "@/components/Modal";
 import ButtonRounded from "@/components/ui/btnRound";
 import DropdownItem from "@/components/ui/dropdownItem";
-import SearchInput from "@/components/ui/searchInput";
+import SearchInput from "@/components/form/searchInput";
 import TagItem from "@/components/ui/tagItem";
-import ViewItem, { ViewItemProps } from "@/components/ui/viewItem";
-import { useState } from "react";
+import ViewItem, { ViewItemProps } from "@/components/feature/viewItem";
 
 // 더미데이터
 const dummyData: ViewItemProps[] = [
@@ -58,18 +54,14 @@ const dummyData: ViewItemProps[] = [
 
 // 살펴보기 게시판 목록
 export default function FeedPage() {
-  const [searchValue, setSearchValue] = useState("");
-  const [selectItem, setSelectItem] = useState(false);
-
   return (
     <>
       {/* 검색바 */}
       <SearchInput
         size="md"
         placeholder="가고 싶은 국내 여행지의 리뷰를 살펴보세요"
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
       />
+
       {/* 셀렉트창 및 필터 */}
       <div className="flex flex-col-reverse xs:flex-row items-end xs:items-center gap-y-3 my-3 px-0.5">
         <DropdownItem label="오래된순" />
@@ -85,11 +77,9 @@ export default function FeedPage() {
       {/* 내용 */}
       <div className="flex flex-col gap-6">
         {dummyData.map((item, index) => (
-          <ViewItem key={index} {...item} onClick={() => setSelectItem(true)} />
+          <ViewItem key={index} {...item} />
         ))}
       </div>
-      {/* 모달 */}
-      {selectItem && <ModalItem onClose={() => setSelectItem(false)} />}
     </>
   );
 }

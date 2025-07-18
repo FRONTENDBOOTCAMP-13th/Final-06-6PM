@@ -1,6 +1,6 @@
 import Input from "@/components/ui/input";
-import SelectMenu3 from "@/components/ui/selectMenu3";
-import ViewItem from "@/components/ui/viewItem";
+import SelectMenu3 from "@/components/feature/selectMenu3";
+import ViewItem from "@/components/feature/viewItem";
 import { ChevronDown } from "lucide-react";
 
 // 마이페이지/리뷰

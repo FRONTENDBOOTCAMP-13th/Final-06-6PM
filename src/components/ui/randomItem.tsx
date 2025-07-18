@@ -1,14 +1,12 @@
 import React from "react";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
-import Button from "@/components/ui/btn";
-
+import DrawerItem from "@/components/feature/drawerItem";
 interface RandomItemProps {
   image: string;
   title: string;
   location: string;
   desc: string;
-  onMoreClick?: () => void;
 }
 
 export default function RandomItem({
@@ -36,9 +34,16 @@ export default function RandomItem({
           </p>
           <p className="text-14 line-clamp-3">{desc}</p>
         </div>
-        <Button variant="outline" size="md" className="float-right">
-          더 알아보기
-        </Button>
+        <div className="float-right">
+          <DrawerItem
+            title={"이호태우해변"}
+            location={"제주특별자치도"}
+            imgUrl={"/images/user1.png"}
+            desc={
+              "섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 섬 전체가 하나의 거대한 관광자원인 제주도"
+            }
+          />
+        </div>
       </div>
     </div>
   );
