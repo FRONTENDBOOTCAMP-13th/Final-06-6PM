@@ -1,23 +1,16 @@
-"use client";
-
 import Button from "@/components/ui/btn";
 import PlacePlusItem from "@/components/feature/placePlusItem";
 import SearchInput from "@/components/form/searchInput";
 import TagItem from "@/components/ui/tagItem";
 import { Bookmark, CalendarDays, Search } from "lucide-react";
-import { useState } from "react";
 
 export default function TravelRegister2Page() {
-  const [searchValueSm, setSearchValueSm] = useState("");
 
   return (
     <div className="">
       <SearchInput
         size="md"
-        placeholder="가고 싶은 국내 여행지를 검색해보세요."
-        value={searchValueSm}
-        onChange={(e) => setSearchValueSm(e.target.value)}
-        className="my-2"
+        placeholder="가고 싶은 국내 여행지를 검색해보세요"
       />
       <div className="flex items-center gap-1 py-3">
         <TagItem>전체</TagItem>
