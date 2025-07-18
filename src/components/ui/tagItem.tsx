@@ -43,7 +43,7 @@ export default function TagItem({
 
   return (
     <div
-      className={`${btnType[variant]}  ${btnSize[size]} ${className}  rounded-2xl cursor-pointer font-sans grid grid-cols-[1fr_auto] items-center leading-none gap-1.5`}
+      className={`${btnType[variant]}  ${btnSize[size]} ${className}  rounded-2xl cursor-pointer font-sans grid grid-cols-[1fr_auto] items-center leading-none`}
     >
       {children}
       {closeIcon && <X onClick={onRemove} className="size-4 -translate-y-0.25" />}

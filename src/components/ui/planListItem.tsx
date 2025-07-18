@@ -18,7 +18,7 @@ function PlanListItem({ number, place, tag }: PlanListItemProps) {
       {/* 관광지명과 태그 */}
       <div className="font-medium leading-none contents">
         <span>{place}</span>
-        <TagItem variant="primary">{tag}</TagItem>
+        <TagItem variant="primary" size="sm">{tag}</TagItem>
       </div>
     </div>
   );
