@@ -5,7 +5,7 @@ import ModalItem from "@/components/feature/locationModal";
 import ToggleIcon from "@/components/feature/toggleComponents";
 import { Eye, Heart, MessageCircleMore, Star } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export type ViewItemProps = {
   title?: string;
@@ -14,6 +14,7 @@ export type ViewItemProps = {
   location: string;
   content: string;
   contentImg?:string[];
+  reviewRating?:number;
   tags: string[];
   views: number;
   likes: number;
@@ -30,6 +31,7 @@ export default function ViewItem({
   location,
   content,
   contentImg,
+  reviewRating =4,
   tags,
   views,
   likes,
@@ -37,16 +39,24 @@ export default function ViewItem({
   visitDate = '2025.03.01.',
   regdate = '2025.04.05. 11:00:00',
 }: ViewItemProps) {
-  // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
+  
   const pathname = usePathname();
-  const SubPageClass = pathname.startsWith("/feed/");
+  const router = useRouter();
+  
+  // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
+  const isDetailView = pathname.startsWith("/feed/");
   const listClass = `relative w-full space-y-2 ${
-    SubPageClass ? "" : "rounded-xl bg-white shadow p-4"
+    isDetailView ? "" : "rounded-xl bg-white shadow p-4"
   }`;
 
   const listTextClass = `text-14 text-travel-text100 ${
-    SubPageClass ? "" : "line-clamp-3"
+    isDetailView ? "" : "line-clamp-3"
   }`;
+  
+  // 이미지 갯수 제한
+  const maxImg = 2; 
+  const showImg = isDetailView ? contentImg : contentImg?.slice(0,maxImg) || [];
+  const moreCount = isDetailView ? 0 : (contentImg?.length || 0) - maxImg;
 
   return (
     <div className={listClass}>
@@ -92,35 +102,49 @@ export default function ViewItem({
         </div>
       </div>
 
-      {/* 리뷰내용 */}
+    {/* 리뷰사진 및 내용 */} 
       <div className="space-y-2 text-14">
         <div
           className={`grid gap-3 ${
-            contentImg?.length === 1
-              ? "grid-cols-1": "grid-cols-2"
+            showImg?.length === 1 ? "grid-cols-1" : "grid-cols-2"
           }`}
         >
-          {contentImg?.map((img, idx) => (
-            <div
-              key={idx}
-              className={`rounded-lg bg-travel-gray200 overflow-hidden ${
-                contentImg.length === 1
-                  ? "aspect-[3/2]" 
-                  : "aspect-square"
-              }`}
-            >
-              <Image
-                width={400}
-                height={300}
-                src={img}
-                alt={img}
-                className="object-cover w-full h-full"
-              />
-            </div>
-          ))}
+          {showImg?.map((item, idx) => {
+            const overlay = idx === 1 && moreCount > 0;
+
+            return (
+              <div
+                key={idx}
+                className={`relative rounded-lg bg-travel-gray200 overflow-hidden ${
+                  showImg?.length === 1 ? "aspect-[3/2]" : "aspect-square"
+                }`}
+              >
+                <Image
+                  width={400}
+                  height={300}
+                  src={item}
+                  alt={item}
+                  className="object-cover w-full h-full"
+                />
+                { !isDetailView && overlay && (
+                  <div
+                    className="absolute inset-0 bg-black/60 flex items-center justify-center cursor-pointer"
+                    onClick={() => router.push(`/feed/1`)}
+                  >
+                    <span className="text-white font-bold text-20">
+                      +
+                      {moreCount}
+                      </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         <div className={listTextClass}>{content}</div>
+
+        {/* 태그 */}
         <div className="flex flex-wrap gap-1">
           {tags.map((tag) => (
             <span key={tag} className="text-travel-info100">
@@ -130,17 +154,23 @@ export default function ViewItem({
         </div>
       </div>
 
-
       {/* 별점 및 방문날짜 */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              className="size-4 text-travel-warn100"
-              fill="currentColor"
-            />
-          ))}
+
+          {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                fill="currentColor"
+                stroke="currentColor"
+                className={`size-4 ${
+                  i < Math.floor(reviewRating)
+                    ? "text-travel-warn100"
+                    : "text-travel-gray400"
+                }`}
+              />
+            ))}
+
         </div>
         <span className="text-gray-600 text-14">{regdate}</span>
       </div>

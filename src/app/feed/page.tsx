@@ -35,6 +35,7 @@ const dummyData: ViewItemProps[] = [
     userImgURL: "/images/user3.png",
     location: "강릉",
     content: "3번 내용입니다.",
+    contentImg : ["/images/user1.png","/images/user2.png","/images/user3.png"],
     tags: ["카페", "감성", "동해"],
     views: 789,
     likes: 90,
