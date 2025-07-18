@@ -11,6 +11,7 @@ interface TagItemProps {
     | "outline"
     | "fill"
     | "primary";
+  size?: "sm" | "md";
   children: React.ReactNode;
   className?: string;
   closeIcon?: boolean;
@@ -20,6 +21,7 @@ interface TagItemProps {
 export default function TagItem({
   children,
   variant = "primary",
+  size = "md",
   className = "",
   closeIcon = false,
   onRemove,
@@ -34,9 +36,14 @@ export default function TagItem({
     primary: "bg-travel-primary100 border border-travel-primary200 text-white",
   };
 
+  const btnSize = {
+    sm: "py-1 px-2 text-12",
+    md: "py-1.5 px-3 text-[13px]",
+  };
+
   return (
     <div
-      className={`${btnType[variant]} ${className} py-1.5 px-3 text-[13px] rounded-2xl cursor-pointer font-sans grid grid-cols-[1fr_auto] items-center leading-none gap-1.5`}
+      className={`${btnType[variant]}  ${btnSize[size]} ${className}  rounded-2xl cursor-pointer font-sans grid grid-cols-[1fr_auto] items-center leading-none gap-1.5`}
     >
       {children}
       {closeIcon && <X onClick={onRemove} className="size-4 -translate-y-0.25" />}

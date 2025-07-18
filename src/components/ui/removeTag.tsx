@@ -23,7 +23,7 @@ export default function RemoveTag({ tagData }: RemoveTagProps) {
  return (
    <div className="flex gap-2">
      {tags.map(tag => (
-       <TagItem key={tag.id} variant="outline" closeIcon onRemove={() => handleRemove(tag.id)}>
+       <TagItem key={tag.id} variant="outline" size="md" closeIcon onRemove={() => handleRemove(tag.id)}>
          {tag.name}
        </TagItem>
      ))}
