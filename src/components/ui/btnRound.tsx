@@ -29,9 +29,9 @@ export default function ButtonRounded({
   };
 
   const btnSize = {
-    sm: "py-1 px-3 text-12 rounded-[1.25rem] min-w-12",
-    md: "py-2 px-4 text-14 rounded-3xl min-w-14",
-    lg: "py-2 px-5 text-16 rounded-4xl min-w-16",
+    sm: "py-1 px-3 text-12 rounded-[1.25rem] min-w-14",
+    md: "py-2 px-4 text-14 rounded-3xl min-w-16",
+    lg: "py-2 px-5 text-16 rounded-4xl min-w-18",
   };
 
   return (

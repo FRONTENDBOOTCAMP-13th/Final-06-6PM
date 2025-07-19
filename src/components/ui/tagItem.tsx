@@ -11,16 +11,20 @@ interface TagItemProps {
     | "outline"
     | "fill"
     | "primary";
+  size?: "sm" | "md";
   children: React.ReactNode;
   className?: string;
   closeIcon?: boolean;
+  onRemove?: () => void;
 }
 
 export default function TagItem({
   children,
   variant = "primary",
+  size = "md",
   className = "",
   closeIcon = false,
+  onRemove,
 }: TagItemProps) {
   const btnType = {
     info: "bg-travel-info100 border border-travel-info200 text-white",
@@ -32,16 +36,17 @@ export default function TagItem({
     primary: "bg-travel-primary100 border border-travel-primary200 text-white",
   };
 
-  const remove = () => {
-    console.log("삭제됩니다.");
+  const btnSize = {
+    sm: "py-1 px-2 text-12",
+    md: "py-1.5 px-3 text-[13px]",
   };
 
   return (
     <div
-      className={`${btnType[variant]} ${className} py-1.5 px-3 text-[13px] rounded-2xl cursor-pointer font-sans grid items-center leading-none gap-1.5`}
+      className={`${btnType[variant]}  ${btnSize[size]} ${className}  rounded-2xl cursor-pointer font-sans grid grid-cols-[1fr_auto] items-center leading-none`}
     >
       {children}
-      {closeIcon && <X onClick={remove} className="w-3 h-3" />}
+      {closeIcon && <X onClick={onRemove} className="size-4 -translate-y-0.25" />}
     </div>
   );
 }

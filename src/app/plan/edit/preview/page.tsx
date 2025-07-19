@@ -8,8 +8,7 @@ export default function TravelRegisterPage() {
       <ScheduleRegisterPlus 
         day={1} 
         date="2025.05.08" 
-        daylist={[{id: 1, title: "더미데이터"}
-        ]}/>
+        daylist={[{id: 1, title: "더미데이터", tag: "중요"}]}/>
       <ScheduleRegisterPlus day={2} date="2025.05.09"/>
        
       </div>

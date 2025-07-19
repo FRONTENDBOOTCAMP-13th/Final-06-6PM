@@ -1,7 +1,6 @@
 "use client";
 
 import SearchInput from "@/components/form/searchInput";
-import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -76,8 +75,6 @@ export default function TravelPage() {
     },
   ];
 
-  const [searchValueSm, setSearchValueSm] = useState("");
-
   const router = useRouter();
   const regionClick = (region: string) => {
     localStorage.setItem("selectedRegion", region);
@@ -91,13 +88,10 @@ export default function TravelPage() {
         <h2 className="text-travel-primary200 text-28 font-extrabold py-1">
           어디로 여행을 떠나시나요?
         </h2>
-        <SearchInput
-          size="md"
-          placeholder="가고 싶은 국내 여행지를 검색해보세요."
-          value={searchValueSm}
-          onChange={(e) => setSearchValueSm(e.target.value)}
-          className="my-2"
-        />
+          <SearchInput
+            size="md"
+            placeholder="가고 싶은 국내 여행지를 검색해보세요"
+          />
       </div>
       <div className="grid grid-cols-2 gap-5 py-5">
         {destinations.map((destination) => (

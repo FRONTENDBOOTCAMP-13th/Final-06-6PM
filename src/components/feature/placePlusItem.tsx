@@ -41,7 +41,7 @@ export default function PlacePlusItem({
       <div className="max-w-[240px] text-travel-text100 overflow-hidden">
         <div className="flex items-center gap-1">
           <h2 className="font-bold">{place}</h2>
-          <TagItem variant="primary">관광지</TagItem>
+          <TagItem variant="primary" size="sm">관광지</TagItem>
         </div>
 
         <p className="my-1 truncate text-travel-gray600 text-14 whitespace-nowrap">
