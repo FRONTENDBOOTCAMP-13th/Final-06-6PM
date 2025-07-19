@@ -22,7 +22,7 @@ export default function DrawerBtn() {
   };
 
   return (
-    <div>
+    <>
       <button onClick={() => setOpen(true)}>
         <EllipsisVerticalIcon className="cursor-pointer size-6 text-travel-gray400" />
       </button>
@@ -68,6 +68,6 @@ export default function DrawerBtn() {
           </Button>
         </DialogPanel>
       </Dialog>
-    </div>
+    </>
   );
 }

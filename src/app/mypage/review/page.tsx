@@ -1,14 +1,10 @@
-import Input from "@/components/ui/input";
-import SelectMenu3 from "@/components/feature/selectMenu3";
-import ViewItem from "@/components/feature/viewItem";
+import SelectReview from "@/components/feature/selectReview";
 import { ChevronDown } from "lucide-react";
 
 // 마이페이지/리뷰
 export default function MypageReviewPage() {
   return (
     <>
-      <h2>마이페이지/리뷰</h2>
-
       <div className="relative mb-2">
         <label htmlFor="daily-review"></label>
         <select
@@ -42,24 +38,7 @@ export default function MypageReviewPage() {
         </div>
       </div>
       <div className="bg-white rounded-2xl overflow-hidden">
-        <div className=" bg-white text-center rounded-2xl overflow-hidden">
-          <SelectMenu3 />
-        </div>
-        <div className="m-4 grid grid-cols-1 gap-2 shadow-[0_0_10px_rgba(0,0,0,0.3)] rounded-2xl">
-          <ViewItem
-            userName={"닉네임"}
-            userImgURL={"/gwak.png"}
-            location={"제주도"}
-            content={
-              "내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 "
-            }
-            tags={["맛집", "#좋아요", "몰라"]}
-            views={200}
-            likes={100}
-            comments={100}
-            date={"2025-07-15"}
-          />
-        </div>
+        <SelectReview/>
       </div>
     </>
   );

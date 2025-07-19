@@ -1,34 +1,9 @@
-import React from "react";
 import DropdownItem from "@/components/ui/dropdownItem";
 import TagItem from "@/components/ui/tagItem";
-import SelectMenu2 from "@/components/feature/selectMenu2";
-import PlacePlusItem from "@/components/feature/placePlusItem";
+import SelectBookmark from "@/components/feature/selectBookmark";
 
 // 마이페이지/북마크
 export default function MypageBookmarkPage() {
-  // 더미데이터
-  const dummyData = [
-    {
-      reviewRating: 1.3,
-      reviewCount: 2,
-      place: "광안리해수욕장",
-      desc: "포토스팟으로 일품인 광안대교의 야경",
-      imgUrl: "/images/user3.png",
-    },
-    {
-      reviewRating: 4.7,
-      reviewCount: 15,
-      place: "해운대해수욕장",
-      desc: "넓고 깨끗한 백사장이 인기 많은 해변",
-      imgUrl: "/images/user1.png",
-    },
-    {
-      reviewRating: 3.9,
-      reviewCount: 8,
-      place: "태종대",
-      desc: "절경과 산책로가 아름다운 명소",
-    },
-  ];
 
   return (
     <>
@@ -44,21 +19,9 @@ export default function MypageBookmarkPage() {
       </div>
 
       <h3 className="my-4 font-semibold">전체 도시</h3>
-      <div className="overflow-hidden bg-white rounded-2xl">
-        <SelectMenu2 />
 
-        <div className="grid grid-cols-1 gap-2 p-4">
-          {dummyData.map((item, idx) => (
-            <PlacePlusItem
-              key={idx}
-              reviewRating={item.reviewRating}
-              reviewCount={item.reviewCount}
-              place={item.place}
-              desc={item.desc}
-              imgUrl={item.imgUrl}
-            />
-          ))}
-        </div>
+      <div className="overflow-hidden bg-white rounded-2xl">
+        <SelectBookmark />
       </div>
     </>
   );

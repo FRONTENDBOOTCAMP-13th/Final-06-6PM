@@ -1,11 +1,61 @@
-import React from "react";
 import DropdownItem from "@/components/ui/dropdownItem";
 import TagItem from "@/components/ui/tagItem";
 import SelectMenu2 from "@/components/feature/selectMenu2";
-import ViewItem from "@/components/feature/viewItem";
+import ViewItem, { ViewItemProps } from "@/components/feature/viewItem";
 
 // 마이페이지/북마크
 export default function MypageBookmarkPage() {
+
+  const dummyData: ViewItemProps[] = [
+    {
+      userName: "주먹밥쿵야",
+      userImgURL: "/images/user1.png",
+      location: "제주도",
+      content: "1번 내용입니다.",
+      contentImg : ["/images/user1.png"],
+      tags: ["맛집", "자연", "풍경"],
+      views: 123,
+      likes: 45,
+      comments: 12,
+      visitDate: "2025-07-15",
+    },
+    {
+      userName: "하츄핑",
+      userImgURL: "/images/user2.png",
+      location: "부산",
+      content: "2번 내용입니다.",
+      contentImg : ["/images/user1.png","/images/user2.png"],
+      tags: ["해변", "카페", "바다"],
+      views: 456,
+      likes: 78,
+      comments: 34,
+      visitDate: "2025-07-14",
+    },
+    {
+      userName: "숀",
+      userImgURL: "/images/user3.png",
+      location: "강릉",
+      content: "3번 내용입니다.",
+      contentImg : ["/images/user1.png","/images/user2.png","/images/user3.png"],
+      tags: ["카페", "감성", "동해"],
+      views: 789,
+      likes: 90,
+      comments: 56,
+      visitDate: "2025-07-13",
+    },
+    {
+      userName: "듀..가나디",
+      userImgURL: "/images/user4.png",
+      location: "서울",
+      content: "4번 내용입니다.",
+      tags: ["맛집", "카페", "힐링"],
+      views: 129,
+      likes: 40,
+      comments: 76,
+      visitDate: "2025-07-14",
+    },
+  ];
+
   return (
     <>
       {/* 셀렉트창 및 필터 */}
@@ -22,21 +72,10 @@ export default function MypageBookmarkPage() {
       <h3 className="my-4 font-semibold">전체 도시</h3>
       <div className=" bg-white shadow-xl rounded-2xl overflow-hidden">
         <SelectMenu2 />
-
-        <div className="m-4 grid grid-cols-1 gap-2 shadow-[0_0_10px_rgba(0,0,0,0.3)] rounded-2xl">
-          <ViewItem
-            userName={"닉네임"}
-            userImgURL={"/gwak.png"}
-            location={"제주도"}
-            content={
-              "내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다 "
-            }
-            tags={["맛집", "#좋아요", "몰라"]}
-            views={200}
-            likes={100}
-            comments={100}
-            date={"2025-07-15"}
-          />
+        <div className="flex flex-col px-4 gap-4">
+        {dummyData.map((item, index) => (
+            <ViewItem key={index} {...item} />  
+          ))}
         </div>
       </div>
     </>
