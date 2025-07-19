@@ -1,0 +1,15 @@
+meta {
+  name: 댓글 삭제
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{url}}/posts/:id/replies
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1
+}

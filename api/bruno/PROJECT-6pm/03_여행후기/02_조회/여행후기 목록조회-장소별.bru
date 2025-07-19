@@ -1,16 +1,16 @@
 meta {
   name: 여행후기 목록조회-장소별
   type: http
-  seq: 2
+  seq: 5
 }
 
 get {
-  url: {{url}}/posts?type=reviewPlace&custom={"parent_id":1}
+  url: {{url}}/posts?type=reviewPlace&custom={"parent_id":2}
   body: none
   auth: inherit
 }
 
 params:query {
   type: reviewPlace
-  custom: {"parent_id":1}
+  custom: {"parent_id":2}
 }
