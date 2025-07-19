@@ -1,0 +1,19 @@
+meta {
+  name: 여행일정 등록
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/posts/1/replies/:id?type=plan
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: plan
+}
+
+params:path {
+  id: 1
+}
