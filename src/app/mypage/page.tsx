@@ -5,6 +5,7 @@ import SelectMenu2 from "@/components/feature/selectMenu2";
 import BookmarkItem from "@/components/ui/bookmarkItem";
 import DayItem from "@/components/ui/dayItem";
 import Link from "next/link";
+import SelectMypage from "@/components/feature/selectMypage";
 
 export default function MypagePage() {
   return (
@@ -23,13 +24,7 @@ export default function MypagePage() {
         </div>
       </div>
       <div className="bg-white shadow-xl rounded-2xl overflow-hidden mt-5">
-        <SelectMenu2 />
-        <div className="p-4 grid grid-cols-1 gap-2">
-          <DayItem name="제주도" period="2025.07.12 ~ 2025.07.15." dday="D-2" />
-          <DayItem name="제주도" period="2025.07.12 ~ 2025.07.15." dday="D-2" />
-          <DayItem name="제주도" period="2025.07.12 ~ 2025.07.15." dday="D-2" />
-          <DayItem name="제주도" period="2025.07.12 ~ 2025.07.15." dday="D-2" />
-        </div>
+        <SelectMypage/>
       </div>
     </>
   );
