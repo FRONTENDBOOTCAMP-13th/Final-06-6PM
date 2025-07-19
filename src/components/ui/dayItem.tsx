@@ -1,8 +1,7 @@
-import ButtonRounded from "@/components/ui/btnRound";
 import Image from "next/image";
 import React from "react";
 
-interface DayItemProps {
+export interface DayItemProps {
   imgUrl?: string;
   place?: string;
   period?: string;
@@ -16,7 +15,7 @@ export default function DayItem({
   dday,
 }: DayItemProps) {
   return (
-    <div className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow shadow-travel-gray300">
+    <div className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-[0_0_6px_rgba(0,0,0,0.3)]">
       <div className="flex gap-3 itmes-center">
         <div className="w-[50px] h-[50px] rounded-full bg-travel-gray200 overflow-hidden aspect-square">
           {imgUrl && (
@@ -24,7 +23,7 @@ export default function DayItem({
               width={100}
               height={100}
               src={imgUrl}
-              alt=""
+              alt={place}
               className="object-cover w-full h-full"
             />
           )}

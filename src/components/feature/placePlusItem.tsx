@@ -4,7 +4,7 @@ import TagItem from "@/components/ui/tagItem";
 import { Star, Plus } from "lucide-react";
 import Image from "next/image";
 
-interface PlacePlusItemProps {
+export interface PlacePlusItemProps {
   place?: string;
   desc?: string;
   reviewRating?: number;
