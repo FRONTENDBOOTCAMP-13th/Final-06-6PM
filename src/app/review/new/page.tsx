@@ -48,10 +48,10 @@ export default function ReviewPlanPage() {
         )}
       </div>
       <div className="space-y-4">
-        <DayItem name="부산" period="2025.07.12 ~ 2025.07.15." />
-        <DayItem name="부산" period="2025.07.12 ~ 2025.07.15." />
-        <DayItem name="제주도" period="2025.07.12 ~ 2025.07.15." dday="D-2" />
-        <DayItem empty />
+        <DayItem place="부산" period="2025.07.12 ~ 2025.07.15." />
+        <DayItem place="부산" period="2025.07.12 ~ 2025.07.15." />
+        <DayItem place="제주도" period="2025.07.12 ~ 2025.07.15." dday={2} />
+        <DayItem />
       </div>
     </>
   );
