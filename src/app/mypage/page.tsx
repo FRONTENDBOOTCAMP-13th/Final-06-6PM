@@ -1,9 +1,5 @@
-"use client";
-
 import ProfileItem from "@/components/ui/profileItem";
-import SelectMenu2 from "@/components/feature/selectMenu2";
 import BookmarkItem from "@/components/ui/bookmarkItem";
-import DayItem from "@/components/ui/dayItem";
 import Link from "next/link";
 import SelectMypage from "@/components/feature/selectMypage";
 
@@ -24,7 +20,7 @@ export default function MypagePage() {
         </div>
       </div>
       <div className="bg-white shadow-xl rounded-2xl overflow-hidden mt-5">
-        <SelectMypage/>
+        <SelectMypage />
       </div>
     </>
   );
