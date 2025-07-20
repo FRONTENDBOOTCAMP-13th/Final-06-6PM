@@ -62,9 +62,6 @@ export default function ProfileItemEdit({
 
       {/* 닉네임 */}
       <div className="w-full">
-        <label htmlFor="username" className="sr-only">
-          닉네임
-        </label>
         <Input
           size="sm"
           id="username"
@@ -75,9 +72,6 @@ export default function ProfileItemEdit({
 
       {/* 한줄소개 */}
       <div className="w-full">
-        <label htmlFor="description" className="sr-only">
-          한줄소개
-        </label>
         <Input
           size="sm"
           id="description"
@@ -88,9 +82,6 @@ export default function ProfileItemEdit({
 
       {/* 비밀번호 */}
       <div className="w-full">
-        <label htmlFor="password" className="sr-only">
-          새 비밀번호
-        </label>
         <Input
           size="sm"
           id="password"
@@ -101,9 +92,6 @@ export default function ProfileItemEdit({
       </div>
 
       <div className="w-full">
-        <label htmlFor="passwordConfirm" className="sr-only">
-          비밀번호 재확인
-        </label>
         <Input
           size="sm"
           id="passwordConfirm"
