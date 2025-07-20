@@ -1,11 +1,11 @@
 meta {
   name: 여행후기 목록상세조회-장소별
   type: http
-  seq: 10
+  seq: 6
 }
 
 get {
-  url: {{url}}/posts/:id?type=reviewPlace&custom={"parent_id":1}
+  url: {{url}}/posts?type=reviewPlace&custom={"parent_id":1}
   body: none
   auth: inherit
 }
@@ -13,8 +13,4 @@ get {
 params:query {
   type: reviewPlace
   custom: {"parent_id":1}
-}
-
-params:path {
-  id: 
 }

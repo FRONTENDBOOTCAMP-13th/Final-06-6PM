@@ -1,0 +1,23 @@
+meta {
+  name: 여행후기 삭제-전체
+  type: http
+  seq: 1
+}
+
+delete {
+  url: {{url}}/posts/:id?type=reviewAll
+  body: none
+  auth: inherit
+}
+
+params:query {
+  type: reviewAll
+}
+
+params:path {
+  id: 12
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}

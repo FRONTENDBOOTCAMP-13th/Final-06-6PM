@@ -1,0 +1,43 @@
+meta {
+  name: 여행후기 등록-전체
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/posts?type=reviewAll
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: reviewAll
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "type": "reviewAll",
+    "parent_id": 1,
+    "user": {
+      "_id": 6,
+      "name": "김연호"
+    },
+    "title": "대전 당일치기 후기",
+    "content": "성심당 굿! 좋아요",
+    "image": [
+      "files/febc13-final06-emjf/user-neo.png",
+      "files/febc13-final06-emjf/user-neo.png", 
+      "files/febc13-final06-emjf/user-neo.png"
+    ],
+    "tag": ["빵냠냠", "꿈돌이", "한화이글스"],
+    "extra": {
+      "startDate": "2025-07-12",
+      "endDate": "2025-07-12",
+      "starRate": 5
+    }
+  }
+}

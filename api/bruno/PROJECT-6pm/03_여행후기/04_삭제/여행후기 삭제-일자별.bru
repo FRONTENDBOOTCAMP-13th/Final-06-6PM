@@ -1,0 +1,23 @@
+meta {
+  name: 여행후기 삭제-일자별
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{url}}/posts/:id?type=reviewDaily
+  body: none
+  auth: inherit
+}
+
+params:query {
+  type: reviewDaily
+}
+
+params:path {
+  id: 20
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}

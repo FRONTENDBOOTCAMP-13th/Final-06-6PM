@@ -1,0 +1,15 @@
+meta {
+  name: 댓글 등록
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/posts/:id/replies
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1
+}
