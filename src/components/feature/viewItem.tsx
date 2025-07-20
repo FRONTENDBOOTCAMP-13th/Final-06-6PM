@@ -104,7 +104,9 @@ export default function ViewItem({
       {/* 리뷰사진 및 내용 */}
       <div className="space-y-2 text-14">
         {isDetailView ? (
+          // 게시물 상세페이지일 때 보이는 이미지
           showImg?.map((item, idx) => (
+            // TODO SWIPER 사용할 자리 = 아래 div 가 SwiperSlide구조로 변경되면 됨
             <div
               className="aspect-[3/2] rounded-lg overflow-hidden bg-travel-gray200"
               key={idx}
@@ -117,8 +119,10 @@ export default function ViewItem({
                 className="object-cover w-full h-full"
               />
             </div>
+            //
           ))
         ) : (
+          // 리스트페이지 일 때 보이는 이미지
           <div
             className={`grid gap-3 ${
               showImg?.length === 1 ? "grid-cols-1" : "grid-cols-2"
