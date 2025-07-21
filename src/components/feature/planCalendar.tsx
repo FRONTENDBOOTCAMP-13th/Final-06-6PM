@@ -1,7 +1,7 @@
 "use client";
 
 import { ko } from 'date-fns/locale/ko'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -17,35 +17,34 @@ interface DateRanges {
 }
 
 export default function PlanCalendar() {
-  // localStorage에서 저장된 날짜를 불러오는 함수
-  const loadDates = () => {
-    if (typeof window !== 'undefined') {
-      const start = localStorage.getItem('startDate');
-      const end = localStorage.getItem('endDate');
+  // 초기값을 서버 렌더링과 동일하게 설정
+  const [dates, setDates] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection'
+  });
+  
+  // hydration 문제 해결용...
+  const [Client, setClient] = useState(false);
 
-      // 저장된 날짜가 둘 다 존재하는 경우
-      if (start && end) {
-        return {
-          startDate: new Date(start),
-          endDate: new Date(end),
-          key: 'selection'
-        };
-      }
+  // 클라이언트에서만 sessionStorage 읽기
+  useEffect(() => {
+    setClient(true);
+    const start = sessionStorage.getItem('startDate');
+    const end = sessionStorage.getItem('endDate');
+
+    // 저장된 날짜가 있으면 상태 업데이트
+    if (start && end) {
+      setDates({
+        startDate: new Date(start),
+        endDate: new Date(end),
+        key: 'selection'
+      });
     }
+  }, []);
 
-   // 저장된 날짜가 없으면 오늘 날짜를 시작/종료로 설정해서 기본값으로 사용
-    return {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection'
-    };
-  };
-
-  const [dates, setDates] = useState(loadDates);
-
+  // 날짜 변경될 때 호출되는 함수
   const updateDates = (ranges: DateRanges) => {
-    
-    // 사용자 입력에 따라 선택된 날짜 범위를 가져옴
     const selection = ranges['selection'];
     const updatedDates = {
       startDate: selection.startDate,
@@ -55,17 +54,18 @@ export default function PlanCalendar() {
     
     setDates(updatedDates);
 
-    // 2025.07.21 형태로 포맷팅
-    const format = (date: Date) => {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}.${month}.${day}`;
-    };
-    
-    // 로컬 스트리지에 저장
-    localStorage.setItem('startDate', format(updatedDates.startDate));
-    localStorage.setItem('endDate', format(updatedDates.endDate));
+    // sessionStorage에 저장
+    if (Client) {
+      const format = (date: Date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}.${month}.${day}`;
+      };
+      
+      sessionStorage.setItem('startDate', format(updatedDates.startDate));
+      sessionStorage.setItem('endDate', format(updatedDates.endDate));
+    }
   };
 
   return (
@@ -77,7 +77,6 @@ export default function PlanCalendar() {
         showDateDisplay={false}
       />
 
-      {/* 레이아웃 페이지에 연결할 것들 */}
       <div>Start Date : {dates.startDate.toLocaleDateString('ko-KR')}</div>
       <div>End Date : {dates.endDate.toLocaleDateString('ko-KR')}</div>
     </div>
