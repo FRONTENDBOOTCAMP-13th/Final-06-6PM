@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{url}}/posts/1/replies/:id?type=plan
+  url: {{url}}/posts?type=plan
   body: json
   auth: inherit
 }
@@ -14,6 +14,50 @@ params:query {
   type: plan
 }
 
-params:path {
-  id: 1
+body:json {
+  {
+    "plan_id": 4,
+    "type": "plan",
+    "views": 23,
+    "user": {
+      "_id": 6,
+      "name": "김연호",
+      "image": "/files/01-community/user-neo.png"
+    },
+    "title": "대전 당일치기",
+    "extra": {
+      "startDate": "2025-06-25",
+      "endDate": "2025-06-25"
+    },
+    "replies": [
+      {
+        "content": "당일",
+        "day": 1,
+        "planDate": "2025-06-25",
+        "locations": [
+          {
+            "title": "성심당",
+            "types": "관광지",
+            "contentId": "126508",
+            "mapx": "126.9769",
+            "mapy": "37.5758"
+          },
+          {
+            "title": "한화이글스파크",
+            "types": "관광지",
+            "contentId": "126049",
+            "mapx": "126.9849",
+            "mapy": "37.5814"
+          },
+          {
+            "title": "유성온천",
+            "types": "관광지",
+            "contentId": "126592",
+            "mapx": "126.9858",
+            "mapy": "37.5717"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -1,0 +1,16 @@
+meta {
+  name: 여행 후기 하단 일자별 조회
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{url}}/posts?custom={"plan_id":1}&type=reviewDaily
+  body: none
+  auth: inherit
+}
+
+params:query {
+  custom: {"plan_id":1}
+  type: reviewDaily
+}
