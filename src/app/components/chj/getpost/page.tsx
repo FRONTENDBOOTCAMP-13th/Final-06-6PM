@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PlanItem } from "./types/plan";
-import { fetchPlanDetail } from "./devide/fetchPlanDetail";
+import { PlanItem } from "@/types/plan";
+import { fetchPlanDetail } from "@/data/functions/posts";
 
 export default function PostPage() {
   const [planData, setPlanData] = useState<PlanItem | null>(null);
 
   useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchPlanDetail();
-      setPlanData(data);
+    const fetchData = async () => {
+      const res = await fetchPlanDetail(2);
+      if (res?.ok) {
+        setPlanData(res.item);
+        console.log("일정 데이터:", res.item);
+      }
     };
-    loadData();
+
+    fetchData();
   }, []);
 
   if (!planData) {

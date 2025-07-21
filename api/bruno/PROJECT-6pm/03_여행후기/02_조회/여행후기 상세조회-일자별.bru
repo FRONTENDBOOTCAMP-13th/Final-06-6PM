@@ -1,0 +1,16 @@
+meta {
+  name: 여행후기 상세조회-일자별
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{url}}/posts/6?type=reviewDaily&custom={"plan_id":1}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  type: reviewDaily
+  custom: {"plan_id":1}
+}
