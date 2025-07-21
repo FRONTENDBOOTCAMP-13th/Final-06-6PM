@@ -1,14 +1,9 @@
-"use client";
 import { CalendarDays, ThumbsUp, MapPin, Sun, NotebookPen } from "lucide-react";
 import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
-import LocationDrawer from "@/components/feature/drawerItem";
-import { useState } from "react";
 import Link from "next/link";
 
 export default function HomePage() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
   return (
     <div className="min-h-screen w-full flex flex-col items-center bg-[url(/images/bg-default.png)] bg-center bg-cover bg-no-repeat">
       <div className="relative w-full px-4 pt-10 pb-6 text-white">
