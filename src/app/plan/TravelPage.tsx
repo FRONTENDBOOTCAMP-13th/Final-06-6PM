@@ -73,7 +73,7 @@ export default function TravelPage() {
 
   const router = useRouter();
   const regionClick = (region: string) => {
-    localStorage.setItem("selectedRegion", region);
+    sessionStorage.setItem("selectedRegion", region);
     router.push("/plan/dates");
   };
 

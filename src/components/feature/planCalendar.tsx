@@ -76,9 +76,6 @@ export default function PlanCalendar() {
         ranges={[dates]}
         showDateDisplay={false}
       />
-
-      <div>Start Date : {dates.startDate.toLocaleDateString('ko-KR')}</div>
-      <div>End Date : {dates.endDate.toLocaleDateString('ko-KR')}</div>
     </div>
   );
 }
