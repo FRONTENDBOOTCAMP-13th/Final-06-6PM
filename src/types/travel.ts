@@ -1,10 +1,12 @@
-export interface fetchKtoProps {
+export interface FetchAreaProps {
   header: {
     resultCode: string;
     resultMsg: string;
   };
   body: {
-    items: AreaProps[];
+    items: {
+      item: AreaProps[];
+    };
     numofRows: number;
     pageNo: number;
     totalCount: number;
@@ -16,6 +18,21 @@ export interface AreaProps {
   code: number; // 지역 코드 (예: 1 - 서울, 2 - 인천 등)
   name: string; // 지역 이름 (예: "서울", "부산")
   rnum: number;
+}
+
+export interface FetchAreaTravelProps {
+  header: {
+    resultCode: string;
+    resultMsg: string;
+  };
+  body: {
+    items: {
+      item: AreaTravelProps[];
+    };
+    numofRows: number;
+    pageNo: number;
+    totalCount: number;
+  };
 }
 
 // 지역 기반 여행지 정보를 나타내는 타입
