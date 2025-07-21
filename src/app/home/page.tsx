@@ -3,6 +3,8 @@ import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
 import Link from "next/link";
 import WeatherItem from "@/components/feature/weatherApi";
+import ServerLocation from "@/components/feature/serverLocation";
+import { getTodayString } from "@/lib/api/utils/getTodayString";
 
 export default function HomePage() {
   return (
@@ -11,9 +13,9 @@ export default function HomePage() {
         <div className="flex flex-col gap-1 mt-2 ">
           <div className="flex items-center gap-1 text-16">
             <MapPin className="w-4 h-4 mr-1" />
-            서울시 마포구
+            <ServerLocation />
           </div>
-          <div className="font-bold text-24">2025년 7월 10일 (수)</div>
+          <div className="font-bold text-24">{getTodayString()}</div>
         </div>
 
         <WeatherItem />

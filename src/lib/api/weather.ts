@@ -1,21 +1,24 @@
 import axios from "axios";
 
+const api_key = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+
 export async function fetchWeather() {
-  const url = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
+  const url =
+    "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
   const params = {
-    serviceKey:
-      "67phAfy03byS4215u35OXmm%2FVG0q6%2FvncZ3rkqehm8M%2BEPVAF6E3xjHjon1lQ7YLMg3ENE6ytogzeOympE0pDQ%3D%3D",
+    serviceKey: api_key,
     numOfRows: 10,
     pageNo: 1,
     dataType: "JSON",
-    base_date: "20250720",
-    base_time: "0500",
+    base_date: "20250721",
+    base_time: "1100",
     nx: 98,
     ny: 76,
   };
   const { data } = await axios.get(url, { params });
 
   console.log("[날씨 원본 응답]", data);
+  console.log("[날씨 원본 응답]", data.response.body.items);
   if (data.response?.header?.resultCode !== "00") {
     console.error(
       "[날씨 API 오류] resultCode:",
