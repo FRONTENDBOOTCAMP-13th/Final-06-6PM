@@ -1,51 +1,55 @@
-"use client";
-import { useWeather } from "@/hook/useWeather";
-import { Sun } from "lucide-react";
+import { getWeatherData } from "@/data/actions/weather";
+import { WeatherItem as WeatherItemType } from "@/types/weather";
+import {
+  Sun,
+  CloudSun,
+  Cloud,
+  CloudRain,
+  CloudLightning,
+  Snowflake,
+} from "lucide-react";
 
-export default function WeatherItem() {
-  // (1) 날씨 훅 사용
-  const { weather, loading, error } = useWeather(); // 서울 마포구 기준
+function WeatherIcon({ sky, pty }: { sky: string; pty: string }) {
+  if (pty === "1" || pty === "4")
+    return <CloudRain className="inline w-5 h-5 mr-1" />;
+  if (pty === "2") return <CloudLightning className="inline w-5 h-5 mr-1" />;
+  if (pty === "3") return <Snowflake className="inline w-5 h-5 mr-1" />;
+  if (sky === "1") return <Sun className="inline w-5 h-5 mr-1" />;
+  if (sky === "3") return <CloudSun className="inline w-5 h-5 mr-1" />;
+  if (sky === "4") return <Cloud className="inline w-5 h-5 mr-1" />;
+  return <Sun className="inline w-5 h-5 mr-1" />;
+}
 
-  // (2) 값 해석 (없으면 기본값)
-  const TMP = weather?.find((f) => f.category === "TMP");
-  const SKY = weather?.find((f) => f.category === "SKY");
-  const PTY = weather?.find((f) => f.category === "PTY");
+// 한글 텍스트 변환
+function skyText(sky: string, pty: string) {
+  if (pty === "1" || pty === "4") return "비";
+  if (pty === "2") return "비/눈";
+  if (pty === "3") return "눈";
+  if (sky === "1") return "맑음";
+  if (sky === "3") return "구름 많음";
+  if (sky === "4") return "흐림";
+  return "-";
+}
 
-  // (3) 하늘 상태 해석
-  function getSkyText(val?: string) {
-    if (!val) return "-";
-    if (val === "1") return "맑음";
-    if (val === "3") return "구름많음";
-    if (val === "4") return "흐림";
-    return "-";
+// 메인 컴포넌트
+export default async function WeatherItem() {
+  let weather: WeatherItemType[] = [];
+  try {
+    weather = await getWeatherData();
+  } catch {
+    return null;
   }
+  const tmp = weather.find((w) => w.category === "TMP");
+  const sky = weather.find((w) => w.category === "SKY");
+  const pty = weather.find((w) => w.category === "PTY");
 
-  // (4) 강수형태 해석
-  function getPtyText(val?: string) {
-    if (!val || val === "0") return "";
-    if (val === "1") return " / 비";
-    if (val === "2") return " / 비/눈";
-    if (val === "3") return " / 눈";
-    if (val === "4") return " / 소나기";
-    return "";
-  }
+  if (!tmp || !sky || !pty) return null;
 
   return (
-    <>
-      {/* === 날씨 데이터로 대체 === */}
-      <div className="absolute flex items-center gap-1 right-6 top-6 text-14">
-        <Sun className="w-4 h-4 mr-1" />
-        {loading && "불러오는 중..."}
-        {error && "날씨 오류"}
-        {!loading && !error && (
-          <>
-            {getSkyText(SKY?.fcstValue)}
-            {getPtyText(PTY?.fcstValue)}
-            {TMP ? ` ${TMP.fcstValue}°C` : ""}
-          </>
-        )}
-      </div>
-      {/* ======================== */}
-    </>
+    <div className="flex items-center gap-1 text-travel-text100 text-base">
+      <WeatherIcon sky={sky.fcstValue} pty={pty.fcstValue} />
+      <span>{skyText(sky.fcstValue, pty.fcstValue)}</span>
+      <span>{tmp.fcstValue}℃</span>
+    </div>
   );
 }

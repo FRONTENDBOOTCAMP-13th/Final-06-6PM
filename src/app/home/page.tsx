@@ -4,21 +4,26 @@ import RandomItem from "@/components/ui/randomItem";
 import Link from "next/link";
 import WeatherItem from "@/components/feature/weatherApi";
 import ServerLocation from "@/components/feature/serverLocation";
-import { getTodayString } from "@/lib/api/utils/getTodayString";
+import { getTodayString } from "@/lib/api/getTodayString";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen w-full flex flex-col items-center bg-[url(/images/bg-default.png)] bg-center bg-cover bg-no-repeat">
-      <div className="relative w-full px-4 pt-10 pb-6 text-white">
+      <div className="relative w-full px-4 pt-10 pb-6 text-travel-text100">
         <div className="flex flex-col gap-1 mt-2 ">
           <div className="flex items-center gap-1 text-16">
             <MapPin className="w-4 h-4 mr-1" />
             <ServerLocation />
           </div>
-          <div className="font-bold text-24">{getTodayString()}</div>
+
+          <div className="font-bold text-24 text-travel-text100">
+            {getTodayString()}
+          </div>
         </div>
 
-        <WeatherItem />
+        <div className="absolute right-4 top-6">
+          <WeatherItem />
+        </div>
       </div>
 
       <div className="w-full flex-1 px-4 py-7 bg-white/65 rounded-t-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] flex flex-col space-y-8">
