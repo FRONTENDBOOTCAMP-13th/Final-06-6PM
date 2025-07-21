@@ -1,4 +1,3 @@
-"use client";
 import { CalendarDays, ThumbsUp, MapPin, Sun, NotebookPen } from "lucide-react";
 import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
 // 지도생성게시판
-export default function ReviewPage() {
+export default function PhotoMapPage() {
   redirect("/photomap/view");
 }
