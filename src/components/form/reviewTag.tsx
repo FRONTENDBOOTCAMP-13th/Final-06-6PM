@@ -1,4 +1,4 @@
-import TagItem from "@/components/ui/tagItem";
+import TagItem from "@/components/feature/tagItem";
 
 export default function ReviewTag() {
   return (

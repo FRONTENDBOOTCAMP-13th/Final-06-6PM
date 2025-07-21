@@ -1,6 +1,6 @@
 "use client";
 import DayItem from "@/components/ui/dayItem";
-import DropdownItem from "@/components/ui/dropdownItem";
+import DropdownItem from "@/components/feature/dropdownItem";
 import { useState } from "react";
 
 const dummyList = [

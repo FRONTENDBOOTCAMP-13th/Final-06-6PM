@@ -1,11 +1,10 @@
 import Button from "@/components/ui/btn";
 import PlacePlusItem from "@/components/feature/placePlusItem";
 import SearchInput from "@/components/form/searchInput";
-import TagItem from "@/components/ui/tagItem";
+import TagItem from "@/components/feature/tagItem";
 import { Bookmark, CalendarDays, Search } from "lucide-react";
 
 export default function TravelRegister2Page() {
-
   return (
     <div className="">
       <SearchInput

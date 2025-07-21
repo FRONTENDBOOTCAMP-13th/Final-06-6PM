@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import TagItem from "@/components/ui/tagItem";
+import TagItem from "@/components/feature/tagItem";
 
 interface Tag {
- id: number;
- name: string;
+  id: number;
+  name: string;
 }
 
 interface RemoveTagProps {
@@ -13,20 +13,26 @@ interface RemoveTagProps {
 }
 
 export default function RemoveTag({ tagData }: RemoveTagProps) {
- const [tags, setTags] = useState(tagData);
+  const [tags, setTags] = useState(tagData);
 
- const handleRemove = (id: number) => {
-   const filteredTags = tags.filter(tag => tag.id !== id);
-   setTags(filteredTags);
- };
+  const handleRemove = (id: number) => {
+    const filteredTags = tags.filter((tag) => tag.id !== id);
+    setTags(filteredTags);
+  };
 
- return (
-   <div className="flex gap-2">
-     {tags.map(tag => (
-       <TagItem key={tag.id} variant="outline" size="md" closeIcon onRemove={() => handleRemove(tag.id)}>
-         {tag.name}
-       </TagItem>
-     ))}
-   </div>
- );
+  return (
+    <div className="flex gap-2">
+      {tags.map((tag) => (
+        <TagItem
+          key={tag.id}
+          variant="outline"
+          size="md"
+          closeIcon
+          onRemove={() => handleRemove(tag.id)}
+        >
+          {tag.name}
+        </TagItem>
+      ))}
+    </div>
+  );
 }

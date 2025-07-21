@@ -1,7 +1,7 @@
 import ButtonRounded from "@/components/ui/btnRound";
-import DropdownItem from "@/components/ui/dropdownItem";
+import DropdownItem from "@/components/feature/dropdownItem";
 import SearchInput from "@/components/form/searchInput";
-import TagItem from "@/components/ui/tagItem";
+import TagItem from "@/components/feature/tagItem";
 import ViewItem, { ViewItemProps } from "@/components/feature/viewItem";
 
 // 더미데이터
@@ -11,7 +11,7 @@ const dummyData: ViewItemProps[] = [
     userImgURL: "/images/user1.png",
     location: "제주도",
     content: "1번 내용입니다.",
-    contentImg : ["/images/user1.png"],
+    contentImg: ["/images/user1.png"],
     tags: ["맛집", "자연", "풍경"],
     views: 123,
     likes: 45,
@@ -23,7 +23,7 @@ const dummyData: ViewItemProps[] = [
     userImgURL: "/images/user2.png",
     location: "부산",
     content: "2번 내용입니다.",
-    contentImg : ["/images/user1.png","/images/user2.png"],
+    contentImg: ["/images/user1.png", "/images/user2.png"],
     tags: ["해변", "카페", "바다"],
     views: 456,
     likes: 78,
@@ -35,7 +35,7 @@ const dummyData: ViewItemProps[] = [
     userImgURL: "/images/user3.png",
     location: "강릉",
     content: "3번 내용입니다.",
-    contentImg : ["/images/user1.png","/images/user2.png","/images/user3.png"],
+    contentImg: ["/images/user1.png", "/images/user2.png", "/images/user3.png"],
     tags: ["카페", "감성", "동해"],
     views: 789,
     likes: 90,
