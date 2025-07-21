@@ -5,13 +5,17 @@ meta {
 }
 
 delete {
-  url: {{url}}/posts?type=reviewPlace
+  url: {{url}}/posts/:id?type=reviewPlace
   body: none
   auth: inherit
 }
 
 params:query {
   type: reviewPlace
+}
+
+params:path {
+  id: 23
 }
 
 headers {
