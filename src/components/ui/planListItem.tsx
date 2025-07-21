@@ -1,4 +1,4 @@
-import TagItem from "@/components/ui/tagItem";
+import TagItem from "@/components/feature/tagItem";
 
 export type PlanListItemProps = {
   id?: number;
@@ -18,7 +18,9 @@ function PlanListItem({ number, place, tag }: PlanListItemProps) {
       {/* 관광지명과 태그 */}
       <div className="font-medium leading-none contents">
         <span>{place}</span>
-        <TagItem variant="primary" size="sm">{tag}</TagItem>
+        <TagItem variant="primary" size="sm">
+          {tag}
+        </TagItem>
       </div>
     </div>
   );

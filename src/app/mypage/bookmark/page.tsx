@@ -1,10 +1,9 @@
-import DropdownItem from "@/components/ui/dropdownItem";
-import TagItem from "@/components/ui/tagItem";
+import DropdownItem from "@/components/feature/dropdownItem";
+import TagItem from "@/components/feature/tagItem";
 import SelectBookmark from "@/components/feature/selectBookmark";
 
 // 마이페이지/북마크
 export default function MypageBookmarkPage() {
-
   return (
     <>
       {/* 셀렉트창 및 필터 */}

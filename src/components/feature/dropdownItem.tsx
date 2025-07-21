@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import TagItem from "@/components/ui/tagItem";
+import TagItem from "@/components/feature/tagItem";
 
 interface DropdownItemProps {
   label: string;

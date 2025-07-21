@@ -2,8 +2,8 @@ import CommentItem from "@/components/ui/commentItem";
 import FreeItem from "@/components/ui/freeItem";
 import SelectMenu3 from "@/components/feature/selectMenu3";
 import SelectMenu2 from "@/components/feature/selectMenu2";
-import TagItem from "@/components/ui/tagItem";
-import DropdownItem from "@/components/ui/dropdownItem";
+import TagItem from "@/components/feature/tagItem";
+import DropdownItem from "@/components/feature/dropdownItem";
 
 export default function ComponentPage() {
   return (
