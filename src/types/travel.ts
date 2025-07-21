@@ -1,11 +1,25 @@
+export interface fetchKtoProps {
+  header: {
+    resultCode: string;
+    resultMsg: string;
+  };
+  body: {
+    items: AreaProps[];
+    numofRows: number;
+    pageNo: number;
+    totalCount: number;
+  };
+}
+
 // 지역(시/도) 정보를 나타내는 타입
-export type AreaProps = {
+export interface AreaProps {
   code: number; // 지역 코드 (예: 1 - 서울, 2 - 인천 등)
   name: string; // 지역 이름 (예: "서울", "부산")
-};
+  rnum: number;
+}
 
 // 지역 기반 여행지 정보를 나타내는 타입
-export type AreaTravelProps = {
+export interface AreaTravelProps {
   addr1: string; // 주소 (기본 주소)
   addr2: string; // 주소 (상세 주소)
   areacode: number; // 지역 코드 (AreaProps의 code와 매칭)
@@ -19,4 +33,4 @@ export type AreaTravelProps = {
   mapx: number; // 지도 좌표 (경도, X좌표)
   mapy: number; // 지도 좌표 (위도, Y좌표)
   title: string; // 여행지 제목 (명칭)
-};
+}
