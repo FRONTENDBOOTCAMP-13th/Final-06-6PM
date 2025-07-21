@@ -1,33 +1,36 @@
 "use client";
 import { useEffect, useState } from "react";
-import { AreaProps, AreaTravelProps, fetchKtoProps } from "@/types/travel";
+import { AreaProps, AreaTravelProps } from "@/types/travel";
 import { fetchAreaList, fetchTravelList } from "@/data/actions/travel";
+import Image from "next/image";
 
 export default function TravelPage() {
   const [areaList, setAreaList] = useState<AreaProps[]>([]);
-  const [selectedAreaCode, setSelectedAreaCode] = useState<number>(1);
+  const [selectAreaCode, setSelectAreaCode] = useState<number>(1);
   const [travelData, setTravelData] = useState<AreaTravelProps[]>([]);
 
   useEffect(() => {
-    // fetchAreaList();
-    // console.log(fetchAreaList());
-
-    const fetchAreaListData = async () => {
-      const res: fetchKtoProps = await fetchAreaList();
-
+    const areaListData = async () => {
+      const res = await fetchAreaList();
       if (res?.header.resultMsg === "OK") {
         setAreaList(res.body.items.item);
       }
     };
-
-    fetchAreaListData();
+    areaListData();
   }, []);
-
-  console.log("area", areaList);
+  // console.log("area", areaList);
 
   useEffect(() => {
-    fetchTravelList(selectedAreaCode);
-  }, [selectedAreaCode]);
+    const travelListData = async () => {
+      const res = await fetchTravelList(selectAreaCode);
+      if (res?.header.resultMsg === "OK") {
+        setTravelData(res.body.items.item);
+      }
+    };
+    travelListData();
+  }, [selectAreaCode]);
+  // console.log("areacode", selectAreaCode);
+  // console.log("travelData", travelData);
 
   return (
     <div className="space-y-4">
@@ -36,9 +39,9 @@ export default function TravelPage() {
         {areaList.map((area) => (
           <button
             key={area.code}
-            onClick={() => setSelectedAreaCode(area.code)}
+            onClick={() => setSelectAreaCode(area.code)}
             className={`px-4 py-1 rounded-3xl text-14 transition-colors duration-300 ${
-              selectedAreaCode === area.code
+              selectAreaCode === area.code
                 ? "bg-travel-info100 hover:bg-travel-info200 text-white"
                 : "bg-travel-gray200 hover:bg-travel-gray300"
             }`}
@@ -48,11 +51,11 @@ export default function TravelPage() {
         ))}
       </div>
 
-      {/* <div className="grid grid-cols-2 gap-4">
-        {travelDataArray.map((data, idx) => (
+      <div className="grid grid-cols-2 gap-4">
+        {travelData.map((data, idx) => (
           <div
             key={idx}
-            className="p-4 border border-gray-300 rounded-2xl flex flex-col items-center gap-4"
+            className="p-4 border border-gray-300 rounded-2xl flex flex-col items-center gap-4 bg-white"
           >
             {data.firstimage ? (
               <Image
@@ -69,7 +72,7 @@ export default function TravelPage() {
             <h3 className="font-bold text-14">{data.title}</h3>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }

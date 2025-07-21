@@ -1,5 +1,3 @@
-// data/functions/fetchKto.ts
-
 const API_SERVER = "http://apis.data.go.kr/B551011/KorService2";
 
 export async function fetchTravel(
@@ -20,7 +18,7 @@ export async function fetchTravel(
 
     return res.json();
   } catch (err) {
-    console.error("일정 조회 실패:", err);
+    console.error("데이터 조회 실패:", err);
     return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
   }
 }
