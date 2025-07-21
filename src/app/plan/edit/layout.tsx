@@ -1,6 +1,6 @@
 import "../../../styles/globals.css";
-import { ChevronLeft } from "lucide-react";
 import Button from "@/components/ui/btn";
+import BackButton from "@/components/feature/backButton";
 
 export default function MenubarLayout({
   children,
@@ -10,9 +10,7 @@ export default function MenubarLayout({
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer">
-          <ChevronLeft />
-        </button>
+        <BackButton />
         <p className="text-center">여행일정만들기</p>
       </div>
       <div className="relative w-full px-4 pb-25">
