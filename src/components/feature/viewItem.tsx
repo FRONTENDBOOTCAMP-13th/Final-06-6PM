@@ -7,9 +7,9 @@ import { Eye, Heart, MessageCircleMore, Star } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 export type ViewItemProps = {
   title?: string;
@@ -110,8 +110,8 @@ export default function ViewItem({
         {isDetailView ? (
           // 게시물 상세페이지일 때 보이는 이미지
           <Swiper
-            navigation={true}
-            modules={[Navigation]}
+            pagination={true}
+            modules={[Pagination]}
             className="rounded-lg overflow-hidden"
           >
             {showImg?.map((item, idx) => (
