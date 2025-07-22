@@ -12,6 +12,11 @@ export interface User {
     accessToken: string; // 액세스 토큰
     refreshToken: string; // 리프레시 토큰
   };
-  createdAt: string; // 생성일
-  updatedAt: string; // 수정일
+  createdAt?: string; // 생성일
+  updatedAt?: string; // 수정일
+}
+export interface UserState {
+  user: User | null;
+  setUser: (user: User) => void;
+  resetUser: () => void;
 }
