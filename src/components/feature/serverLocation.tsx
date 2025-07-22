@@ -1,19 +1,6 @@
-import axios from "axios";
+"use client";
 
-export default async function ServerLocation() {
-  let region = "위치 정보 없음";
-  let city = "";
-  try {
-    const res = await axios.get("https://ipapi.co/json/");
-    region = res.data.region || "위치 정보 없음";
-    city = res.data.city || "";
-  } catch {
-    region = "위치 정보 없음";
-  }
-
-  return (
-    <span>
-      {region} {city}
-    </span>
-  );
+// location이라는 props만 받아서 표시 (ipapi fetch, useEffect 등 전부 제거!)
+export default function ServerLocation({ location }: { location: string }) {
+  return <span>{location}</span>;
 }
