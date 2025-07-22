@@ -2,6 +2,7 @@ import "../../../styles/globals.css";
 import Button from "@/components/ui/btn";
 import RemoveTag from "@/components/ui/removeTag";
 import BackButton from "@/components/feature/backButton";
+import Link from "next/link";
 
 export default function MenubarLayout({
   children,
@@ -19,7 +20,7 @@ export default function MenubarLayout({
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <BackButton />
+        <BackButton path="/plan/edit/schedule" />
         <p className="text-center">여행일정만들기</p>
       </div>
       <div className="relative w-full px-4 pb-25">
@@ -38,9 +39,11 @@ export default function MenubarLayout({
         <div className="flex gap-2 pb-2">
           <RemoveTag tagData={tourData} />
         </div>
-        <Button className="w-full text-16">
-          05.08. ~ 05.12. 일정 선택 완료
-        </Button>
+        <Link href="/plan/edit/preview">
+          <Button className="w-full text-16">
+            일정 선택 완료
+          </Button>
+        </Link>
         
       </div>
     </div>

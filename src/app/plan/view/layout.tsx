@@ -11,7 +11,7 @@ export default function MenubarLayout({
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <BackButton />
+      <BackButton path="/plan/edit/preview" />
         <p className="text-center">여행 일정 살펴보기</p>
       </div>
       <div className="relative w-full px-4 pb-25">

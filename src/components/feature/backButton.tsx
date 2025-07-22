@@ -3,11 +3,19 @@
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function BackButton() {
+interface BackButtonProps {
+  path?: string;
+}
+
+export default function BackButton({ path }: BackButtonProps) {
   const router = useRouter();
 
   const goBackPage = () => {
-    router.back();
+    if (path) {
+      router.push(path);
+    } else {
+      router.back();
+    }
   };
 
   return (
