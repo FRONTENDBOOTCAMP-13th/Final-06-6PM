@@ -1,10 +1,10 @@
 export interface User {
   _id: number; // 사용자 고유 ID
-  email: string; // 이메일 주소
   name: string; // 사용자 이름
+  email: string; // 이메일 주소
   phone?: string; // 전화번호
-  address?: string; // 주소
-  type: "user" | "seller" | "admin"; // 사용자 유형
+  desc?: string; // 내용
+  type: "user" | "admin"; // 사용자 유형
   loginType?: "email" | "kakao" | "google" | "github"; // 로그인 방식
   image?: string; // 프로필 이미지
   token?: {
@@ -16,7 +16,11 @@ export interface User {
   updatedAt?: string; // 수정일
 }
 export interface UserState {
-  user: User | null;
-  setUser: (user: User) => void;
-  resetUser: () => void;
+  token: string | null;
+  userInfo: User | null;
+  isLoggedIn: boolean;
+
+  setToken: (token: string) => void;
+  setUserInfo: (info: User) => void;
+  logout: () => void;
 }
