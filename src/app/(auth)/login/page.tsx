@@ -18,7 +18,7 @@ export default function LoginPage() {
 
       <div className="text-travel-gray400 text-16 flex items-center gap-2">
         <Link
-          href="#"
+          href="/signup"
           className="hover:text-travel-primary100 transition text-travel-text100"
         >
           회원가입

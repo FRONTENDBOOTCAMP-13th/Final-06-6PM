@@ -10,8 +10,11 @@ import {
 import { ChevronDown, Settings } from "lucide-react";
 import Button from "@/components/ui/btn";
 import { useRouter } from "next/navigation";
+import useUserStore from "@/zustand/userStore";
+import { toast } from "react-toastify";
 
 export default function DrawerMypage() {
+  const { user, resetUser } = useUserStore();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -21,7 +24,9 @@ export default function DrawerMypage() {
   };
 
   const userLogout = () => {
-    console.log("로그아웃");
+    resetUser();
+    toast.success("로그아웃 되었습니다.");
+    router.replace("/home");
   };
 
   return (
