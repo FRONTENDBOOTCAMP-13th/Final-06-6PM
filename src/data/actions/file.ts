@@ -1,8 +1,9 @@
 import { ApiResPromise } from "@/types/api";
 import { FileUpload } from "@/types/file";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
+const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 /**
  * 파일 업로드 함수
