@@ -4,6 +4,7 @@ import BackButton from "@/components/feature/backButton";
 import DestinationCard, {
   Destination,
 } from "@/components/feature/destinationCard";
+import SearchRegion from "@/components/feature/searchRegion";
 import SearchInput from "@/components/form/searchInput";
 import { useRouter } from "next/navigation";
 
@@ -118,7 +119,7 @@ export default function TravelPage() {
         </h2>
         
         <div className="pt-3">
-          <SearchInput size="md" placeholder="가고 싶은 국내 여행지를 검색해보세요" />
+          <SearchRegion  regions={destinations} onRegionClick={regionClick} />
           <div className="grid grid-cols-2 gap-5 py-5">
             {destinations.map((destination) => (
               <DestinationCard
