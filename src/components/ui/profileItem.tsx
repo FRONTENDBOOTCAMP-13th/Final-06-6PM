@@ -1,6 +1,9 @@
 import DrawerMypage from "@/components/feature/drawerMypage";
+import useUserStore from "@/zustand/userStore";
 import Image from "next/image";
 import React from "react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
 
 export interface ProfileItemProps {
   imgUrl?: string;
@@ -19,17 +22,22 @@ export default function ProfileItem({
   likesCount = 0,
   totalLikes = 0,
 }: ProfileItemProps) {
+  const user = useUserStore((state) => state.user);
+  const imageUrl = user?.image?.startsWith("http")
+    ? user.image
+    : `${API_URL}/${user?.image}`;
+
   return (
     <div className="relative flex flex-col items-center gap-4 px-5 py-8 font-sans text-center bg-white shadow rounded-xl">
       <DrawerMypage />
 
       {/* 프로필이미지 */}
       <div className="overflow-hidden rounded-full w-25 h-25 bg-travel-gray200 aspect-square">
-        {imgUrl && (
+        {imageUrl && (
           <Image
             width={100}
             height={100}
-            src={imgUrl}
+            src={imageUrl || "/images/front-end.png"}
             alt={userName}
             className="object-cover w-full h-full"
           />
@@ -38,7 +46,7 @@ export default function ProfileItem({
 
       {/* 프로필기본내용 */}
       <div className="space-y-1">
-        <h2 className="font-semibold text-20">{userName}</h2>
+        <h2 className="font-semibold text-20">{user?.name}</h2>
         <p className="px-3 break-keep text-travel-gray700 line-clamp-3">
           {desc}
         </p>

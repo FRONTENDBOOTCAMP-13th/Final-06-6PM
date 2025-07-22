@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     domains: [
       "localhost", // 외부 이미지 사용
       "tong.visitkorea.or.kr",
+      "fesp-api.koyeb.app",
     ],
   },
   experimental: {

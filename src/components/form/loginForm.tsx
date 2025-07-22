@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import useUserStore from "@/zustand/userStore";
 
 export default function LoginForm() {
-  const { setUser } = useUserStore((state) => state);
+  const { setToken, setUserInfo } = useUserStore.getState();
   const router = useRouter();
   const [userState, formAction, isLoading] = useActionState(login, null);
   const redirect = useSearchParams().get("redirect");
@@ -17,16 +17,16 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (userState?.ok) {
-      setUser({
-        _id: userState.item._id,
-        email: userState.item.email,
-        name: userState.item.name,
-        type: userState.item.type,
-        image: userState.item.image,
-        token: {
-          accessToken: userState.item.token?.accessToken || "",
-          refreshToken: userState.item.token?.refreshToken || "",
-        },
+      const user = userState.item;
+
+      setToken(user.token?.accessToken || "");
+      setUserInfo({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        type: user.type,
+        image: user.image,
+        token: user.token,
       });
       toast.success("로그인이 완료되었습니다.");
       router.replace(redirect || "/home");

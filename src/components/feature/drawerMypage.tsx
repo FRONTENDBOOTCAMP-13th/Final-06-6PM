@@ -9,22 +9,22 @@ import {
 } from "@headlessui/react";
 import { ChevronDown, Settings } from "lucide-react";
 import Button from "@/components/ui/btn";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/zustand/userStore";
-import { toast } from "react-toastify";
 
 export default function DrawerMypage() {
-  const { user, resetUser } = useUserStore();
+  const logout = useUserStore.getState().logout;
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const userEdit = () => {
     console.log("수정");
-    router.replace("/mypage/edit");
+    router.push("/mypage/edit");
   };
 
   const userLogout = () => {
-    resetUser();
+    logout();
     toast.success("로그아웃 되었습니다.");
     router.replace("/home");
   };

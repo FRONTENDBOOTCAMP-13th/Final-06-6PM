@@ -1,7 +1,7 @@
 // app/mypage/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/zustand/userStore";
 import ProfileItem from "@/components/ui/profileItem";
@@ -10,20 +10,16 @@ import Link from "next/link";
 import SelectMypage from "@/components/feature/selectMypage";
 
 export default function MypagePage() {
-  const { user } = useUserStore();
+  const { isLoggedIn, userInfo } = useUserStore();
   const router = useRouter();
-  const [userCheck, setUserCheck] = useState(true); // 로딩 상태
 
   useEffect(() => {
-    // 로그인 상태 최종 확인
-    if (user === null) {
+    if (!isLoggedIn) {
       router.replace("/login");
-    } else {
-      setUserCheck(false); // 로그인되어 있으면 로딩 종료
     }
-  }, [user, router]);
+  }, [isLoggedIn, router]);
 
-  if (userCheck) {
+  if (!isLoggedIn) {
     return (
       <div className="h-screen flex justify-center items-center w-full pb-40">
         <div className="w-20 h-20 border-4 border-travel-primary200 border-t-transparent rounded-full animate-spin" />
@@ -35,7 +31,7 @@ export default function MypagePage() {
     <>
       <div className="flex flex-col gap-5 items-center">
         <div className="w-full">
-          <ProfileItem userName="여행덕후" />
+          <ProfileItem userName={userInfo?.name ?? ""} />
         </div>
         <div className="w-full flex flex-col gap-5">
           <Link href="/mypage/bookmark">
