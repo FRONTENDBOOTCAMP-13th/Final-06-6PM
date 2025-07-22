@@ -8,72 +8,100 @@ import { useRouter } from "next/navigation";
 
 // 여행계획
 export default function TravelPage() {
+
   const destinations: Destination[] = [
     {
-      id: 1,
+      areaCode: 1,
       name: "서울",
-      image: "/images/user5.png",
+      image: "/images/destinations/seoul.webp",
     },
     {
-      id: 2,
-      name: "부산",
-      image: "/images/user5.png",
-    },
-    {
-      id: 3,
-      name: "대전",
-      image: "/images/user5.png",
-    },
-    {
-      id: 4,
-      name: "대구",
-      image: "/images/user5.png",
-    },
-    {
-      id: 5,
+      areaCode: 2,
       name: "인천",
-      image: "/images/user5.png",
+      image: "/images/destinations/incheon.jpg",
     },
     {
-      id: 6,
-      name: "울산",
-      image: "/images/user5.png",
+      areaCode: 3,
+      name: "대전",
+      image: "/images/destinations/daejeon.jpg",
     },
     {
-      id: 7,
+      areaCode: 4,
+      name: "대구",
+      image: "/images/destinations/daegu.jpg",
+    },
+    {
+      areaCode: 5,
       name: "광주",
-      image: "/images/user5.png",
+      image: "/images/destinations/gwangju.webp",
     },
     {
-      id: 8,
-      name: "제주도",
-      image: "/images/user5.png",
+      areaCode: 6,
+      name: "부산",
+      image: "/images/destinations/busan.webp",
     },
     {
-      id: 9,
+      areaCode: 7,
+      name: "울산",
+      image: "/images/destinations/ulsan.webp",
+    },
+    {
+      areaCode: 8,
+      name: "세종특별자치시",
+      image: "/images/destinations/sejong.webp",
+    },
+    {
+      areaCode: 9,
       name: "경기도",
-      image: "/images/user5.png",
+      image: "/images/destinations/gyeonggi.webp",
     },
     {
-      id: 10,
-      name: "강원도",
-      image: "/images/user5.png",
+      areaCode: 10,
+      name: "강원특별자치도",
+      image: "/images/destinations/gangwon.webp",
     },
     {
-      id: 11,
-      name: "전라도",
-      image: "/images/user5.png",
+      areaCode: 11,
+      name: "충청북도",
+      image: "/images/destinations/chungbuk.webp",
     },
     {
-      id: 12,
-      name: "경상도",
-      image: "/images/user5.png",
+      areaCode: 12,
+      name: "충청남도",
+      image: "/images/destinations/chungnam.webp",
+    },
+    {
+      areaCode: 13,
+      name: "경상북도",
+      image: "/images/destinations/gyeongbuk.webp",
+    },
+    {
+      areaCode: 14,
+      name: "경상남도",
+      image: "/images/destinations/gyeongnam.webp",
+    },
+    {
+      areaCode: 15,
+      name: "전북특별자치도",
+      image: "/images/destinations/jeonbuk.webp",
+    },
+    {
+      areaCode: 16,
+      name: "전라남도",
+      image: "/images/destinations/jeonnam.webp",
+    },
+    {
+      areaCode: 17,
+      name: "제주도",
+      image: "/images/destinations/jeju.webp",
     },
   ];
 
   const router = useRouter();
-  const regionClick = (region: string) => {
+  const regionClick = (region: string, areaCode: number) => {
+
     sessionStorage.setItem("selectedRegion", region);
+    sessionStorage.setItem("selectedAreaCode", areaCode.toString());
     router.push("/plan/dates");
   };
 
@@ -92,9 +120,9 @@ export default function TravelPage() {
       <div className="grid grid-cols-2 gap-5 py-5">
         {destinations.map((destination) => (
           <DestinationCard
-            key={destination.id}
+            key={destination.areaCode}
             destination={destination}
-            onClick={regionClick}
+            onClick={() => regionClick(destination.name, destination.areaCode)}
           />
         ))}
       </div>
