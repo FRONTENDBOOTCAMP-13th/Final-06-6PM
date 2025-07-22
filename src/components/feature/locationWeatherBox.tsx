@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { MapPin } from "lucide-react";
 import ServerLocation from "@/components/feature/serverLocation";
 import WeatherItem from "@/components/feature/weatherApi";
-import { convertLatLngToGrid } from "@/lib/api/togrid";
+import { convertLatLngToGrid } from "@/lib/togrid";
 
 export default function LocationWeatherBox() {
   const [location, setLocation] = useState("위치 정보 없음");

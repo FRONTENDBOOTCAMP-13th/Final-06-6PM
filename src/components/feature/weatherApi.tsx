@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getWeatherData } from "@/data/actions/weather";
 import { WeatherItem as WeatherItemType } from "@/types/weather";
 import {
   Sun,
@@ -10,6 +9,7 @@ import {
   CloudLightning,
   Snowflake,
 } from "lucide-react";
+import { getWeatherData } from "@/data/functions/weather";
 
 function WeatherIcon({ sky, pty }: { sky: string; pty: string }) {
   if (pty === "1" || pty === "4")

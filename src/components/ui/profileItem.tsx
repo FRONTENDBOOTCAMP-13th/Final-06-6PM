@@ -1,5 +1,7 @@
+"use client";
+
 import DrawerMypage from "@/components/feature/drawerMypage";
-import { getUser } from "@/data/actions/user";
+import { getUser } from "@/data/functions/user";
 import { User } from "@/types/user";
 import useUserStore from "@/zustand/userStore";
 import Image from "next/image";
