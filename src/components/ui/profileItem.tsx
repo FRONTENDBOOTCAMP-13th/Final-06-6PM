@@ -1,6 +1,5 @@
-import { Settings } from "lucide-react";
+import DrawerMypage from "@/components/feature/drawerMypage";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 export interface ProfileItemProps {
@@ -22,12 +21,7 @@ export default function ProfileItem({
 }: ProfileItemProps) {
   return (
     <div className="relative flex flex-col items-center gap-4 px-5 py-8 font-sans text-center bg-white shadow rounded-xl">
-      <Link
-        href="/mypage/edit"
-        className="absolute top-6 right-5 text-travel-gray700"
-      >
-        <Settings className="size-6" />
-      </Link>
+      <DrawerMypage />
 
       {/* 프로필이미지 */}
       <div className="overflow-hidden rounded-full w-25 h-25 bg-travel-gray200 aspect-square">
