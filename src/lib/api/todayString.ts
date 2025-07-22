@@ -1,5 +1,4 @@
-// src/utils/getTodayString.ts
-export function getTodayString() {
+export function todayString() {
   const date = new Date();
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   return `${date.getFullYear()}년 ${
