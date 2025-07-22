@@ -10,11 +10,12 @@ import Link from "next/link";
 import SelectMypage from "@/components/feature/selectMypage";
 
 export default function MypagePage() {
-  const { isLoggedIn, userInfo } = useUserStore();
+  const { isLoggedIn } = useUserStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    // 비로그인 상태이고 현재 경로가 /mypage일 때만 이동
+    if (!isLoggedIn && window.location.pathname === "/mypage") {
       router.replace("/login");
     }
   }, [isLoggedIn, router]);
@@ -31,7 +32,7 @@ export default function MypagePage() {
     <>
       <div className="flex flex-col gap-5 items-center">
         <div className="w-full">
-          <ProfileItem userName={userInfo?.name ?? ""} />
+          <ProfileItem />
         </div>
         <div className="w-full flex flex-col gap-5">
           <Link href="/mypage/bookmark">

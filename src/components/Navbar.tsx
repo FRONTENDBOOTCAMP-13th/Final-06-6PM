@@ -6,13 +6,13 @@ import Link from "next/link";
 import { UserRound, Home, LayoutList, SquarePen, Map } from "lucide-react";
 
 export default function Navbar() {
-  const { user } = useUserStore();
+  const isLoggedIn = useUserStore((state) => state.isLoggedIn);
   const router = useRouter();
 
-  const userStatusCheck = (e: React.MouseEvent) => {
-    if (!user) {
+  const userStatusLogin = (e: React.MouseEvent, targetPath: string) => {
+    if (!isLoggedIn) {
       e.preventDefault();
-      router.push("/login");
+      router.push(`/login?redirect=${encodeURIComponent(targetPath)}`);
     }
   };
 
@@ -35,7 +35,7 @@ export default function Navbar() {
         </Link>
         <Link
           href="/plan"
-          onClick={userStatusCheck}
+          onClick={(e) => userStatusLogin(e, "/plan")}
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <SquarePen />
@@ -43,7 +43,7 @@ export default function Navbar() {
         </Link>
         <Link
           href="/photomap"
-          onClick={userStatusCheck}
+          onClick={(e) => userStatusLogin(e, "/photomap")}
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <Map />
@@ -51,7 +51,7 @@ export default function Navbar() {
         </Link>
         <Link
           href="/mypage"
-          onClick={userStatusCheck}
+          onClick={(e) => userStatusLogin(e, "/mypage")}
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <UserRound />

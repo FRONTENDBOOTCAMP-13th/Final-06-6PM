@@ -26,7 +26,9 @@ export default function DrawerMypage() {
   const userLogout = () => {
     logout();
     toast.success("로그아웃 되었습니다.");
-    router.replace("/home");
+    setTimeout(() => {
+      router.replace("/");
+    }, 50);
   };
 
   return (
