@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import { getWeatherData } from "@/data/actions/weather";
 import { WeatherItem as WeatherItemType } from "@/types/weather";
 import {
@@ -20,7 +22,6 @@ function WeatherIcon({ sky, pty }: { sky: string; pty: string }) {
   return <Sun className="inline w-5 h-5 mr-1" />;
 }
 
-// 한글 텍스트 변환
 function skyText(sky: string, pty: string) {
   if (pty === "1" || pty === "4") return "비";
   if (pty === "2") return "비/눈";
@@ -31,22 +32,24 @@ function skyText(sky: string, pty: string) {
   return "-";
 }
 
-// 메인 컴포넌트
-export default async function WeatherItem() {
-  let weather: WeatherItemType[] = [];
-  try {
-    weather = await getWeatherData();
-  } catch {
-    return null;
-  }
+export default function WeatherItem({ nx, ny }: { nx: string; ny: string }) {
+  const [weather, setWeather] = useState<WeatherItemType[] | null>(null);
+
+  useEffect(() => {
+    if (!nx || !ny) return;
+    getWeatherData(nx, ny)
+      .then(setWeather)
+      .catch(() => setWeather(null));
+  }, [nx, ny]);
+
+  if (!weather) return null;
   const tmp = weather.find((w) => w.category === "TMP");
   const sky = weather.find((w) => w.category === "SKY");
   const pty = weather.find((w) => w.category === "PTY");
-
   if (!tmp || !sky || !pty) return null;
 
   return (
-    <div className="flex items-center gap-1 text-travel-text100 text-base">
+    <div className="flex items-center gap-1 text-white text-base">
       <WeatherIcon sky={sky.fcstValue} pty={pty.fcstValue} />
       <span>{skyText(sky.fcstValue, pty.fcstValue)}</span>
       <span>{tmp.fcstValue}℃</span>

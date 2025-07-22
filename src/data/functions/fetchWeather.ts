@@ -1,9 +1,13 @@
 import { WeatherItem } from "@/types/weather";
-import { getTodayYYYYMMDD } from "@/lib/api/getTodayYYYYMMDD";
+import { todayDate } from "@/lib/api/todayDate";
+import { baseTime } from "@/lib/api/baseTime";
 
 const api_key = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
-export async function fetchWeather(): Promise<WeatherItem[]> {
+export async function fetchWeather(
+  nx: string,
+  ny: string
+): Promise<WeatherItem[]> {
   const url =
     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
   const params = new URLSearchParams({
@@ -11,10 +15,10 @@ export async function fetchWeather(): Promise<WeatherItem[]> {
     numOfRows: "10",
     pageNo: "1",
     dataType: "JSON",
-    base_date: getTodayYYYYMMDD(),
-    base_time: "1100",
-    nx: "98",
-    ny: "76",
+    base_date: todayDate(),
+    base_time: baseTime(),
+    nx,
+    ny,
   });
 
   const response = await fetch(`${url}?${params}`);

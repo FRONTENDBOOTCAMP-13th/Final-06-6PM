@@ -2,27 +2,16 @@ import { CalendarDays, ThumbsUp, MapPin, NotebookPen } from "lucide-react";
 import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
 import Link from "next/link";
-import WeatherItem from "@/components/feature/weatherApi";
-import ServerLocation from "@/components/feature/serverLocation";
-import { getTodayString } from "@/lib/api/getTodayString";
+import { todayString } from "@/lib/api/todayString";
+import LocationWeatherBox from "@/components/feature/LocationWeatherBox";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen w-full flex flex-col items-center bg-[url(/images/bg-default.png)] bg-center bg-cover bg-no-repeat">
-      <div className="relative w-full px-4 pt-10 pb-6 text-travel-text100">
+      <div className="relative w-full px-4 pt-10 pb-6 text-white">
         <div className="flex flex-col gap-1 mt-2 ">
-          <div className="flex items-center gap-1 text-16">
-            <MapPin className="w-4 h-4 mr-1" />
-            <ServerLocation />
-          </div>
-
-          <div className="font-bold text-24 text-travel-text100">
-            {getTodayString()}
-          </div>
-        </div>
-
-        <div className="absolute right-4 top-6">
-          <WeatherItem />
+          <LocationWeatherBox />
+          <div className="font-bold text-24 text-white">{todayString()}</div>
         </div>
       </div>
 
