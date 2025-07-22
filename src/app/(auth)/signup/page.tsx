@@ -1,4 +1,9 @@
-// 회원가입
-export default function SingUpPage() {
-  return <h2>회원가입페이지</h2>;
+import SignupForm from "@/components/form/singUpForm";
+
+export default function SignUpPage() {
+  return (
+    <div className="flex flex-col gap-8 items-center justify-center min-h-dvh">
+      <SignupForm />
+    </div>
+  );
 }
