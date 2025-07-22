@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/feature/backButton";
 import DestinationCard, {
   Destination,
 } from "@/components/feature/destinationCard";
@@ -106,25 +107,28 @@ export default function TravelPage() {
   };
 
   return (
-    <div className="p-5">
-      <div>
-        <h2>여행일정만들기</h2>
-        <h2 className="py-1 font-extrabold text-travel-primary200 text-28">
+    <div>
+      <div className="w-full relative py-5 px-4">
+        <BackButton />
+        <p className="text-center">여행일정만들기</p>
+      </div>
+      <div className="relative w-full px-4 pb-25">
+        <h2 className="text-28 text-travel-primary200 font-semibold">
           어디로 여행을 떠나시나요?
         </h2>
-        <SearchInput
-          size="md"
-          placeholder="가고 싶은 국내 여행지를 검색해보세요"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-5 py-5">
-        {destinations.map((destination) => (
-          <DestinationCard
-            key={destination.areaCode}
-            destination={destination}
-            onClick={() => regionClick(destination.name, destination.areaCode)}
-          />
-        ))}
+        
+        <div className="pt-3">
+          <SearchInput size="md" placeholder="가고 싶은 국내 여행지를 검색해보세요" />
+          <div className="grid grid-cols-2 gap-5 py-5">
+            {destinations.map((destination) => (
+              <DestinationCard
+                key={destination.areaCode}
+                destination={destination}
+                onClick={() => regionClick(destination.name, destination.areaCode)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
