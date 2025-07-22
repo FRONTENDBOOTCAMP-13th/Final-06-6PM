@@ -3,7 +3,7 @@ import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
 import Link from "next/link";
 import { todayString } from "@/lib/api/todayString";
-import LocationWeatherBox from "@/components/feature/LocationWeatherBox";
+import LocationWeatherBox from "@/components/feature/locationWeatherBox";
 
 export default function HomePage() {
   return (
