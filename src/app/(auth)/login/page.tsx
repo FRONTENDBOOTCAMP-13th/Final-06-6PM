@@ -6,7 +6,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col gap-8 items-center justify-center min-h-dvh">
       <Image
-        src="/images/log.png"
+        src="/images/logo.png"
         alt="여행로그인 로고"
         width={200}
         height={200}
