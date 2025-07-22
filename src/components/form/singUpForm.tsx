@@ -7,11 +7,10 @@ import { useRouter } from "next/navigation";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/btn";
 import { toast } from "react-toastify";
+import ImageUploader from "@/components/form/imageUploader";
 
 export default function SignupForm() {
-  const [state, formAction, isLoading] = useActionState(createUser, null);
-  console.log(isLoading, state);
-
+  const [state, formAction] = useActionState(createUser, null);
   const router = useRouter();
 
   useEffect(() => {
@@ -31,25 +30,14 @@ export default function SignupForm() {
     >
       <input type="hidden" name="type" value="user" />
 
-      {/* 이름 */}
-      <div className="w-full">
-        <Input
-          size="md"
-          id="name"
-          name="name"
-          placeholder="이름을 입력해주세요"
-        />
-        <p className="mt-1 text-14 font-medium text-travel-fail100">
-          {state?.ok === 0 && state.errors?.name?.msg}
-        </p>
-      </div>
-
       {/* 이메일 */}
       <div className="w-full">
         <Input
-          size="md"
+          size="sm"
           id="email"
           name="email"
+          labelTitle="이메일"
+          srOnly={false}
           placeholder="이메일을 입력해주세요"
         />
         <p className="mt-1 text-14 font-medium text-travel-fail100">
@@ -60,10 +48,12 @@ export default function SignupForm() {
       {/* 비밀번호 */}
       <div className="w-full">
         <Input
-          size="md"
+          size="sm"
           id="password"
           name="password"
           type="password"
+          labelTitle="비밀번호"
+          srOnly={false}
           placeholder="비밀번호를 입력해주세요"
         />
         <p className="mt-1 text-14 font-medium text-travel-fail100">
@@ -71,21 +61,37 @@ export default function SignupForm() {
         </p>
       </div>
 
-      {/* 이미지 */}
+      {/* 이름 */}
       <div className="w-full">
-        <label htmlFor="attach" className="sr-only">
-          프로필 이미지
-        </label>
-        <input
-          type="file"
-          id="attach"
-          accept="image/*"
-          placeholder="이미지를 선택하세요"
-          className="w-full px-4 py-3.5 text-16 rounded-lg border border-travel-gray400 bg-white text-travel-gray500 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100"
-          name="attach"
+        <Input
+          size="sm"
+          id="name"
+          name="name"
+          labelTitle="닉네임"
+          srOnly={false}
+          placeholder="닉네임을 입력해주세요"
+        />
+        <p className="mt-1 text-14 font-medium text-travel-fail100">
+          {state?.ok === 0 && state.errors?.name?.msg}
+        </p>
+      </div>
+
+      {/* 소개 */}
+      <div className="w-full">
+        <Input
+          size="sm"
+          id="desc"
+          name="desc"
+          labelTitle="소개(선택사항)"
+          srOnly={false}
+          placeholder="소개를 입력해주세요"
         />
       </div>
 
+      {/* 이미지 */}
+      <ImageUploader />
+
+      {/* 버튼 그룹 */}
       <div className="flex justify-center items-center gap-4">
         <Button type="submit" variant="primary" size="md">
           회원가입

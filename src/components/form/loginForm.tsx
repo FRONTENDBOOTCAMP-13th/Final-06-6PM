@@ -13,7 +13,6 @@ export default function LoginForm() {
   const router = useRouter();
   const [userState, formAction, isLoading] = useActionState(login, null);
   const redirect = useSearchParams().get("redirect");
-  console.log(isLoading, userState);
 
   useEffect(() => {
     if (userState?.ok) {
