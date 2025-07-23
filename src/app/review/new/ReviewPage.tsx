@@ -1,7 +1,11 @@
 "use client";
 import DayItem from "@/components/ui/dayItem";
 import DropdownItem from "@/components/feature/dropdownItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useUserStore from "@/zustand/userStore";
+import { getPlanListUser } from "@/lib/api/plan";
+import { GetPlanDetailProps } from "@/types/plan";
+import { getDday } from "@/lib/getDday";
 
 const dummyList = [
   {
@@ -16,6 +20,9 @@ const dummyList = [
 export default function ReviewNew() {
   const [selectOpen, setSelectOpen] = useState(false);
   const [selectData, setSelectData] = useState(dummyList[0].title);
+
+  const token = useUserStore((state) => state.token);
+  const [plan, setPlan] = useState<GetPlanDetailProps[]>([]);
 
   const listData = (
     <>
@@ -33,6 +40,20 @@ export default function ReviewNew() {
       ))}
     </>
   );
+
+  useEffect(() => {
+    const planListUserData = async () => {
+      const res = await getPlanListUser(token);
+      // console.log("API 응답:", res);
+      if (res.ok) {
+        setPlan(res.item);
+      }
+    };
+    planListUserData();
+  }, [token]);
+
+  console.log(plan);
+
   return (
     <>
       <div className="relative flex flex-row-reverse my-3">
@@ -48,9 +69,23 @@ export default function ReviewNew() {
         )}
       </div>
       <div className="space-y-4">
-        <DayItem place="부산" period="2025.07.12 ~ 2025.07.15." />
-        <DayItem place="제주도" period="2025.07.12 ~ 2025.07.15." dday={20} />
-        <DayItem />
+        {plan ? (
+          plan.map((item) => {
+            const dday = getDday(item.extra?.startDate);
+            if (dday >= 0) return null;
+
+            return (
+              <DayItem
+                key={item._id}
+                place={item.title}
+                period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
+                dday={dday}
+              />
+            );
+          })
+        ) : (
+          <DayItem />
+        )}
       </div>
     </>
   );
