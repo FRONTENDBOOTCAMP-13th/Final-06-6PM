@@ -7,12 +7,14 @@ interface SearchInputProps {
   size?: "sm" | "md" | "lg";
   placeholder?: string;
   className?: string;
+  onSearch?: (value: string) => void;
 }
 
 export default function SearchInput({
   size = "md",
   placeholder = "검색어를 입력하세요",
   className = "",
+  onSearch,
 }: SearchInputProps) {
   const [inputValue, setInputValue] = useState("");
 
@@ -30,8 +32,11 @@ export default function SearchInput({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     console.log(inputValue);
+    
+    if (onSearch) {
+      onSearch(inputValue);
+    }
   };
 
   return (
