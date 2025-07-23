@@ -7,6 +7,7 @@ export interface Destination {
   areaCode: number;
   name: string;
   image: string;
+  keywords?: string[];
 }
 
 interface DestinationCardProps {
