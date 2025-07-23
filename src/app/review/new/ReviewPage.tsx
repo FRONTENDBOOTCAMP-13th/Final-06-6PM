@@ -69,19 +69,23 @@ export default function ReviewNew() {
         )}
       </div>
       <div className="space-y-4">
-        {plan.map((item) => {
-          const dday = getDday(item.extra.startDate);
-          if (dday > 0) return null;
+        {plan ? (
+          plan.map((item) => {
+            const dday = getDday(item.extra?.startDate);
+            if (dday >= 0) return null;
 
-          return (
-            <DayItem
-              key={item._id}
-              place={item.title}
-              period={`${item.extra.startDate} ~ ${item.extra.endDate}`}
-              dday={dday}
-            />
-          );
-        })}
+            return (
+              <DayItem
+                key={item._id}
+                place={item.title}
+                period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
+                dday={dday}
+              />
+            );
+          })
+        ) : (
+          <DayItem />
+        )}
       </div>
     </>
   );

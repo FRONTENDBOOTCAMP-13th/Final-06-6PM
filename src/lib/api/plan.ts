@@ -13,8 +13,7 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 export async function getPlanListUser(
   token: string | null
 ): ApiResPromise<GetPlanDetailProps[]> {
-  console.log(token);
-
+  // console.log(token);
   try {
     const res = await fetch(`${API_URL}/posts/users?type=plan`, {
       method: "GET",
@@ -23,9 +22,7 @@ export async function getPlanListUser(
         "Client-Id": CLIENT_ID,
         Authorization: `Bearer ${token}`,
       },
-      cache: "force-cache",
     });
-
     return res.json();
   } catch (err) {
     console.error("사용자 여행 계획 조회 실패:", err);
