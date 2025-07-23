@@ -55,31 +55,3 @@ export async function getPlanList(): ApiResPromise<GetPlanDetailProps[]> {
     return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
   }
 }
-
-/**
- * 특정 사용자(user_id)가 작성한 여행 계획(type=plan) 게시물 목록을 조회
- *
- * @param userId - 게시물을 작성한 사용자의 고유 ID
- * @returns {Promise<ApiRes<GetPlanDetailProps[]>>} 여행 계획 게시물 배열을 포함한 응답 객체
- */
-export async function getPlanListUser(
-  userId: number
-): ApiResPromise<GetPlanDetailProps[]> {
-  try {
-    const res = await fetch(`${API_URL}/posts/?type=plan&user_id=${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Client-Id": CLIENT_ID,
-      },
-    });
-
-    return res.json();
-  } catch (err) {
-    console.error("사용자 여행 계획 조회 실패:", err);
-    return {
-      ok: 0,
-      message: "사용자의 여행 계획 목록을 불러오는 데 실패했습니다.",
-    };
-  }
-}
