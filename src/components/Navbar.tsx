@@ -34,8 +34,8 @@ export default function Navbar() {
           <span className="whitespace-nowrap">살펴보기</span>
         </Link>
         <Link
-          href="/plan"
-          onClick={(e) => userStatusLogin(e, "/plan")}
+          href="/review"
+          onClick={(e) => userStatusLogin(e, "/review")}
           className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12"
         >
           <SquarePen />

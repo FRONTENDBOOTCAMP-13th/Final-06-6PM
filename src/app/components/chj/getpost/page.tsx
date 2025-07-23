@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PlanItem } from "@/types/plan";
+import { GetPlanDetailProps } from "@/types/plan";
 import { getPlanDetail } from "@/data/functions/plan";
 
 export default function PostPage() {
-  const [planData, setPlanData] = useState<PlanItem | null>(null);
+  const [planData, setPlanData] = useState<GetPlanDetailProps | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -35,8 +35,14 @@ export default function DayItem({
       </div>
 
       {dday && (
-        <div className="px-4 py-1 text-center text-white bg-travel-primary100 text-14 rounded-3xl min-w-14">
-          D-{dday}
+        <div
+          className={`px-4 py-1 text-center text-white text-14 rounded-3xl min-w-14 ${
+            dday < 0 ? "bg-travel-gray500" : "bg-travel-primary100"
+          }`}
+        >
+          {dday > 0 && `D-${dday}`}
+          {dday === 0 && "D-day"}
+          {dday < 0 && "완료된 여행"}
         </div>
       )}
     </div>

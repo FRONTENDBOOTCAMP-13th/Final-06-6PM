@@ -1,0 +1,15 @@
+meta {
+  name: 나의 여행계획 목록전체조회
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{url}}/posts/users?type=plan
+  body: none
+  auth: inherit
+}
+
+params:query {
+  type: plan
+}
