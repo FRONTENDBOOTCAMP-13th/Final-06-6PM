@@ -3,12 +3,12 @@ import SelectMenu2 from "@/components/feature/selectMenu2";
 import BookmarkItem from "@/components/ui/bookmarkItem";
 import ProfileItemEdit from "@/components/form/profileItemEdit";
 
-export default function MypagePage() {
+export default function MypageEdit() {
   return (
     <>
       <div className="flex flex-col items-center gap-5">
         <div className="w-full">
-          <ProfileItemEdit userName="여행덕후"></ProfileItemEdit>
+          <ProfileItemEdit />
         </div>
         <div className="flex flex-col w-full gap-5">
           <BookmarkItem type="bookmark" count={2} />
