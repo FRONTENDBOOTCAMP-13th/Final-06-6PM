@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { PlanItem } from "@/types/plan";
-import { fetchPlanDetail } from "@/data/functions/posts";
+import { getPlanDetail } from "@/data/functions/plan";
 
 export default function PostPage() {
   const [planData, setPlanData] = useState<PlanItem | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetchPlanDetail(2);
+      const res = await getPlanDetail(2);
       if (res?.ok) {
         setPlanData(res.item);
         console.log("일정 데이터:", res.item);

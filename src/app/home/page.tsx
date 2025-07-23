@@ -2,7 +2,7 @@ import { CalendarDays, ThumbsUp, MapPin, NotebookPen } from "lucide-react";
 import DayItem from "@/components/ui/dayItem";
 import RandomItem from "@/components/ui/randomItem";
 import Link from "next/link";
-import { todayString } from "@/lib/api/todayString";
+import { todayString } from "@/lib/todayString";
 import LocationWeatherBox from "@/components/feature/locationWeatherBox";
 
 export default function HomePage() {

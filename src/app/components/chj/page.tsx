@@ -12,7 +12,7 @@ export default function ComponentPage() {
     <div className="flex flex-col items-center">
       <div className="w-full py-4 space-y-4">
         <h2 className="font-bold">ProfileItem</h2>
-        <ProfileItem userName="여행덕후" />
+        <ProfileItem />
       </div>
 
       {/* DrawerBtn */}

@@ -6,7 +6,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col gap-8 items-center justify-center min-h-dvh">
       <Image
-        src="/images/log.png"
+        src="/images/logo.png"
         alt="여행로그인 로고"
         width={200}
         height={200}
@@ -18,7 +18,7 @@ export default function LoginPage() {
 
       <div className="text-travel-gray400 text-16 flex items-center gap-2">
         <Link
-          href="#"
+          href="/signup"
           className="hover:text-travel-primary100 transition text-travel-text100"
         >
           회원가입

@@ -6,14 +6,14 @@ import {
   ContentDataProps,
   KeywordTravelProps,
 } from "@/types/travel";
-import {
-  fetchAreaList,
-  fetchContentData,
-  fetchKeywordData,
-  fetchTravelList,
-} from "@/data/actions/travel";
 import Image from "next/image";
 import ButtonRounded from "@/components/ui/btnRound";
+import {
+  getAreaList,
+  getContentData,
+  getKeywordData,
+  getTravelList,
+} from "@/data/functions/travel";
 
 export default function TravelPage() {
   const [areaList, setAreaList] = useState<AreaProps[]>([]);
@@ -28,7 +28,7 @@ export default function TravelPage() {
   // 지역코드조회
   useEffect(() => {
     const areaListData = async () => {
-      const res = await fetchAreaList();
+      const res = await getAreaList();
       if (res?.header.resultMsg === "OK") {
         const data = res.body.items.item;
         setAreaList(data);
@@ -41,7 +41,7 @@ export default function TravelPage() {
   // 지역코드기반 관광지조회
   useEffect(() => {
     const travelListData = async () => {
-      const res = await fetchTravelList(selectAreaCode);
+      const res = await getTravelList(selectAreaCode);
       if (res?.header.resultMsg === "OK") {
         const data = res.body.items.item;
         setTravelData(data);
@@ -62,7 +62,7 @@ export default function TravelPage() {
 
     console.log("검색어 입력 : ", trimKeyword);
 
-    const res = await fetchKeywordData(trimKeyword);
+    const res = await getKeywordData(trimKeyword);
     if (res?.header.resultMsg === "OK" && res.body?.items?.item) {
       const keywordData = res.body.items.item;
       console.log("검색결과", keywordData);
@@ -77,7 +77,7 @@ export default function TravelPage() {
   // 키워드
   useEffect(() => {
     const ContentListData = async () => {
-      const res = await fetchContentData(selectContentID);
+      const res = await getContentData(selectContentID);
       if (res?.header.resultMsg === "OK") {
         const data = res.body.items.item;
         setContentData(data[0]);

@@ -1,3 +1,5 @@
+"use server";
+
 import { ApiResPromise } from "@/types/api";
 import { PlanItem } from "@/types/plan";
 
@@ -6,12 +8,12 @@ const API_URL =
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 /**
- * 특정 게시글의 상세 정보를 가져옵니다.
+ * 일정 상세 정보를 조회하는 함수
  *
- * @param {number} _id - 조회할 게시글의 고유 ID
+ * @param {number} _id - 조회할 일정의 고유 ID
  * @returns {Promise<ApiRes<Post>>} 게시글 상세 정보를 담은 응답 객체
  */
-export async function fetchPlanDetail(_id: number): ApiResPromise<PlanItem> {
+export async function getPlanDetail(_id: number): ApiResPromise<PlanItem> {
   try {
     const res = await fetch(`${API_URL}/posts/${_id}`, {
       method: "GET",

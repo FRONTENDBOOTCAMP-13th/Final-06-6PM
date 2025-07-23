@@ -10,6 +10,8 @@ interface InputProps {
   value?: string;
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  srOnly?: boolean;
+  labelTitle?: string;
 }
 
 export default function Input({
@@ -22,6 +24,8 @@ export default function Input({
   value,
   defaultValue,
   onChange,
+  srOnly = true,
+  labelTitle,
 }: InputProps) {
   const inputSize = {
     sm: "px-4 py-3 text-14",
@@ -31,8 +35,8 @@ export default function Input({
 
   return (
     <>
-      <label htmlFor={id} className="sr-only">
-        {id}
+      <label htmlFor={id} className={`text-14 ${srOnly ? "sr-only" : ""}`}>
+        {labelTitle ?? id}
       </label>
       <input
         id={id}
