@@ -76,11 +76,16 @@ export default function ReviewNew() {
             if (dday >= 0) return null;
 
             return (
-              <DayItem
-                place={item.title}
-                period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
-                dday={dday}
-              />
+              <Link
+                href={`/review/${item._id}?place=${item.title}`}
+                key={item._id}
+              >
+                <DayItem
+                  place={item.title}
+                  period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
+                  dday={dday}
+                />
+              </Link>
             );
           })
         ) : (
