@@ -69,7 +69,7 @@ export default function ReviewNew() {
           </ul>
         )}
       </div>
-      <div className="space-y-4">
+      <div className="flex flex-col gap-4">
         {plan.length > 0 ? (
           plan.map((item) => {
             const dday = getDday(item.extra?.startDate);
@@ -77,7 +77,6 @@ export default function ReviewNew() {
 
             return (
               <DayItem
-                key={item._id}
                 place={item.title}
                 period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
                 dday={dday}
