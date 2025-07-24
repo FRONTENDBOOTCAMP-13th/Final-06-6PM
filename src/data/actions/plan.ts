@@ -1,7 +1,7 @@
 "use server";
 
 import { ApiRes, ApiResPromise } from "@/types/api";
-import { GetPlanDetailProps } from "@/types/plan";
+import { GetPlanDetailProps, PlanReply } from "@/types/plan";
 
 
 const API_URL =
@@ -59,4 +59,50 @@ export async function createPlanPost(
 
     return data;
 
+}
+
+/**
+ * 여행 계획 댓글(일차별 일정) 등록 함수
+ * @param {ApiRes<PostReply> | null} state - 이전 상태 (Server Action용)
+ * @param {FormData} formData - 댓글 정보가 담긴 폼 데이터
+ * @returns {Promise<ApiRes<PostReply>>} API 응답 결과
+ * @description 여행 계획 게시물에 일차별 일정을 댓글로 등록
+ * 작성자만 자신의 게시물에 댓글을 달 수 있음
+ */
+export async function createReply(
+  state: ApiRes<PlanReply> | null, 
+  formData: FormData
+): Promise<ApiRes<PlanReply>> {
+  
+  let res: Response;
+  let data: ApiRes<PlanReply>;
+
+  try {
+    const content = formData.get('content') as string;
+    const postId = formData.get('postId') as string;
+    const accessToken = formData.get('accessToken') as string;
+
+    const body = {
+      content: content,
+    };
+
+    console.log(`reply body`, body);
+
+    res = await fetch(`${API_URL}/posts/${postId}/replies`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Client-Id': CLIENT_ID,
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    data = await res.json();
+  } catch (error) {
+    console.error(error);
+    return { ok: 0, message: '일시적인 네트워크 문제가 발생했습니다.' };
+  }
+  
+  return data;
 }
