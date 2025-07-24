@@ -15,11 +15,12 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
  * @description 사용자가 선택한 여행 지역과 날짜로 게시물을 생성
  * 네트워크 오류 발생 시 사용자 친화적 에러 메시지를 반환
  */
-export async function createPlanPost(
 
-  formData: FormData
+export async function createPlanPost(
+  formData: FormData,
+  accessToken: string | null 
 ): Promise<ApiRes<GetPlanDetailProps>> {
-  
+
   let res: Response;
   let data: ApiRes<GetPlanDetailProps>;
 
@@ -31,7 +32,11 @@ export async function createPlanPost(
     const body = {
       type: "plan",
       title: `${selectedRegion}`,
-      content: `${startDate} ~ ${endDate}`,
+      content: `여행 일정: ${startDate} ~ ${endDate}`,
+      extra: {
+        startDate,
+        endDate,
+      }
     };
 
     console.log(`travel post body`, body);
@@ -41,6 +46,7 @@ export async function createPlanPost(
       headers: {
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
+        "Authorization": `Bearer ${accessToken}`,
       },
       body: JSON.stringify(body),
     });

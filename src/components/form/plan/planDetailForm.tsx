@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { createPlanPost } from "@/data/actions/plan";
 import useUserStore from "@/zustand/userStore";
 
@@ -12,10 +11,7 @@ export default function PlanDetailForm() {
     endDate: '',
     selectedRegion: ''
   });
-
-  // 로그인 여부 확인
-  const isLoggedIn = useUserStore((state) => state.isLoggedIn);
-  const router = useRouter();
+  const accessToken = useUserStore((state) => state.token);
 
   useEffect(() => {
     const data = {
@@ -26,18 +22,9 @@ export default function PlanDetailForm() {
     setTravelData(data);
   }, []);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.replace("/login");
-    }
-  }, [isLoggedIn, router]);
 
   const handleClick = async () => {
     console.log('버튼 클릭됨');
-    console.log('로그인 상태:', isLoggedIn);
-    
-    
-    console.log('로그인됨, 데이터 전송 시작');
     
     const formData = new FormData();
     formData.append('startDate', travelData.startDate);
@@ -51,7 +38,7 @@ export default function PlanDetailForm() {
     });
     
     try {
-      const result = await createPlanPost(formData);
+      const result = await createPlanPost(formData, accessToken);
       console.log('서버 응답:', result);
       
       if (result.ok) {
