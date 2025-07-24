@@ -7,6 +7,7 @@ import { GetPlanDetailProps } from "@/types/plan";
 import { getPlanListUser } from "@/lib/api/plan";
 import useUserStore from "@/zustand/userStore";
 import { getDday } from "@/lib/getDday";
+import Link from "next/link";
 
 export default function SelectMypage() {
   const [tab, setTab] = useState(0);
@@ -83,7 +84,9 @@ export default function SelectMypage() {
             );
           })
         ) : (
-          <DayItem />
+          <Link href="/plan">
+            <DayItem />
+          </Link>
         )}
       </div>
     </div>

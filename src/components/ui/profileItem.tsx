@@ -47,7 +47,7 @@ export default function ProfileItem({
           <Image
             width={100}
             height={100}
-            src={imgUrl || "/images/user1.png"}
+            src={imgUrl || "/images/user-default.png"}
             alt={user?.name || "사용자"}
             className="object-cover w-full h-full"
           />
