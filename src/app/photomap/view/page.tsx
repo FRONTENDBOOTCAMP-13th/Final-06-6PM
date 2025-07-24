@@ -1,15 +1,20 @@
 import { ZoomIn, ZoomOut } from "lucide-react";
+import TestMap2 from "@/app/photomap/view/mapcom/depth/koreaMap2";
+import KoreaMapOverlayImg from "@/app/photomap/view/mapcom/depth/koreaMapImg";
 
 // 지도생성 뷰
 export default function PhotoMapViewPage() {
   return (
     <>
-      <div className="w-full min-h-[600px] bg-amber-200 mt-4">
-        지도 들어올 공간
-      </div>
-      <div className="flex items-center justify-end w-full gap-2 py-2">
+      <div>
         <ZoomIn />
         <ZoomOut />
+        <div className="w-full bg-amber-200 mt-4">
+          <TestMap2 />
+        </div>
+        <div>
+          <KoreaMapOverlayImg />
+        </div>
       </div>
     </>
   );
