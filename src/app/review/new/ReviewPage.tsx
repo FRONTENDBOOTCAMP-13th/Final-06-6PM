@@ -6,6 +6,7 @@ import useUserStore from "@/zustand/userStore";
 import { getPlanListUser } from "@/lib/api/plan";
 import { GetPlanDetailProps } from "@/types/plan";
 import { getDday } from "@/lib/getDday";
+import Link from "next/link";
 
 const dummyList = [
   {
@@ -69,7 +70,7 @@ export default function ReviewNew() {
         )}
       </div>
       <div className="space-y-4">
-        {plan ? (
+        {plan.length > 0 ? (
           plan.map((item) => {
             const dday = getDday(item.extra?.startDate);
             if (dday >= 0) return null;
@@ -84,7 +85,9 @@ export default function ReviewNew() {
             );
           })
         ) : (
-          <DayItem />
+          <Link href="/plan">
+            <DayItem />
+          </Link>
         )}
       </div>
     </>
