@@ -258,7 +258,6 @@ export const paths = [
 export default function MapPaths() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-
   return (
     <svg width="390" height="600" viewBox="0 0 800 1000">
       {paths.map((d, index) => (
@@ -273,3 +272,4 @@ export default function MapPaths() {
       ))}
     </svg>
   );
+}
