@@ -5,23 +5,31 @@ import { MapPin } from "lucide-react";
 import ServerLocation from "@/components/feature/serverLocation";
 import WeatherItem from "@/components/feature/weatherApi";
 import { convertLatLngToGrid } from "@/lib/togrid";
+import { getLocationData } from "@/data/functions/weather";
 
 export default function LocationWeatherBox() {
   const [location, setLocation] = useState("위치 정보 없음");
   const [coords, setCoords] = useState<{ nx: string; ny: string } | null>(null);
 
   useEffect(() => {
-    fetch("https://ipapi.co/json/")
-      .then((res) => res.json())
-      .then((data) => {
-        const region = data.region || "";
-        const city = data.city || "";
-        setLocation(region && city ? `${region} ${city}` : "위치 정보 없음");
-        if (data.latitude && data.longitude) {
-          const { nx, ny } = convertLatLngToGrid(data.latitude, data.longitude);
-          setCoords({ nx: String(nx), ny: String(ny) });
-        }
-      });
+    const fetchData = async () => {
+      const data = await getLocationData();
+
+      console.log("하이", data);
+
+      if (!data) {
+        setLocation("위치 정보 없음");
+        return;
+      }
+
+      const { region, city, latitude, longitude } = data;
+      setLocation(region && city ? `${region} ${city}` : "위치 정보 없음");
+
+      const { nx, ny } = convertLatLngToGrid(latitude, longitude);
+      setCoords({ nx: String(nx), ny: String(ny) });
+    };
+
+    fetchData();
   }, []);
 
   return (
