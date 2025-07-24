@@ -1,7 +1,7 @@
 import { ZoomIn, ZoomOut } from "lucide-react";
 import TestMap2 from "@/app/photomap/view/mapcom/depth/koreaMap2";
-import KoreaMapOverlayImg from "@/app/photomap/view/mapcom/depth/koreaMapImg";
-
+import KoreaMapClipPathImg from "@/app/photomap/view/mapcom/depth/koreaMapImg";
+const userId = "admin@market.com";
 // 지도생성 뷰
 export default function PhotoMapViewPage() {
   return (
@@ -13,7 +13,7 @@ export default function PhotoMapViewPage() {
           <TestMap2 />
         </div>
         <div>
-          <KoreaMapOverlayImg />
+          <KoreaMapClipPathImg userId={userId} />
         </div>
       </div>
     </>
