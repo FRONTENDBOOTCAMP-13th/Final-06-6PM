@@ -10,7 +10,7 @@ export interface DayItemProps {
 
 export default function DayItem({
   imgUrl,
-  place = "예정된 여행이 없어요.",
+  place = "등록된 여행이 없어요.",
   period = "일정을 만들어보세요!",
   dday,
 }: DayItemProps) {

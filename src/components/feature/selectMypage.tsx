@@ -1,55 +1,51 @@
 "use client";
 
 import { MapPinned } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DayItem, { DayItemProps } from "../ui/dayItem";
+import { GetPlanDetailProps } from "@/types/plan";
+import { getPlanListUser } from "@/lib/api/plan";
+import useUserStore from "@/zustand/userStore";
+import { getDday } from "@/lib/getDday";
 
 export default function SelectMypage() {
   const [tab, setTab] = useState(0);
+  const token = useUserStore((state) => state.token);
+  const [plan, setPlan] = useState<GetPlanDetailProps[]>([]);
 
-  const upcomingData: DayItemProps[] = [
-    {
-      imgUrl: "/images/user2.png",
-      place: "제주도",
-      period: "2025.08.01 ~ 2025.08.03",
-      dday: 13,
-    },
-    {
-      imgUrl: "/images/user1.png",
-      place: "강릉",
-      period: "2025.09.10 ~ 2025.09.12",
-      dday: 53,
-    },
-  ];
+  useEffect(() => {
+    const planListUserData = async () => {
+      const res = await getPlanListUser(token);
+      // console.log("API 응답:", res);
+      if (res.ok) {
+        setPlan(res.item);
+      }
+    };
+    planListUserData();
+  }, [token]);
 
-  const completeData: DayItemProps[] = [
-    {
-      imgUrl: "/images/user2.png",
-      place: "제주도",
-      period: "2024.08.01 ~ 2024.08.03",
-    },
-    {
-      imgUrl: "/images/user3.png",
-      place: "대구",
-      period: "2024.09.10 ~ 2024.09.12",
-    },
-    {
-      imgUrl: "/images/user4.png",
-      place: "서울",
-      period: "2024.05.21 ~ 2024.05.21",
-    },
-  ];
+  // D-day 기준으로 데이터 필터링
+  const FilterPlanData = (tabId: number) => {
+    return plan.filter((item) => {
+      const dday = getDday(item.extra?.startDate);
+      if (tabId === 0) {
+        return dday >= 0;
+      } else {
+        return dday < 0;
+      }
+    });
+  };
 
   const tabData = [
     {
       id: 0,
       title: "다가오는 여행",
-      description: upcomingData
+      description: FilterPlanData(0),
     },
     {
       id: 1,
       title: "완료된 여행",
-      description: completeData
+      description: FilterPlanData(1),
     },
   ];
 
@@ -73,11 +69,22 @@ export default function SelectMypage() {
       </div>
 
       <div className="space-y-4 p-4">
-        {tabData[tab].description.map((item, idx) => (
-          <DayItem 
-            key={idx} {...item}
-          />
-        ))}
+        {tabData[tab].description.length > 0 ? (
+          tabData[tab].description.map((item) => {
+            const dday = getDday(item.extra?.startDate);
+
+            return (
+              <DayItem
+                key={item._id}
+                place={item.title}
+                period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
+                dday={dday}
+              />
+            );
+          })
+        ) : (
+          <DayItem />
+        )}
       </div>
     </div>
   );
