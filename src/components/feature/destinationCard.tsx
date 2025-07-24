@@ -1,14 +1,8 @@
 // components/feature/DestinationCard.tsx
 "use client";
 
+import { Destination } from "@/lib/data/destinationList";
 import Image from "next/image";
-
-export interface Destination {
-  areaCode: number;
-  name: string;
-  image: string;
-  keywords?: string[];
-}
 
 interface DestinationCardProps {
   destination: Destination;
@@ -20,7 +14,10 @@ export default function DestinationCard({
   onClick,
 }: DestinationCardProps) {
   return (
-    <div onClick={() => onClick(destination.name, destination.areaCode)} className="cursor-pointer">
+    <div
+      onClick={() => onClick(destination.name, destination.areaCode)}
+      className="cursor-pointer"
+    >
       <div className="relative overflow-hidden rounded-lg aspect-square group">
         <Image
           width={400}
