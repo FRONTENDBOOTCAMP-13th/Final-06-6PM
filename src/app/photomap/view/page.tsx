@@ -1,6 +1,4 @@
 import { ZoomIn, ZoomOut } from "lucide-react";
-import KoreaMap from "./mapcom/koreaMap";
-import TestMap from "@/app/photomap/view/mapcom/depth/paths";
 import TestMap2 from "@/app/photomap/view/mapcom/depth/koreaMap2";
 import KoreaMapOverlayImg from "@/app/photomap/view/mapcom/depth/koreaMapImg";
 
