@@ -99,10 +99,6 @@ export default function ViewItem({
           <ModalItem location={location} />
           <ModalItem location={location} />
           <ModalItem location={location} />
-          <ModalItem location={location} />
-          <ModalItem location={location} />
-          <ModalItem location={location} />
-          <ModalItem location={location} />
         </div>
       </div>
 
