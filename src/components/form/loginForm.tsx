@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useActionState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/btn";
 import { login } from "@/data/actions/user";
@@ -12,7 +12,7 @@ export default function LoginForm() {
   const { setToken, setUserInfo } = useUserStore.getState();
   const router = useRouter();
   const [userState, formAction, isLoading] = useActionState(login, null);
-  const redirect = useSearchParams().get("redirect");
+  // const redirect = useSearchParams().get("redirect");
 
   useEffect(() => {
     if (userState?.ok) {
@@ -28,7 +28,7 @@ export default function LoginForm() {
         token: user.token,
       });
       toast.success("로그인이 완료되었습니다.");
-      router.replace(redirect || "/home");
+      router.replace("/home");
     } else if (!userState?.errors && userState?.message) {
       toast.error(userState.message);
     }
@@ -37,12 +37,12 @@ export default function LoginForm() {
   return (
     <form
       action={formAction}
-      className="w-full bg-white rounded-xl shadow border border-travel-gray400 p-6 flex flex-col gap-4 items-center"
+      className="flex flex-col items-center w-full gap-4 p-6 bg-white border shadow rounded-xl border-travel-gray400"
     >
       {/* 이메일 */}
       <div className="w-full">
         <Input size="md" id="email" name="email" placeholder="test@email.com" />
-        <p className="mt-1 text-14 font-medium text-travel-fail100">
+        <p className="mt-1 font-medium text-14 text-travel-fail100">
           {!userState?.ok && userState?.errors?.email?.msg}
         </p>
       </div>
@@ -56,7 +56,7 @@ export default function LoginForm() {
           type="password"
           placeholder="password"
         />
-        <p className="mt-1 text-14 font-medium text-travel-fail100">
+        <p className="mt-1 font-medium text-14 text-travel-fail100">
           {!userState?.ok && userState?.errors?.password?.msg}
         </p>
       </div>
