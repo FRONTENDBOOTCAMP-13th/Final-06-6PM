@@ -63,8 +63,9 @@ export async function getWeatherData(nx: string, ny: string) {
 
 export async function getLocationData() {
   try {
-    const res = await fetch("https://ipapi.co/json/");
+    const res = await fetch("https://geolocation-db.com/json/");
     const data = await res.json();
+    console.log("data", data);
 
     if (!data || !data.latitude || !data.longitude) {
       throw new Error("위치 정보 없음");
