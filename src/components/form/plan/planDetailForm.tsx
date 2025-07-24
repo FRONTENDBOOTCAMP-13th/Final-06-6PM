@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createPlanPost } from "@/data/actions/plan";
+import useUserStore from "@/zustand/userStore";
 
 export default function PlanDetailForm() {
   
@@ -10,6 +11,7 @@ export default function PlanDetailForm() {
     endDate: '',
     selectedRegion: ''
   });
+  const accessToken = useUserStore((state) => state.token);
 
   useEffect(() => {
     const data = {
@@ -20,7 +22,9 @@ export default function PlanDetailForm() {
     setTravelData(data);
   }, []);
 
+
   const handleClick = async () => {
+    console.log('버튼 클릭됨');
     
     const formData = new FormData();
     formData.append('startDate', travelData.startDate);
@@ -33,12 +37,17 @@ export default function PlanDetailForm() {
       selectedRegion: travelData.selectedRegion
     });
     
-    const result = await createPlanPost(formData);
-    
-    if (result.ok) {
-      console.log('여행 계획 저장 성공!', result);
-    } else {
-      console.error('저장 실패:', result.message);
+    try {
+      const result = await createPlanPost(formData, accessToken);
+      console.log('서버 응답:', result);
+      
+      if (result.ok) {
+        console.log('여행 계획 저장 성공!', result);
+      } else {
+        console.error('저장 실패:', result.message);
+      }
+    } catch (error) {
+      console.error('API 호출 에러:', error);
     }
   };
   

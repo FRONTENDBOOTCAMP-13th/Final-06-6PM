@@ -4,15 +4,9 @@ import SearchInput from "@/components/form/searchInput";
 import TagItem from "@/components/feature/tagItem";
 import BackButton from "@/components/feature/backButton";
 import { Bookmark, CalendarDays, Search } from "lucide-react";
-import { TravelData } from "@/components/plan/planContainer";
 import NextButton from "@/components/feature/nextButton";
 import RemoveTag from "@/components/ui/removeTag";
 
-interface StepSearchProps {
-  onNext: (stepData: any) => void;
-  onPrev: () => void;
-  data: TravelData;
-}
 
 const tourData = [
   { id: 1, name: "가나디" },
@@ -21,11 +15,11 @@ const tourData = [
 ];
 
 
-export default function StepSearch({ onNext, onPrev }: StepSearchProps) {
+export default function searchPage() {
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <BackButton onPrev={onPrev} />
+        <BackButton path="/plan/edit/schedule"/>
         <p className="text-center">여행일정만들기</p>
       </div>
       
@@ -95,7 +89,7 @@ export default function StepSearch({ onNext, onPrev }: StepSearchProps) {
             <RemoveTag tagData={tourData} />
         </div>
       </div>
-        <NextButton onNext={onNext} />
+        <NextButton path="/plan/edit/schedule" />
     </div>
   );
 }

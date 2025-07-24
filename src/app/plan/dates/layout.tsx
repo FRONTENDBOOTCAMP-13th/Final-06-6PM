@@ -26,7 +26,7 @@ export default function MenubarLayout({
         {children}
       </div>
 
-      <Link href="/plan/edit">
+      <Link href="/plan/edit/schedule">
           <PlanDetailForm />
       </Link>
     </>

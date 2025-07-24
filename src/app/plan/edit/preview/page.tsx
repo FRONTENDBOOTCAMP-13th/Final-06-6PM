@@ -1,18 +1,13 @@
 import ScheduleRegisterPlus from "@/components/ui/scheduleRegisterPlus";
-import { TravelData } from "@/components/plan/planContainer";
 import BackButton from "@/components/feature/backButton";
+import Link from "next/link";
 import NextButton from "@/components/feature/nextButton";
 
-interface StepScheduleProps {
-  onNext: (stepData: any) => void;
-  data: TravelData;
-}
-
-export default function StepSchedule({ onNext }: StepScheduleProps) {
+export default function previewPage() {
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <BackButton path="/plan/dates" />
+        <BackButton path="/plan/edit/search"/>
         <p className="text-center">여행일정만들기</p>
       </div>
       
@@ -27,13 +22,15 @@ export default function StepSchedule({ onNext }: StepScheduleProps) {
         </div>
         
         <div className="flex flex-col justify-between pt-7 gap-5">
-          <ScheduleRegisterPlus day={1} date="2025.05.08"/>
+          <ScheduleRegisterPlus 
+            day={1} 
+            date="2025.05.08" 
+            daylist={[{id: 1, title: "더미데이터", tag: "중요"}]}/>
           <ScheduleRegisterPlus day={2} date="2025.05.09"/>
-          <ScheduleRegisterPlus day={3} date="2025.05.10"/>
         </div>
       </div>
       
-      <NextButton onNext={onNext} />
+      <NextButton path="/plan/success"/>   
     </div>
   );
 }
