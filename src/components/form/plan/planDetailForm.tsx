@@ -1,31 +1,57 @@
 "use client";
 
-import PlanCalendar from "@/components/feature/planCalendar";
-import Button from "@/components/ui/btn";
-import PlanRegion from "@/components/form/plan/planRegion";
+import { useState, useEffect } from 'react';
+import { createPlanPost } from "@/data/actions/plan";
 
 export default function PlanDetailForm() {
+  
+  const [travelData, setTravelData] = useState({
+    startDate: '',
+    endDate: '',
+    selectedRegion: ''
+  });
 
-  const formSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const planData = {
-      startDate: sessionStorage.getItem('startDate'),
-      endDate: sessionStorage.getItem('endDate'),
-      location: sessionStorage.getItem('location'),
+  useEffect(() => {
+    const data = {
+      startDate: sessionStorage.getItem('startDate') || '',
+      endDate: sessionStorage.getItem('endDate') || '',
+      selectedRegion: sessionStorage.getItem('selectedRegion') || ''
     };
+    setTravelData(data);
+  }, []);
 
+  const handleClick = async () => {
+    
+    const formData = new FormData();
+    formData.append('startDate', travelData.startDate);
+    formData.append('endDate', travelData.endDate);
+    formData.append('selectedRegion', travelData.selectedRegion);
+    
+    console.log('전송 데이터:', {
+      startDate: travelData.startDate,
+      endDate: travelData.endDate,
+      selectedRegion: travelData.selectedRegion
+    });
+    
+    const result = await createPlanPost(formData);
+    
+    if (result.ok) {
+      console.log('여행 계획 저장 성공!', result);
+    } else {
+      console.error('저장 실패:', result.message);
+    }
   };
-
+  
   return (
-    <form onSubmit={formSubmit} className="grid grid-cols-1 gap-2 p-4">
-      <PlanCalendar />
-      <PlanRegion />
+    <div className="grid grid-cols-1 gap-2 p-4">
       <div className="bg-travel-bg100 fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-4 max-h-21 z-20 shadow-[0_-8px_16px_-4px_rgba(0,0,0,0.1)]">
-        <Button className="w-full text-16" type="submit">
+        <button 
+          className="w-full text-16 bg-blue-500 text-white p-4 rounded" 
+          onClick={handleClick}
+        >
           여행 계획 저장
-        </Button>
+        </button>
       </div>
-    </form>
+    </div>
   );
 }

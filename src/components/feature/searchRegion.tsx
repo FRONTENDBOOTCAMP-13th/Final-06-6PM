@@ -13,9 +13,13 @@ export default function SearchRegion({ regions, onRegionClick }: SearchRegionPro
   const [search, setSearch] = useState("");
 
   // 지역 목록 필터링
-  const filteredRegions = regions.filter((region) =>
-    region.name.includes(search)
-  );
+  const filteredRegions = regions.filter((region) => {
+    const nameMatch = region.name.includes(search);
+    const keywordMatch = region.keywords?.some((keyword: string) => 
+      keyword.includes(search)
+    ) || false;
+    return nameMatch || keywordMatch;
+  });
 
   // 사용자가 입력할 때마다 호출
   const handleSearch = (value: string) => {

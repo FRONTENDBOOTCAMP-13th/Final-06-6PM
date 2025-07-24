@@ -8,7 +8,7 @@ export default function PlanPage() {
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <BackButton />
+        <BackButton path="/home"/>
         <p className="text-center">여행일정만들기</p>
       </div>
       <div className="relative w-full px-4 pb-25">
