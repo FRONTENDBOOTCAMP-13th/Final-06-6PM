@@ -16,13 +16,13 @@ export default function ReviewTag() {
 
       // 태그 갯수 제한
       if (tagList.length >= 10) {
-        toast.warning("태그는 최대 10개까지 입력할 수 있어요!");
+        toast.warning("태그는 최대 10개까지 입력할 수 있어요.");
         return;
       }
 
       // 중복 값 방지
       if (tagList.includes(trimTagValue)) {
-        toast.warning("이미 등록된 태그입니다");
+        toast.warning("이 태그는 이미 등록되어 있어요");
       }
       if (trimTagValue && !tagList.includes(trimTagValue)) {
         setTagList([...tagList, trimTagValue]);
