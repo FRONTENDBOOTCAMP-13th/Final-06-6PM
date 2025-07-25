@@ -1,55 +1,55 @@
 "use client";
 
 import { Camera, ImagePlus, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-export default function ReviewImg() {
-  const [imgList, setImgList] = useState<string[]>([]); // 이미지 미리보기용 URL
-  const [imgFile, setImgFile] = useState<File[]>([]); // 업로드할 파일
+interface ReviewImgProps {
+  images: File[];
+  setImages: (images: File[]) => void;
+}
+
+export default function ReviewImg({ images, setImages }: ReviewImgProps) {
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]); // 이미지 미리보기용 URL
   const inputRef = useRef<HTMLInputElement>(null);
 
   const MAX_IMG = 10;
 
+  // images가 변경될 때마다 미리보기 URL 업데이트
+  useEffect(() => {
+    // 기존 URL 해제 (메모리 누수 방지)
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+
+    // 새로운 미리보기 URL 생성
+    const newUrls = images.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(newUrls);
+
+    // cleanup 함수로 컴포넌트 언마운트 시 URL 해제
+    return () => {
+      newUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [images]);
+
   // 이미지 업로드
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.files);
     const selectFiles = Array.from(e.target.files || []);
     console.log(selectFiles);
 
-    /*
-      e.target.files = FileList 선택한 파일목록
-      FileList {
-        0: File { name: "photo1.png", size: 123456, type: "image/png", ... },
-        1: File { name: "photo2.jpg", size: 234567, type: "image/jpeg", ... },
-        length: 2,
-        item: function(index) { ... } 
-      }
-     */
-
-    if (imgFile.length + selectFiles.length > MAX_IMG) {
-      // 현재 파일 개수 + 새로 선택하는 파일 개수
+    if (images.length + selectFiles.length > MAX_IMG) {
       toast.warning("사진은 최대 10장까지 첨부할 수 있습니다.");
       return;
     }
 
-    // 파일 객체를 브라우저가 보여줄 수 있는 임시 URL처리
-    const newUrls = selectFiles.map((file) => URL.createObjectURL(file));
-
-    setImgList((prev) => [...prev, ...newUrls]); // 이미지 미리보기용 URL
-    setImgFile((prev) => [...prev, ...selectFiles]); // 업로드할 파일
+    // 부모 컴포넌트의 상태 업데이트
+    setImages([...images, ...selectFiles]);
 
     e.target.value = ""; // input 초기화
   };
 
   // 이미지 삭제
   const removeImg = (index: number) => {
-    // 메모리 누수 방지를 위해 URL 해제
-    URL.revokeObjectURL(imgList[index]);
-
-    // 두 상태에서 해당 인덱스 제거
-    setImgList((prev) => prev.filter((_, i) => i !== index));
-    setImgFile((prev) => prev.filter((_, i) => i !== index));
+    // 부모 컴포넌트의 상태 업데이트
+    setImages(images.filter((_, i) => i !== index));
   };
 
   // 파일 선택 다이얼로그 열기
@@ -74,7 +74,7 @@ export default function ReviewImg() {
         </div>
 
         {/* 업로드된 이미지들 */}
-        {imgList.map((src, index) => (
+        {previewUrls.map((src, index) => (
           <div
             key={index}
             className="relative p-2 bg-white border rounded-lg border-travel-gray400 min-h-21"

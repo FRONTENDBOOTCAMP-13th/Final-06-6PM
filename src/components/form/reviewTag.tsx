@@ -4,10 +4,13 @@ import { useState } from "react";
 import { Tags } from "lucide-react";
 import TagItem from "@/components/feature/tagItem";
 import { toast } from "react-toastify";
+interface ReviewTagProps {
+  tags: string[];
+  setTags: (tags: string[]) => void;
+}
 
-export default function ReviewTag() {
+export default function ReviewTag({ tags, setTags }: ReviewTagProps) {
   const [tagValue, setTagValue] = useState("");
-  const [tagList, setTagList] = useState<string[]>([]);
 
   const tagKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -15,24 +18,24 @@ export default function ReviewTag() {
       const trimTagValue = tagValue.trim();
 
       // 태그 갯수 제한
-      if (tagList.length >= 10) {
+      if (tags.length >= 10) {
         toast.warning("태그는 최대 10개까지 입력할 수 있어요.");
         return;
       }
 
       // 중복 값 방지
-      if (tagList.includes(trimTagValue)) {
+      if (tags.includes(trimTagValue)) {
         toast.warning("이 태그는 이미 등록되어 있어요");
       }
-      if (trimTagValue && !tagList.includes(trimTagValue)) {
-        setTagList([...tagList, trimTagValue]);
+      if (trimTagValue && !tags.includes(trimTagValue)) {
+        setTags([...tags, trimTagValue]);
         setTagValue("");
       }
     }
   };
 
   const removeTag = (target: string) => {
-    setTagList(tagList.filter((tag) => tag !== target));
+    setTags(tags.filter((tag) => tag !== target));
   };
 
   return (
@@ -50,7 +53,7 @@ export default function ReviewTag() {
         onKeyDown={tagKeydown}
       />
       <div className="flex flex-wrap gap-2 ">
-        {tagList.map((tag) => (
+        {tags.map((tag) => (
           <TagItem
             key={tag}
             closeIcon
