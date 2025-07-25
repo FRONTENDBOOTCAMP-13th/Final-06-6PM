@@ -69,19 +69,23 @@ export default function ReviewNew() {
           </ul>
         )}
       </div>
-      <div className="space-y-4">
+      <div className="flex flex-col gap-4">
         {plan.length > 0 ? (
           plan.map((item) => {
             const dday = getDday(item.extra?.startDate);
             if (dday >= 0) return null;
 
             return (
-              <DayItem
+              <Link
+                href={`/review/${item._id}?place=${item.title}`}
                 key={item._id}
-                place={item.title}
-                period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
-                dday={dday}
-              />
+              >
+                <DayItem
+                  place={item.title}
+                  period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
+                  dday={dday}
+                />
+              </Link>
             );
           })
         ) : (

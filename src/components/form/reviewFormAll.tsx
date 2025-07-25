@@ -14,7 +14,7 @@ export default function ReviewFormAll() {
   };
 
   return (
-    <form action={formSubmit} className="grid grid-cols-1 gap-2 p-4">
+    <form action={formSubmit} className="grid grid-cols-1 gap-3 p-4">
       <ReviewStar />
       <ReviewTitle />
       <ReviewContent />
