@@ -5,30 +5,39 @@ import { MapPin } from "lucide-react";
 import ServerLocation from "@/components/feature/serverLocation";
 import WeatherItem from "@/components/feature/weatherApi";
 import { convertLatLngToGrid } from "@/lib/togrid";
+import { getLocationData } from "@/data/functions/weather";
+
+interface LocationInfo {
+  region: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+}
 
 export default function LocationWeatherBox() {
-  const [location, setLocation] = useState("위치 정보 없음");
+  const [weatherData, setWeatherData] = useState<LocationInfo | null>(null);
   const [coords, setCoords] = useState<{ nx: string; ny: string } | null>(null);
 
   useEffect(() => {
-    fetch("https://ipapi.co/json/")
-      .then((res) => res.json())
-      .then((data) => {
-        const region = data.region || "";
-        const city = data.city || "";
-        setLocation(region && city ? `${region} ${city}` : "위치 정보 없음");
-        if (data.latitude && data.longitude) {
-          const { nx, ny } = convertLatLngToGrid(data.latitude, data.longitude);
-          setCoords({ nx: String(nx), ny: String(ny) });
-        }
-      });
+    const fetchData = async () => {
+      const data = await getLocationData();
+      if (!data) return;
+
+      setWeatherData(data);
+
+      const { latitude, longitude } = data;
+      const { nx, ny } = convertLatLngToGrid(latitude, longitude);
+      setCoords({ nx: String(nx), ny: String(ny) });
+    };
+
+    fetchData();
   }, []);
 
   return (
     <>
       <div className="flex items-center gap-1 text-16">
         <MapPin className="w-4 h-4 mr-1" />
-        <ServerLocation location={location} />
+        <ServerLocation city={weatherData?.city ?? "위치 정보 없음"} />
       </div>
       <div className="absolute right-4 top-3">
         {coords ? (

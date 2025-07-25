@@ -1,23 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import DestinationCard, { Destination } from "@/components/feature/destinationCard";
 import SearchInput from "@/components/form/searchInput";
+import { Destination } from "@/lib/data/destinationList";
+import DestinationCard from "@/components/feature/destinationCard";
 
 interface SearchRegionProps {
   regions: Destination[];
   onRegionClick: (name: string, areaCode: number) => void;
 }
 
-export default function SearchRegion({ regions, onRegionClick }: SearchRegionProps) {
+export default function SearchRegion({
+  regions,
+  onRegionClick,
+}: SearchRegionProps) {
   const [search, setSearch] = useState("");
 
   // 지역 목록 필터링
   const filteredRegions = regions.filter((region) => {
     const nameMatch = region.name.includes(search);
-    const keywordMatch = region.keywords?.some((keyword: string) => 
-      keyword.includes(search)
-    ) || false;
+    const keywordMatch =
+      region.keywords?.some((keyword: string) => keyword.includes(search)) ||
+      false;
     return nameMatch || keywordMatch;
   });
 
@@ -26,8 +30,8 @@ export default function SearchRegion({ regions, onRegionClick }: SearchRegionPro
     setSearch(value);
   };
 
-   // 지역 목록 검색 렌더링
-   const renderRegionList = () => (
+  // 지역 목록 검색 렌더링
+  const renderRegionList = () => (
     <div className="grid grid-cols-2 gap-5 py-5">
       {filteredRegions.map((region) => (
         <DestinationCard
@@ -48,7 +52,7 @@ export default function SearchRegion({ regions, onRegionClick }: SearchRegionPro
       />
       {renderRegionList()}
       {filteredRegions.length === 0 && search && (
-        <div className="text-center pb-4 text-travel-gray500">
+        <div className="pb-4 text-center text-travel-gray500">
           검색 결과가 없습니다.
         </div>
       )}

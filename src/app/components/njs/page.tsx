@@ -1,5 +1,5 @@
 import BookmarkItem from "@/components/ui/bookmarkItem";
-import DayItem from "@/components/ui/dayItem";
+// import DayItem from "@/components/ui/dayItem";
 import DrawerItem from "@/components/feature/drawerItem";
 import RandomItem from "@/components/ui/randomItem";
 
@@ -19,13 +19,13 @@ export default function ComponentPage() {
       <div className="w-full py-4 space-y-4">
         <h2 className="font-bold">DayItem</h2>
         <div className="w-full space-y-4">
-          <DayItem
+          {/* <DayItem
             imgUrl="/images/user3.png"
             place="제주도"
             period="2025.07.12 ~ 2025.07.15."
             dday={2}
           />
-          <DayItem />
+          <DayItem /> */}
         </div>
       </div>
 
