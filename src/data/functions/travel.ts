@@ -81,16 +81,17 @@ export async function getAreaList(): Promise<GetAreaProps> {
  * 지정된 지역 코드(areaCode)를 기반으로 관광지 목록을 조회
  */
 export async function getTravelList(
-  areaCode: number
+  areaCode: number,
+  contentTypeId: string = "12"
 ): Promise<GetAreaTravelProps> {
   const params = {
     serviceKey: API_KEY,
     areaCode: String(areaCode),
-    numOfRows: "6",
+    numOfRows: "10",
     pageNo: "1",
     MobileOS: "ETC",
     MobileApp: "TravelDiary",
-    contentTypeId: "12",
+    contentTypeId,
     _type: "json",
   };
 
@@ -108,8 +109,11 @@ export async function getTravelList(
  * 키워드를 이용해 관련된 관광 정보를 검색
  */
 export async function getKeywordData(
-  keyword: string
+  keyword: string,
+  contentTypeId: string = "12"
 ): Promise<GetKeywordProps> {
+  console.log("API 호출 시작:", { keyword, contentTypeId }); // 추가
+  
   const params = {
     serviceKey: API_KEY,
     keyword,
@@ -117,10 +121,12 @@ export async function getKeywordData(
     MobileApp: "TravelDiary",
     pageNo: "1",
     numOfRows: "10",
+    contentTypeId,
     _type: "json",
   };
-
+  
   const res = await fetchTravel("/searchKeyword2", params);
+  
   return res.response;
 }
 
