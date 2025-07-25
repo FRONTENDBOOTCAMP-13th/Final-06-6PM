@@ -28,20 +28,15 @@ export async function uploadUserPhoto(
     formData.append("userId", userId);
     formData.append("regionId", regionId);
 
-    // 헤더 구성 (Content-Type은 FormData 사용 시 지정하지 않음)
     const headers: HeadersInit = {
       "Client-Id": CLIENT_ID,
     };
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
+    if (token) headers.Authorization = `Bearer ${token}`;
 
+    // Content-Type 설정하지 않음: 브라우저가 자동 지정
     const res = await fetch(`${API_URL}/posts?type=map`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Client-Id": CLIENT_ID,
-      },
+      headers, // Content-Type 없음!
       body: formData,
     });
 

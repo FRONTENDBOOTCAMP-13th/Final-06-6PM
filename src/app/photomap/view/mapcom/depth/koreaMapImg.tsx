@@ -49,7 +49,13 @@ export default function KoreaMapClipPathImg({ userId }: { userId: string }) {
   const onSelectFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && selectedId && userId) {
-      const res = await uploadUserPhoto(file, userId, selectedId, token || undefined);
+      const res = await uploadUserPhoto(
+        file,
+        userId,
+        selectedId,
+        token || undefined
+      );
+
       if (res.ok && res.data?.imageUrl) {
         setImgMap((prev) => ({
           ...prev,
