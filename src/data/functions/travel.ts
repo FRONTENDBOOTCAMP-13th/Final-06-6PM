@@ -68,9 +68,9 @@ export async function getAreaList(): Promise<GetAreaProps> {
   };
 
   const res = await fetchTravel("/areaCode2", params);
-  // console.log(`Area res`, res);
   return res.response;
 }
+
 
 /**
  * 특정 지역의 관광지 목록을 가져오는 함수
@@ -82,23 +82,27 @@ export async function getAreaList(): Promise<GetAreaProps> {
  */
 export async function getTravelList(
   areaCode: number,
-  contentTypeId: string = "12"
+  contentTypeId?: string
 ): Promise<GetAreaTravelProps> {
-  const params = {
+  const params: Record<string, string> = {
     serviceKey: API_KEY,
     areaCode: String(areaCode),
     numOfRows: "10",
     pageNo: "1",
     MobileOS: "ETC",
     MobileApp: "TravelDiary",
-    contentTypeId,
     _type: "json",
   };
+  
+  if (contentTypeId && contentTypeId !== "all") {
+    params.contentTypeId = contentTypeId;
+  }
 
   const res = await fetchTravel("/areaBasedList2", params);
   console.log(`Travel res`, res);
   return res.response;
 }
+
 
 /**
  * 키워드 기반 관광 정보 검색 함수
@@ -110,23 +114,25 @@ export async function getTravelList(
  */
 export async function getKeywordData(
   keyword: string,
-  contentTypeId: string = "12"
+  contentTypeId?: string,
 ): Promise<GetKeywordProps> {
-  console.log("API 호출 시작:", { keyword, contentTypeId }); // 추가
+  console.log("API 호출 시작:", { keyword, contentTypeId });
   
-  const params = {
+  const params: Record<string, string> = {
     serviceKey: API_KEY,
     keyword,
     MobileOS: "ETC",
     MobileApp: "TravelDiary",
     pageNo: "1",
     numOfRows: "10",
-    contentTypeId,
     _type: "json",
   };
   
-  const res = await fetchTravel("/searchKeyword2", params);
+  if (contentTypeId && contentTypeId !== "all") {
+    params.contentTypeId = contentTypeId;
+  }
   
+  const res = await fetchTravel("/searchKeyword2", params);
   return res.response;
 }
 

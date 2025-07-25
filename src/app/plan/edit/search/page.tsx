@@ -5,7 +5,6 @@ import {
   ContentDataProps,
   KeywordTravelProps,
 } from "@/types/travel";
-import Image from "next/image";
 
 import {
   getContentData,
@@ -22,17 +21,7 @@ import CategorySelect from "@/components/plan/categorySelect";
 import SearchSection from "@/components/plan/searchSection";
 import SearchResult from "@/components/plan/searchResult";
 import ContentDetail from "@/components/plan/contentDetail";
-
-// 카테고리 정의
-const categories = [
-  { id: "12", name: "관광지" },
-  { id: "39", name: "맛집" },
-  { id: "14", name: "문화시설" },
-  { id: "15", name: "축제" },
-  { id: "28", name: "레포츠" },
-  { id: "32", name: "숙박" },
-  { id: "38", name: "쇼핑" },
-];
+import { categories } from "@/lib/data/categoryList";
 
 const tourData = [
   { id: 1, name: "가나디" },
@@ -44,13 +33,14 @@ export default function SearchPage() {
   const [selectedArea, setSelectedArea] = useState<Destination | null>(null);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
-  const [travelData, setTravelData] = useState<AreaTravelProps[]>([]);
+  const [filteredData, setFilteredData] = useState<AreaTravelProps[]>([]);
   const [keyword, setKeyword] = useState("");
   const [searchList, setSearchList] = useState<KeywordTravelProps[]>([]);
   const [selectContentID, setSelectContentID] = useState<string | number>("");
   const [contentData, setContentData] = useState<ContentDataProps>();
-  const [selectedCategory, setSelectedCategory] = useState<string>("12");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isSearching, setIsSearching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 세션에서 선택된 지역 정보 가져오기
   useEffect(() => {
@@ -62,8 +52,8 @@ export default function SearchPage() {
       const savedStartDate = sessionStorage.getItem('startDate');
       const savedEndDate = sessionStorage.getItem('endDate');
 
-    if (savedStartDate) setStartDate(savedStartDate);
-    if (savedEndDate) setEndDate(savedEndDate);
+      if (savedStartDate) setStartDate(savedStartDate);
+      if (savedEndDate) setEndDate(savedEndDate);
       
       if (foundArea) {
         setSelectedArea(foundArea);
@@ -73,29 +63,40 @@ export default function SearchPage() {
 
   // 선택된 지역과 카테고리 기반으로 데이터 조회
   useEffect(() => {
-    if (selectedArea && selectedCategory) {
-      const fetchCategoryData = async () => {
+    if (selectedArea) {
+      const fetchData = async () => {
+        setIsLoading(true);
         try {
-          const res = await getTravelList(selectedArea.areaCode, selectedCategory);
+          let response;
           
-          if (res?.header.resultMsg === "OK") {
-            const data = res.body.items.item;
-            const dataArray = Array.isArray(data) ? data : [data];
-            setTravelData(dataArray || []);
+          if (selectedCategory === "all") {
+            // 전체 선택 - 카테고리 없이 호출
+            response = await getTravelList(selectedArea.areaCode);
           } else {
-            console.log("카테고리 데이터 조회 실패:", res);
-            setTravelData([]);
+            // 특정 카테고리 선택
+            response = await getTravelList(selectedArea.areaCode, selectedCategory);
+          }
+          
+          if (response?.header.resultMsg === "OK" && response.body.items?.item) {
+            const data = response.body.items.item;
+            const dataArray = Array.isArray(data) ? data : [data];
+            setFilteredData(dataArray);
+          } else {
+            setFilteredData([]);
           }
         } catch (error) {
-          console.error("카테고리 데이터 조회 에러:", error);
-          setTravelData([]);
+          console.error("데이터 조회 에러:", error);
+          setFilteredData([]);
+        } finally {
+          setIsLoading(false);
         }
       };
-      fetchCategoryData();
+      
+      fetchData();
     }
-  }, [selectedCategory, selectedArea]);
+  }, [selectedArea, selectedCategory]);
 
-  // 카테고리별 키워드 검색 - 지역코드로 필터링
+  // 키워드 검색
   const searchSubmit = async (searchKeyword: string) => {
     const trimKeyword = searchKeyword.trim();
     if (!selectedArea) {
@@ -106,7 +107,15 @@ export default function SearchPage() {
     setIsSearching(true);
 
     try {
-      const res = await getKeywordData(trimKeyword, selectedCategory);
+      let res;
+      
+      if (selectedCategory === "all") {
+        // 전체 선택 - contentTypeId 없이 모든 카테고리에서 검색
+        res = await getKeywordData(trimKeyword);
+      } else {
+        // 특정 카테고리 선택
+        res = await getKeywordData(trimKeyword, selectedCategory);
+      }
       
       if (res?.header?.resultMsg === "OK" && res.body?.items?.item) {
         const keywordData = res.body.items.item;
@@ -217,36 +226,31 @@ export default function SearchPage() {
         {/* 검색 중이 아닐때 카테고리 장소목록 출력 */}
         {!isSearching && searchList.length === 0 && !keyword && (
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-16">
-              {selectedArea.name} {selectedCategoryInfo?.name}
-            </h3>
-            
-            {/* 장소 리스트 */}
             <div className="space-y-3">
-              {travelData.length > 0 ? (
-                travelData.map((data) => (
-                  <PlaceCard
-                    key={data.contentid}
-                    item={data}
-                    categoryName={selectedCategoryInfo?.name}
-                    onClick={() => setSelectContentID(data.contentid)}
-                    onAdd={() => console.log("아이템 추가", data.title)}
-                  />
-                ))
+              {filteredData.length > 0 ? (
+                filteredData.map((data) => {
+                  return (
+                    <PlaceCard
+                      key={data.contentid}
+                      item={data}
+                      onClick={() => setSelectContentID(data.contentid)}
+                      onAdd={() => console.log("아이템 추가", data.title)}
+                    />
+                  );
+                })
               ) : (
                 <div className="text-center py-8 text-gray-500">
-                  <p>등록된 {selectedCategoryInfo?.name}이 없습니다.</p>
+                  <p>등록된 {selectedCategoryInfo?.name === "전체" ? "장소가" : `${selectedCategoryInfo?.name}이`} 없습니다.</p>
                 </div>
               )}
             </div>
+            )
           </div>
         )}
 
         {/* 선택된 콘텐츠 상세 정보 */}
         {contentData && <ContentDetail contentData={contentData} />}
       </div>
-
-    
 
       {/* 버튼 레이아웃 */}
       <div className="fixed bottom-15 bg-white w-full py-3">
