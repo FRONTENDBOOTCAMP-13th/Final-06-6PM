@@ -16,6 +16,7 @@ interface TagItemProps {
   className?: string;
   closeIcon?: boolean;
   onRemove?: () => void;
+  onClick?: () => void;
 }
 
 export default function TagItem({
@@ -25,6 +26,7 @@ export default function TagItem({
   className = "",
   closeIcon = false,
   onRemove,
+  onClick,
 }: TagItemProps) {
   const btnType = {
     info: "bg-travel-info100 border border-travel-info200 text-white",
@@ -44,6 +46,7 @@ export default function TagItem({
   return (
     <div
       className={`${btnType[variant]}  ${btnSize[size]} ${className}  rounded-2xl cursor-pointer font-sans grid grid-cols-[1fr_auto] items-center leading-none`}
+      onClick={onClick}
     >
       {children}
       {closeIcon && <X onClick={onRemove} className="size-4 -translate-y-0.25" />}
