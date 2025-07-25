@@ -12,13 +12,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 export type ViewItemProps = {
+  _id: number;
   title?: string;
   userName: string;
   userImgURL?: string;
   location: string;
   content: string;
   contentImg?: string[];
-  reviewRating?: number;
+  starRate?: number;
   tags: string[];
   views: number;
   likes: number;
@@ -35,7 +36,7 @@ export default function ViewItem({
   location,
   content,
   contentImg,
-  reviewRating = 4,
+  starRate = 4,
   tags,
   views,
   likes,
@@ -95,10 +96,6 @@ export default function ViewItem({
       <div className="grid grid-cols-[55px_auto] gap-2 text-14">
         <p>방문장소</p>
         <div className="flex flex-wrap gap-1">
-          <ModalItem location={location} />
-          <ModalItem location={location} />
-          <ModalItem location={location} />
-          <ModalItem location={location} />
           <ModalItem location={location} />
           <ModalItem location={location} />
           <ModalItem location={location} />
@@ -188,7 +185,7 @@ export default function ViewItem({
               fill="currentColor"
               stroke="currentColor"
               className={`size-4 ${
-                i < Math.floor(reviewRating)
+                i < Math.floor(starRate)
                   ? "text-travel-warn100"
                   : "text-travel-gray400"
               }`}
