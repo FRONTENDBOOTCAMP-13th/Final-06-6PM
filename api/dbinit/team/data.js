@@ -108,7 +108,7 @@ export const initData = async (clientId, nextSeq) => {
           image: `/files/${clientId}/user-neo.png`,
         },
         title: "서울",
-        content: `${startDate} ~ ${endDate}`,
+        content: `2025-06-25 ~ 2025-06-26`,
         createdAt: getTime(-30, -60 * 60 * 12),
         updatedAt: getTime(-28, -60 * 60 * 5),
         extra: {
@@ -188,7 +188,7 @@ export const initData = async (clientId, nextSeq) => {
           image: `/files/${clientId}/user-neo.png`,
         },
         title: "울산",
-        content: `${startDate} ~ ${endDate}`,
+        content: `2025-08-03 ~ 2025-08-05`,
         createdAt: getTime(-1, -60 * 60 * 9),
         updatedAt: getTime(0, -60 * 60 * 5),
         extra: {
@@ -297,7 +297,7 @@ export const initData = async (clientId, nextSeq) => {
           image: `/files/${clientId}/user-neo.png`,
         },
         title: "전주 3박 4일",
-        content: `${startDate} ~ ${endDate}`,
+        content: `2025-06-15 ~ 2025-06-18`,
         createdAt: getTime(-40, -60 * 60 * 15),
         updatedAt: getTime(-38, -60 * 60 * 6),
         extra: {
