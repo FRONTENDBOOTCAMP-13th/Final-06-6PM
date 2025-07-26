@@ -4,12 +4,24 @@ import DestinationCard from "@/components/feature/destinationCard";
 import SearchRegion from "@/components/feature/searchRegion";
 import { destinationList } from "@/lib/data/destinationList";
 import { useRouter } from "next/navigation";
+import usePlanStore from "@/zustand/planStore";
 
 export default function PlanRegion() {
   const router = useRouter();
+  const { setSelectedArea } = usePlanStore();
+
   const regionClick = (region: string, areaCode: number) => {
-    sessionStorage.setItem("selectedRegion", region);
-    sessionStorage.setItem("selectedAreaCode", areaCode.toString());
+    // destinationList에서 선택된 지역 정보 찾기
+    const selectedDestination = destinationList.find(dest => dest.areaCode === areaCode);
+    
+    if (selectedDestination) {
+      // Zustand에 지역 정보 저장
+      setSelectedArea(selectedDestination);
+      
+      console.log('선택된 지역:', selectedDestination);
+      
+    }
+    
     router.push("/plan/dates");
   };
 

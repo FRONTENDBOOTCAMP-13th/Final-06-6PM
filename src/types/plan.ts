@@ -1,4 +1,6 @@
 import { User } from "./user";
+import { Destination } from "@/lib/data/destinationList";
+import { AreaTravelProps, ContentDataProps, KeywordTravelProps } from "@/types/travel";
 
 // 여행 계획 상세 정보 응답 타입
 export interface GetPlanDetailProps {
@@ -57,4 +59,62 @@ export interface PlanProduct {
   _id: any[];
   name: string[];
   mainImages: string[];
+}
+
+export interface DailyPlan {
+  day: number; // 여행 중 몇째 날
+  planDate: string; // 실제 일정 날짜
+  places: SelectedPlace[]; // 해당 날짜의 장소들
+}
+
+export interface PlanState {
+  // 기본 여행 정보
+  selectedArea: Destination | null;
+  startDate: string | null;
+  endDate: string | null;
+  planTitle: string;
+  planId: number | null;
+
+  // 검색 관련 상태
+  keyword: string;
+  selectedCategory: string;
+  isSearching: boolean;
+  isLoading: boolean;
+
+  // 데이터 상태
+  filteredData: AreaTravelProps[];
+  searchList: KeywordTravelProps[];
+  contentData: ContentDataProps | undefined;
+  selectContentID: string | number;
+  selectedPlaces: SelectedPlace[];
+  dailyPlans: DailyPlan[];
+}
+
+// 액션만 정의 (함수들)
+export interface PlanActions {
+  // Setters
+  setSelectedArea: (area: Destination | null) => void;
+  setStartDate: (date: string | null) => void;
+  setEndDate: (date: string | null) => void;
+  setPlanTitle: (title: string) => void;
+  setPlanId: (id: number | null) => void;
+  setKeyword: (keyword: string) => void;
+  setSelectedCategory: (category: string) => void;
+  setIsSearching: (isSearching: boolean) => void;
+  setIsLoading: (isLoading: boolean) => void;
+  setFilteredData: (data: AreaTravelProps[]) => void;
+  setSearchList: (list: KeywordTravelProps[]) => void;
+  setContentData: (data: ContentDataProps | undefined) => void;
+  setSelectContentID: (id: string | number) => void;
+  setSelectedPlaces: (places: SelectedPlace[]) => void;
+  setDailyPlans: (plans: DailyPlan[]) => void;
+
+  // 복합 액션들
+  addSelectedPlace: (place: SelectedPlace) => boolean;
+  removeSelectedPlace: (id: number) => void;
+  addPlaceToDailyPlan: (day: number, place: SelectedPlace) => void;
+  removePlaceFromDailyPlan: (day: number, placeId: number) => void;
+  getPlanExtra: () => PlanExtra | null;
+  clearSearchData: () => void;
+  clearAllData: () => void;
 }
