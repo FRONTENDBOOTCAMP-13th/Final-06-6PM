@@ -19,9 +19,9 @@ export default function ContentDetail({ contentData }: ContentDetailProps) {
           className="aspect-4/3 object-cover rounded-2xl"
         />
       )}
-      <h3 className="text-lg font-bold mt-2">{contentData.title}</h3>
-      <p className="text-sm mt-1">{contentData.addr1}</p>
-      <p className="mt-2 text-sm">{contentData.overview}</p>
+      <h3 className="text-18 font-bold mt-2">{contentData.title}</h3>
+      <p className="text-14 mt-1">{contentData.addr1}</p>
+      <p className="mt-2 text-14">{contentData.overview}</p>
     </div>
   );
 }

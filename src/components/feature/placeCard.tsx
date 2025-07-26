@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Plus, Star } from "lucide-react";
 import TagItem from "./tagItem";
 import { categories } from "@/lib/data/categoryList";
 
@@ -79,7 +79,7 @@ export default function PlaceCard({
         }}
         className="cursor-pointer"
       >
-        <span className="text-travel-gray700 text-xl">+</span>
+        <Plus className="size-5 text-travel-gray700" />
       </button>
     </div>
   );
