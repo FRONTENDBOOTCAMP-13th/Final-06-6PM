@@ -67,41 +67,32 @@ export interface DailyPlan {
   places: SelectedPlace[]; // 해당 날짜의 장소들
 }
 
+// 핵심 상태만 정의 (불필요한 것들 제거)
 export interface PlanState {
-  // 기본 여행 정보
+  // 핵심 여행 데이터 (persist 됨)
   selectedArea: Destination | null;
   startDate: string | null;
   endDate: string | null;
-  planTitle: string;
-  planId: number | null;
-
-  // 검색 관련 상태
-  keyword: string;
   selectedCategory: string;
-  isSearching: boolean;
-  isLoading: boolean;
+  selectedPlaces: SelectedPlace[];
+  dailyPlans: DailyPlan[];
 
-  // 데이터 상태
+  // 검색 관련 임시 상태 (persist 안 됨)
   filteredData: AreaTravelProps[];
   searchList: KeywordTravelProps[];
   contentData: ContentDataProps | undefined;
   selectContentID: string | number;
-  selectedPlaces: SelectedPlace[];
-  dailyPlans: DailyPlan[];
 }
 
-// 액션만 정의 (함수들)
+// 액션 정의
 export interface PlanActions {
-  // Setters
+  // 기본 정보 설정
   setSelectedArea: (area: Destination | null) => void;
   setStartDate: (date: string | null) => void;
   setEndDate: (date: string | null) => void;
-  setPlanTitle: (title: string) => void;
-  setPlanId: (id: number | null) => void;
-  setKeyword: (keyword: string) => void;
   setSelectedCategory: (category: string) => void;
-  setIsSearching: (isSearching: boolean) => void;
-  setIsLoading: (isLoading: boolean) => void;
+
+  // 데이터 설정 (임시 상태)
   setFilteredData: (data: AreaTravelProps[]) => void;
   setSearchList: (list: KeywordTravelProps[]) => void;
   setContentData: (data: ContentDataProps | undefined) => void;
