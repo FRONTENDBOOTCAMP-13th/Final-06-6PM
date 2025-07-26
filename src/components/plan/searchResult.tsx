@@ -34,7 +34,6 @@ export default function SearchResult({
           <PlaceCard
             key={item.contentid}
             item={item}
-            categoryName={selectedCategoryInfo?.name}
             onClick={() => onItemClick(item.contentid.toString())}
             onAdd={() => onItemAdd(item)}
           />

@@ -24,7 +24,6 @@ export default function PlanDetailForm() {
 
 
   const handleClick = async () => {
-    console.log('버튼 클릭됨');
     
     const formData = new FormData();
     formData.append('startDate', travelData.startDate);
@@ -41,11 +40,6 @@ export default function PlanDetailForm() {
       const result = await createPlanPost(formData, accessToken);
       console.log('서버 응답:', result);
       
-      if (result.ok) {
-        console.log('여행 계획 저장 성공!', result);
-      } else {
-        console.error('저장 실패:', result.message);
-      }
     } catch (error) {
       console.error('API 호출 에러:', error);
     }
