@@ -1,63 +1,78 @@
+// @/data/actions/review.ts
 "use server";
 
-import { ApiRes } from "@/types/api";
-import { GetReviewDetailProps } from "@/types/review"; // 타입 import 경로는 프로젝트에 맞게 수정
+import { revalidatePath } from "next/cache";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
+// 간단한 에러 타입 정의
+interface SimpleError {
+  msg: string;
+}
+
+interface ActionResult {
+  ok: 0 | 1;
+  message?: string;
+  errors?: Record<string, SimpleError>;
+  data?: any;
+}
+
 /**
- * 여행 리뷰(전체) 게시물 생성 함수
+ * 여행 리뷰(전체) 게시물 생성 Server Action
+ * @param {any} prevState - 이전 상태 (useActionState에서 사용)
  * @param {FormData} formData - 리뷰 정보가 담긴 폼 데이터
- * @param {string | null} accessToken - 사용자 인증 토큰
- * @returns {Promise<ApiRes<GetReviewDetailProps>>} API 응답 결과
- * @description 사용자가 작성한 리뷰 데이터로 게시물을 생성
- * 네트워크 오류 발생 시 사용자 친화적 에러 메시지를 반환
+ * @returns {Promise<ActionResult>} API 응답 결과
  */
 export async function createReviewAllPost(
-  formData: FormData,
-  accessToken: string | null
-): Promise<ApiRes<GetReviewDetailProps>> {
-  let res: Response;
-  let data: ApiRes<GetReviewDetailProps>;
-
+  prevState: any,
+  formData: FormData
+): Promise<ActionResult> {
   try {
-    // 이미지 파일들 처리
-    const imgFile: File[] = [];
-    let imgIdx = 0;
-    while (formData.get(`image_${imgIdx}`)) {
-      const file = formData.get(`image_${imgIdx}`) as File;
-      if (file) {
-        imgFile.push(file);
-      }
-      imgIdx++;
-    }
-
-    // 텍스트 데이터 처리
+    // FormData에서 데이터 추출
     const starRate = parseInt(formData.get("starRate") as string);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
     const tags = JSON.parse((formData.get("tags") as string) || "[]");
+    const token = formData.get("token") as string;
+    const planId = formData.get("plan_id") as string;
+    const place = formData.get("place") as string;
 
-    // URL query에서 받은 값들
-    const plan_id = parseInt(formData.get("plan_id") as string);
-    const location = formData.get("place") as string;
+    // 입력값 검증
+    const errors: Record<string, SimpleError> = {};
 
+    if (!title?.trim()) {
+      errors.title = { msg: "제목을 입력해주세요." };
+    }
+
+    if (!content?.trim()) {
+      errors.content = { msg: "내용을 입력해주세요." };
+    }
+
+    // 이미지 파일들 처리
+    const imgFile: File[] = [];
+    let imgIdx = 0;
+
+    while (true) {
+      const file = formData.get(`image_${imgIdx}`) as File;
+      if (!file || file.size === 0) break;
+      imgFile.push(file);
+      imgIdx++;
+    }
+
+    // API 요청 body 구성
     const body = {
       type: "reviewAll",
-      plan_id,
+      plan_id: planId,
       title,
       content,
       extra: {
         starRate,
-        location,
+        location: place,
         tags,
       },
     };
-
-    console.log("Review post body:", body);
-    console.log("Image files count:", imgFile.length);
 
     // 텍스트와 이미지를 함께 전송하기 위한 FormData 생성
     const reviewAllData = new FormData();
@@ -68,30 +83,39 @@ export async function createReviewAllPost(
       reviewAllData.append("attach", file);
     });
 
-    res = await fetch(`${API_URL}/posts?type=reviewAll`, {
+    // API 호출
+    const res = await fetch(`${API_URL}/posts?type=reviewAll`, {
       method: "POST",
       headers: {
         "Client-Id": CLIENT_ID,
-        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+        Authorization: `Bearer ${token}`,
       },
       body: reviewAllData,
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      return {
+        ok: 0,
+        message: data.message || "리뷰 작성에 실패했습니다.",
+      };
     }
 
-    data = await res.json();
+    // 성공 시 관련 페이지 재검증
+    revalidatePath("/review");
+    revalidatePath(`/plan/${planId}`);
+
+    return {
+      ok: 1,
+      data,
+      message: "리뷰가 성공적으로 작성되었습니다.",
+    };
   } catch (error) {
-    console.error("Review creation error:", error);
+    console.error("리뷰 작성 오류:", error);
     return {
       ok: 0,
-      message:
-        error instanceof Error
-          ? error.message
-          : "일시적인 네트워크 문제가 발생했습니다.",
+      message: "일시적인 네트워크 문제가 발생했습니다.",
     };
   }
-
-  return data;
 }
