@@ -1,6 +1,7 @@
-import ScheduleRegisterPlus from "@/components/ui/scheduleRegisterPlus";
+import DayScheduleCard from "@/components/ui/dayScheduleCard";
 import BackButton from "@/components/feature/backButton";
 import NextButton from "@/components/feature/nextButton";
+
 
 export default function SchedulePage() {
   return (
@@ -21,9 +22,9 @@ export default function SchedulePage() {
         </div>
         
         <div className="flex flex-col justify-between pt-7 gap-5">
-          <ScheduleRegisterPlus day={1} date="2025.05.08"/>
-          <ScheduleRegisterPlus day={2} date="2025.05.09"/>
-          <ScheduleRegisterPlus day={3} date="2025.05.10"/>
+          <DayScheduleCard day={1} date="2025.05.08"/>
+          <DayScheduleCard day={2} date="2025.05.09"/>
+          <DayScheduleCard day={3} date="2025.05.10"/>
         </div>
       </div>
       

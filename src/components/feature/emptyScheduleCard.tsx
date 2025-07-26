@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import ButtonRounded from "@/components/ui/btnRound";
 
-export default function ScheduleRegister() {
+export default function EmptyScheduleCard() {
   return (
     <div className="w-full py-8 bg-white border rounded-2xl border-travel-gray200">
       <div className="flex flex-col items-center">

@@ -1,4 +1,4 @@
-import ScheduleRegisterPlus from "@/components/ui/scheduleRegisterPlus";
+import ScheduleRegisterPlus from "@/components/ui/dayScheduleCard";
 import BackButton from "@/components/feature/backButton";
 import Link from "next/link";
 import NextButton from "@/components/feature/nextButton";

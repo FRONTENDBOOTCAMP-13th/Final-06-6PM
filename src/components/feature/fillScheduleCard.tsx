@@ -4,29 +4,43 @@ import { Plus } from "lucide-react";
 import PlanListItem, { PlanListItemProps } from "../ui/planListItem";
 import ButtonRounded from "../ui/btnRound";
 
-export default function PlanList() {
-  const planListDataArray: PlanListItemProps[] = [
-    { id: 1, place: "성산일출봉", tag: "관광지" },
-    { id: 2, place: "성산일출봉", tag: "관광지" },
-  ];
+// Props 타입 정의
+export interface DayListItem {
+  id: number;
+  title: string;
+  tag: string;
+}
 
-  const plusPlan = () => {
-    console.log("일정 등록하기");
-  };
+interface FillScheduleCardProps {
+  daylist: DayListItem[];
+  day: number;
+  onAddPlace: () => void;
+}
+
+export default function FillScheduleCard({ 
+  daylist, 
+  day, 
+  onAddPlace 
+}: FillScheduleCardProps) {
 
   return (
     // 나중에 지도 API 연동 예정
     <div className="w-full space-y-4 overflow-hidden rounded-2xl">
       {/* 지도 */}
-      <div className="w-full bg-travel-gray200 rounded-2xl h-[240px]"></div>
+      <div className="w-full bg-travel-gray200 rounded-2xl h-[240px] flex items-center justify-center">
+        <div className="text-travel-gray500 text-center">
+          <p className="text-sm">지도 영역</p>
+          <p className="text-xs">(추후 구현 예정)</p>
+        </div>
+      </div>
 
       {/* planListItem 컴포넌트 사용 */}
       <div className="space-y-2">
-        {planListDataArray.map((item, index) => (
+        {daylist.map((item, index) => (
           <PlanListItem
             key={item.id}
             number={index + 1}
-            place={item.place}
+            place={item.title}  // title -> place 매핑
             tag={item.tag}
           />
         ))}
@@ -37,12 +51,10 @@ export default function PlanList() {
         size="md"
         variant="outline"
         className="flex items-center gap-1 mx-auto"
-        onClick={() => {
-          plusPlan();
-        }}
+        onClick={onAddPlace}
       >
         <Plus className="size-4" color="currentColor" />
-        <span>일정 등록하기</span>
+        <span>일정 추가하기</span>
       </ButtonRounded>
     </div>
   );
