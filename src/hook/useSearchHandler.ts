@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { getKeywordData } from "@/data/functions/travel";
 import { AreaTravelProps, KeywordTravelProps } from "@/types/travel";
 import { SelectedPlace } from "@/types/plan";
@@ -6,12 +9,13 @@ import usePlanStore from "@/zustand/planStore";
 
 // 검색 관련 핸들러들
 export const useSearchHandlers = () => {
+  const [keyword, setKeyword] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
   const {
     selectedArea,
     selectedCategory,
-    setKeyword,
     setSearchList,
-    setIsSearching,
     setSelectedCategory,
     setSelectContentID,
     addSelectedPlace,
@@ -39,9 +43,7 @@ export const useSearchHandlers = () => {
 
       if (res?.header?.resultMsg === "OK" && res.body?.items?.item) {
         const keywordData = res.body.items.item;
-        const keywordList = Array.isArray(keywordData)
-          ? keywordData
-          : [keywordData];
+        const keywordList = Array.isArray(keywordData) ? keywordData : [keywordData];
 
         const filteredResults = keywordList.filter((item) => {
           return item.areacode === selectedArea.areaCode.toString();
@@ -83,6 +85,8 @@ export const useSearchHandlers = () => {
   };
 
   return {
+    keyword,
+    isSearching,
     searchSubmit,
     handleCategoryChange,
     handleAddPlace,

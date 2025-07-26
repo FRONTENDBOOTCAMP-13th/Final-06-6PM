@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import { getTravelList } from "@/data/functions/travel";
 import usePlanStore from "@/zustand/planStore";
 
 // 여행 데이터 로딩 (지역/카테고리 기반)
 export const useTravelData = () => {
-  const { selectedArea, selectedCategory, setFilteredData, setIsLoading } = usePlanStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const { selectedArea, selectedCategory, setFilteredData } = usePlanStore();
 
   useEffect(() => {
     if (selectedArea) {
@@ -36,5 +39,7 @@ export const useTravelData = () => {
 
       fetchData();
     }
-  }, [selectedArea, selectedCategory]);
+  }, [selectedArea, selectedCategory, setFilteredData]);
+
+  return { isLoading };
 };

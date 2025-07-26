@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react";
 import { getContentData } from "@/data/functions/travel";
 import usePlanStore from "@/zustand/planStore";

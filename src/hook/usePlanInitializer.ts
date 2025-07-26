@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react";
 import { destinationList } from "@/lib/data/destinationList";
 import usePlanStore from "@/zustand/planStore";
