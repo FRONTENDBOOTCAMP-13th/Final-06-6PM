@@ -40,6 +40,18 @@ export interface Location {
   mapy: string; // 위도 (string으로 된 좌표값)
 }
 
+// 선택한 장소 아이템
+export interface SelectedPlace {
+  id: number;
+  name: string;
+}
+
+export interface SearchNavProps {
+  path: string;
+  tagData: SelectedPlace[];
+  onRemoveTag?: (id: number) => void;
+}
+
 // 기타사항
 export interface PlanProduct {
   _id: any[];
