@@ -36,6 +36,7 @@ export interface AreaTravelProps {
   mapx: number; // 지도 좌표 경도 (X 좌표)
   mapy: number; // 지도 좌표 위도 (Y 좌표)
   title: string; // 여행지 제목
+  categoryId?: string;
 }
 
 // 지역 기반 여행지 목록 API 응답 타입

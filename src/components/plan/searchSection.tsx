@@ -8,12 +8,7 @@ interface SearchSectionProps {
   onSearch: (value: string) => Promise<void>;
 }
 
-export default function SearchSection({ 
-  selectedArea, 
-  keyword, 
-  isSearching, 
-  onSearch 
-}: SearchSectionProps){
+export default function SearchSection({ selectedArea, keyword, isSearching, onSearch }: SearchSectionProps) {
   return (
     <div className="flex flex-col gap-2">
       <SearchInput
@@ -21,7 +16,7 @@ export default function SearchSection({
         value={keyword}
         onSearch={onSearch}
       />
-      
+
       {/* 로딩 상태 표시 */}
       {isSearching && (
         <div className="text-center py-4">
@@ -30,5 +25,4 @@ export default function SearchSection({
       )}
     </div>
   );
-};
-
+}
