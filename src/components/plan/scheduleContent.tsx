@@ -46,7 +46,6 @@ export default function ScheduleContent() {
   // 장소 선택 초기화
   useEffect(() => {
     if (selectedPlaces.length > 0) {
-      console.log("스케줄 페이지 로드: selectedPlaces 정리");
       setSelectedPlaces([]);
     }
   }, []);
@@ -75,7 +74,7 @@ export default function ScheduleContent() {
           const daylist = plan.places.map((place) => ({
             id: place.id,
             title: place.name,
-            tag: "관광지",
+            tag: place.category || "관광지",
           }));
 
           // console.log(`${plan.day}일차 장소들:`, plan.places);
