@@ -4,7 +4,7 @@ import DayScheduleCard from "@/components/ui/dayScheduleCard";
 import usePlanStore from "@/zustand/planStore";
 
 export default function ScheduleContent() {
-  const { selectedArea, startDate, endDate, dailyPlans, setDailyPlans, addPlaceToDailyPlan, removeSelectedPlace } =
+  const { selectedArea, startDate, endDate, dailyPlans, setDailyPlans, selectedPlaces, setSelectedPlaces } =
     usePlanStore();
 
   // 날짜 기간으로 일정 초기화 (날짜 변경 시 기존 장소 보존)
@@ -42,6 +42,14 @@ export default function ScheduleContent() {
       }
     }
   }, [startDate, endDate, dailyPlans, setDailyPlans]);
+
+  // 장소 선택 초기화
+  useEffect(() => {
+    if (selectedPlaces.length > 0) {
+      console.log("스케줄 페이지 로드: selectedPlaces 정리");
+      setSelectedPlaces([]);
+    }
+  }, []);
 
   // 로딩 상태
   if (!selectedArea || !startDate || !endDate) {
