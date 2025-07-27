@@ -15,10 +15,9 @@ interface SimpleError {
 interface ActionResult {
   ok: 0 | 1;
   message?: string;
-  errors?: Record<string, SimpleError>;
   data?: any;
+  errors?: Record<string, SimpleError>;
 }
-
 /**
  * 여행 리뷰(전체) 게시물 생성 Server Action
  * @param {any} prevState - 이전 상태 (useActionState에서 사용)
@@ -26,7 +25,6 @@ interface ActionResult {
  * @returns {Promise<ActionResult>} API 응답 결과
  */
 export async function createReviewAllPost(
-  prevState: any,
   formData: FormData
 ): Promise<ActionResult> {
   try {
@@ -48,6 +46,31 @@ export async function createReviewAllPost(
 
     if (!content?.trim()) {
       errors.content = { msg: "내용을 입력해주세요." };
+    }
+
+    if (isNaN(starRate) || starRate < 1 || starRate > 5) {
+      errors.starRate = { msg: "별점을 올바르게 선택해주세요." };
+    }
+
+    if (!token) {
+      errors.token = { msg: "인증이 필요합니다." };
+    }
+
+    if (!planId) {
+      errors.planId = { msg: "여행 계획 정보가 필요합니다." };
+    }
+
+    if (!place) {
+      errors.place = { msg: "장소 정보가 필요합니다." };
+    }
+
+    // 검증 오류가 있으면 반환
+    if (Object.keys(errors).length > 0) {
+      return {
+        ok: 0,
+        errors,
+        message: "입력값을 확인해주세요.",
+      };
     }
 
     // 이미지 파일들 처리

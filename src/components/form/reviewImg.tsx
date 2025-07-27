@@ -99,6 +99,7 @@ export default function ReviewImg({ images, setImages }: ReviewImgProps) {
         {/* 숨겨진 파일 입력 */}
         <input
           type="file"
+          name="images"
           accept="image/*"
           multiple
           ref={inputRef}

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useActionState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter, useParams } from "next/navigation";
 import ReviewStar from "@/components/form/reviewStar";
 import ReviewTitle from "@/components/form/reviewTitle";
 import ReviewContent from "@/components/form/reviewContent";
@@ -16,78 +16,78 @@ export default function ReviewFormAll() {
   const token = useUserStore((state) => state.token);
   const router = useRouter();
 
-  // useActionState: [state, formAction, isPending]
-  const [state, formAction, isPending] = useActionState(
-    createReviewAllPost,
-    null
-  );
-
   const [starRate, setStarRate] = useState(5);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
+  const [isPending, setIsPending] = useState(false);
 
   const searchParams = useSearchParams();
-  const planId = searchParams.get("plan_id");
+  const params = useParams();
+  const planId = params?.id || "";
   const place = searchParams.get("place");
-
-  // Server Action 결과 처리
-  useEffect(() => {
-    if (state?.ok === 1) {
-      toast.success("리뷰가 성공적으로 작성되었습니다!");
-      router.push(`/review/success`);
-    } else if (state?.ok === 0 && state?.message) {
-      toast.error(state.message);
-    }
-  }, [state, router]);
 
   const isFormValid = title.trim() && content.trim() && planId && place;
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!isFormValid || isPending) return;
+
+    setIsPending(true);
+
+    try {
+      const formData = new FormData();
+
+      // 기본 데이터 추가
+      formData.set("starRate", starRate.toString());
+      formData.set("title", title);
+      formData.set("content", content);
+      formData.set("tags", JSON.stringify(tags));
+      formData.set("token", token || "");
+      formData.set("plan_id", planId.toString());
+      formData.set("place", place || "");
+
+      // 이미지 파일들 추가 (Server Action이 기대하는 형식으로)
+      images.forEach((image, index) => {
+        formData.append(`image_${index}`, image);
+      });
+
+      console.log("Submitting with data:", {
+        starRate,
+        title,
+        content,
+        tags,
+        images: images.length,
+        planId,
+        place,
+        token: !!token,
+      });
+
+      const result = await createReviewAllPost(formData);
+
+      if (result?.ok === 1) {
+        toast.success("리뷰가 성공적으로 작성되었습니다!");
+        router.push(`/review/success`);
+      } else if (result?.ok === 0 && result?.message) {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      console.error("Submit error:", error);
+      toast.error("리뷰 작성 중 오류가 발생했습니다.");
+    } finally {
+      setIsPending(false);
+    }
+  };
+
   return (
-    <form action={formAction} className="grid grid-cols-1 gap-3 p-4">
-      {/* Hidden inputs로 상태값들 전달 */}
-      <input type="hidden" name="starRate" value={starRate} />
-      <input type="hidden" name="title" value={title} />
-      <input type="hidden" name="content" value={content} />
-      <input type="hidden" name="tags" value={JSON.stringify(tags)} />
-      <input type="hidden" name="token" value={token || ""} />
-      <input type="hidden" name="plan_id" value={planId || ""} />
-      <input type="hidden" name="place" value={place || ""} />
-
-      {/* 실제 이미지 파일들을 hidden input으로 추가 */}
-      {images.map((image, index) => (
-        <input
-          key={`image-${index}`}
-          type="file"
-          name={`image_${index}`}
-          style={{ display: "none" }}
-          ref={(input) => {
-            if (input) {
-              const dataTransfer = new DataTransfer();
-              dataTransfer.items.add(image);
-              input.files = dataTransfer.files;
-            }
-          }}
-        />
-      ))}
-
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 p-4">
       <ReviewStar starRate={starRate} setStarRate={setStarRate} />
       <ReviewTitle title={title} setTitle={setTitle} />
       <ReviewContent content={content} setContent={setContent} />
       <ReviewImg images={images} setImages={setImages} />
       <ReviewTag tags={tags} setTags={setTags} />
-
-      {/* 에러 메시지 표시 */}
-      {state?.ok === 0 && state?.errors && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-3">
-          {Object.entries(state.errors).map(([field, error]) => (
-            <p key={field} className="text-sm text-red-600">
-              {error?.msg}
-            </p>
-          ))}
-        </div>
-      )}
 
       {/* 제출 버튼 */}
       <div className="bg-white fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-4 max-h-21 z-20 shadow-[0_-8px_16px_-4px_rgba(0,0,0,0.1)]">
