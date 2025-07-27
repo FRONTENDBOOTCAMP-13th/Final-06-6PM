@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import CategorySelect from "@/components/plan/categorySelect";
 import SearchSection from "@/components/plan/searchSection";
 import SearchResult from "@/components/plan/searchResult";
@@ -18,9 +19,20 @@ import { useSearchHandlers } from "@/hook/useSearchHandler";
 export default function SearchAll() {
   const [keyword, setKeyword] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const searchParams = useSearchParams();
+  const targetDay = searchParams.get("targetDay") ? parseInt(searchParams.get("targetDay")!) : null;
 
-  const { selectedArea, startDate, endDate, searchList, contentData, selectedCategory, selectedPlaces } =
-    usePlanStore();
+  const {
+    selectedArea,
+    startDate,
+    endDate,
+    searchList,
+    contentData,
+    selectedCategory,
+    selectedPlaces,
+    addPlaceToDailyPlan,
+    filteredData,
+  } = usePlanStore();
 
   usePlanInitializer();
   useTravelData();
@@ -29,6 +41,21 @@ export default function SearchAll() {
   // 검색 관련 핸들러들
   const { searchSubmit, handleCategoryChange, handleAddPlace, handleRemovePlace, setSelectContentID } =
     useSearchHandlers();
+
+  // ~일차 있을 때 사용할 함수
+  const handleAddPlaceTarget = (data: any) => {
+    // 원본 데이터를 SelectedPlace 형태로 변환
+    const selectedPlaceData = {
+      id: data.contentid,
+      name: data.title,
+    };
+
+    if (targetDay) {
+      // ~일차 있으면 바로 해당 날짜, selectedPlaces에 추가
+      addPlaceToDailyPlan(targetDay, selectedPlaceData);
+      handleAddPlace(data);
+    }
+  };
 
   // 선택된 지역이 없으면 로딩
   if (!selectedArea) {
@@ -78,7 +105,7 @@ export default function SearchAll() {
             keyword={keyword}
             isSearching={isSearching}
             onItemClick={(contentId) => setSelectContentID(contentId)}
-            onItemAdd={handleAddPlace}
+            onItemAdd={handleAddPlaceTarget}
           />
         </div>
 
@@ -87,7 +114,7 @@ export default function SearchAll() {
           keyword={keyword}
           isSearching={isSearching}
           onItemClick={setSelectContentID}
-          onItemAdd={handleAddPlace}
+          onItemAdd={handleAddPlaceTarget}
         />
 
         {/* 선택된 콘텐츠 상세 정보 */}
