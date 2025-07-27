@@ -16,7 +16,7 @@ export type ViewItemProps = {
   title?: string;
   userName: string;
   userImgURL?: string;
-  location: string;
+  location: string[];
   content: string;
   contentImg?: string[];
   starRate?: number;
@@ -96,9 +96,13 @@ export default function ViewItem({
       <div className="grid grid-cols-[55px_auto] gap-2 text-14">
         <p>방문장소</p>
         <div className="flex flex-wrap gap-1">
-          <ModalItem location={location} />
-          <ModalItem location={location} />
-          <ModalItem location={location} />
+          {location && Array.isArray(location) && location.length > 0 ? (
+            location.map((loc, index) => (
+              <ModalItem key={index} location={loc} />
+            ))
+          ) : (
+            <span className="text-travel-gray700">방문장소 없음</span>
+          )}
         </div>
       </div>
 
