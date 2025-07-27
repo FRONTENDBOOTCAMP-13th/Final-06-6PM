@@ -15,13 +15,13 @@ export interface DayScheduleCardPlusProps {
   day: number;
   date: string;
   daylist?: DayListItem[];
+  isPreview?: boolean;
 }
 
-export default function DayScheduleCard({ day, date, daylist }: DayScheduleCardPlusProps) {
+export default function DayScheduleCard({ day, date, daylist, isPreview = false }: DayScheduleCardPlusProps) {
   const router = useRouter();
 
   const handleAddPlace = () => {
-    // 검색 페이지로 이동하면서 어느 날짜에 추가할지 전달
     router.push(`/plan/edit/search?targetDay=${day}`);
   };
 
@@ -34,7 +34,9 @@ export default function DayScheduleCard({ day, date, daylist }: DayScheduleCardP
       </div>
 
       {daylist?.length ? (
-        <FillScheduleCard daylist={daylist} day={day} onAddPlace={handleAddPlace} />
+        <FillScheduleCard daylist={daylist} day={day} onAddPlace={isPreview ? undefined : handleAddPlace} />
+      ) : isPreview ? (
+        <div className="text-travel-gray500 text-center py-4">등록된 일정이 없습니다.</div>
       ) : (
         <EmptyScheduleCard onAddPlace={handleAddPlace} />
       )}

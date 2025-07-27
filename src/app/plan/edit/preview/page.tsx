@@ -1,36 +1,49 @@
-import ScheduleRegisterPlus from "@/components/ui/dayScheduleCard";
+"use client";
+import DayScheduleCard from "@/components/ui/dayScheduleCard";
 import BackButton from "@/components/feature/backButton";
-import Link from "next/link";
 import NextButton from "@/components/feature/nextButton";
+import { usePlanSchedule } from "@/hook/usePlanSchedule";
 
-export default function previewPage() {
+export default function PreviewPage() {
+  const { selectedArea, startDate, endDate, dailyPlans, isLoading } = usePlanSchedule();
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <p className="text-gray-500">여행 정보를 불러오는 중...</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <BackButton path="/plan/edit/search"/>
+        <BackButton path="/plan/edit/search" />
         <p className="text-center">여행일정만들기</p>
       </div>
-      
+
       <div className="relative w-full px-4 pb-25">
         <div>
-          <h2 className="text-28 text-travel-primary200 font-semibold">
-            울산
-          </h2>
+          <h2 className="text-28 text-travel-primary200 font-semibold">{selectedArea?.name}</h2>
           <p className="text-16 text-travel-gray700">
-            2025.08.03 ~ 2025.08.05
+            {startDate} ~ {endDate}
           </p>
         </div>
-        
+
         <div className="flex flex-col justify-between pt-7 gap-5">
-          <ScheduleRegisterPlus 
-            day={1} 
-            date="2025.05.08" 
-            daylist={[{id: 1, title: "더미데이터", tag: "중요"}]}/>
-          <ScheduleRegisterPlus day={2} date="2025.05.09"/>
+          {dailyPlans.map((plan) => (
+            <DayScheduleCard
+              key={plan.day}
+              day={plan.day}
+              date={plan.planDate}
+              daylist={plan.daylist}
+              isPreview={true}
+            />
+          ))}
         </div>
       </div>
-      
-      <NextButton path="/plan/success"/>   
+
+      <NextButton path="/plan/success" />
     </div>
   );
 }
