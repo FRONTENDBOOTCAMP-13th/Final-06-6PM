@@ -13,8 +13,9 @@ import {
 
 type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
 
-interface ApiReviewItem {
+export type GetReviewItem = {
   _id: number;
+  plan_id: number;
   type: string;
   views: number;
   user: {
@@ -24,20 +25,23 @@ interface ApiReviewItem {
   };
   title: string;
   content: string;
-  starRate: number; // *목록조회-전체/일자별/장소별에 안뜸
   createdAt: string; // 생성날짜
   updatedAt: string; // 수정날짜
   extra: {
     startDate: string; // 여행시작일
     endDate: string; // 여행종료일
-    tags: string[]; // *목록조회-전체에 안뜸
+    visitDate?: string;
+    starRate: number; // 별점
+    location: string[]; // 방문장소
+    tags: string[]; // 태그
+    images: string[];
   };
   bookmarks: number;
   repliesCount: number;
   product: {
     image: string | null;
   };
-}
+};
 
 const formatDateYmd = (dateString: string) => {
   const date = new Date(dateString);
@@ -48,35 +52,29 @@ const formatDateYmd = (dateString: string) => {
   return formattedDate;
 };
 
-// data.js에 location이 없어서 우선은 제목에서 첫단어 추출하고 있음.
-// 제목을 공백 기준으로 나눠 그 배열의 첫번째 요소!
+// 제목을 공백 기준으로 나눠 그 배열의 첫번째 요소를 불러옴
 const extractLocation = (title: string): string => {
   return title.split(" ")[0] || "방문장소";
 };
 
-// 태그 문제발견완료! 실제 data.js 양식이 전체리뷰랑 일별리뷰가 다름 확인하고 수정할것!
-// all에서는 태그가 바깥에 있는데 데일리랑 플레이스는 태그가 extra 안에 있음!
-// 방문일자 다르게 전체랑 다르게 나오는 것도, all에 맞춰 startDate라고 설정해놓고 없을씨 createdAt에서
-// 불러오는것으로 되어있는데, 데일리와 플레이스는 date로 되어있음.
-// all은 시작일~종료일 둘다 떠야하기에 이것도 추가 수정!!
-// regdate도 추가해야함. data.js에 없고, viewItem에만 있음 따라서 적용안되고 있음.
-// starRate도 반영안되고 있어 수정해야함.
-// 이미지도 둘 다 잘 들어가지만 사용자별 이미지에 맞춰 수정해야함.
-const transformReviewData = (apiData: ApiReviewItem[]): ViewItemProps[] => {
+const transformReviewData = (apiData: GetReviewItem[]): ViewItemProps[] => {
   return apiData.map((item) => {
     return {
       _id: item._id,
       title: item.title,
       userName: item.user.name,
       userImgURL: "/images/user2.png", // item.user.image
-      location: extractLocation(item.title),
       content: item.content,
       contentImg: [
         "/images/user1.png",
         "/images/user2.png",
         "/images/user3.png",
       ],
-      starRate: item.starRate || 5,
+      starRate: item.extra?.starRate || 5,
+      location:
+        item.extra?.location && Array.isArray(item.extra.location)
+          ? item.extra.location
+          : [extractLocation(item.title)],
       tags:
         item.extra?.tags && item.extra.tags.length > 0
           ? item.extra.tags
@@ -84,7 +82,15 @@ const transformReviewData = (apiData: ApiReviewItem[]): ViewItemProps[] => {
       views: item.views,
       likes: item.bookmarks,
       comments: item.repliesCount,
-      visitDate: formatDateYmd(item.extra?.startDate || item.createdAt),
+      visitDate:
+        item.type === "reviewAll"
+          ? `${formatDateYmd(
+              item.extra?.startDate || item.createdAt
+            )} ~ ${formatDateYmd(item.extra?.endDate || item.createdAt)}`
+          : formatDateYmd(
+              item.extra?.visitDate || item.extra?.startDate || item.createdAt
+            ),
+      regdate: item.createdAt,
     };
   });
 };
@@ -101,7 +107,7 @@ export default function FeedPage() {
   const fetchReviewData = async (type: ReviewType = "all") => {
     setLoading(true);
     try {
-      let allData: ApiReviewItem[] = [];
+      let allData: GetReviewItem[] = [];
       if (type === "all") {
         const [reviewAllRes, reviewDailyRes, reviewPlaceRes] =
           await Promise.all([
