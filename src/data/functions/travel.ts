@@ -1,10 +1,6 @@
 "use server";
 
-import {
-  GetAreaProps,
-  GetAreaTravelProps,
-  GetKeywordProps,
-} from "@/types/travel";
+import { GetAreaProps, GetAreaTravelProps, GetKeywordProps } from "@/types/travel";
 
 const API_URL = "http://apis.data.go.kr/B551011/KorService2";
 const API_KEY = process.env.NEXT_PUBLIC_TOUR_API_KEY!;
@@ -26,10 +22,7 @@ const API_KEY = process.env.NEXT_PUBLIC_TOUR_API_KEY!;
  *   _type: "json",
  * });
  */
-export async function fetchTravel(
-  endpoint: string,
-  params: Record<string, string>
-) {
+export async function fetchTravel(endpoint: string, params: Record<string, string>) {
   const baseURL = API_URL;
   const queryString = new URLSearchParams(params).toString();
   const url = `${baseURL}${endpoint}?${queryString}`;
@@ -60,7 +53,7 @@ export async function fetchTravel(
 export async function getAreaList(): Promise<GetAreaProps> {
   const params = {
     serviceKey: API_KEY,
-    numOfRows: "5",
+    numOfRows: "10",
     pageNo: "1",
     MobileOS: "ETC",
     MobileApp: "TravelDiary",
@@ -68,7 +61,6 @@ export async function getAreaList(): Promise<GetAreaProps> {
   };
 
   const res = await fetchTravel("/areaCode2", params);
-  // console.log(`Area res`, res);
   return res.response;
 }
 
@@ -80,20 +72,20 @@ export async function getAreaList(): Promise<GetAreaProps> {
  * @description
  * 지정된 지역 코드(areaCode)를 기반으로 관광지 목록을 조회
  */
-export async function getTravelList(
-  areaCode: number,
-  contentTypeId: string = "12"
-): Promise<GetAreaTravelProps> {
-  const params = {
+export async function getTravelList(areaCode: number, contentTypeId?: string): Promise<GetAreaTravelProps> {
+  const params: Record<string, string> = {
     serviceKey: API_KEY,
     areaCode: String(areaCode),
     numOfRows: "10",
     pageNo: "1",
     MobileOS: "ETC",
     MobileApp: "TravelDiary",
-    contentTypeId,
     _type: "json",
   };
+
+  if (contentTypeId && contentTypeId !== "all") {
+    params.contentTypeId = contentTypeId;
+  }
 
   const res = await fetchTravel("/areaBasedList2", params);
   console.log(`Travel res`, res);
@@ -108,25 +100,24 @@ export async function getTravelList(
  * @description
  * 키워드를 이용해 관련된 관광 정보를 검색
  */
-export async function getKeywordData(
-  keyword: string,
-  contentTypeId: string = "12"
-): Promise<GetKeywordProps> {
-  console.log("API 호출 시작:", { keyword, contentTypeId }); // 추가
-  
-  const params = {
+export async function getKeywordData(keyword: string, contentTypeId?: string): Promise<GetKeywordProps> {
+  console.log("API 호출 시작:", { keyword, contentTypeId });
+
+  const params: Record<string, string> = {
     serviceKey: API_KEY,
     keyword,
     MobileOS: "ETC",
     MobileApp: "TravelDiary",
     pageNo: "1",
     numOfRows: "10",
-    contentTypeId,
     _type: "json",
   };
-  
+
+  if (contentTypeId && contentTypeId !== "all") {
+    params.contentTypeId = contentTypeId;
+  }
+
   const res = await fetchTravel("/searchKeyword2", params);
-  
   return res.response;
 }
 

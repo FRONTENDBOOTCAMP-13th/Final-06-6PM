@@ -1,3 +1,5 @@
 {
-  "editor.maxTokenizationLineLength": 10000000
+  "editor.maxTokenizationLineLength": 10000000,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }

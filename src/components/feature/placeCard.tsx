@@ -1,18 +1,19 @@
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Plus, Star } from "lucide-react";
 import TagItem from "./tagItem";
+import { categories } from "@/lib/data/categoryList";
 
 export default function PlaceCard({
   item,
-  categoryName,
   onClick,
   onAdd,
 }: {
   item: any;
-  categoryName?: string;
   onClick?: () => void;
   onAdd?: (e: React.MouseEvent) => void;
 }) {
+  const categoryName = categories.find(cat => cat.id === String(item.contenttypeid))?.name || "기타";
+
   return (
     <div
       className="w-full bg-white rounded-2xl shadow-[0_0_6px_rgba(0,0,0,0.3)] py-4 px-3 grid grid-cols-[auto_1fr_auto] items-center gap-2"
@@ -38,11 +39,9 @@ export default function PlaceCard({
       <div className="max-w-[240px] text-travel-text100 overflow-hidden">
         <div className="w-full grid grid-cols-[1fr_auto] items-center gap-1">
           <h2 className="font-bold line-clamp-2">{item.title}</h2>
-          {categoryName && (
-            <TagItem variant="primary" size="sm">
-              {categoryName}
-            </TagItem>
-          )}
+          <TagItem variant="primary" size="sm">
+            {categoryName}
+          </TagItem>
         </div>
 
         <p className="my-1 truncate text-travel-gray600 text-14 whitespace-nowrap">
@@ -80,7 +79,7 @@ export default function PlaceCard({
         }}
         className="cursor-pointer"
       >
-        <span className="text-travel-gray700 text-xl">+</span>
+        <Plus className="size-5 text-travel-gray700" />
       </button>
     </div>
   );
