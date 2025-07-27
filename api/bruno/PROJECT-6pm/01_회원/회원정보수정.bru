@@ -1,0 +1,28 @@
+meta {
+  name: 회원정보수정
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{url}}/users/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjEsInR5cGUiOiJhZG1pbiIsIm5hbWUiOiLrrLjshJzsnbgiLCJlbWFpbCI6ImFkbWluQG1hcmtldC5jb20iLCJpbWFnZSI6Ii9maWxlcy9mZWJjMTMtZmluYWwwNi1lbWpmL3VzZXItbXV6aS5wbmciLCJsb2dpblR5cGUiOiJlbWFpbCIsImlhdCI6MTc1MzQyOTYwOCwiZXhwIjoxNzUzNTE2MDA4LCJpc3MiOiJGRUJDIn0.uhb0IkVwODJrB8dR8DYsLZ-PlKJduoF6i6TVvbkkc3U
+}
+
+body:json {
+  {
+    "extra":{
+    "seoul": "files/febc13-final06-emjf/KSF0hB96Q.png"
+  }
+    
+  }
+}
+
+settings {
+  encodeUrl: true
+}

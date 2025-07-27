@@ -5,17 +5,11 @@ meta {
 }
 
 post {
-  url: {{url}}/posts?type=map
+  url: {{url}}/files
   body: multipartForm
   auth: inherit
 }
 
-params:query {
-  type: map
-}
-
 body:multipart-form {
-  regionId: seoul
-  image: @file(C:\Users\qt_br\Downloads\다운로드.png)
-  userId: user123
+  attach: @file(C:\Users\qt_br\Downloads\다운로드.png)
 }

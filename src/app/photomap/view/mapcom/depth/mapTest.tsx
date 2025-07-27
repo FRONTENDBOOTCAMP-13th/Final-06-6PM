@@ -1,41 +1,161 @@
 "use client";
-import React, { useRef, useState } from "react";
-export interface ApiRes<T> {
+
+import React, { useRef, useState, useEffect } from "react";
+import { uploadUserPhoto, fetchUserPhotos } from "../getPost";
+import useUserStore from "@/zustand/userStore";
+
+interface UserPhoto {
+  regionId: string;
+  imageUrl: string;
+}
+
+interface ApiRes<T> {
   ok: number;
   data?: T;
   message?: string;
 }
 
-export interface UserPhoto {
-  regionId: string;
-  imageUrl: string;
+interface Props {
+  token: string;
 }
 
-export default function KoreaMapClipPathImg() {
-  const [imgMap, setImgMap] = useState<{ [key: string]: string }>({});
+export default function KoreaMapClipPathImg({ token }: Props) {
+  const [imgMap, setImgMap] = useState<{ [regionId: string]: string }>({});
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // 경로 클릭 → 파일선택창 띄우기
-  const handleRegionClick = (id: string) => {
-    setSelectedId(id);
-    inputRef.current?.click();
+  // zustand에서 사용자 정보와 토큰 가져오기
+  const user = useUserStore((state) => state.userInfo);
+  const userToken = useUserStore((state) => state.token);
+
+  // 로그인 시 기존 사진 불러오기
+  useEffect(() => {
+    if (!userToken || !user) return;
+
+    async function loadPhotos() {
+      try {
+        const res: ApiRes<UserPhoto[]> = await fetchUserPhotos(userToken!);
+        if (res.ok && res.data) {
+          const map: { [key: string]: string } = {};
+          res.data.forEach(({ regionId, imageUrl }) => {
+            map[regionId] = imageUrl;
+          });
+          setImgMap(map);
+        } else {
+          console.error("사진을 불러올 수 없습니다.");
+        }
+      } catch (error) {
+        console.error("포토맵 로드 실패:", error);
+      }
+    }
+
+    loadPhotos();
+  }, [userToken, user]);
+
+  // 지역 선택 시 file input 클릭 트리거
+  const handleRegionClick = (regionId: string) => {
+    if (!userToken) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    setSelectedId(regionId);
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
   };
 
-  // 사진 업로드
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 파일 선택 시 즉시 업로드 처리
+  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && selectedId) {
-      setImgMap((prev) => ({
-        ...prev,
-        [selectedId]: URL.createObjectURL(file),
-      }));
-      if (inputRef.current) inputRef.current.value = "";
+    if (!file || !selectedId || !userToken) {
+      console.log("파일, 지역 또는 토큰이 없습니다:", {
+        file,
+        selectedId,
+        userToken,
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      console.log("업로드 시작:", {
+        regionId: selectedId,
+        fileName: file.name,
+      });
+
+      const res = await uploadUserPhoto(file, selectedId, userToken);
+
+      console.log("업로드 결과:", res);
+
+      if (res.ok && res.data?.imageUrl) {
+        // 즉시 지도에 이미지 표시
+        setImgMap((prev) => ({
+          ...prev,
+          [selectedId]: res.data!.imageUrl,
+        }));
+
+        alert(`${selectedId} 지역에 사진이 업로드되었습니다!`);
+
+        // 최신 포토맵 데이터 다시 불러오기
+        await loadUserPhotos(userToken);
+      } else {
+        alert(res.message || "사진 업로드 실패");
+      }
+    } catch (err) {
+      console.error("업로드 오류:", err);
+      alert(
+        err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다."
+      );
+    } finally {
+      setLoading(false);
+      // 파일 input 초기화
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
+      setSelectedId(null);
+    }
+  };
+
+  // 포토맵 데이터 다시 불러오는 헬퍼 함수
+  const loadUserPhotos = async (token: string) => {
+    try {
+      const res = await fetchUserPhotos(token);
+      if (res.ok && res.data) {
+        const newImgMap: Record<string, string> = {};
+        res.data.forEach((photo) => {
+          newImgMap[photo.regionId] = photo.imageUrl;
+        });
+        setImgMap(newImgMap);
+      }
+    } catch (err) {
+      console.error("포토맵 로드 실패:", err);
     }
   };
 
   return (
     <div style={{ position: "relative", width: 850, height: 800 }}>
+      {loading && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontSize: "18px",
+            zIndex: 1000,
+          }}
+        >
+          업로드 중...
+        </div>
+      )}
+
       <svg
         viewBox="55 400 1600 600"
         width={850}
@@ -429,29 +549,22 @@ export default function KoreaMapClipPathImg() {
           className="land"
         />
       </svg>
+
+      {/* 파일 선택 input - 숨김 */}
       <input
         type="file"
         accept="image/*"
-        ref={inputRef}
         style={{ display: "none" }}
-        onChange={onSelectFile}
-        name="attach"
+        ref={inputRef}
+        onChange={onFileChange}
       />
 
-      <style>{`
-       
-        .land:hover { fill: #000; }
-       .land {
-        
-        stroke: #000;
-        stroke-width: 1;
-        cursor: pointer;
-      }
-
-
-
-
-      `}</style>
+      {/* 상태 표시 */}
+      <div style={{ marginTop: 10, fontSize: "14px", color: "#666" }}>
+        {!userToken && "로그인이 필요합니다."}
+        {userToken && !loading && "지역을 클릭해서 사진을 업로드하세요."}
+        {loading && "업로드 중..."}
+      </div>
     </div>
   );
 }
