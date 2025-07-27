@@ -3,7 +3,7 @@
 import { useActionState, useRef, useState } from "react";
 import { useSearchParams, useParams } from "next/navigation";
 import { Camera, ImagePlus, X } from "lucide-react";
-import { uploadFile } from "@/data/actions/file"; // 파일 업로드 함수
+import { uploadFile } from "@/data/actions/file";
 import ReviewStar from "@/components/form/reviewStar";
 import ReviewTitle from "@/components/form/reviewTitle";
 import ReviewContent from "@/components/form/reviewContent";
@@ -20,20 +20,35 @@ export default function ReviewFormAll() {
     null
   );
 
-  // 이미지 관련 상태
+  /* 이미지 관련 상태
+    path: 서버에 업로드된 파일 경로
+    name: 원본 파일명
+    preview: 브라우저에서 미리보기용 base64 데이터
+  */
   const [images, setImages] = useState<
     { path: string; name: string; preview: string }[]
   >([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const searchParams = useSearchParams();
   const params = useParams();
+  const searchParams = useSearchParams();
   const planId = params?.id || "";
   const place = searchParams.get("place");
 
-  // 이미지 업로드 처리
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 파일 선택 Dialog
+  const openFileDialog = () => {
+    if (!isUploading && !isPending) {
+      fileRef.current?.click();
+    }
+  };
+
+  // 이미지 업로드 함수
+  // 1. 미리보기 생성
+  // 2. 서버에 실제 업로드
+
+  const uploadImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 파일 확인
     const files = e.target.files;
     if (!files) return;
 
@@ -41,7 +56,6 @@ export default function ReviewFormAll() {
       toast.warning("사진은 최대 10장까지 첨부할 수 있습니다.");
       return;
     }
-
     setIsUploading(true);
 
     try {
@@ -50,7 +64,7 @@ export default function ReviewFormAll() {
         const preview = await new Promise<string>((resolve) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result as string);
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(file); // 파일을 base64로 변환
         });
 
         // 파일 업로드
@@ -68,8 +82,8 @@ export default function ReviewFormAll() {
         throw new Error("업로드 실패");
       });
 
-      const uploadedImages = await Promise.all(uploadPromises);
-      setImages((prev) => [...prev, ...uploadedImages]);
+      const completeImg = await Promise.all(uploadPromises);
+      setImages((prev) => [...prev, ...completeImg]);
     } catch (error) {
       toast.error("이미지 업로드에 실패했습니다.");
     } finally {
@@ -78,31 +92,25 @@ export default function ReviewFormAll() {
     }
   };
 
-  // 이미지 삭제
-  const removeImage = (index: number) => {
+  // 이미지 삭제 함수
+  const removeImg = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  // 파일 선택 다이얼로그 열기
-  const openFileDialog = () => {
-    if (!isUploading && !isPending) {
-      fileRef.current?.click();
-    }
   };
 
   return (
     <form action={formAction} className="grid grid-cols-1 gap-3 p-4 relative">
       {/* 로딩 오버레이 */}
       {(isUploading || isPending) && (
-        <div className="absolute inset-0 z-50 bg-black bg-opacity-30 flex flex-col items-center justify-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-2"></div>
-          <span className="text-white font-semibold text-sm">
-            {isUploading ? "이미지 업로드 중..." : "리뷰 작성 중..."}
+        <div className="absolute inset-0 z-20 bg-black/70 backdrop-blur-xs flex flex-col items-center justify-center space-y-4">
+          <div className="w-16 h-16 border-[6px] border-travel-primary100 border-t-transparent rounded-full animate-spin shadow-lg"></div>
+          <span className="text-white text-base font-medium animate-pulse tracking-wide">
+            {isUploading
+              ? "이미지를 업로드하고 있어요"
+              : "리뷰를 저장하는 중이에요"}
           </span>
         </div>
       )}
 
-      {/* Hidden inputs */}
       <input type="hidden" name="token" value={token || ""} />
       <input type="hidden" name="plan_id" value={planId.toString()} />
       <input type="hidden" name="place" value={place || ""} />
@@ -167,7 +175,7 @@ export default function ReviewFormAll() {
               />
               <button
                 type="button"
-                onClick={() => removeImage(index)}
+                onClick={() => removeImg(index)}
                 className="absolute z-10 p-1 text-white transition-colors rounded-full top-1 right-1 bg-black/60 hover:bg-black/80"
                 aria-label={`이미지 ${index + 1} 삭제`}
               >
@@ -184,7 +192,7 @@ export default function ReviewFormAll() {
           accept="image/*"
           multiple
           className="hidden"
-          onChange={handleImageUpload}
+          onChange={uploadImg}
           disabled={isUploading || isPending}
         />
       </div>

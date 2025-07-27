@@ -8,22 +8,34 @@ const API_URL =
   process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
+/**
+ * 사용자의 '여행 전체 후기(reviewAll)'를 생성하는 Server Action 함수.
+ *
+ * 클라이언트로부터 전달된 FormData를 검증하고, 서버 API에 POST 요청을 보낸 뒤
+ * 성공 시 관련 경로를 revalidate하고 `/review/success`로 리디렉션한다.
+ *
+ * @param {any} prevState - 이전 상태 (useActionState 사용 시 전달됨, 사용하지 않음)
+ * @param {FormData} formData - 클라이언트에서 전송된 후기 데이터 (제목, 내용, 별점 등 포함)
+ * @returns {Promise<ActionResult>} - 성공 여부와 메시지 또는 에러 필드 포함
+ *
+ * @example
+ * const result = await createReviewAllPost(null, formData);
+ * if (result.ok === 0) {
+ *   // 오류 처리
+ * }
+ */
 export async function createReviewAllPost(
   prevState: any,
   formData: FormData
 ): Promise<ActionResult> {
   try {
-    // 🔥 디버그 로그 - API URL 확인
-    console.log("API_URL:", API_URL);
-    console.log("CLIENT_ID:", CLIENT_ID);
-
     // FormData에서 데이터 추출
     const starRate = parseInt(formData.get("starRate") as string);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
     const tags = JSON.parse((formData.get("tags") as string) || "[]");
     const token = formData.get("token") as string;
-    const planId = formData.get("plan_id") as string;
+    const planId = parseInt(formData.get("plan_id") as string);
     const place = formData.get("place") as string;
 
     // 이미지 경로들 수집
@@ -36,16 +48,16 @@ export async function createReviewAllPost(
       imgIdx++;
     }
 
-    console.log("Server Action received:", {
-      starRate,
-      title,
-      content,
-      tags,
-      token: !!token,
-      planId,
-      place,
-      images: imagePaths.length,
-    });
+    // console.log("Server Action received:", {
+    //   starRate,
+    //   title,
+    //   content,
+    //   tags,
+    //   token: !!token,
+    //   planId,
+    //   place,
+    //   images: imagePaths.length,
+    // });
 
     // 입력값 검증
     const errors: Record<string, { msg: string }> = {};
@@ -58,22 +70,6 @@ export async function createReviewAllPost(
       errors.content = { msg: "내용을 입력해주세요." };
     }
 
-    if (isNaN(starRate) || starRate < 1 || starRate > 5) {
-      errors.starRate = { msg: "별점을 올바르게 선택해주세요." };
-    }
-
-    if (!token) {
-      errors.token = { msg: "인증이 필요합니다." };
-    }
-
-    if (!planId) {
-      errors.planId = { msg: "여행 계획 정보가 필요합니다." };
-    }
-
-    if (!place) {
-      errors.place = { msg: "장소 정보가 필요합니다." };
-    }
-
     // 검증 오류가 있으면 반환
     if (Object.keys(errors).length > 0) {
       return {
@@ -83,7 +79,7 @@ export async function createReviewAllPost(
       };
     }
 
-    // 요청 본문 구성
+    // API 요청 body 구성
     const body = {
       type: "reviewAll",
       title: title,
@@ -97,14 +93,9 @@ export async function createReviewAllPost(
       },
     };
 
-    console.log("Request body:", JSON.stringify(body, null, 2));
-
-    // 최종 URL 구성 및 로그
-    const fullUrl = `${API_URL}/posts?type=reviewAll`;
-    console.log("Full API URL:", fullUrl);
-
     // API 호출
-    const res = await fetch(fullUrl, {
+    const ApiPostURL = `${API_URL}/posts?type=reviewAll`;
+    const res = await fetch(ApiPostURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -118,7 +109,7 @@ export async function createReviewAllPost(
     console.log("API Response:", { status: res.status, data });
 
     if (!res.ok) {
-      console.error("❌ API 요청 실패:", {
+      console.error("API 요청 실패:", {
         status: res.status,
         statusText: res.statusText,
         data,
@@ -130,9 +121,9 @@ export async function createReviewAllPost(
       };
     }
 
-    console.log("✅ 리뷰 생성 성공! ID:", data.item?._id);
+    console.log("리뷰 생성 성공! ID:", data.item?._id);
 
-    // 성공 시 관련 페이지 재검증
+    // 관련 페이지 캐시 무효화
     revalidatePath("/review");
     revalidatePath(`/plan/${planId}`);
 
@@ -143,7 +134,7 @@ export async function createReviewAllPost(
 
     // 네트워크 오류인지 URL 오류인지 구분
     if (error instanceof TypeError && error.message.includes("Invalid URL")) {
-      console.error("❌ URL 구성 오류 - 환경변수를 확인하세요!");
+      console.error("URL 구성 오류 - 환경변수를 확인하세요!");
       return {
         ok: 0,
         message: "API 서버 연결 설정에 문제가 있습니다. 관리자에게 문의하세요.",
