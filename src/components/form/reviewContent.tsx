@@ -1,15 +1,12 @@
 import Textarea from "@/components/ui/textarea";
 import { FileText } from "lucide-react";
 
-interface ReviewContentProps {
-  content: string;
-  setContent: (content: string) => void;
-}
+// interface ReviewContentProps {
+//   content: string;
+//   setContent: (content: string) => void;
+// }
 
-export default function ReviewContent({
-  content,
-  setContent,
-}: ReviewContentProps) {
+export default function ReviewContent({ name = "content" }) {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-1.5">
@@ -19,9 +16,8 @@ export default function ReviewContent({
       <Textarea
         placeholder="내용을 입력해주세요"
         id="reviewContent"
+        name={name}
         rows={5}
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
       />
     </div>
   );

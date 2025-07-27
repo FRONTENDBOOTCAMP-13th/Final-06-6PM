@@ -1,33 +1,22 @@
-// @/data/actions/review.ts
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { ActionResult } from "next/dist/server/app-render/types";
+import { redirect } from "next/navigation";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
-// 간단한 에러 타입 정의
-interface SimpleError {
-  msg: string;
-}
-
-interface ActionResult {
-  ok: 0 | 1;
-  message?: string;
-  data?: any;
-  errors?: Record<string, SimpleError>;
-}
-/**
- * 여행 리뷰(전체) 게시물 생성 Server Action
- * @param {any} prevState - 이전 상태 (useActionState에서 사용)
- * @param {FormData} formData - 리뷰 정보가 담긴 폼 데이터
- * @returns {Promise<ActionResult>} API 응답 결과
- */
 export async function createReviewAllPost(
+  prevState: any,
   formData: FormData
 ): Promise<ActionResult> {
   try {
+    // 🔥 디버그 로그 - API URL 확인
+    console.log("API_URL:", API_URL);
+    console.log("CLIENT_ID:", CLIENT_ID);
+
     // FormData에서 데이터 추출
     const starRate = parseInt(formData.get("starRate") as string);
     const title = formData.get("title") as string;
@@ -37,8 +26,29 @@ export async function createReviewAllPost(
     const planId = formData.get("plan_id") as string;
     const place = formData.get("place") as string;
 
+    // 이미지 경로들 수집
+    const imagePaths: string[] = [];
+    let imgIdx = 0;
+    while (true) {
+      const imagePath = formData.get(`imagePath_${imgIdx}`) as string;
+      if (!imagePath) break;
+      imagePaths.push(imagePath);
+      imgIdx++;
+    }
+
+    console.log("Server Action received:", {
+      starRate,
+      title,
+      content,
+      tags,
+      token: !!token,
+      planId,
+      place,
+      images: imagePaths.length,
+    });
+
     // 입력값 검증
-    const errors: Record<string, SimpleError> = {};
+    const errors: Record<string, { msg: string }> = {};
 
     if (!title?.trim()) {
       errors.title = { msg: "제목을 입력해주세요." };
@@ -73,72 +83,77 @@ export async function createReviewAllPost(
       };
     }
 
-    // 이미지 파일들 처리
-    const imgFile: File[] = [];
-    let imgIdx = 0;
-
-    while (true) {
-      const file = formData.get(`image_${imgIdx}`) as File;
-      if (!file || file.size === 0) break;
-      imgFile.push(file);
-      imgIdx++;
-    }
-
-    // API 요청 body 구성
+    // 요청 본문 구성
     const body = {
       type: "reviewAll",
-      plan_id: planId,
-      title,
-      content,
+      title: title,
+      content: content,
       extra: {
-        starRate,
+        plan_id: planId,
+        starRate: starRate,
         location: place,
-        tags,
+        tags: tags,
+        images: imagePaths,
       },
     };
 
-    // 텍스트와 이미지를 함께 전송하기 위한 FormData 생성
-    const reviewAllData = new FormData();
-    reviewAllData.append("data", JSON.stringify(body));
+    console.log("Request body:", JSON.stringify(body, null, 2));
 
-    // 이미지 파일들 추가
-    imgFile.forEach((file) => {
-      reviewAllData.append("attach", file);
-    });
+    // 최종 URL 구성 및 로그
+    const fullUrl = `${API_URL}/posts?type=reviewAll`;
+    console.log("Full API URL:", fullUrl);
 
     // API 호출
-    const res = await fetch(`${API_URL}/posts?type=reviewAll`, {
+    const res = await fetch(fullUrl, {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
         Authorization: `Bearer ${token}`,
       },
-      body: reviewAllData,
+      body: JSON.stringify(body),
     });
 
     const data = await res.json();
+    console.log("API Response:", { status: res.status, data });
 
     if (!res.ok) {
+      console.error("❌ API 요청 실패:", {
+        status: res.status,
+        statusText: res.statusText,
+        data,
+      });
+
       return {
         ok: 0,
-        message: data.message || "리뷰 작성에 실패했습니다.",
+        message: data.message || `서버 오류가 발생했습니다. (${res.status})`,
       };
     }
+
+    console.log("✅ 리뷰 생성 성공! ID:", data.item?._id);
 
     // 성공 시 관련 페이지 재검증
     revalidatePath("/review");
     revalidatePath(`/plan/${planId}`);
 
-    return {
-      ok: 1,
-      data,
-      message: "리뷰가 성공적으로 작성되었습니다.",
-    };
+    // redirect로 페이지 이동
+    redirect("/review/success");
   } catch (error) {
     console.error("리뷰 작성 오류:", error);
+
+    // 네트워크 오류인지 URL 오류인지 구분
+    if (error instanceof TypeError && error.message.includes("Invalid URL")) {
+      console.error("❌ URL 구성 오류 - 환경변수를 확인하세요!");
+      return {
+        ok: 0,
+        message: "API 서버 연결 설정에 문제가 있습니다. 관리자에게 문의하세요.",
+      };
+    }
+
     return {
       ok: 0,
-      message: "일시적인 네트워크 문제가 발생했습니다.",
+      message:
+        "일시적인 네트워크 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
     };
   }
 }

@@ -1,34 +1,19 @@
 "use client";
 
 import { Camera, ImagePlus, X } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 interface ReviewImgProps {
-  images: File[];
-  setImages: (images: File[]) => void;
+  name?: string; // FormData에서 사용할 name
 }
 
-export default function ReviewImg({ images, setImages }: ReviewImgProps) {
-  const [previewUrls, setPreviewUrls] = useState<string[]>([]); // 이미지 미리보기용 URL
+export default function ReviewImg({ name = "images" }: ReviewImgProps) {
+  const [images, setImages] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const MAX_IMG = 10;
-
-  // images가 변경될 때마다 미리보기 URL 업데이트
-  useEffect(() => {
-    // 기존 URL 해제 (메모리 누수 방지)
-    previewUrls.forEach((url) => URL.revokeObjectURL(url));
-
-    // 새로운 미리보기 URL 생성
-    const newUrls = images.map((file) => URL.createObjectURL(file));
-    setPreviewUrls(newUrls);
-
-    // cleanup 함수로 컴포넌트 언마운트 시 URL 해제
-    return () => {
-      newUrls.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, [images]);
 
   // 이미지 업로드
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,16 +25,28 @@ export default function ReviewImg({ images, setImages }: ReviewImgProps) {
       return;
     }
 
-    // 부모 컴포넌트의 상태 업데이트
-    setImages([...images, ...selectFiles]);
+    const newImages = [...images, ...selectFiles];
+    setImages(newImages);
+
+    // 기존 URL 해제
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+
+    // 새로운 미리보기 URL 생성
+    const newUrls = newImages.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(newUrls);
 
     e.target.value = ""; // input 초기화
   };
 
   // 이미지 삭제
   const removeImg = (index: number) => {
-    // 부모 컴포넌트의 상태 업데이트
-    setImages(images.filter((_, i) => i !== index));
+    const newImages = images.filter((_, i) => i !== index);
+    setImages(newImages);
+
+    // URL 해제
+    URL.revokeObjectURL(previewUrls[index]);
+    const newUrls = previewUrls.filter((_, i) => i !== index);
+    setPreviewUrls(newUrls);
   };
 
   // 파일 선택 다이얼로그 열기
@@ -95,18 +92,34 @@ export default function ReviewImg({ images, setImages }: ReviewImgProps) {
             </button>
           </div>
         ))}
-
-        {/* 숨겨진 파일 입력 */}
-        <input
-          type="file"
-          name="images"
-          accept="image/*"
-          multiple
-          ref={inputRef}
-          className="hidden"
-          onChange={uploadImg}
-        />
       </div>
+
+      {/* FormData로 전송할 숨겨진 input들 */}
+      {images.map((file, index) => (
+        <input
+          key={index}
+          type="file"
+          name={`image_${index}`}
+          style={{ display: "none" }}
+          ref={(input) => {
+            if (input) {
+              const dataTransfer = new DataTransfer();
+              dataTransfer.items.add(file);
+              input.files = dataTransfer.files;
+            }
+          }}
+        />
+      ))}
+
+      {/* 파일 선택용 숨겨진 input */}
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        ref={inputRef}
+        className="hidden"
+        onChange={uploadImg}
+      />
     </div>
   );
 }
