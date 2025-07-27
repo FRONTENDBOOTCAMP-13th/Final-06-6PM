@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { CalendarDays } from "lucide-react";
 import EmptyScheduleCard from "@/components/feature/emptyScheduleCard";
 import FillScheduleCard from "@/components/feature/fillScheduleCard";
@@ -15,6 +18,13 @@ export interface DayScheduleCardPlusProps {
 }
 
 export default function DayScheduleCard({ day, date, daylist }: DayScheduleCardPlusProps) {
+  const router = useRouter();
+
+  const handleAddPlace = () => {
+    // 검색 페이지로 이동하면서 어느 날짜에 추가할지 전달
+    router.push(`/plan/edit/search?targetDay=${day}`);
+  };
+
   return (
     <div className="border-travel-gray200 w-full rounded-2xl border bg-white p-5">
       <div className="mb-3 flex items-center gap-2">
@@ -24,15 +34,9 @@ export default function DayScheduleCard({ day, date, daylist }: DayScheduleCardP
       </div>
 
       {daylist?.length ? (
-        <FillScheduleCard
-          daylist={daylist}
-          day={day}
-          onAddPlace={() => {
-            console.log(`${day}일차 일정 추가하기`);
-          }}
-        />
+        <FillScheduleCard daylist={daylist} day={day} onAddPlace={handleAddPlace} />
       ) : (
-        <EmptyScheduleCard />
+        <EmptyScheduleCard onAddPlace={handleAddPlace} />
       )}
     </div>
   );

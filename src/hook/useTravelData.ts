@@ -27,6 +27,7 @@ export const useTravelData = () => {
             const dataArray = Array.isArray(data) ? data : [data];
             setFilteredData(dataArray);
           } else {
+            console.log("응답 데이터가 없거나 에러:", response?.header);
             setFilteredData([]);
           }
         } catch (error) {

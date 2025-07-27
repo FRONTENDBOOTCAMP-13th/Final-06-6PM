@@ -10,14 +10,14 @@ interface SearchResultProps {
   onItemAdd: (item: KeywordTravelProps) => void;
 }
 
-export default function SearchResult({ 
-  searchList, 
-  selectedCategoryInfo, 
+export default function SearchResult({
+  searchList,
+  selectedCategoryInfo,
   keyword,
   isSearching,
-  onItemClick, 
-  onItemAdd 
-}: SearchResultProps){
+  onItemClick,
+  onItemAdd,
+}: SearchResultProps) {
   // 로딩 중이면 아무것도 렌더링하지 않음
   if (isSearching) {
     return null;
@@ -27,9 +27,7 @@ export default function SearchResult({
   if (searchList.length > 0) {
     return (
       <div className="space-y-3 mt-4">
-        <h3 className="font-bold text-16">
-          {selectedCategoryInfo?.name} 검색 결과
-        </h3>
+        <h3 className="font-bold text-16">{selectedCategoryInfo?.name} 검색 결과</h3>
         {searchList.map((item) => (
           <PlaceCard
             key={item.contentid}
@@ -54,5 +52,4 @@ export default function SearchResult({
 
   // 검색하지 않은 상태면 아무것도 렌더링하지 않음
   return null;
-};
-
+}
