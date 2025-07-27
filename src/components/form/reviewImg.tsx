@@ -4,52 +4,49 @@ import { Camera, ImagePlus, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function ReviewImg() {
-  const [imgList, setImgList] = useState<string[]>([]); // 이미지 미리보기용 URL
-  const [imgFile, setImgFile] = useState<File[]>([]); // 업로드할 파일
+interface ReviewImgProps {
+  name?: string; // FormData에서 사용할 name
+}
+
+export default function ReviewImg({ name = "images" }: ReviewImgProps) {
+  const [images, setImages] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const MAX_IMG = 10;
 
   // 이미지 업로드
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.files);
     const selectFiles = Array.from(e.target.files || []);
     console.log(selectFiles);
 
-    /*
-      e.target.files = FileList 선택한 파일목록
-      FileList {
-        0: File { name: "photo1.png", size: 123456, type: "image/png", ... },
-        1: File { name: "photo2.jpg", size: 234567, type: "image/jpeg", ... },
-        length: 2,
-        item: function(index) { ... } 
-      }
-     */
-
-    if (imgFile.length + selectFiles.length > MAX_IMG) {
-      // 현재 파일 개수 + 새로 선택하는 파일 개수
+    if (images.length + selectFiles.length > MAX_IMG) {
       toast.warning("사진은 최대 10장까지 첨부할 수 있습니다.");
       return;
     }
 
-    // 파일 객체를 브라우저가 보여줄 수 있는 임시 URL처리
-    const newUrls = selectFiles.map((file) => URL.createObjectURL(file));
+    const newImages = [...images, ...selectFiles];
+    setImages(newImages);
 
-    setImgList((prev) => [...prev, ...newUrls]); // 이미지 미리보기용 URL
-    setImgFile((prev) => [...prev, ...selectFiles]); // 업로드할 파일
+    // 기존 URL 해제
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+
+    // 새로운 미리보기 URL 생성
+    const newUrls = newImages.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(newUrls);
 
     e.target.value = ""; // input 초기화
   };
 
   // 이미지 삭제
   const removeImg = (index: number) => {
-    // 메모리 누수 방지를 위해 URL 해제
-    URL.revokeObjectURL(imgList[index]);
+    const newImages = images.filter((_, i) => i !== index);
+    setImages(newImages);
 
-    // 두 상태에서 해당 인덱스 제거
-    setImgList((prev) => prev.filter((_, i) => i !== index));
-    setImgFile((prev) => prev.filter((_, i) => i !== index));
+    // URL 해제
+    URL.revokeObjectURL(previewUrls[index]);
+    const newUrls = previewUrls.filter((_, i) => i !== index);
+    setPreviewUrls(newUrls);
   };
 
   // 파일 선택 다이얼로그 열기
@@ -74,7 +71,7 @@ export default function ReviewImg() {
         </div>
 
         {/* 업로드된 이미지들 */}
-        {imgList.map((src, index) => (
+        {previewUrls.map((src, index) => (
           <div
             key={index}
             className="relative p-2 bg-white border rounded-lg border-travel-gray400 min-h-21"
@@ -95,17 +92,34 @@ export default function ReviewImg() {
             </button>
           </div>
         ))}
-
-        {/* 숨겨진 파일 입력 */}
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          ref={inputRef}
-          className="hidden"
-          onChange={uploadImg}
-        />
       </div>
+
+      {/* FormData로 전송할 숨겨진 input들 */}
+      {images.map((file, index) => (
+        <input
+          key={index}
+          type="file"
+          name={`image_${index}`}
+          style={{ display: "none" }}
+          ref={(input) => {
+            if (input) {
+              const dataTransfer = new DataTransfer();
+              dataTransfer.items.add(file);
+              input.files = dataTransfer.files;
+            }
+          }}
+        />
+      ))}
+
+      {/* 파일 선택용 숨겨진 input */}
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        ref={inputRef}
+        className="hidden"
+        onChange={uploadImg}
+      />
     </div>
   );
 }
