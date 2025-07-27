@@ -42,7 +42,8 @@ export default function ViewItem({
   const tags = extra.tags ?? [];
   const contentImg = extra.images ?? [];
   const locationList = Array.isArray(extra.location) ? extra.location : [extra.location ?? ""];
-  const visitDate = extra.startDate ?? "";
+  const visitDate =
+    extra.startDate && extra.endDate ? `${extra.startDate} ~ ${extra.endDate}` : extra.startDate ? extra.startDate : "";
   const regdate = createdAt;
 
   // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
