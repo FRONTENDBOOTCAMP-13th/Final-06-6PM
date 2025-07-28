@@ -1,21 +1,22 @@
 "use client";
 
-import { getPlanListUser } from "@/lib/api/plan";
-import { GetPlanDetailProps } from "@/types/plan";
 import useUserStore from "@/zustand/userStore";
-import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function MypageReviewSelect() {
+import { getPlanListUser } from "@/lib/api/plan";
+import { GetPlanDetailProps } from "@/types/plan";
+import { ChevronDown } from "lucide-react";
+
+export default function SelectReviewTab() {
   const token = useUserStore((state) => state.token);
   const router = useRouter();
-
   const searchParams = useSearchParams();
 
   const [userPlan, setUserPlan] = useState<GetPlanDetailProps[]>([]);
   const [selectPlan, setSelectPlan] = useState<string>(searchParams.get("plan_id") || "");
 
+  // 사용자 여행일정 전체 조회
   useEffect(() => {
     const UserPlanData = async () => {
       if (!token) return;

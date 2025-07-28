@@ -1,57 +1,59 @@
 "use client";
 
-import { CalendarDays, LayoutList, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
-import ViewItem from "./viewItem";
 import useUserStore from "@/zustand/userStore";
-import { GetReviewDetailProps } from "@/types/review";
-import { getReviewAllUser, getReviewDailyUser, getReviewPlaceUser } from "@/lib/api/review";
 import { useSearchParams } from "next/navigation";
 
-interface FetchProps {
+import { GetReviewDetailProps } from "@/types/review";
+import { getReviewAllUser, getReviewDailyUser, getReviewPlaceUser } from "@/lib/api/review";
+import { CalendarDays, LayoutList, MapPin } from "lucide-react";
+import ViewItem from "./viewItem";
+
+// 리뷰 타입별 요청
+interface ReviewTypeProps {
   all: boolean;
   daily: boolean;
   place: boolean;
 }
 
 export default function SelectReview() {
-  const [tab, setTab] = useState(0);
   const token = useUserStore((state) => state.token);
+  const searchParams = useSearchParams();
+  const planIdParam = searchParams.get("plan_id");
 
+  const [tab, setTab] = useState(0);
   const [reviewAll, setReviewAll] = useState<GetReviewDetailProps[]>([]);
   const [reviewDaily, setReviewDaily] = useState<GetReviewDetailProps[]>([]);
   const [reviewPlace, setReviewPlace] = useState<GetReviewDetailProps[]>([]);
 
-  const [fetched, setFetched] = useState<FetchProps>({
+  const [reviewType, setReviewType] = useState<ReviewTypeProps>({
     all: false,
     daily: false,
     place: false,
   });
 
-  const searchParams = useSearchParams();
-  const planIdParam = searchParams.get("plan_id");
-
+  // 탭에 해당하는 리뷰데이터 요청
   useEffect(() => {
     if (!token) return;
 
     const fetchData = async () => {
-      if (tab === 0 && !fetched.all) {
+      if (tab === 0 && !reviewType.all) {
         const res = await getReviewAllUser(token);
         if (res.ok) {
           setReviewAll(res.item);
-          setFetched((prev) => ({ ...prev, all: true }));
+          setReviewType((prev) => ({ ...prev, all: true }));
         }
-      } else if (tab === 1 && !fetched.daily) {
+      } else if (tab === 1 && !reviewType.daily) {
         const res = await getReviewDailyUser(token);
         if (res.ok) {
           setReviewDaily(res.item);
-          setFetched((prev) => ({ ...prev, daily: true }));
+          setReviewType((prev) => ({ ...prev, daily: true }));
         }
-      } else if (tab === 2 && !fetched.place) {
+      } else if (tab === 2 && !reviewType.place) {
         const res = await getReviewPlaceUser(token);
         if (res.ok) {
           setReviewPlace(res.item);
-          setFetched((prev) => ({ ...prev, place: true }));
+          setReviewType((prev) => ({ ...prev, place: true }));
         }
       }
     };
