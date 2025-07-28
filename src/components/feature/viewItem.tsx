@@ -15,11 +15,12 @@ import { GetReviewDetailProps } from "@/types/review";
 const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
 
 export type ViewItemProps = GetReviewDetailProps & {
-  onClick?: () => void; // 필요 시 추가
+  onClick?: () => void;
 };
 
 export default function ViewItem({
   _id,
+  type,
   title,
   user,
   content,
@@ -42,8 +43,15 @@ export default function ViewItem({
   const tags = extra.tags ?? [];
   const contentImg = extra.images ?? [];
   const locationList = Array.isArray(extra.location) ? extra.location : [extra.location ?? ""];
+
+  // 리뷰 타입에 따른 방문일자 처리
   const visitDate =
-    extra.startDate && extra.endDate ? `${extra.startDate} ~ ${extra.endDate}` : extra.startDate ? extra.startDate : "";
+    type === "reviewAll"
+      ? extra.startDate && extra.endDate
+        ? `${extra.startDate} ~ ${extra.endDate}`
+        : extra.startDate || ""
+      : extra.visitDate || extra.startDate || "";
+
   const regdate = createdAt;
 
   // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
@@ -56,14 +64,24 @@ export default function ViewItem({
   const showImg = isDetailView ? contentImg : contentImg.slice(0, maxImg);
   const moreCount = isDetailView ? 0 : contentImg.length - maxImg;
 
-  // 이미지 URL설정 필요
+  // 이미지 URL설정
   const getImageURL = (imgPath: string) => {
     if (!imgPath) return "/images/user4.png";
     return imgPath.startsWith("http") ? imgPath : `${API_URL}/${imgPath}`;
   };
 
+  // 상세페이지로 이동하는 함수
+  const handleItemClick = () => {
+    if (!isDetailView) {
+      router.push(`/feed/${_id}`);
+    }
+  };
+
   return (
-    <div className={listClass}>
+    <div
+      className={`${listClass} ${!isDetailView ? "cursor-pointer hover:shadow-lg transition-shadow" : ""}`}
+      onClick={handleItemClick}
+    >
       <div className="flex items-center justify-between">
         {/* 사용자이미지/타이틀/닉네임 */}
         <div className="flex items-center gap-3">
@@ -81,7 +99,9 @@ export default function ViewItem({
         </div>
 
         {/* 수정/삭제 모달창 버튼*/}
-        <DrawerBtn />
+        <div onClick={(e) => e.stopPropagation()}>
+          <DrawerBtn />
+        </div>
       </div>
 
       {/* 방문일자 */}
@@ -93,7 +113,7 @@ export default function ViewItem({
       {/* 방문장소 */}
       <div className="grid grid-cols-[55px_auto] gap-2 text-14">
         <p>방문장소</p>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1" onClick={(e) => e.stopPropagation()}>
           {locationList.map((location, idx) => (
             <ModalItem key={idx} location={location} />
           ))}
@@ -140,10 +160,7 @@ export default function ViewItem({
                     className="object-cover w-full h-full"
                   />
                   {!isDetailView && overlay && (
-                    <div
-                      className="absolute inset-0 bg-black/60 flex items-center justify-center cursor-pointer"
-                      onClick={() => router.push(`/feed/${_id}`)}
-                    >
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                       <span className="text-white font-bold text-20">+{moreCount}</span>
                     </div>
                   )}
@@ -196,7 +213,9 @@ export default function ViewItem({
           </span>
         </div>
 
-        <ToggleIcon type="book" />
+        <div onClick={(e) => e.stopPropagation()}>
+          <ToggleIcon type="book" />
+        </div>
       </div>
     </div>
   );
