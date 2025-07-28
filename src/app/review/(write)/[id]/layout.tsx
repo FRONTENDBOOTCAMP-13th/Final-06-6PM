@@ -1,6 +1,6 @@
+import CurrentPlace from "@/components/ui/currentPlace";
 import "../../../../styles/globals.css";
 import { ChevronLeft } from "lucide-react";
-import Button from "@/components/ui/btn";
 
 export default function MenubarLayout({
   children,
@@ -17,10 +17,8 @@ export default function MenubarLayout({
       </div>
       <div className="relative w-full px-4 pb-25">
         <div>
-          <h2 className="font-semibold text-28 text-travel-primary200">
-            후기작성
-          </h2>
-          <p className="text-16 text-travel-gray700">제주도</p>
+          <h2 className="font-semibold text-28 text-travel-primary200">후기작성</h2>
+          <CurrentPlace />
         </div>
         {children}
       </div>

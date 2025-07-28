@@ -13,7 +13,7 @@ export interface DayListItem {
 interface FillScheduleCardProps {
   daylist: DayListItem[];
   day: number;
-  onAddPlace: () => void;
+  onAddPlace?: () => void;
 }
 
 export default function FillScheduleCard({ daylist, day, onAddPlace }: FillScheduleCardProps) {
@@ -34,10 +34,13 @@ export default function FillScheduleCard({ daylist, day, onAddPlace }: FillSched
         ))}
       </div>
 
-      <ButtonRounded size="md" variant="outline" className="flex items-center gap-1 mx-auto" onClick={onAddPlace}>
-        <Plus className="size-4" color="currentColor" />
-        <span>일정 추가하기</span>
-      </ButtonRounded>
+      {/* onAddPlace가 있을 때만 버튼 렌더링 */}
+      {onAddPlace && (
+        <ButtonRounded size="md" variant="outline" className="flex items-center gap-1 mx-auto" onClick={onAddPlace}>
+          <Plus className="size-4" color="currentColor" />
+          <span>일정 추가하기</span>
+        </ButtonRounded>
+      )}
     </div>
   );
 }

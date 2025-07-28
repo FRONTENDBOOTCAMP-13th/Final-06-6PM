@@ -14,6 +14,25 @@ export interface User {
     accessToken: string; // 액세스 토큰
     refreshToken: string; // 리프레시 토큰
   };
+  extra?: {
+    seoul?: string;
+    busan?: string;
+    jejudo?: string;
+    gwangju?: string;
+    daejeon?: string;
+    ulsan?: string;
+    incheon?: string;
+    gyeonggido?: string;
+    gyeongsangnamdo?: string;
+    gyeongsangbukdo?: string;
+    chungcheongnamdo?: string;
+    chungcheongbukdo?: string;
+    jeonrabukdo?: string;
+    jeonranamdo?: string;
+    gangwondo?: string;
+    daegu?: string;
+    sejongsi?: string;
+  };
 }
 
 // Zustand 등 상태 관리용 사용자 상태 타입

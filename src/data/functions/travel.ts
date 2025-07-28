@@ -88,7 +88,6 @@ export async function getTravelList(areaCode: number, contentTypeId?: string): P
   }
 
   const res = await fetchTravel("/areaBasedList2", params);
-  console.log(`Travel res`, res);
   return res.response;
 }
 

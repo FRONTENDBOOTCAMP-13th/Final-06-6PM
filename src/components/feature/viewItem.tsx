@@ -49,13 +49,19 @@ export default function ViewItem({
 
   // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
   const isDetailView = pathname.startsWith("/feed/");
-  const listClass = `relative w-full space-y-2 ${isDetailView ? "" : "rounded-xl bg-white shadow p-4"}`;
+  const listClass = `relative w-full space-y-2 ${
+    isDetailView ? "" : "rounded-xl bg-white shadow p-4"
+  }`;
 
-  const listTextClass = `text-14 text-travel-text100 ${isDetailView ? "" : "line-clamp-3"}`;
+  const listTextClass = `text-14 text-travel-text100 ${
+    isDetailView ? "" : "line-clamp-3"
+  }`;
 
   // 이미지 갯수 제한
   const maxImg = 2;
-  const showImg = isDetailView ? contentImg : contentImg?.slice(0, maxImg) || [];
+  const showImg = isDetailView
+    ? contentImg
+    : contentImg?.slice(0, maxImg) || [];
   const moreCount = isDetailView ? 0 : (contentImg?.length || 0) - maxImg;
 
   return (
@@ -100,18 +106,32 @@ export default function ViewItem({
       <div className="space-y-2 text-14">
         {isDetailView ? (
           // 게시물 상세페이지일 때 보이는 이미지
-          <Swiper pagination={true} modules={[Pagination]} className="rounded-lg overflow-hidden">
+          <Swiper
+            pagination={true}
+            modules={[Pagination]}
+            className="rounded-lg overflow-hidden"
+          >
             {showImg?.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <div className="aspect-[3/2] bg-travel-gray200">
-                  <Image width={600} height={400} src={item} alt={item} className="object-cover w-full h-full" />
+                  <Image
+                    width={600}
+                    height={400}
+                    src={item}
+                    alt={item}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
         ) : (
           // 리스트페이지 일 때 보이는 이미지
-          <div className={`grid gap-3 ${showImg?.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}>
+          <div
+            className={`grid gap-3 ${
+              showImg?.length === 1 ? "grid-cols-1" : "grid-cols-2"
+            }`}
+          >
             {showImg?.map((item, idx) => {
               const overlay = idx === 1 && moreCount > 0;
 
@@ -122,13 +142,21 @@ export default function ViewItem({
                     showImg?.length === 1 ? "aspect-[3/2]" : "aspect-square"
                   }`}
                 >
-                  <Image width={400} height={300} src={item} alt={item} className="object-cover w-full h-full" />
+                  <Image
+                    width={400}
+                    height={300}
+                    src={item}
+                    alt={item}
+                    className="object-cover w-full h-full"
+                  />
                   {!isDetailView && overlay && (
                     <div
                       className="absolute inset-0 bg-black/60 flex items-center justify-center cursor-pointer"
                       onClick={() => router.push(`/feed/1`)}
                     >
-                      <span className="text-white font-bold text-20">+{moreCount}</span>
+                      <span className="text-white font-bold text-20">
+                        +{moreCount}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -156,7 +184,11 @@ export default function ViewItem({
               key={i}
               fill="currentColor"
               stroke="currentColor"
-              className={`size-4 ${i < Math.floor(starRate) ? "text-travel-warn100" : "text-travel-gray400"}`}
+              className={`size-4 ${
+                i < Math.floor(starRate)
+                  ? "text-travel-warn100"
+                  : "text-travel-gray400"
+              }`}
             />
           ))}
         </div>
