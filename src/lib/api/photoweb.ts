@@ -1,7 +1,4 @@
-"use server";
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
+const API_URL = process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 
 export interface ApiRes<T> {
   ok: number;
@@ -25,7 +22,7 @@ export async function uploadUserPhoto(
   file: File,
   regionId: string,
   token: string,
-  userId: number
+  userId: number,
 ): Promise<ApiRes<{ imageUrl: string }>> {
   console.log("1단계: 파일 업로드 시작", { fileName: file.name, regionId });
 
@@ -35,7 +32,11 @@ export async function uploadUserPhoto(
 
   const fileRes = await fetch(`${API_URL}/files`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      "content-type": "application/json",
+      "client-id": "febc13-final06-emjf",
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 
@@ -113,15 +114,16 @@ export async function uploadUserPhoto(
  * @param token 인증 토큰
  * @param userId 사용자 ID
  */
-export async function fetchUserPhotos(
-  token: string,
-  userId: number
-): Promise<ApiRes<UserPhoto[]>> {
+export async function fetchUserPhotos(token: string, userId: number): Promise<ApiRes<UserPhoto[]>> {
   console.log("사용자 포토맵 조회 시작");
 
   const res = await fetch(`${API_URL}/users/${userId}`, {
     method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      "client-id": "febc13-final06-emjf",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!res.ok) {
