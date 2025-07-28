@@ -4,6 +4,7 @@ import { MapPinned } from "lucide-react";
 import { useState } from "react";
 import PlacePlusItem, { PlacePlusItemProps } from "./placePlusItem";
 import ViewItem, { ViewItemProps } from "./viewItem";
+import { GetReviewDetailProps } from "@/types/review";
 
 export default function SelectBookmark() {
   const [tab, setTab] = useState(0);
@@ -32,21 +33,33 @@ export default function SelectBookmark() {
     },
   ];
 
-  const reviewBookmark: ViewItemProps[] = [
+  const reviewBookmark: GetReviewDetailProps[] = [
     {
+      _id: 1,
+      type: "reviewAll",
       title: "여름 바다 여행",
-      userName: "홍길동",
-      userImgURL: "/images/user2.png",
-      location: "부산 해운대",
       content: "햇살 가득한 해운대에서 여유로운 시간을 보냈어요!",
-      contentImg: ["/images/user1.png", "/images/user2.png","images/user3.png"],
-      reviewRating: 4.5,
-      tags: ["여행", "바다", "여름"],
+      user: {
+        type: "user",
+        email: "test",
+        _id: 101,
+        name: "홍길동",
+        image: "/images/user2.png",
+      },
+      createdAt: "2025-07-11",
+      updatedAt: "2025-07-11",
+      extra: {
+        plan_id: 501,
+        startDate: "2025-07-10",
+        endDate: "2025-07-12",
+        images: ["/images/user1.png", "/images/user2.png", "/images/user3.png"],
+        starRate: 4.5,
+        location: ["부산 해운대"],
+        tags: ["여행", "바다", "여름"],
+      },
       views: 123,
-      likes: 45,
-      comments: 8,
-      visitDate: "2025-07-10",
-      regdate: "2025-07-11",
+      bookmarks: 45,
+      repliesCount: 8,
     },
   ];
 
@@ -54,12 +67,12 @@ export default function SelectBookmark() {
     {
       id: 0,
       title: "장소 북마크",
-      description: placeBookmark
+      description: placeBookmark,
     },
     {
       id: 1,
       title: "후기 북마크",
-      description: reviewBookmark
+      description: reviewBookmark,
     },
   ];
 
@@ -84,12 +97,8 @@ export default function SelectBookmark() {
 
       <div className="space-y-4 p-4">
         {tab === 0
-          ? placeBookmark.map((item, idx) => (
-              <PlacePlusItem key={idx} {...item} />
-            ))
-          : reviewBookmark.map((item, idx) => (
-              <ViewItem key={idx} {...item} />
-        ))}
+          ? placeBookmark.map((item, idx) => <PlacePlusItem key={idx} {...item} />)
+          : reviewBookmark.map((item, idx) => <ViewItem key={idx} {...item} />)}
       </div>
     </div>
   );

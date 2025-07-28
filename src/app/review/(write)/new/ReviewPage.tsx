@@ -58,10 +58,7 @@ export default function ReviewNew() {
   return (
     <>
       <div className="relative flex flex-row-reverse my-3">
-        <DropdownItem
-          label={selectData}
-          openModal={() => setSelectOpen((prev) => !prev)}
-        />
+        <DropdownItem label={selectData} openModal={() => setSelectOpen((prev) => !prev)} />
 
         {selectOpen && (
           <ul className="flex flex-col bg-white absolute top-[28px] right-0 w-24 border border-travel-gray400 rounded">
@@ -77,14 +74,10 @@ export default function ReviewNew() {
 
             return (
               <Link
-                href={`/review/${item._id}?place=${item.title}`}
+                href={`/review/${item._id}?place=${item.title}&startDate=${item.extra?.startDate}&endDate=${item.extra?.endDate}`}
                 key={item._id}
               >
-                <DayItem
-                  place={item.title}
-                  period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
-                  dday={dday}
-                />
+                <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} dday={dday} />
               </Link>
             );
           })

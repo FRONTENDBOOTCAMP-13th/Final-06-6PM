@@ -108,7 +108,7 @@ export const initData = async (clientId, nextSeq) => {
           image: `/files/${clientId}/user-neo.png`,
         },
         title: "서울",
-        content: `${startDate} ~ ${endDate}`,
+        content: `2025-06-25 ~ 2025-06-26`,
         createdAt: getTime(-30, -60 * 60 * 12),
         updatedAt: getTime(-28, -60 * 60 * 5),
         extra: {
@@ -188,7 +188,7 @@ export const initData = async (clientId, nextSeq) => {
           image: `/files/${clientId}/user-neo.png`,
         },
         title: "울산",
-        content: `${startDate} ~ ${endDate}`,
+        content: `2025-08-03 ~ 2025-08-05`,
         createdAt: getTime(-1, -60 * 60 * 9),
         updatedAt: getTime(0, -60 * 60 * 5),
         extra: {
@@ -297,7 +297,7 @@ export const initData = async (clientId, nextSeq) => {
           image: `/files/${clientId}/user-neo.png`,
         },
         title: "전주 3박 4일",
-        content: `${startDate} ~ ${endDate}`,
+        content: `2025-06-15 ~ 2025-06-18`,
         createdAt: getTime(-40, -60 * 60 * 15),
         updatedAt: getTime(-38, -60 * 60 * 6),
         extra: {
@@ -463,7 +463,6 @@ export const initData = async (clientId, nextSeq) => {
       // ALL후기
       {
         _id: await nextSeq("post"),
-        plan_id: 1,
         type: "reviewAll",
         views: 89,
         user: {
@@ -480,20 +479,21 @@ export const initData = async (clientId, nextSeq) => {
           `images/user3.png`,
           `images/user4.png`,
         ],
-        location: [
-          "경복궁",
-          "북촌한옥마을",
-          "여의도한강공원",
-          "명동",
-          "남산서울타워",
-        ],
-        tags: ["서울", "도심여행", "전통문화", "야경"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 1,
           startDate: "2025-06-25",
           endDate: "2025-06-26",
           starRate: 4,
+          location: [
+            "경복궁",
+            "북촌한옥마을",
+            "여의도한강공원",
+            "명동",
+            "남산서울타워",
+          ],
+          tags: ["서울", "도심여행", "전통문화", "야경"],
         },
         replies: [
           {
@@ -512,7 +512,6 @@ export const initData = async (clientId, nextSeq) => {
       // Daily후기
       {
         _id: await nextSeq("post"),
-        plan_id: 1,
         type: "reviewDaily",
         views: 67,
         user: {
@@ -527,13 +526,14 @@ export const initData = async (clientId, nextSeq) => {
           `files/${clientId}/seoul-1.png`,
           `files/${clientId}/seoul-2.png`,
         ],
-        location: ["경복궁", "북촌한옥마을", "인사동"],
-        tags: ["서울", "궁궐투어", "전통문화", "한옥마을"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 5,
+          location: ["경복궁", "북촌한옥마을", "인사동"],
+          tags: ["서울", "궁궐투어", "전통문화", "한옥마을"],
         },
         replies: [
           {
@@ -561,7 +561,6 @@ export const initData = async (clientId, nextSeq) => {
       },
       {
         _id: await nextSeq("post"),
-        plan_id: 1,
         type: "reviewDaily",
         views: 124,
         user: {
@@ -573,13 +572,14 @@ export const initData = async (clientId, nextSeq) => {
         content:
           "둘째 날은 서울의 현대적인 매력을 즐긴 하루였어요. 여의도 한강공원에서 아침 산책을 하며 여유롭게 하루를 시작했고, 명동에서는 쇼핑과 길거리 음식 탐방을 마음껏 했어요. 특히 명동교자 만두가 정말 맛있었어요! 마지막으로 남산서울타워에서 야경을 보며 서울 여행을 마무리했답니다.",
         images: [`images/user1.png`, `images/user2.png`],
-        location: ["여의도한강공원", "명동", "남산서울타워"],
-        tags: ["서울", "명동쇼핑", "야경", "한강뷰"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 1,
           visitDate: "2025-06-26",
           starRate: 3,
+          location: ["여의도한강공원", "명동", "남산서울타워"],
+          tags: ["서울", "명동쇼핑", "야경", "한강뷰"],
         },
         replies: [
           {
@@ -597,7 +597,6 @@ export const initData = async (clientId, nextSeq) => {
       // 장소후기
       {
         _id: await nextSeq("post"),
-        plan_id: 1,
         type: "reviewPlace",
         views: 178,
         user: {
@@ -612,12 +611,14 @@ export const initData = async (clientId, nextSeq) => {
           `files/${clientId}/seoul-5.png`,
           `files/${clientId}/seoul-6.png`,
         ],
-        tags: ["경복궁", "수문장교대식", "한복체험", "궁궐투어"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 5,
+          location: ["경복궁"],
+          tags: ["수문장교대식", "한복체험", "궁궐투어"],
         },
         replies: [
           {
@@ -635,7 +636,6 @@ export const initData = async (clientId, nextSeq) => {
       },
       {
         _id: await nextSeq("post"),
-        plan_id: 1,
         type: "reviewPlace",
         views: 142,
         user: {
@@ -652,12 +652,14 @@ export const initData = async (clientId, nextSeq) => {
           `images/user3.png`,
           `images/user2.png`,
         ],
-        tags: ["인사동", "전통찻집", "전통문화", "공예거리"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 4,
+          location: ["인사동"],
+          tags: ["전통찻집", "전통문화", "공예거리"],
         },
         replies: [
           {
@@ -676,7 +678,6 @@ export const initData = async (clientId, nextSeq) => {
       // ALL후기
       {
         _id: await nextSeq("post"),
-        plan_id: 2,
         type: "reviewAll",
         views: 127,
         user: {
@@ -693,24 +694,25 @@ export const initData = async (clientId, nextSeq) => {
           `images/user2.png`,
           `images/user2.png`,
         ],
-        location: [
-          "대왕암공원",
-          "울산대공원",
-          "울산박물관",
-          "간절곶",
-          "태화강국가정원",
-          "암각화박물관",
-          "반구대암각화",
-          "장생포고래문화마을",
-          "진하해수욕장",
-        ],
-        tags: ["울산", "자연여행", "역사탐방", "힐링"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 2,
           startDate: "2025-08-03",
           endDate: "2025-08-05",
           starRate: 5,
+          location: [
+            "대왕암공원",
+            "울산대공원",
+            "울산박물관",
+            "간절곶",
+            "태화강국가정원",
+            "암각화박물관",
+            "반구대암각화",
+            "장생포고래문화마을",
+            "진하해수욕장",
+          ],
+          tags: ["울산", "자연여행", "역사탐방", "힐링"],
         },
         replies: [
           {
@@ -729,7 +731,6 @@ export const initData = async (clientId, nextSeq) => {
       // Daily후기
       {
         _id: await nextSeq("post"),
-        plan_id: 2,
         type: "reviewDaily",
         views: 89,
         user: {
@@ -741,13 +742,14 @@ export const initData = async (clientId, nextSeq) => {
         content:
           "대왕암공원에서 시작한 울산 여행! 기암괴석과 푸른 바다가 만나는 절경이 정말 장관이었어요. 특히 대왕암까지 이어지는 산책로가 너무 아름다워서 사진을 엄청 많이 찍었답니다. 울산대공원은 넓고 잘 조성되어 있어 가족 단위 여행에 제격이고, 울산박물관에서는 울산의 과거부터 현재까지를 한눈에 볼 수 있었어요.",
         images: [`images/user3.png`, `images/user3.png`, `images/user3.png`],
-        location: ["대왕암공원", "울산대공원", "울산박물관"],
-        tags: ["자연", "역사", "공원"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 2,
           visitDate: "2025-08-03",
           starRate: 4,
+          location: ["대왕암공원", "울산대공원", "울산박물관"],
+          tags: ["자연", "바다", "역사", "공원"],
         },
         replies: [
           {
@@ -774,7 +776,6 @@ export const initData = async (clientId, nextSeq) => {
       },
       {
         _id: await nextSeq("post"),
-        plan_id: 2,
         type: "reviewDaily",
         views: 156,
         user: {
@@ -786,13 +787,14 @@ export const initData = async (clientId, nextSeq) => {
         content:
           "간절곶에서 본 일출은 정말 잊지 못할 만큼 감동적이었어요. 등대와 함께 어우러진 풍경이 정말 아름다웠고, 일출의 여운을 안고 태화강 국가정원으로 이동했어요. 대나무숲길이 특히 인상 깊었고, 암각화박물관에서는 선사시대 문화에 대해 새롭게 알게 되었어요.",
         images: [`images/user3.png`, `images/user3.png`, `images/user3.png`],
-        location: ["간절곶", "태화강국가정원", "암각화박물관"],
-        tags: ["일출", "자연", "역사"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
+          location: ["간절곶", "태화강국가정원", "암각화박물관"],
+          tags: ["일출", "자연", "역사"],
         },
         replies: [
           {
@@ -811,7 +813,6 @@ export const initData = async (clientId, nextSeq) => {
       // 장소후기
       {
         _id: await nextSeq("post"),
-        plan_id: 2,
         type: "reviewPlace",
         views: 134,
         user: {
@@ -823,12 +824,14 @@ export const initData = async (clientId, nextSeq) => {
         content:
           "간절곶은 한반도에서 가장 먼저 해가 뜨는 곳이라는 의미도 있고, 그 자체로도 정말 아름다운 장소예요. 등대, 바위, 바다, 일출이 어우러진 장면은 정말 감동적이었어요. 주변 산책로도 잘 조성되어 있어서 여유롭게 둘러보기 좋고, 포토존도 많아서 사진 찍기에도 최고예요.",
         images: [`images/user3.png`, `images/user3.png`],
-        tags: ["간절곶", "일출", "등대", "바다풍경"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
+          location: ["간절곶"],
+          tags: ["일출", "등대", "바다풍경"],
         },
         replies: [
           {
@@ -845,7 +848,6 @@ export const initData = async (clientId, nextSeq) => {
       },
       {
         _id: await nextSeq("post"),
-        plan_id: 2,
         type: "reviewPlace",
         views: 98,
         user: {
@@ -857,12 +859,14 @@ export const initData = async (clientId, nextSeq) => {
         content:
           "태화강 국가정원은 울산 도심 한복판에서 만나는 자연의 쉼터였어요. 강변을 따라 걷는 산책로와 대나무숲길이 특히 인상 깊었고, 계절마다 다른 꽃들을 감상할 수 있어 또 오고 싶어지는 곳이에요. 가족 단위 피크닉 장소로도 정말 추천드려요!",
         images: [`images/user4.png`],
-        tags: ["태화강국가정원", "대나무숲", "자연힐링"],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
+          plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
+          location: ["태화강국가정원"],
+          tags: ["대나무숲", "자연힐링"],
         },
         replies: [
           {

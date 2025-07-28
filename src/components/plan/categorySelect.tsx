@@ -1,8 +1,6 @@
 "use client";
 
 import TagItem from "@/components/feature/tagItem";
-import Button from "@/components/ui/btn";
-import ButtonRounded from "@/components/ui/btnRound";
 import React from "react";
 
 export interface Category {
@@ -22,16 +20,15 @@ export default function CategorySelector({
   onSelectCategory,
 }: CategorySelectorProps) {
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div className="flex gap-1 flex-wrap">
       {categories.map((category) => (
-        <ButtonRounded
-          variant="outline"
+        <TagItem
+          variant={selectedCategory === category.id ? "primary" : "outline"}
           key={category.id}
           onClick={() => onSelectCategory(category.id)}
-          className={"transition-colors duration-300"}
         >
           {category.name}
-        </ButtonRounded>
+        </TagItem>
       ))}
     </div>
   );
