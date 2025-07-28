@@ -32,7 +32,7 @@ export async function fetchTravel(endpoint: string, params: Record<string, strin
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
 
     return res.json();

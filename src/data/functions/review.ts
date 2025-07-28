@@ -19,7 +19,7 @@ export async function getReviewAllList(): ApiResPromise<GetReviewDetailProps[]> 
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
     return res.json();
   } catch (err) {
@@ -41,7 +41,7 @@ export async function getReviewDailyList(): ApiResPromise<GetReviewDetailProps[]
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
     return res.json();
   } catch (err) {
@@ -63,7 +63,7 @@ export async function getReviewPlaceList(): ApiResPromise<GetReviewDetailProps[]
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
     return res.json();
   } catch (err) {
@@ -81,7 +81,7 @@ export async function getReviewDetail(id: string): ApiResPromise<GetReviewDetail
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
     return res.json();
   } catch (err) {
