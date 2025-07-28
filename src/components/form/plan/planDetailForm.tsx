@@ -6,7 +6,7 @@ import usePlanStore from "@/zustand/planStore";
 
 export default function PlanDetailForm() {
   // 여행 데이터 가져오기
-  const { selectedArea, startDate, endDate } = usePlanStore();
+  const { selectedArea, startDate, endDate, setPostId } = usePlanStore();
   const accessToken = useUserStore((state) => state.token);
 
   const handleClick = async () => {
@@ -35,6 +35,10 @@ export default function PlanDetailForm() {
     try {
       const result = await createPlanPost(formData, accessToken);
       console.log("서버 응답:", result);
+      if (result.ok && result.item) {
+        setPostId(result.item._id);
+        console.log("PostId:", result.item._id);
+      }
     } catch (error) {
       console.error("API 호출 에러:", error);
     }

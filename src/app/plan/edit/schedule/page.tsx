@@ -1,6 +1,6 @@
 import ScheduleContent from "@/components/plan/scheduleContent";
 import BackButton from "@/components/feature/backButton";
-import NextButton from "@/components/feature/nextButton";
+import PlanReplyForm from "@/components/form/plan/planReplyForm";
 
 export default function SchedulePage() {
   return (
@@ -12,7 +12,7 @@ export default function SchedulePage() {
 
       <ScheduleContent />
 
-      <NextButton path="/plan/edit/preview" />
+      <PlanReplyForm />
     </div>
   );
 }

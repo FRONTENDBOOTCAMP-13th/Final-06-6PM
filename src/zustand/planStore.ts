@@ -12,6 +12,7 @@ const usePlanStore = create<PlanStore>()(
       selectedArea: null,
       startDate: null,
       endDate: null,
+      postId: null,
       selectedCategory: "all",
       selectedPlaces: [],
       dailyPlans: [],
@@ -26,6 +27,7 @@ const usePlanStore = create<PlanStore>()(
       setSelectedArea: (area) => set({ selectedArea: area }),
       setStartDate: (date) => set({ startDate: date }),
       setEndDate: (date) => set({ endDate: date }),
+      setPostId: (id) => set({ postId: id }),
       setSelectedCategory: (category) =>
         set({
           selectedCategory: category,
@@ -102,6 +104,7 @@ const usePlanStore = create<PlanStore>()(
           selectedArea: null,
           startDate: null,
           endDate: null,
+          postId: null,
           selectedCategory: "all",
           filteredData: [],
           searchList: [],

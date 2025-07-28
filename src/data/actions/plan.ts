@@ -3,9 +3,7 @@
 import { ApiRes, ApiResPromise } from "@/types/api";
 import { GetPlanDetailProps, PlanReply } from "@/types/plan";
 
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
+const API_URL = process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 /**
@@ -18,9 +16,8 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 export async function createPlanPost(
   formData: FormData,
-  accessToken: string | null 
+  accessToken: string | null,
 ): Promise<ApiRes<GetPlanDetailProps>> {
-
   let res: Response;
   let data: ApiRes<GetPlanDetailProps>;
 
@@ -36,7 +33,7 @@ export async function createPlanPost(
       extra: {
         startDate,
         endDate,
-      }
+      },
     };
 
     console.log(`travel post body`, body);
@@ -46,7 +43,7 @@ export async function createPlanPost(
       headers: {
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
-        "Authorization": `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(body),
     });
@@ -57,8 +54,7 @@ export async function createPlanPost(
     return { ok: 0, message: "일시적인 네트워크 문제가 발생했습니다." };
   }
 
-    return data;
-
+  return data;
 }
 
 /**
@@ -69,31 +65,33 @@ export async function createPlanPost(
  * @description 여행 계획 게시물에 일차별 일정을 댓글로 등록
  * 작성자만 자신의 게시물에 댓글을 달 수 있음
  */
-export async function createReply(
-  state: ApiRes<PlanReply> | null, 
-  formData: FormData
-): Promise<ApiRes<PlanReply>> {
-  
+export async function createReply(state: ApiRes<PlanReply> | null, formData: FormData): Promise<ApiRes<PlanReply>> {
   let res: Response;
   let data: ApiRes<PlanReply>;
 
   try {
-    const content = formData.get('content') as string;
-    const postId = formData.get('postId') as string;
-    const accessToken = formData.get('accessToken') as string;
+    const content = formData.get("content") as string;
+    const postId = formData.get("postId") as string;
+    const accessToken = formData.get("accessToken") as string;
+    const day = formData.get("day") as string;
+    const planDate = formData.get("planDate") as string;
+    const locations = formData.get("locations") as string;
 
     const body = {
       content: content,
+      day: day ? parseInt(day) : undefined,
+      planDate: planDate || undefined,
+      locations: locations ? JSON.parse(locations) : undefined,
     };
 
     console.log(`reply body`, body);
 
     res = await fetch(`${API_URL}/posts/${postId}/replies`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Client-Id': CLIENT_ID,
-        'Authorization': `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(body),
     });
@@ -101,8 +99,8 @@ export async function createReply(
     data = await res.json();
   } catch (error) {
     console.error(error);
-    return { ok: 0, message: '일시적인 네트워크 문제가 발생했습니다.' };
+    return { ok: 0, message: "일시적인 네트워크 문제가 발생했습니다." };
   }
-  
+
   return data;
 }
