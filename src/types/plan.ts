@@ -46,6 +46,7 @@ export interface Location {
 export interface SelectedPlace {
   id: number;
   name: string;
+  category?: string;
 }
 
 export interface SearchNavProps {
