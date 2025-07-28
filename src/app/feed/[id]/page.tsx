@@ -1,9 +1,10 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import CommentItem from "@/components/ui/commentItem";
 import ViewItem from "@/components/feature/viewItem";
-import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
+import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
 
 //use client 컴포넌트 분리 예정
@@ -24,20 +25,26 @@ export default function FeedViewPage() {
         getReviewPlaceList(),
       ]);
 
-      let allData: GetReviewDetailProps[] = [];
-      if (reviewAllRes?.ok === 1) allData = [...allData, ...(reviewAllRes.item || [])];
-      if (reviewDailyRes?.ok === 1) allData = [...allData, ...(reviewDailyRes.item || [])];
-      if (reviewPlaceRes?.ok === 1) allData = [...allData, ...(reviewPlaceRes.item || [])];
+      let allReviews: GetReviewDetailProps[] = [];
+      if (reviewAllRes?.ok === 1) allReviews.push(...(reviewAllRes.item || []));
+      if (reviewDailyRes?.ok === 1) allReviews.push(...(reviewDailyRes.item || []));
+      if (reviewPlaceRes?.ok === 1) allReviews.push(...(reviewPlaceRes.item || []));
 
-      const targetReview = allData.find((item) => item._id.toString() === id);
+      const targetReview = allReviews.find((item) => item._id.toString() === id);
 
       if (targetReview) {
-        console.log("Found review data:", targetReview);
-        setReviewData(targetReview);
+        const detailRes = await getReviewDetail(id, targetReview.type, targetReview.extra?.plan_id);
 
-        if (targetReview.replies && Array.isArray(targetReview.replies)) {
-          setComments(targetReview.replies);
+        if (detailRes?.ok === 1 && detailRes.item) {
+          const updatedReviewData = {
+            ...detailRes.item,
+            repliesCount: detailRes.item.repliesCount || detailRes.item.replies?.length || 0,
+          };
+
+          setReviewData(updatedReviewData);
+          setComments(detailRes.item.replies || []);
         } else {
+          setReviewData(targetReview);
           setComments([]);
         }
       } else {
@@ -77,51 +84,30 @@ export default function FeedViewPage() {
   }
 
   return (
-    <>
-      <div className="py-6 px-4 relative bg-white rounded-2xl">
-        <div className="flex flex-col gap-8">
-          <ViewItem {...reviewData} />
-        </div>
-        <hr className="my-6 text-travel-gray200" />
-        <CommentItem
-          author={"오둥이"}
-          date={"2024-07-18"}
-          content={
-            "여기 진짜 힐링 그 자체네요 사진만 봐도 여유로워요. 혹시 여긴 어떻게 가면 되나요? 대중교통 가능한가요?"
-          }
-        />
-        <hr className="my-6 text-travel-gray200" />
-        <CommentItem
-          author={"오둥이"}
-          date={"2024-07-18"}
-          content={
-            "여기 진짜 힐링 그 자체네요 사진만 봐도 여유로워요. 혹시 여긴 어떻게 가면 되나요? 대중교통 가능한가요?"
-          }
-        />
-        <hr className="my-6 text-travel-gray200" />
-        <CommentItem
-          author={"오둥이"}
-          date={"2024-07-18"}
-          content={
-            "여기 진짜 힐링 그 자체네요 사진만 봐도 여유로워요. 혹시 여긴 어떻게 가면 되나요? 대중교통 가능한가요?"
-          }
-        />
-        <hr className="my-6 text-travel-gray200" />
-        <CommentItem
-          author={"오둥이"}
-          date={"2024-07-18"}
-          content={
-            "여기 진짜 힐링 그 자체네요 사진만 봐도 여유로워요. 혹시 여긴 어떻게 가면 되나요? 대중교통 가능한가요?"
-          }
-        />
+    <div className="py-6 px-4 relative bg-white rounded-2xl">
+      <div className="flex flex-col gap-8">
+        <ViewItem {...reviewData} />
+      </div>
 
-        {(!comments || comments.length === 0) && (
+      <div>
+        {comments.length > 0 ? (
+          comments.map((comment, index) => (
+            <div key={comment._id || index}>
+              <hr className="my-6 text-travel-gray200" />
+              <CommentItem
+                author={comment.user?.name || "익명"}
+                date={comment.createdAt || "날짜 없음"}
+                content={comment.content || "내용 없음"}
+              />
+            </div>
+          ))
+        ) : (
           <>
             <hr className="my-6 text-travel-gray200" />
             <div className="text-center py-8 text-travel-gray400">첫 번째 댓글을 작성해보세요!</div>
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }
