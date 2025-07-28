@@ -22,4 +22,14 @@ export interface GetReviewDetailProps {
   views: number; // 조회수
   bookmarks: number; // 북마크(찜) 수
   repliesCount: number; // 댓글 수
+  replies?: Array<{
+    _id: number;
+    user: {
+      _id: number;
+      name: string;
+      image?: string;
+    };
+    content: string;
+    createdAt: string;
+  }>;
 }
