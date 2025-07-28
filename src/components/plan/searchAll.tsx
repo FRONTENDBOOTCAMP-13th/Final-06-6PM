@@ -38,14 +38,8 @@ export default function SearchAll() {
   useContentDetail();
 
   // 검색 관련 핸들러들
-  const { searchSubmit, handleCategoryChange, handleAddPlace, handleRemovePlace, setSelectContentID } =
+  const { searchSubmit, handleCategoryChange, handleAddPlace, handleRemovePlace, setSelectContentID, getCategoryName } =
     useSearchHandlers();
-
-  // 카테고리 ID를 이름으로 변환하는 함수
-  const getCategoryName = (categoryId: string) => {
-    const category = categories.find((cat) => cat.id === categoryId);
-    return category ? category.name : "관광지";
-  };
 
   // ~일차 있을 때 사용할 함수
   const handleAddPlaceTarget = (data: any) => {
@@ -54,6 +48,8 @@ export default function SearchAll() {
       id: data.contentid,
       name: data.title,
       category: getCategoryName(data.contenttypeid),
+      mapx: data.mapx,
+      mapy: data.mapy,
     };
 
     if (targetDay) {

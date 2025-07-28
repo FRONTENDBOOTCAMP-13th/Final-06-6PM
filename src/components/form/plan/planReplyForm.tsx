@@ -42,8 +42,6 @@ export default function PlanReplyForm() {
         formData.append("accessToken", accessToken);
         formData.append("day", plan.day.toString());
         formData.append("planDate", plan.planDate);
-        formData.append("day", plan.day.toString());
-        formData.append("planDate", plan.planDate);
         formData.append(
           "locations",
           JSON.stringify(
@@ -51,8 +49,8 @@ export default function PlanReplyForm() {
               title: place.name,
               types: place.category || "관광지",
               contentId: place.id.toString(),
-              mapx: "",
-              mapy: "",
+              mapx: place.mapx || "",
+              mapy: place.mapy || "",
             })),
           ),
         );

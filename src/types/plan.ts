@@ -47,6 +47,8 @@ export interface SelectedPlace {
   id: number;
   name: string;
   category?: string;
+  mapx?: number;
+  mapy?: number;
 }
 
 export interface SearchNavProps {

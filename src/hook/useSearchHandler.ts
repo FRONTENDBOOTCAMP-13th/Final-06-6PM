@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getKeywordData } from "@/data/functions/travel";
 import { AreaTravelProps, KeywordTravelProps } from "@/types/travel";
 import { SelectedPlace } from "@/types/plan";
+import { categories } from "@/lib/data/categoryList"; // 추가
 import { toast } from "react-toastify";
 import usePlanStore from "@/zustand/planStore";
 
@@ -21,6 +22,12 @@ export const useSearchHandlers = () => {
     addSelectedPlace,
     removeSelectedPlace,
   } = usePlanStore();
+
+  // 카테고리 ID를 이름으로 변환하는 함수
+  const getCategoryName = (categoryId: string | number) => {
+    const category = categories.find((cat) => cat.id === categoryId);
+    return category ? category.name : "관광지";
+  };
 
   // 키워드 검색
   const searchSubmit = async (searchKeyword: string) => {
@@ -71,6 +78,9 @@ export const useSearchHandlers = () => {
     const newPlace: SelectedPlace = {
       id: Number(item.contentid),
       name: item.title,
+      category: getCategoryName(item.contenttypeid),
+      mapx: item.mapx ? Number(item.mapx) : undefined,
+      mapy: item.mapy ? Number(item.mapy) : undefined,
     };
 
     const success = addSelectedPlace(newPlace);
@@ -92,5 +102,6 @@ export const useSearchHandlers = () => {
     handleAddPlace,
     handleRemovePlace,
     setSelectContentID,
+    getCategoryName,
   };
 };
