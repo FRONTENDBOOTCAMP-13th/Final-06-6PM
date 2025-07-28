@@ -35,9 +35,13 @@ export default function ViewItem({
   const router = useRouter();
 
   const userName = user.name;
-  const userImgURL = user?.image?.startsWith("http") ? user.image : `${API_URL}/${user?.image}`;
+  const userImgURL = (() => {
+    const img = user?.image;
+    if (!img || img === "undefined") return "/images/user-default.webp";
+    return img.startsWith("http") ? img : `${API_URL}/${img}`;
+  })();
 
-  console.log(user.image);
+  // console.log(user.image);
 
   const starRate = extra.starRate ?? 0;
   const tags = extra.tags ?? [];
@@ -66,7 +70,7 @@ export default function ViewItem({
 
   // 이미지 URL설정
   const getImageURL = (imgPath: string) => {
-    if (!imgPath) return "/images/user4.png";
+    if (!imgPath) return "/files/user-default.webp";
     return imgPath.startsWith("http") ? imgPath : `${API_URL}/${imgPath}`;
   };
 
