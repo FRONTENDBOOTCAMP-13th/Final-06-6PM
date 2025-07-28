@@ -43,20 +43,7 @@ export default function SearchAll() {
 
   // ~일차 있을 때 사용할 함수
   const handleAddPlaceTarget = (data: any) => {
-    // 원본 데이터를 SelectedPlace 형태로 변환
-    const selectedPlaceData = {
-      id: data.contentid,
-      name: data.title,
-      category: getCategoryName(data.contenttypeid),
-      mapx: data.mapx,
-      mapy: data.mapy,
-    };
-
-    if (targetDay) {
-      // ~일차 있으면 바로 해당 날짜, selectedPlaces에 추가
-      addPlaceToDailyPlan(targetDay, selectedPlaceData);
-      handleAddPlace(data);
-    }
+    handleAddPlace(data);
   };
 
   // 선택된 지역이 없으면 로딩

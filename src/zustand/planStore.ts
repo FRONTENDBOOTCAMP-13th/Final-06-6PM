@@ -42,6 +42,18 @@ const usePlanStore = create<PlanStore>()(
       setSelectedPlaces: (places) => set({ selectedPlaces: places }),
       setDailyPlans: (plans) => set({ dailyPlans: plans }),
 
+      // 장소 제거
+      removeSelectedPlace: (placeId) => {
+        set((state) => ({
+          selectedPlaces: state.selectedPlaces.filter((place) => place.id !== placeId),
+          // dailyPlans에서도 제거하여 동기화
+          dailyPlans: state.dailyPlans.map((plan) => ({
+            ...plan,
+            places: plan.places.filter((place) => place.id !== placeId),
+          })),
+        }));
+      },
+
       // 장소 추가 (중복 체크 포함)
       addSelectedPlace: (place) => {
         const { selectedPlaces } = get();
@@ -55,21 +67,21 @@ const usePlanStore = create<PlanStore>()(
         return true; // 추가 성공
       },
 
-      // 장소 제거
-      removeSelectedPlace: (id) => {
-        const { selectedPlaces } = get();
-        set({
-          selectedPlaces: selectedPlaces.filter((place) => place.id !== id),
-        });
-      },
-
-      // 특정 날짜에 장소 추가
+      // 중복 체크 추가
       addPlaceToDailyPlan: (day, place) => {
         const { dailyPlans } = get();
+
+        // 해당 날짜에 이미 같은 장소가 있는지 체크
+        const targetPlan = dailyPlans.find((plan) => plan.day === day);
+        if (targetPlan?.places.some((p) => p.id === place.id)) {
+          return false;
+        }
+
         const updatedPlans = dailyPlans.map((plan) =>
           plan.day === day ? { ...plan, places: [...plan.places, place] } : plan,
         );
         set({ dailyPlans: updatedPlans });
+        return true;
       },
 
       // 특정 날짜에서 장소 제거
