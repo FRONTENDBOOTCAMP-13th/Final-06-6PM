@@ -15,19 +15,14 @@ import { createReviewAllPost } from "@/data/actions/review";
 
 export default function ReviewFormAll() {
   const token = useUserStore((state) => state.token);
-  const [state, formAction, isPending] = useActionState(
-    createReviewAllPost,
-    null
-  );
+  const [state, formAction, isPending] = useActionState(createReviewAllPost, null);
 
   /* 이미지 관련 상태
     path: 서버에 업로드된 파일 경로
     name: 원본 파일명
     preview: 브라우저에서 미리보기용 base64 데이터
   */
-  const [images, setImages] = useState<
-    { path: string; name: string; preview: string }[]
-  >([]);
+  const [images, setImages] = useState<{ path: string; name: string; preview: string }[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -35,6 +30,8 @@ export default function ReviewFormAll() {
   const searchParams = useSearchParams();
   const planId = params?.id || "";
   const place = searchParams.get("place");
+  const startDate = searchParams.get("startDate");
+  const endDate = searchParams.get("endDate");
 
   // 파일 선택 Dialog
   const openFileDialog = () => {
@@ -104,9 +101,7 @@ export default function ReviewFormAll() {
         <div className="absolute inset-0 z-20 bg-black/70 backdrop-blur-xs flex flex-col items-center justify-center space-y-4">
           <div className="w-16 h-16 border-[6px] border-travel-primary100 border-t-transparent rounded-full animate-spin shadow-lg"></div>
           <span className="text-white text-base font-medium animate-pulse tracking-wide">
-            {isUploading
-              ? "이미지를 업로드하고 있어요"
-              : "리뷰를 저장하는 중이에요"}
+            {isUploading ? "이미지를 업로드하고 있어요" : "리뷰를 저장하는 중이에요"}
           </span>
         </div>
       )}
@@ -114,15 +109,12 @@ export default function ReviewFormAll() {
       <input type="hidden" name="token" value={token || ""} />
       <input type="hidden" name="plan_id" value={planId.toString()} />
       <input type="hidden" name="place" value={place || ""} />
+      <input type="hidden" name="startDate" value={startDate || ""} />
+      <input type="hidden" name="endDate" value={endDate || ""} />
 
       {/* 이미지 경로들을 hidden input으로 전송 */}
       {images.map((img, index) => (
-        <input
-          key={index}
-          type="hidden"
-          name={`imagePath_${index}`}
-          value={img.path}
-        />
+        <input key={index} type="hidden" name={`imagePath_${index}`} value={img.path} />
       ))}
 
       {/* 별점 */}
@@ -140,9 +132,7 @@ export default function ReviewFormAll() {
       <div>
         <ReviewContent name="content" />
         {state?.ok === 0 && state.errors?.content && (
-          <p className="mt-1 text-sm text-red-500">
-            {state.errors.content.msg}
-          </p>
+          <p className="mt-1 text-sm text-red-500">{state.errors.content.msg}</p>
         )}
       </div>
 
@@ -164,10 +154,7 @@ export default function ReviewFormAll() {
 
           {/* 업로드된 이미지들 */}
           {images.map((img, index) => (
-            <div
-              key={index}
-              className="relative p-2 bg-white border rounded-lg border-travel-gray400 min-h-21"
-            >
+            <div key={index} className="relative p-2 bg-white border rounded-lg border-travel-gray400 min-h-21">
               <img
                 src={img.preview}
                 alt={`첨부이미지-${index + 1}`}
@@ -202,11 +189,7 @@ export default function ReviewFormAll() {
 
       {/* 제출 버튼 */}
       <div className="bg-white fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-4 max-h-21 z-20 shadow-[0_-8px_16px_-4px_rgba(0,0,0,0.1)]">
-        <Button
-          className="w-full text-16"
-          type="submit"
-          disabled={isPending || isUploading}
-        >
+        <Button className="w-full text-16" type="submit" disabled={isPending || isUploading}>
           {isPending ? "작성 중..." : "리뷰 작성 완료"}
         </Button>
       </div>

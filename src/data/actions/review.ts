@@ -4,8 +4,7 @@ import { revalidatePath } from "next/cache";
 import { ActionResult } from "next/dist/server/app-render/types";
 import { redirect } from "next/navigation";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
+const API_URL = process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 /**
@@ -24,10 +23,7 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
  *   // 오류 처리
  * }
  */
-export async function createReviewAllPost(
-  prevState: any,
-  formData: FormData
-): Promise<ActionResult> {
+export async function createReviewAllPost(prevState: any, formData: FormData): Promise<ActionResult> {
   try {
     // FormData에서 데이터 추출
     const starRate = parseInt(formData.get("starRate") as string);
@@ -37,6 +33,8 @@ export async function createReviewAllPost(
     const token = formData.get("token") as string;
     const planId = parseInt(formData.get("plan_id") as string);
     const place = formData.get("place") as string;
+    const startDate = formData.get("startDate") as string;
+    const endDate = formData.get("endDate") as string;
 
     // 이미지 경로들 수집
     const imagePaths: string[] = [];
@@ -85,6 +83,8 @@ export async function createReviewAllPost(
       title: title,
       content: content,
       extra: {
+        startDate: startDate,
+        endDate: endDate,
         plan_id: planId,
         starRate: starRate,
         location: place,
@@ -143,8 +143,7 @@ export async function createReviewAllPost(
 
     return {
       ok: 0,
-      message:
-        "일시적인 네트워크 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
+      message: "일시적인 네트워크 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
     };
   }
 }
