@@ -11,6 +11,7 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { GetReviewDetailProps } from "@/types/review";
+import useUserStore from "@/zustand/userStore";
 
 const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
 
@@ -33,6 +34,12 @@ export default function ViewItem({
 }: ViewItemProps) {
   const pathname = usePathname();
   const router = useRouter();
+
+  // 수정/삭제버튼 show-hidden 여부
+  const loginUserInfo = useUserStore((state) => state.userInfo);
+  // console.log(loginUserInfo);
+  // console.log(user);
+  const sameUser = loginUserInfo?._id === user._id;
 
   const userName = user.name;
   const userImgURL = (() => {
@@ -103,19 +110,21 @@ export default function ViewItem({
         </div>
 
         {/* 수정/삭제 모달창 버튼*/}
-        <div onClick={(e) => e.stopPropagation()}>
-          <DrawerBtn />
-        </div>
+        {sameUser && (
+          <div onClick={(e) => e.stopPropagation()}>
+            <DrawerBtn reviewId={_id} />
+          </div>
+        )}
       </div>
 
       {/* 방문일자 */}
-      <div className="grid grid-cols-[55px_auto] items-center gap-2 text-14">
+      <div className="grid grid-cols-[3.4375rem_auto] items-center gap-2 text-14">
         <p>방문일자</p>
         <p className="text-travel-gray700">{visitDate}</p>
       </div>
 
       {/* 방문장소 */}
-      <div className="grid grid-cols-[55px_auto] gap-2 text-14">
+      <div className="grid grid-cols-[3.4375rem_auto] gap-2 text-14">
         <p>방문장소</p>
         <div className="flex flex-wrap gap-1" onClick={(e) => e.stopPropagation()}>
           {locationList.map((location, idx) => (
