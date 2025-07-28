@@ -71,3 +71,21 @@ export async function getReviewPlaceList(): ApiResPromise<GetReviewDetailProps[]
     return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
   }
 }
+
+// 선택한 리뷰의 상세 정보(댓글 포함) 조회하는 함수
+export async function getReviewDetail(id: string): ApiResPromise<GetReviewDetailProps> {
+  try {
+    const res = await fetch(`${API_URL}/posts/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Client-Id": CLIENT_ID,
+      },
+      cache: "force-cache",
+    });
+    return res.json();
+  } catch (err) {
+    console.error("리뷰 상세 조회 실패:", err);
+    return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
+  }
+}
