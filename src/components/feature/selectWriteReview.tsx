@@ -113,11 +113,21 @@ export default function SelectWriteReview() {
       {tab === 0 && <ReviewFormAll />}
 
       {tab === 1 && selectItem && reviewDaily.length > 0 && (
-        <ReviewDetailForm list={reviewDaily} selected={selectItem} onChange={setSelectItem} />
+        <ReviewDetailForm
+          list={reviewDaily}
+          selected={selectItem}
+          onChange={setSelectItem}
+          reviewType="reviewDaily" // 일자별
+        />
       )}
 
       {tab === 2 && selectItem && reviewPlace.length > 0 && (
-        <ReviewDetailForm list={reviewPlace} selected={selectItem} onChange={setSelectItem} />
+        <ReviewDetailForm
+          list={reviewPlace}
+          selected={selectItem}
+          onChange={setSelectItem}
+          reviewType="reviewPlace" // 장소별
+        />
       )}
 
       {/* 로딩 상태나 빈 데이터 처리 */}
