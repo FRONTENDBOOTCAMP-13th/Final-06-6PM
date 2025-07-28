@@ -9,16 +9,20 @@ export type PlanListItemProps = {
 
 function PlanListItem({ number, place, tag }: PlanListItemProps) {
   return (
-    <div className="flex items-center gap-2 text-travel-text100">
+    <div className="flex items-start gap-3 text-travel-text100">
       {/* 숫자 */}
-      <div className="text-center rounded-full size-5 bg-travel-gray200 text-14">{number}</div>
+      <div className="flex-shrink-0 text-center rounded-full size-5 bg-travel-gray200 text-14 mt-0.5">{number}</div>
 
       {/* 관광지명과 태그 */}
-      <div className="font-medium leading-none contents">
-        <span>{place}</span>
-        <TagItem variant="primary" size="sm">
-          {tag}
-        </TagItem>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-1 flex-wrap">
+          <span className="font-medium text-16">{place}</span>
+          {tag && (
+            <TagItem variant="primary" size="sm">
+              {tag}
+            </TagItem>
+          )}
+        </div>
       </div>
     </div>
   );

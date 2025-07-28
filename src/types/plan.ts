@@ -47,6 +47,8 @@ export interface SelectedPlace {
   id: number;
   name: string;
   category?: string;
+  mapx?: number;
+  mapy?: number;
 }
 
 export interface SearchNavProps {
@@ -74,6 +76,7 @@ export interface PlanState {
   selectedArea: Destination | null;
   startDate: string | null;
   endDate: string | null;
+  postId: number | null;
   selectedCategory: string;
   selectedPlaces: SelectedPlace[];
   dailyPlans: DailyPlan[];
@@ -91,6 +94,7 @@ export interface PlanActions {
   setSelectedArea: (area: Destination | null) => void;
   setStartDate: (date: string | null) => void;
   setEndDate: (date: string | null) => void;
+  setPostId: (id: number | null) => void;
   setSelectedCategory: (category: string) => void;
 
   // 데이터 설정 (임시 상태)

@@ -40,8 +40,7 @@ export default function SearchInput({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("handleSubmit 호출됨, inputValue:", inputValue);
-    
+
     if (onSearch) {
       onSearch(inputValue);
     } else {

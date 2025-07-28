@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getKeywordData } from "@/data/functions/travel";
 import { AreaTravelProps, KeywordTravelProps } from "@/types/travel";
 import { SelectedPlace } from "@/types/plan";
+import { categories } from "@/lib/data/categoryList"; // 추가
 import { toast } from "react-toastify";
 import usePlanStore from "@/zustand/planStore";
 
@@ -20,7 +21,14 @@ export const useSearchHandlers = () => {
     setSelectContentID,
     addSelectedPlace,
     removeSelectedPlace,
+    dailyPlans,
   } = usePlanStore();
+
+  // 카테고리 ID를 이름으로 변환하는 함수
+  const getCategoryName = (categoryId: string | number) => {
+    const category = categories.find((cat) => cat.id === categoryId);
+    return category ? category.name : "관광지";
+  };
 
   // 키워드 검색
   const searchSubmit = async (searchKeyword: string) => {
@@ -68,9 +76,27 @@ export const useSearchHandlers = () => {
 
   // 장소 추가
   const handleAddPlace = (item: AreaTravelProps | KeywordTravelProps) => {
+    const placeId = Number(item.contentid);
+
+    // URL에서 목표 날짜 가져오기
+    const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+    const targetDay = searchParams ? parseInt(searchParams.get("targetDay") || "1") : 1;
+
+    // 해당 날짜에 이미 있는지 체크
+    const targetPlan = dailyPlans.find((plan) => plan.day === targetDay);
+    const isAlreadyInDay = targetPlan?.places.some((p) => p.id === placeId);
+
+    if (isAlreadyInDay) {
+      toast.warning(`${targetDay}일차에 이미 추가된 장소입니다.`);
+      return;
+    }
+
     const newPlace: SelectedPlace = {
       id: Number(item.contentid),
       name: item.title,
+      category: getCategoryName(item.contenttypeid),
+      mapx: item.mapx ? Number(item.mapx) : undefined,
+      mapy: item.mapy ? Number(item.mapy) : undefined,
     };
 
     const success = addSelectedPlace(newPlace);
@@ -92,5 +118,6 @@ export const useSearchHandlers = () => {
     handleAddPlace,
     handleRemovePlace,
     setSelectContentID,
+    getCategoryName,
   };
 };

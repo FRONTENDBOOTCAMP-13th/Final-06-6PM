@@ -1,11 +1,13 @@
-'use client';
+"use client";
 
-import Button from '@/components/ui/btn';
-import TagItem from '@/components/feature/tagItem';
-import { useRouter } from 'next/navigation';
-import { SearchNavProps } from '@/types/plan';
+import Button from "@/components/ui/btn";
+import TagItem from "@/components/feature/tagItem";
+import { useRouter } from "next/navigation";
+import { SearchNavProps } from "@/types/plan";
+import usePlanStore from "@/zustand/planStore";
 
 export default function SearchNav({ path, tagData, onRemoveTag }: SearchNavProps) {
+  const { addPlaceToDailyPlan, setSelectedPlaces } = usePlanStore();
   const router = useRouter();
 
   const handleRemove = (id: number) => {
@@ -13,6 +15,17 @@ export default function SearchNav({ path, tagData, onRemoveTag }: SearchNavProps
   };
 
   const goNextPage = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const targetDay = parseInt(searchParams.get("targetDay") || "1");
+
+    // selectedPlaces를 해당 날짜의 dailyPlans에 추가
+    tagData.forEach((place) => {
+      addPlaceToDailyPlan(targetDay, place);
+    });
+
+    // selectedPlaces 초기화 (태그 제거)
+    setSelectedPlaces([]);
+
     router.push(path);
   };
 

@@ -42,8 +42,6 @@ export default function PreviewPage() {
           ))}
         </div>
       </div>
-
-      <NextButton path="/plan/success" />
     </div>
   );
 }
