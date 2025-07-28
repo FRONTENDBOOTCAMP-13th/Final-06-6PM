@@ -3,8 +3,7 @@
 import { ApiResPromise } from "@/types/api";
 import { GetPlanDetailProps } from "@/types/plan";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
+const API_URL = process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 /**
@@ -13,9 +12,7 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
  * @param {number} _id - 조회할 일정의 고유 ID
  * @returns {Promise<ApiRes<Post>>} 게시글 상세 정보를 담은 응답 객체
  */
-export async function getPlanDetail(
-  _id: number
-): ApiResPromise<GetPlanDetailProps> {
+export async function getPlanDetail(_id: number): ApiResPromise<GetPlanDetailProps> {
   try {
     const res = await fetch(`${API_URL}/posts/${_id}`, {
       method: "GET",
@@ -52,72 +49,6 @@ export async function getPlanList(): ApiResPromise<GetPlanDetailProps[]> {
     return res.json();
   } catch (err) {
     console.error("일정 조회 실패:", err);
-    return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
-  }
-}
-
-/**
- * 전체 리뷰(type=reviewAll) 목록을 조회하는 함수
- *
- * @returns {Promise<ApiRes<any>>} 전체 리뷰 리스트 응답 객체
- */
-export async function getReviewAllList(): ApiResPromise<any[]> {
-  try {
-    const res = await fetch(`${API_URL}/posts/?type=reviewAll`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Client-Id": CLIENT_ID,
-      },
-      cache: "force-cache",
-    });
-    return res.json();
-  } catch (err) {
-    console.error("전체 리뷰 조회 실패:", err);
-    return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
-  }
-}
-
-/**
- * 일별 리뷰(type=reviewDaily) 목록을 조회하는 함수
- *
- * @returns {Promise<ApiRes<any>>} 일별 리뷰 리스트 응답 객체
- */
-export async function getReviewDailyList(): ApiResPromise<any[]> {
-  try {
-    const res = await fetch(`${API_URL}/posts/?type=reviewDaily`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Client-Id": CLIENT_ID,
-      },
-      cache: "force-cache",
-    });
-    return res.json();
-  } catch (err) {
-    console.error("일별 리뷰 조회 실패:", err);
-    return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
-  }
-}
-
-/**
- * 장소별 리뷰(type=reviewPlace) 목록을 조회하는 함수
- *
- * @returns {Promise<ApiRes<any>>} 장소별 리뷰 리스트 응답 객체
- */
-export async function getReviewPlaceList(): ApiResPromise<any[]> {
-  try {
-    const res = await fetch(`${API_URL}/posts/?type=reviewPlace`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Client-Id": CLIENT_ID,
-      },
-      cache: "force-cache",
-    });
-    return res.json();
-  } catch (err) {
-    console.error("장소별 리뷰 조회 실패:", err);
     return { ok: 0, message: "일시적인 네트워크 문제로 조회에 실패했습니다." };
   }
 }
