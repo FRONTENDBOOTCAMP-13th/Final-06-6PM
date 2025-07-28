@@ -31,7 +31,7 @@ export default function FeedDetailContent({ reviewId }: FeedDetailContentProps) 
       const targetReview = allReviews.find((item) => item._id.toString() === id);
 
       if (targetReview) {
-        const detailRes = await getReviewDetail(id, targetReview.type, targetReview.extra?.plan_id);
+        const detailRes = await getReviewDetail(id);
 
         if (detailRes?.ok === 1 && detailRes.item) {
           const updatedReviewData = {

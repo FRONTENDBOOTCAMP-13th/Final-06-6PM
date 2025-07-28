@@ -73,9 +73,9 @@ export async function getReviewPlaceList(): ApiResPromise<GetReviewDetailProps[]
 }
 
 // 선택한 리뷰의 상세 정보(댓글 포함) 조회하는 함수
-export async function getReviewDetail(id: string, type: string, plan_id?: number): ApiResPromise<GetReviewDetailProps> {
+export async function getReviewDetail(id: string): ApiResPromise<GetReviewDetailProps> {
   try {
-    const res = await fetch(`${API_URL}/posts/${id}?type=${type}&custom={"plan_id":${plan_id || 1}}`, {
+    const res = await fetch(`${API_URL}/posts/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
