@@ -3,12 +3,7 @@
 import { Plus } from "lucide-react";
 import PlanListItem from "@/components/ui/planListItem";
 import ButtonRounded from "@/components/ui/btnRound";
-
-export interface DayListItem {
-  id: number;
-  title: string;
-  tag: string;
-}
+import { DayListItem } from "@/types/plan";
 
 interface FillScheduleCardProps {
   daylist: DayListItem[];
