@@ -13,6 +13,7 @@ export interface GetReviewDetailProps {
     plan_id: number; // 참조용 계획 ID (해당 리뷰가 어떤 여행 계획과 연결되는지)
     startDate: string; // 여행 시작일
     endDate: string; // 여행 종료일
+    visitDate?: string; // 방문일
     images?: string[]; // 이미지 URL 배열
     starRate: number; // 사용자 별점
     location: string[]; // 방문한 장소 목록
