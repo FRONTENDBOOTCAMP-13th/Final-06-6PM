@@ -30,17 +30,31 @@ export default function KoreaMapClipPathImg({ token }: Props) {
   const userToken = useUserStore((state) => state.token);
 
   // 로그인 시 기존 사진 불러오기
+  // 로그인 시 기존 사진 불러오기
   useEffect(() => {
-    if (!userToken || !user) return;
+    console.log("useEffect 실행:", { userToken: !!userToken, user: !!user });
+
+    if (!userToken || !user?._id) {
+      console.log("토큰 또는 사용자 정보가 없음, 사진 로드 건너뜀");
+      return;
+    }
 
     async function loadPhotos() {
       try {
-        const res: ApiRes<UserPhoto[]> = await fetchUserPhotos(userToken!);
+        console.log("사진 로드 시작");
+        // user가 null이 아님을 확인했으므로 안전하게 접근
+        const res: ApiRes<UserPhoto[]> = await fetchUserPhotos(
+          userToken!,
+          user!._id
+        );
+        console.log("사진 로드 결과:", res);
+
         if (res.ok && res.data) {
           const map: { [key: string]: string } = {};
           res.data.forEach(({ regionId, imageUrl }) => {
             map[regionId] = imageUrl;
           });
+          console.log("imgMap 설정:", map);
           setImgMap(map);
         } else {
           console.error("사진을 불러올 수 없습니다.");
@@ -68,11 +82,12 @@ export default function KoreaMapClipPathImg({ token }: Props) {
   // 파일 선택 시 즉시 업로드 처리
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !selectedId || !userToken) {
-      console.log("파일, 지역 또는 토큰이 없습니다:", {
+    if (!file || !selectedId || !userToken || !user?._id) {
+      console.log("파일, 지역, 토큰 또는 사용자 정보가 없습니다:", {
         file,
         selectedId,
         userToken,
+        user,
       });
       return;
     }
@@ -84,7 +99,13 @@ export default function KoreaMapClipPathImg({ token }: Props) {
         fileName: file.name,
       });
 
-      const res = await uploadUserPhoto(file, selectedId, userToken);
+      // user가 null이 아님을 확인했으므로 안전하게 접근
+      const res = await uploadUserPhoto(
+        file,
+        selectedId,
+        userToken!,
+        user!._id
+      );
 
       console.log("업로드 결과:", res);
 
@@ -98,7 +119,7 @@ export default function KoreaMapClipPathImg({ token }: Props) {
         alert(`${selectedId} 지역에 사진이 업로드되었습니다!`);
 
         // 최신 포토맵 데이터 다시 불러오기
-        await loadUserPhotos(userToken);
+        await loadUserPhotos(userToken!, user!._id);
       } else {
         alert(res.message || "사진 업로드 실패");
       }
@@ -118,14 +139,15 @@ export default function KoreaMapClipPathImg({ token }: Props) {
   };
 
   // 포토맵 데이터 다시 불러오는 헬퍼 함수
-  const loadUserPhotos = async (token: string) => {
+  const loadUserPhotos = async (token: string, userId: number) => {
     try {
-      const res = await fetchUserPhotos(token);
+      const res = await fetchUserPhotos(token, userId);
       if (res.ok && res.data) {
         const newImgMap: Record<string, string> = {};
         res.data.forEach((photo) => {
           newImgMap[photo.regionId] = photo.imageUrl;
         });
+        console.log("포토맵 갱신:", newImgMap);
         setImgMap(newImgMap);
       }
     } catch (err) {
@@ -155,7 +177,6 @@ export default function KoreaMapClipPathImg({ token }: Props) {
           업로드 중...
         </div>
       )}
-
       <svg
         viewBox="55 400 1600 600"
         width={850}

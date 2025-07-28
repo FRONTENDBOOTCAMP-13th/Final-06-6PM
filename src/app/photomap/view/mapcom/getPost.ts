@@ -1,7 +1,5 @@
 "use server";
 
-import { User } from "@/types/user";
-
 const API_URL =
   process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 
@@ -21,23 +19,15 @@ export interface UserPhoto {
  * @param file 이미지 파일
  * @param regionId 지역 ID (예: seoul)
  * @param token 인증 토큰
+ * @param userId 사용자 ID
  */
 export async function uploadUserPhoto(
   file: File,
   regionId: string,
-  token: string
+  token: string,
+  userId: number
 ): Promise<ApiRes<{ imageUrl: string }>> {
   console.log("1단계: 파일 업로드 시작", { fileName: file.name, regionId });
-
-  // userStore에서 사용자 정보 가져오기
-  const userStore = await import("@/zustand/userStore");
-  const user = userStore.default.getState().userInfo;
-
-  if (!user?._id) {
-    throw new Error("사용자 정보를 찾을 수 없습니다.");
-  }
-
-  const userId = user._id;
 
   // 1단계: 파일 업로드
   const formData = new FormData();
@@ -121,21 +111,13 @@ export async function uploadUserPhoto(
 /**
  * 사용자 포토맵 조회 함수 (회원정보 조회)
  * @param token 인증 토큰
+ * @param userId 사용자 ID
  */
 export async function fetchUserPhotos(
-  token: string
+  token: string,
+  userId: number
 ): Promise<ApiRes<UserPhoto[]>> {
   console.log("사용자 포토맵 조회 시작");
-
-  // userStore에서 사용자 정보 가져오기
-  const userStore = await import("@/zustand/userStore");
-  const user = userStore.default.getState().userInfo;
-
-  if (!user?._id) {
-    throw new Error("사용자 정보를 찾을 수 없습니다.");
-  }
-
-  const userId = user._id;
 
   const res = await fetch(`${API_URL}/users/${userId}`, {
     method: "GET",
