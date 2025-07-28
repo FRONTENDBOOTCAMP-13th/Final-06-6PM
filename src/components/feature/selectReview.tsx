@@ -104,7 +104,7 @@ export default function SelectReview() {
         ))}
       </div>
 
-      <div className="space-y-4 p-4">
+      <div className="space-y-4 p-4 min-h-25 content-center">
         {filterReview.length > 0 ? (
           filterReview.map((item) => <ViewItem key={item._id} {...item} />)
         ) : (
