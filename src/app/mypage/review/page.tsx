@@ -1,7 +1,7 @@
 "use client";
 import SelectReview from "@/components/feature/selectReview";
 import { getPlanListUser } from "@/lib/api/plan";
-import { GetPlanDetailProps } from "@/types/plan"; // 계획 타입으로 다시 변경
+import { GetPlanDetailProps } from "@/types/plan";
 import useUserStore from "@/zustand/userStore";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
