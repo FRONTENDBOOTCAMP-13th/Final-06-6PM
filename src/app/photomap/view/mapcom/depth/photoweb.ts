@@ -1,3 +1,4 @@
+"use server";
 const API_URL = process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 
 export interface ApiRes<T> {
@@ -33,7 +34,6 @@ export async function uploadUserPhoto(
   const fileRes = await fetch(`${API_URL}/files`, {
     method: "POST",
     headers: {
-      "content-type": "application/json",
       "client-id": "febc13-final06-emjf",
       Authorization: `Bearer ${token}`,
     },
@@ -49,7 +49,7 @@ export async function uploadUserPhoto(
   const fileResult = await fileRes.json();
   console.log("파일 업로드 결과:", fileResult);
 
-  const imagePath = fileResult.item?.path || fileResult.path;
+  const imagePath = fileResult.item[0]?.path || fileResult.path;
   if (!imagePath) {
     throw new Error("파일 경로를 받을 수 없습니다.");
   }
@@ -59,7 +59,11 @@ export async function uploadUserPhoto(
   // 2단계: 현재 회원정보 조회
   const getUserRes = await fetch(`${API_URL}/users/${userId}`, {
     method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      "client-id": "febc13-final06-emjf",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!getUserRes.ok) {
@@ -83,6 +87,7 @@ export async function uploadUserPhoto(
   const updateRes = await fetch(`${API_URL}/users/${userId}`, {
     method: "PATCH",
     headers: {
+      "client-id": "febc13-final06-emjf",
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
@@ -117,7 +122,7 @@ export async function uploadUserPhoto(
 export async function fetchUserPhotos(token: string, userId: number): Promise<ApiRes<UserPhoto[]>> {
   console.log("사용자 포토맵 조회 시작");
 
-  const res = await fetch(`${API_URL}/users/${userId}`, {
+  const res = await fetch(`${API_URL}/users/${userId}/extra`, {
     method: "GET",
     headers: {
       "client-id": "febc13-final06-emjf",

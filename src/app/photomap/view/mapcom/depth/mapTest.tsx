@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { uploadUserPhoto, fetchUserPhotos } from "@/lib/api/photoweb";
+import { uploadUserPhoto, fetchUserPhotos } from "@/app/photomap/view/mapcom/depth/photoweb";
 import useUserStore from "@/zustand/userStore";
 
 interface UserPhoto {
@@ -32,7 +32,6 @@ export default function KoreaMapClipPathImg({ token }: Props) {
   // 로그인 시 기존 사진 불러오기
   useEffect(() => {
     console.log("useEffect 실행:", { userToken: !!userToken, user: !!user });
-    console.log("useEffect 실행:", { userToken: userToken, user: user });
 
     if (!userToken || !user?._id) {
       console.log("토큰 또는 사용자 정보가 없음, 사진 로드 건너뜀");
@@ -49,7 +48,8 @@ export default function KoreaMapClipPathImg({ token }: Props) {
         if (res.ok && res.data) {
           const map: { [key: string]: string } = {};
           res.data.forEach(({ regionId, imageUrl }) => {
-            map[regionId] = imageUrl;
+            map[regionId] = `${process.env.NEXT_PUBLIC_API_SERVER}/${imageUrl}`;
+            console.log("map[regionId]:", map[regionId]);
           });
           console.log("imgMap 설정:", map);
           setImgMap(map);
@@ -105,7 +105,7 @@ export default function KoreaMapClipPathImg({ token }: Props) {
         // 즉시 지도에 이미지 표시
         setImgMap((prev) => ({
           ...prev,
-          [selectedId]: res.data!.imageUrl,
+          [selectedId]: `${process.env.NEXT_PUBLIC_API_SERVER}/${res.data!.imageUrl}`,
         }));
 
         alert(`${selectedId} 지역에 사진이 업로드되었습니다!`);
@@ -135,7 +135,7 @@ export default function KoreaMapClipPathImg({ token }: Props) {
       if (res.ok && res.data) {
         const newImgMap: Record<string, string> = {};
         res.data.forEach((photo) => {
-          newImgMap[photo.regionId] = photo.imageUrl;
+          newImgMap[photo.regionId] = `${process.env.NEXT_PUBLIC_API_SERVER}/${photo.imageUrl}`;
         });
         console.log("포토맵 갱신:", newImgMap);
         setImgMap(newImgMap);
