@@ -64,7 +64,7 @@ export default function PlanReplyForm() {
         }
       }
 
-      router.push("/plan/edit/preview");
+      router.push("/plan/success");
     } catch (error) {
       console.error("일정 등록 에러:", error);
       alert("네트워크 오류가 발생했습니다.");
