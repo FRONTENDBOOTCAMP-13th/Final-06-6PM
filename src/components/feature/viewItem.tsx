@@ -10,57 +10,59 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { GetReviewDetailProps } from "@/types/review";
 
-const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
-
-export type ViewItemProps = GetReviewDetailProps & {
-  onClick?: () => void; // 필요 시 추가
+export type ViewItemProps = {
+  _id: number;
+  title?: string;
+  userName: string;
+  userImgURL?: string;
+  location: string;
+  content: string;
+  contentImg?: string[];
+  starRate?: number;
+  tags: string[];
+  views: number;
+  likes: number;
+  comments: number;
+  visitDate?: string;
+  regdate?: string;
+  onClick?: () => void;
 };
 
 export default function ViewItem({
-  _id,
-  title,
-  user,
+  title = "제주도 1박 2일 여행 - 힐링코스, 액티비티코스 다 준비했어요!",
+  userName,
+  userImgURL = "/gwak.png",
+  location,
   content,
-  extra,
+  contentImg,
+  starRate = 4,
+  tags,
   views,
-  bookmarks,
-  repliesCount,
-  createdAt,
-  onClick,
+  likes,
+  comments,
+  visitDate = "2025.03.01.",
+  regdate = "2025.04.05. 11:00:00",
 }: ViewItemProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const userName = user.name;
-  const userImgURL = user?.image?.startsWith("http") ? user.image : `${API_URL}/${user?.image}`;
-
-  console.log(user.image);
-
-  const starRate = extra.starRate ?? 0;
-  const tags = extra.tags ?? [];
-  const contentImg = extra.images ?? [];
-  const locationList = Array.isArray(extra.location) ? extra.location : [extra.location ?? ""];
-  const visitDate =
-    extra.startDate && extra.endDate ? `${extra.startDate} ~ ${extra.endDate}` : extra.startDate ? extra.startDate : "";
-  const regdate = createdAt;
-
   // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
   const isDetailView = pathname.startsWith("/feed/");
-  const listClass = `relative w-full space-y-2 ${isDetailView ? "" : "rounded-xl bg-white shadow p-4"}`;
-  const listTextClass = `text-14 text-travel-text100 ${isDetailView ? "" : "line-clamp-3"}`;
+  const listClass = `relative w-full space-y-2 ${
+    isDetailView ? "" : "rounded-xl bg-white shadow p-4"
+  }`;
+
+  const listTextClass = `text-14 text-travel-text100 ${
+    isDetailView ? "" : "line-clamp-3"
+  }`;
 
   // 이미지 갯수 제한
   const maxImg = 2;
-  const showImg = isDetailView ? contentImg : contentImg.slice(0, maxImg);
-  const moreCount = isDetailView ? 0 : contentImg.length - maxImg;
-
-  // 이미지 URL설정 필요
-  const getImageURL = (imgPath: string) => {
-    if (!imgPath) return "/images/user4.png";
-    return imgPath.startsWith("http") ? imgPath : `${API_URL}/${imgPath}`;
-  };
+  const showImg = isDetailView
+    ? contentImg
+    : contentImg?.slice(0, maxImg) || [];
+  const moreCount = isDetailView ? 0 : (contentImg?.length || 0) - maxImg;
 
   return (
     <div className={listClass}>
@@ -70,7 +72,7 @@ export default function ViewItem({
           <Image
             width={40}
             height={40}
-            src={userImgURL || "/images/user-default.webp"}
+            src={userImgURL}
             alt={userName}
             className="w-10 h-10 rounded-full bg-travel-gray300"
           />
@@ -94,9 +96,9 @@ export default function ViewItem({
       <div className="grid grid-cols-[55px_auto] gap-2 text-14">
         <p>방문장소</p>
         <div className="flex flex-wrap gap-1">
-          {locationList.map((location, idx) => (
-            <ModalItem key={idx} location={location} />
-          ))}
+          <ModalItem location={location} />
+          <ModalItem location={location} />
+          <ModalItem location={location} />
         </div>
       </div>
 
@@ -104,15 +106,19 @@ export default function ViewItem({
       <div className="space-y-2 text-14">
         {isDetailView ? (
           // 게시물 상세페이지일 때 보이는 이미지
-          <Swiper pagination={true} modules={[Pagination]} className="rounded-lg overflow-hidden">
-            {showImg.map((img, idx) => (
+          <Swiper
+            pagination={true}
+            modules={[Pagination]}
+            className="rounded-lg overflow-hidden"
+          >
+            {showImg?.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <div className="aspect-[3/2] bg-travel-gray200">
                   <Image
                     width={600}
                     height={400}
-                    src={getImageURL(img)}
-                    alt={`Review image ${idx + 1}`}
+                    src={item}
+                    alt={item}
                     className="object-cover w-full h-full"
                   />
                 </div>
@@ -121,30 +127,36 @@ export default function ViewItem({
           </Swiper>
         ) : (
           // 리스트페이지 일 때 보이는 이미지
-          <div className={`grid gap-3 ${showImg?.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}>
-            {showImg.map((img, idx) => {
+          <div
+            className={`grid gap-3 ${
+              showImg?.length === 1 ? "grid-cols-1" : "grid-cols-2"
+            }`}
+          >
+            {showImg?.map((item, idx) => {
               const overlay = idx === 1 && moreCount > 0;
 
               return (
                 <div
                   key={idx}
                   className={`relative rounded-lg bg-travel-gray200 overflow-hidden ${
-                    showImg.length === 1 ? "aspect-[3/2]" : "aspect-square"
+                    showImg?.length === 1 ? "aspect-[3/2]" : "aspect-square"
                   }`}
                 >
                   <Image
                     width={400}
                     height={300}
-                    src={getImageURL(img)}
-                    alt={`Review image ${idx + 1}`}
+                    src={item}
+                    alt={item}
                     className="object-cover w-full h-full"
                   />
                   {!isDetailView && overlay && (
                     <div
                       className="absolute inset-0 bg-black/60 flex items-center justify-center cursor-pointer"
-                      onClick={() => router.push(`/feed/${_id}`)}
+                      onClick={() => router.push(`/feed/1`)}
                     >
-                      <span className="text-white font-bold text-20">+{moreCount}</span>
+                      <span className="text-white font-bold text-20">
+                        +{moreCount}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -172,7 +184,11 @@ export default function ViewItem({
               key={i}
               fill="currentColor"
               stroke="currentColor"
-              className={`size-4 ${i < Math.floor(starRate) ? "text-travel-warn100" : "text-travel-gray400"}`}
+              className={`size-4 ${
+                i < Math.floor(starRate)
+                  ? "text-travel-warn100"
+                  : "text-travel-gray400"
+              }`}
             />
           ))}
         </div>
@@ -188,11 +204,11 @@ export default function ViewItem({
           </span>
           <span className="flex items-center gap-1">
             <Heart className="w-4 h-4" />
-            {bookmarks}
+            {likes}
           </span>
           <span className="flex items-center gap-1">
             <MessageCircleMore className="w-4 h-4" />
-            {repliesCount}
+            {comments}
           </span>
         </div>
 
