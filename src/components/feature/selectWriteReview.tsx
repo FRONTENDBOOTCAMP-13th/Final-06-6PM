@@ -75,7 +75,7 @@ export default function SelectWriteReview() {
     const fetchPlanData = async () => {
       try {
         const res = await getPlanDetail(planId);
-        console.log(res);
+        // console.log("res 데이터: ", res);
         if (res.ok) {
           setPlanReply(res.item.replies);
         }

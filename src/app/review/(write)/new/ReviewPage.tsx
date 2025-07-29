@@ -53,7 +53,7 @@ export default function ReviewNew() {
     planListUserData();
   }, [token]);
 
-  console.log(plan);
+  // console.log("전체 여행 목록", plan);
 
   return (
     <>
