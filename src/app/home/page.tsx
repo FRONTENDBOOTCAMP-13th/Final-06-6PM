@@ -17,23 +17,6 @@ export default function HomePage() {
       </div>
 
       <div className="w-full flex-1 px-4 py-7 bg-white/65 rounded-t-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] flex flex-col space-y-8">
-        {/* <div className="space-y-3">
-          <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
-            <CalendarDays className="size-6" />
-            예정된 여행
-          </div>
-          <DayItem place="제주도" period="2025.07.12 ~ 2025.07.15." dday={3} />
-          <DayItem />
-        </div>
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
-            <NotebookPen className="size-6" />
-            이전에 다녀온 여행을 기록해보세요!
-          </div>
-          <Link href="/review">
-            <DayItem place="부산" period="2025.05.08 ~ 2025.05.12." />
-          </Link>
-        </div> */}
         <TripPage />
         <div className="space-y-2">
           <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
