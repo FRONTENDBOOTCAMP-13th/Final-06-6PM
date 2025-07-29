@@ -6,7 +6,7 @@ export default function PlanDetailPage() {
   return (
     <div>
       <div className="w-full relative py-5 px-4">
-        <BackButton path="/plan" />
+        <BackButton path="/mypage" />
         <p className="text-center">여행일정 살펴보기</p>
       </div>
 

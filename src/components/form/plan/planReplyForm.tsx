@@ -63,7 +63,6 @@ export default function PlanReplyForm() {
           return;
         }
       }
-
       router.push("/plan/success");
     } catch (error) {
       console.error("일정 등록 에러:", error);
