@@ -11,7 +11,7 @@ export default function PlanSuccessPage() {
         <p>일정이 도감에 잘 저장되었어요!</p>
         <p>즐거운 여행 되시길 바라요. 😊</p>
       </div>
-      <Link href="/plan/edit/preview">
+      <Link href="/mypage">
         <ButtonRounded variant="primary" size="lg">
           등록한 여행 일정 보러가기
         </ButtonRounded>
