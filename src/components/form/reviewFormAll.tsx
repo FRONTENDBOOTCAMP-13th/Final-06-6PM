@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useRef, useState, useEffect } from "react";
-import { useSearchParams, useParams } from "next/navigation";
 import { Camera, ImagePlus, X } from "lucide-react";
 import { uploadFile } from "@/data/actions/file";
 import ReviewStar from "@/components/form/reviewStar";
@@ -13,6 +12,7 @@ import { toast } from "react-toastify";
 import { createReviewAllPost, updateReviewPost } from "@/data/actions/review";
 import { GetReviewDetailProps } from "@/types/review";
 import { ReviewTitle } from "@/components/form/reviewTitle";
+import { useRouter } from "next/navigation";
 
 interface ReviewFormAllProps {
   initialData?: GetReviewDetailProps;
@@ -22,20 +22,14 @@ export default function ReviewFormAll({ initialData }: ReviewFormAllProps) {
   const token = useUserStore((state) => state.token);
   const isEditMode = !!initialData; // initialData가 있으면 수정 모드
   const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewAllPost, null);
+  const router = useRouter();
 
   /* 이미지 관련 상태 */
   const [images, setImages] = useState<{ path: string; name: string; preview: string }[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const params = useParams();
-  const searchParams = useSearchParams();
-  const planId = params?.id || "";
-  const place = searchParams.get("place");
-  const startDate = searchParams.get("startDate");
-  const endDate = searchParams.get("endDate");
-
-  // ⭐ 초기 데이터 설정 (수정 모드일 때)
+  // 초기 데이터 설정 (수정 모드)
   useEffect(() => {
     if (initialData && isEditMode) {
       console.log("ReviewFormAll 초기 데이터 설정:", initialData);
@@ -51,6 +45,12 @@ export default function ReviewFormAll({ initialData }: ReviewFormAllProps) {
       }
     }
   }, [initialData, isEditMode]);
+
+  useEffect(() => {
+    if (state?.ok) {
+      router.back();
+    }
+  }, [state]);
 
   // 파일 선택 Dialog
   const openFileDialog = () => {
@@ -130,10 +130,20 @@ export default function ReviewFormAll({ initialData }: ReviewFormAllProps) {
       {isEditMode && initialData && (
         <input type="hidden" name="reviewId" value={initialData._id?.toString() || initialData._id?.toString()} />
       )}
-      <input type="hidden" name="plan_id" value={planId.toString()} />
-      <input type="hidden" name="place" value={place || initialData?.extra?.location || ""} />
-      <input type="hidden" name="startDate" value={startDate || initialData?.extra?.startDate || ""} />
-      <input type="hidden" name="endDate" value={endDate || initialData?.extra?.endDate || ""} />
+      <input type="hidden" name="plan_id" value={initialData?.extra?.plan_id} />
+      <input type="hidden" name="location" value={initialData?.extra?.location || ""} />
+      <input type="hidden" name="startDate" value={initialData?.extra?.startDate || ""} />
+      <input type="hidden" name="endDate" value={initialData?.extra?.endDate || ""} />
+      <input
+        type="hidden"
+        name="selected_days"
+        value={
+          initialData?.extra?.startDate && initialData?.extra?.endDate
+            ? `${initialData.extra.startDate} ~ ${initialData.extra.endDate}`
+            : ""
+        }
+      />
+      <input type="hidden" name="review_type" value={initialData?.type || ""} />
 
       {/* 이미지 경로들을 hidden input으로 전송 */}
       {images.map((img, index) => (

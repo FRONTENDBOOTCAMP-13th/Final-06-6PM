@@ -24,6 +24,8 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
  * }
  */
 export async function createReviewAllPost(prevState: any, formData: FormData): Promise<ActionResult> {
+  let reviewId = 0;
+
   try {
     // FormData에서 데이터 추출
     const starRate = parseInt(formData.get("starRate") as string);
@@ -45,17 +47,6 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
       imagePaths.push(imagePath);
       imgIdx++;
     }
-
-    // console.log("Server Action received:", {
-    //   starRate,
-    //   title,
-    //   content,
-    //   tags,
-    //   token: !!token,
-    //   planId,
-    //   place,
-    //   images: imagePaths.length,
-    // });
 
     // 입력값 검증
     const errors: Record<string, { msg: string }> = {};
@@ -106,7 +97,7 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
     });
 
     const data = await res.json();
-    console.log("API Response:", { status: res.status, data });
+    console.log("reviewAll 생성 확인:", { status: res.status, data });
 
     if (!res.ok) {
       console.error("API 요청 실패:", {
@@ -121,13 +112,15 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
       };
     }
 
-    console.log("리뷰 생성 성공! ID:", data.item?._id);
+    console.log("reviewAll 생성 성공! ID:", data.item?._id);
+
+    reviewId = data.item?._id;
 
     // 관련 페이지 캐시 무효화
     revalidatePath("/review");
     revalidatePath(`/plan/${planId}`);
   } catch (error) {
-    console.error("리뷰 작성 오류:", error);
+    console.error("reviewAll  작성 오류:", error);
 
     // 네트워크 오류인지 URL 오류인지 구분
     if (error instanceof TypeError && error.message.includes("Invalid URL")) {
@@ -143,8 +136,9 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
       message: "일시적인 네트워크 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
     };
   }
+
   // redirect로 페이지 이동
-  redirect("/review/success");
+  redirect(`/review/success?reviewId=${reviewId}`);
 }
 
 /**
@@ -164,6 +158,8 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
  * }
  */
 export async function createReviewDetailPost(prevState: any, formData: FormData): Promise<ActionResult> {
+  let reviewId = 0;
+
   try {
     // FormData에서 데이터 추출
     const starRate = parseInt(formData.get("starRate") as string);
@@ -247,7 +243,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
     });
 
     const data = await res.json();
-    console.log("API Response:", { status: res.status, data });
+    console.log("리뷰생성 확인:", { status: res.status, data });
 
     if (!res.ok) {
       console.error("API 요청 실패:", {
@@ -263,6 +259,8 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
     }
 
     console.log("일자별/장소별 리뷰 생성 성공! ID:", data.item?._id);
+
+    reviewId = data.item?._id;
 
     // 관련 페이지 캐시 무효화
     revalidatePath("/review");
@@ -285,8 +283,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
     };
   }
 
-  // redirect로 페이지 이동
-  redirect("/review/success");
+  redirect(`/review/success?reviewId=${reviewId}`);
 }
 
 /**
@@ -358,10 +355,15 @@ export async function updateReviewPost(prevState: any, formData: FormData): Prom
     const token = formData.get("token") as string;
     const reviewId = formData.get("reviewId") as string;
 
+    const planId = parseInt(formData.get("plan_id") as string);
     const starRate = parseInt(formData.get("starRate") as string);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
     const tags = JSON.parse((formData.get("tags") as string) || "[]");
+    const startDate = formData.get("startDate") as string;
+    const endDate = formData.get("endDate") as string;
+    const visitDate = formData.get("selected_days") as string;
+    const location = formData.get("location") as string;
 
     const imagePaths: string[] = [];
     let imgIdx = 0;
@@ -416,9 +418,14 @@ export async function updateReviewPost(prevState: any, formData: FormData): Prom
       content,
       extra: {
         ...extra,
+        planId,
         starRate,
         tags,
         images: imagePaths,
+        startDate,
+        endDate,
+        visitDate,
+        location,
       },
     };
 

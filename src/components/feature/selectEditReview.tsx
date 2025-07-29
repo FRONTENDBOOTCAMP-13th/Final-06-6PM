@@ -1,31 +1,26 @@
-// 1. SelectEditReview 컴포넌트에서 데이터 로딩 상태 확인 및 개선
-
 "use client";
 
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { GetReviewDetailProps } from "@/types/review";
+import { getReviewDetail } from "@/data/functions/review";
 import ReviewDetailForm from "@/components/form/reviewDetailForm";
 import ReviewFormAll from "@/components/form/reviewFormAll";
+import Button from "@/components/ui/btn";
+import { CalendarDays, LayoutList, Link, MapPin } from "lucide-react";
 import { DayItem } from "@/components/form/reviewSelect";
-import { getPlanDetail } from "@/data/functions/plan";
-import { getReviewDetail } from "@/data/functions/review";
-import { PlanReply } from "@/types/plan";
-import { GetReviewDetailProps } from "@/types/review";
-import { CalendarDays, LayoutList, MapPin } from "lucide-react";
-import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
 
 export default function SelectEditReview() {
   const [tab, setTab] = useState(0);
-  const [planReply, setPlanReply] = useState<PlanReply[]>([]);
   const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const params = useParams();
-  const searchParams = useSearchParams();
-  const reviewId = Number(params?.id);
   const [selectItem, setSelectItem] = useState<DayItem | null>(null);
 
-  // ⭐ 디버깅용 로그
+  const params = useParams();
+  const reviewId = Number(params?.id);
+
+  // 디버깅용 로그
   console.log("SelectEditReview 렌더링:", {
     reviewId,
     reviewData: reviewData ? "로드됨" : "로딩중",
@@ -33,35 +28,8 @@ export default function SelectEditReview() {
     loading,
   });
 
-  // reviewDaily 계산
-  const reviewDaily: DayItem[] = useMemo(() => {
-    if (!planReply || !Array.isArray(planReply)) {
-      return [];
-    }
-    return planReply.map((day) => ({
-      days: day.planDate,
-      place: day.locations?.map((location) => location.title) || [],
-    }));
-  }, [planReply]);
-
-  // reviewPlace 계산
-  const reviewPlace: DayItem[] = useMemo(() => {
-    if (!planReply || !Array.isArray(planReply)) {
-      return [];
-    }
-    const places: DayItem[] = [];
-    planReply.forEach((day) => {
-      if (day.locations && Array.isArray(day.locations)) {
-        day.locations.forEach((location) => {
-          places.push({
-            days: day.planDate,
-            place: location.title,
-          });
-        });
-      }
-    });
-    return places;
-  }, [planReply]);
+  const reviewDaily: DayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
+  const reviewPlace: DayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
 
   const data = [
     {
@@ -83,7 +51,7 @@ export default function SelectEditReview() {
     },
   ];
 
-  // ⭐ 리뷰 데이터 로드 (가장 먼저 실행)
+  // 리뷰 데이터 조회
   useEffect(() => {
     const fetchReviewData = async () => {
       if (!reviewId) {
@@ -93,66 +61,28 @@ export default function SelectEditReview() {
       }
 
       try {
-        console.log("리뷰 데이터 로딩 시작:", reviewId);
         const res = await getReviewDetail(String(reviewId));
-
-        console.log("리뷰 API 응답:", res);
-
         if (res.ok === 1 && res.item) {
           setReviewData(res.item);
-          console.log("리뷰 데이터 설정 완료:", res.item);
 
-          // 리뷰 타입에 따라 적절한 탭 설정
-          if (res.item.type === "reviewAll") {
-            setTab(0);
-          } else if (res.item.type === "reviewDaily") {
-            setTab(1);
-          } else if (res.item.type === "reviewPlace") {
-            setTab(2);
-          }
+          if (res.item.type === "reviewAll") setTab(0);
+          else if (res.item.type === "reviewDaily") setTab(1);
+          else if (res.item.type === "reviewPlace") setTab(2);
         } else {
-          // setError(res.message || "리뷰 데이터를 불러올 수 없습니다.");
+          setError("리뷰 데이터를 불러올 수 없습니다.");
         }
       } catch (error) {
         console.error("리뷰 데이터 로드 실패:", error);
         setError("리뷰 데이터 로드 중 오류가 발생했습니다.");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchReviewData();
   }, [reviewId]);
 
-  // ⭐ Plan 데이터 로드
-  useEffect(() => {
-    const fetchPlanData = async () => {
-      if (!reviewId) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        console.log("Plan 데이터 로딩 시작:", reviewId);
-        const res = await getPlanDetail(reviewId);
-
-        console.log("Plan API 응답:", res);
-
-        if (res.ok === 1 && res.item?.replies) {
-          setPlanReply(res.item.replies);
-          console.log("Plan 데이터 설정 완료:", res.item.replies);
-        } else {
-          console.error("Plan 데이터 로드 실패:", res);
-        }
-      } catch (error) {
-        console.error("Plan 데이터 로드 실패:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPlanData();
-  }, [reviewId]);
-
-  // ⭐ selectItem 설정 (reviewData와 planReply가 모두 로드된 후)
+  // selectItem 설정
   useEffect(() => {
     if (tab === 0) {
       setSelectItem(null);
@@ -165,22 +95,19 @@ export default function SelectEditReview() {
         let matchingItem = null;
 
         if (tab === 1 && reviewData.type === "reviewDaily") {
-          // 일자별 매칭
           matchingItem = targetList.find((item) => item.days === reviewData.extra?.visitDate);
         } else if (tab === 2 && reviewData.type === "reviewPlace") {
-          // 장소별 매칭
           matchingItem = targetList.find((item) => item.place === reviewData.extra?.location);
         }
 
         setSelectItem(matchingItem || targetList[0]);
-        console.log("SelectItem 설정:", matchingItem || targetList[0]);
       } else {
         setSelectItem(targetList[0]);
       }
     }
   }, [tab, reviewDaily, reviewPlace, reviewData]);
 
-  // ⭐ 로딩 상태
+  // 로딩중
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[300px]">
@@ -192,95 +119,62 @@ export default function SelectEditReview() {
     );
   }
 
-  // ⭐ 에러 상태
+  // 에러
   if (error) {
     return (
       <div className="p-4 text-center">
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
           <p className="text-red-600">{error}</p>
         </div>
-        <button
-          onClick={() => window.history.back()}
-          className="px-4 py-2 bg-travel-secondary100 text-white rounded hover:bg-travel-secondary200"
-        >
-          돌아가기
-        </button>
+        <Link href="/feed">
+          <Button variant="info" size="md">
+            돌아가기
+          </Button>
+        </Link>
       </div>
     );
   }
 
-  // ⭐ 데이터 없음 상태
   if (!reviewData) {
     return (
       <div className="p-4 text-center">
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
           <p className="text-yellow-600">리뷰 데이터를 찾을 수 없습니다.</p>
         </div>
-        <button
-          onClick={() => window.history.back()}
-          className="px-4 py-2 bg-travel-secondary100 text-white rounded hover:bg-travel-secondary200"
-        >
-          돌아가기
-        </button>
+        <Link href="/feed">
+          <Button variant="info" size="md">
+            돌아가기
+          </Button>
+        </Link>
       </div>
     );
   }
 
   return (
     <div>
-      {/* ⭐ 디버깅 정보 (개발 환경에서만) */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="p-2 bg-gray-100 text-xs border-b">
-          <p>
-            <strong>Review ID:</strong> {reviewId}
-          </p>
-          <p>
-            <strong>Review Type:</strong> {reviewData?.type}
-          </p>
-          <p>
-            <strong>Current Tab:</strong> {tab}
-          </p>
-          <p>
-            <strong>Review Title:</strong> {reviewData?.title}
-          </p>
-          <p>
-            <strong>Review Content Length:</strong> {reviewData?.content?.length || 0}
-          </p>
-          <p>
-            <strong>Has Initial Data:</strong> {!!reviewData ? "✅" : "❌"}
-          </p>
-        </div>
-      )}
-
-      {/* 탭 네비게이션 */}
       <div className="grid grid-cols-3 divide-x divide-travel-gray100">
-        {data.map((item) => (
-          <div
-            key={item.id}
-            className={`text-14 flex flex-col items-center p-1.5 gap-1.5 cursor-pointer ${
-              tab === item.id
-                ? "text-white bg-travel-secondary100 border-b border-b-travel-secondary200"
-                : "text-travel-gray400 bg-white border-b border-b-travel-gray200"
-            }`}
-            onClick={() => setTab(item.id)}
-          >
-            {item.icon}
-            <span>{item.title}</span>
-          </div>
-        ))}
+        {data.map((item) => {
+          const isActive = tab === item.id;
+          return (
+            <div
+              key={item.id}
+              className={`text-14 flex flex-col items-center p-1.5 gap-1.5 ${
+                isActive
+                  ? "text-white bg-travel-secondary100 border-b border-b-travel-secondary200"
+                  : "text-travel-gray300 bg-white border-b border-b-travel-gray200 opacity-50 pointer-events-none"
+              }`}
+            >
+              {item.icon}
+              <span>{item.title}</span>
+            </div>
+          );
+        })}
       </div>
-
-      {/* 컨텐츠 영역 */}
-      {tab === 0 && (
-        <ReviewFormAll
-          key={`review-all-${reviewData._id || reviewData._id}`} // ⭐ key 추가
-          initialData={reviewData}
-        />
-      )}
+      {tab === 0 && <ReviewFormAll key={`review-all-${reviewData._id || reviewData._id}`} initialData={reviewData} />}
 
       {tab === 1 && selectItem && reviewDaily.length > 0 && (
         <ReviewDetailForm
-          key={`review-daily-${reviewData._id || reviewData._id}-${selectItem.days}`} // ⭐ key 추가
+          key={`review-daily-${reviewData._id || reviewData._id}-${selectItem.days}`}
           list={reviewDaily}
           selected={selectItem}
           onChange={setSelectItem}
@@ -291,22 +185,13 @@ export default function SelectEditReview() {
 
       {tab === 2 && selectItem && reviewPlace.length > 0 && (
         <ReviewDetailForm
-          key={`review-place-${reviewData._id || reviewData._id}-${selectItem.place}`} // ⭐ key 추가
+          key={`review-place-${reviewData._id || reviewData._id}-${selectItem.place}`}
           list={reviewPlace}
           selected={selectItem}
           onChange={setSelectItem}
           reviewType="reviewPlace"
           initialData={reviewData}
         />
-      )}
-
-      {/* 빈 데이터 상태 */}
-      {tab === 1 && reviewDaily.length === 0 && (
-        <div className="p-4 text-center text-travel-gray400">일자별 데이터가 없습니다.</div>
-      )}
-
-      {tab === 2 && reviewPlace.length === 0 && (
-        <div className="p-4 text-center text-travel-gray400">장소별 데이터가 없습니다.</div>
       )}
     </div>
   );
