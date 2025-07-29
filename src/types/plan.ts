@@ -62,6 +62,7 @@ export interface DayListItem {
 export interface DailyPlan {
   day: number; // 여행 중 몇째 날
   planDate: string; // 실제 일정 날짜
+  replyId?: number; // 댓글 id (일차별)
   places: SelectedPlace[]; // 해당 날짜의 장소들
 }
 

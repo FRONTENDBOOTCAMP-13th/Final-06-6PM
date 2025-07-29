@@ -21,8 +21,9 @@ export default function DrawerPlanBtn({ reviewId, onDelete }: DrawerPlanBtnProps
   const pathname = usePathname();
 
   const modifyPlan = () => {
-    console.log("수정");
-    // router.push(`/review/edit/${reviewId}?place=${title}`);
+    console.log("여행일정 수정으로 이동:", reviewId);
+    router.push(`/plan/${reviewId}/modify`);
+    setOpen(false);
   };
 
   const DeleteAction = async (formData: FormData) => {
