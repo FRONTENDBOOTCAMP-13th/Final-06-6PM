@@ -1,10 +1,10 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import DrawerBtn from "@/components/feature/drawerBtn";
 import DayScheduleCard from "@/components/ui/dayScheduleCard";
 import { getPlanDetail } from "@/data/functions/plan";
 import { GetPlanDetailProps } from "@/types/plan";
+import DrawerPlanBtn from "@/components/feature/drawerPlanBtn";
 
 export default function PlanDetailContent() {
   const params = useParams();
@@ -67,7 +67,7 @@ export default function PlanDetailContent() {
             {planData.extra.startDate} ~ {planData.extra.endDate}
           </p>
         </div>
-        <DrawerBtn reviewId={planId} />
+        <DrawerPlanBtn reviewId={planId} />
       </div>
 
       <div className="flex flex-col justify-between pt-7 gap-5">
