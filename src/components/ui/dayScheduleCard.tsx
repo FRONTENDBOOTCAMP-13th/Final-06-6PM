@@ -4,12 +4,7 @@ import { useRouter } from "next/navigation";
 import { CalendarDays } from "lucide-react";
 import EmptyScheduleCard from "@/components/feature/emptyScheduleCard";
 import FillScheduleCard from "@/components/feature/fillScheduleCard";
-
-export interface DayListItem {
-  id: number;
-  title: string;
-  tag: string;
-}
+import { DayListItem } from "@/types/plan";
 
 export interface DayScheduleCardPlusProps {
   day: number;

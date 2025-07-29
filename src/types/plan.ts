@@ -51,6 +51,20 @@ export interface SelectedPlace {
   mapy?: number;
 }
 
+// 표시되는 장소 아이템
+export interface DayListItem {
+  id: number;
+  title: string;
+  tag: string;
+}
+
+// 일차별 계획 아이템
+export interface DailyPlan {
+  day: number; // 여행 중 몇째 날
+  planDate: string; // 실제 일정 날짜
+  places: SelectedPlace[]; // 해당 날짜의 장소들
+}
+
 export interface SearchNavProps {
   path: string;
   tagData: SelectedPlace[];
@@ -62,12 +76,6 @@ export interface PlanProduct {
   _id: any[];
   name: string[];
   mainImages: string[];
-}
-
-export interface DailyPlan {
-  day: number; // 여행 중 몇째 날
-  planDate: string; // 실제 일정 날짜
-  places: SelectedPlace[]; // 해당 날짜의 장소들
 }
 
 // 핵심 상태만 정의 (불필요한 것들 제거)
