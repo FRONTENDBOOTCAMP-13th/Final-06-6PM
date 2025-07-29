@@ -22,6 +22,7 @@ export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
 
   const modifyPlan = () => {
     console.log("수정");
+    // router.push(`/review/edit/${reviewId}?place=${title}`);
   };
 
   const DeleteAction = async (formData: FormData) => {
@@ -40,6 +41,8 @@ export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
 
         if (pathname.startsWith("/mypage/review")) {
           router.push("/mypage/review");
+        } else if (pathname.startsWith("/plan")) {
+          router.push("/mypage");
         } else {
           router.push("/feed");
         }
