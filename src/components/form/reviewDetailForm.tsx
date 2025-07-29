@@ -150,7 +150,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
         <div className="grid grid-cols-4 gap-2">
           {/* 업로드 버튼 */}
           <div
-            className="relative flex items-center justify-center p-2 transition-colors bg-white border border-dashed rounded-lg cursor-pointer min-h-21 border-travel-gray400 hover:bg-gray-50"
+            className="relative flex items-center justify-center p-2 transition-colors bg-white border border-dashed rounded-lg cursor-pointer h-21 border-travel-gray400 hover:bg-gray-50"
             onClick={openFileDialog}
           >
             <ImagePlus className="w-10 h-10 text-travel-gray400" />
@@ -158,7 +158,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
 
           {/* 업로드된 이미지들 */}
           {images.map((img, index) => (
-            <div key={index} className="relative p-2 bg-white border rounded-lg border-travel-gray400 min-h-21">
+            <div key={index} className="relative p-2 bg-white border rounded-lg border-travel-gray400 h-21">
               <img
                 src={img.preview}
                 alt={`첨부이미지-${index + 1}`}

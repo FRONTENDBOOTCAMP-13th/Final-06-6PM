@@ -20,7 +20,7 @@ export async function getPlanDetail(_id: number): ApiResPromise<GetPlanDetailPro
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
 
     return res.json();
@@ -43,7 +43,7 @@ export async function getPlanList(): ApiResPromise<GetPlanDetailProps[]> {
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
 
     return res.json();

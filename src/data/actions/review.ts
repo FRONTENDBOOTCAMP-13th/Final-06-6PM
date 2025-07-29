@@ -288,3 +288,60 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
   // redirect로 페이지 이동
   redirect("/review/success");
 }
+
+/**
+ * 사용자의 리뷰를 삭제하는 Server Action 함수.
+ *
+ * @param {any} prevState - 이전 상태 (useActionState 사용 시 전달됨, 사용하지 않음)
+ * @param {FormData} formData - 삭제할 리뷰 정보 (리뷰 ID와 토큰 포함)
+ * @returns {Promise<ActionResult>} - 성공 여부와 메시지
+ */
+export async function deleteReviewPost(prevState: any, formData: FormData): Promise<ActionResult> {
+  try {
+    const token = formData.get("token") as string;
+    const reviewId = formData.get("reviewId") as string;
+
+    if (!reviewId || !token) {
+      return {
+        ok: 0,
+        message: "삭제할 리뷰 ID 또는 인증 정보가 없습니다.",
+      };
+    }
+
+    // API URL
+    const ApiDeleteURL = `${API_URL}/posts/${reviewId}`;
+
+    const res = await fetch(ApiDeleteURL, {
+      method: "DELETE",
+      headers: {
+        "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      return {
+        ok: 0,
+        message: data.message || `삭제 실패 (${res.status})`,
+      };
+    }
+
+    // 관련 캐시 무효화
+    revalidatePath("/review");
+    revalidatePath("/feed");
+
+    // 성공 응답 반환
+    return {
+      ok: 1,
+      message: "리뷰가 성공적으로 삭제되었습니다.",
+    };
+  } catch (error) {
+    console.error("리뷰 삭제 중 오류:", error);
+
+    return {
+      ok: 0,
+      message: "리뷰 삭제 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
+    };
+  }
+}
