@@ -13,6 +13,7 @@ export default function FeedContent() {
   const [reviewData, setReviewData] = useState<GetReviewDetailProps[]>([]);
   const [currentType, setCurrentType] = useState<ReviewType>("all");
   const [loading, setLoading] = useState(false);
+  const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
 
   const fetchReviewData = async (type: ReviewType = "all") => {
     setLoading(true);
@@ -62,6 +63,14 @@ export default function FeedContent() {
     setCurrentType(type);
   };
 
+  // 삭제 성공 시 데이터 새로고침하는 콜백 함수
+  const handleDelete = (reviewId: number) => {
+    setDeleteReviewId(reviewId);
+
+    // 로컬 상태에서 해당 리뷰 제거
+    setReviewData((prev) => prev.filter((item) => item._id !== reviewId));
+  };
+
   useEffect(() => {
     fetchReviewData(currentType);
   }, [currentType]);
@@ -94,7 +103,7 @@ export default function FeedContent() {
         {loading ? (
           <div className="text-center py-8">로딩 중...</div>
         ) : reviewData.length > 0 ? (
-          reviewData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} />)
+          reviewData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
         ) : (
           <div className="text-center py-8 text-travel-gray400">후기가 없습니다.</div>
         )}

@@ -11,9 +11,10 @@ import Button from "@/components/ui/btn";
 
 interface DrawerBtnProps {
   reviewId: number;
+  onDelete?: (reviewId: number) => void;
 }
 
-export default function DrawerBtn({ reviewId }: DrawerBtnProps) {
+export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
   const [open, setOpen] = useState(false);
   const accessToken = useUserStore((state) => state.token);
   const router = useRouter();
@@ -33,6 +34,10 @@ export default function DrawerBtn({ reviewId }: DrawerBtnProps) {
       if (result && result.ok === 1) {
         toast.success("리뷰가 삭제되었습니다.");
         setOpen(false);
+
+        // 부모 컴포넌트에 삭제 성공 알림 (reviewId 전달)
+        onDelete?.(reviewId);
+
         if (pathname.startsWith("/mypage/review")) {
           router.push("/mypage/review");
         } else {
