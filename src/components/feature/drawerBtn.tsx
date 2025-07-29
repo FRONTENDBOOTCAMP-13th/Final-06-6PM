@@ -22,7 +22,7 @@ export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
 
   const modifyPlan = () => {
     console.log("수정");
-    // router.push(`/review/edit/${reviewId}?place=${title}`);
+    router.push(`/review/edit/${reviewId}`);
   };
 
   const DeleteAction = async (formData: FormData) => {
