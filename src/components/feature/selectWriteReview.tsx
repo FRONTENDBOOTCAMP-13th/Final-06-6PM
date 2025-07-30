@@ -1,17 +1,23 @@
 "use client";
+import { useParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
 import ReviewDetailForm from "@/components/form/reviewDetailForm";
 import ReviewFormAll from "@/components/form/reviewFormAll";
 import { ReviewDayItem } from "@/components/form/reviewSelect";
 import { getPlanDetail } from "@/data/functions/plan";
-import { PlanReply } from "@/types/plan";
+import { PlanReply, PlanReviewInfo } from "@/types/plan";
 import { CalendarDays, LayoutList, MapPin } from "lucide-react";
-import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
 
 export default function SelectWriteReview() {
   const [tab, setTab] = useState(0);
   const [planReply, setPlanReply] = useState<PlanReply[]>([]);
+  const [planReviewInfo, setPlanReviewInfo] = useState<PlanReviewInfo>({
+    title: "",
+    startDate: "",
+    endDate: "",
+  });
+
   const params = useParams();
   const planId = Number(params?.id);
   const [selectItem, setSelectItem] = useState<ReviewDayItem | null>(null);
@@ -44,6 +50,7 @@ export default function SelectWriteReview() {
     return places;
   }, [planReply]);
 
+  // 탭구분
   const data = [
     {
       id: 0,
@@ -64,6 +71,7 @@ export default function SelectWriteReview() {
     },
   ];
 
+  // 탭 선택에 따른 데이터 출력
   useEffect(() => {
     if (tab === 0) {
       setSelectItem(null); // 일정전체는 선택 항목 없음
@@ -76,14 +84,19 @@ export default function SelectWriteReview() {
     }
   }, [tab, reviewDaily, reviewPlace]);
 
-  // API 데이터 로드
+  // getPlanDetail
   useEffect(() => {
     const fetchPlanData = async () => {
       try {
         const res = await getPlanDetail(planId);
-        // console.log("res 데이터: ", res);
+        console.log("res 데이터: ", res);
         if (res.ok) {
-          setPlanReply(res.item.replies);
+          setPlanReply(res.item.replies); // 일정별 계획
+          setPlanReviewInfo({
+            title: res.item.title,
+            startDate: res.item.extra.startDate,
+            endDate: res.item.extra.endDate,
+          });
         }
       } catch (error) {
         console.error("Plan 데이터 로드 실패:", error);
@@ -116,7 +129,7 @@ export default function SelectWriteReview() {
       </div>
 
       {/* 컨텐츠 영역 */}
-      {tab === 0 && <ReviewFormAll />}
+      {tab === 0 && <ReviewFormAll planReviewInfo={planReviewInfo} />}
 
       {tab === 1 && selectItem && reviewDaily.length > 0 && (
         <ReviewDetailForm

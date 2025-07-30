@@ -8,14 +8,14 @@ import ReviewDetailForm from "@/components/form/reviewDetailForm";
 import ReviewFormAll from "@/components/form/reviewFormAll";
 import Button from "@/components/ui/btn";
 import { CalendarDays, LayoutList, Link, MapPin } from "lucide-react";
-import { DayItem } from "@/components/form/reviewSelect";
+import { ReviewDayItem } from "@/components/form/reviewSelect";
 
 export default function SelectEditReview() {
   const [tab, setTab] = useState(0);
   const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectItem, setSelectItem] = useState<DayItem | null>(null);
+  const [selectItem, setSelectItem] = useState<ReviewDayItem | null>(null);
 
   const params = useParams();
   const reviewId = Number(params?.id);
@@ -28,8 +28,8 @@ export default function SelectEditReview() {
     loading,
   });
 
-  const reviewDaily: DayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
-  const reviewPlace: DayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
+  const reviewDaily: ReviewDayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
+  const reviewPlace: ReviewDayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
 
   const data = [
     {
