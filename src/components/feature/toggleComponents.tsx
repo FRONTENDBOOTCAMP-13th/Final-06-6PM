@@ -8,20 +8,19 @@ import { addBookmark, deleteBookmark, getBookmarks } from "@/data/functions/book
 interface ToggleIconProps {
   type: "star" | "book";
   reviewId: number;
-  myBookmarkedId?: number;
+  myBookmarkId?: number;
   onBookmarkChange?: (isBookmarked: boolean) => void; //북마크 상태 변경
 }
 
-export default function ToggleIcon({ type, reviewId, myBookmarkedId, onBookmarkChange }: ToggleIconProps) {
+export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkChange }: ToggleIconProps) {
   const token = useUserStore((state) => state.token);
-  const [toggle, setIsToggle] = useState(!!myBookmarkedId);
+  const [toggle, setIsToggle] = useState(!!myBookmarkId);
   const [loading, setLoading] = useState(false);
-
   // props로 마이북마크아이디 값이 들어오면 토글상태 업데이트
   // 북마크가 안되어있으면 언디파인드라 업데이트 안댐
   useEffect(() => {
-    setIsToggle(!!myBookmarkedId);
-  }, [myBookmarkedId]);
+    setIsToggle(!!myBookmarkId);
+  }, [myBookmarkId]);
 
   const toggleClick = async () => {
     if (!token || loading) return; // 토큰없으면 무시

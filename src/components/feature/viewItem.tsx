@@ -35,7 +35,6 @@ export default function ViewItem({
   onClick,
   onDelete,
 }: ViewItemProps) {
-  console.log(myBookmarkId);
   const pathname = usePathname();
   const router = useRouter();
   const [bookmarkCount, setBookmarkCount] = useState(bookmarks || 0);
@@ -248,12 +247,7 @@ export default function ViewItem({
         </div>
 
         <div onClick={(e) => e.stopPropagation()}>
-          <ToggleIcon
-            type="book"
-            onBookmarkChange={handleBookmarkChange}
-            reviewId={_id}
-            myBookmarkedId={myBookmarkId}
-          />
+          <ToggleIcon type="book" onBookmarkChange={handleBookmarkChange} reviewId={_id} myBookmarkId={myBookmarkId} />
         </div>
       </div>
     </div>

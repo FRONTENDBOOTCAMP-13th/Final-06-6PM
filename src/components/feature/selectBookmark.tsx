@@ -1,13 +1,18 @@
 "use client";
 
 import { MapPinned } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlacePlusItem, { PlacePlusItemProps } from "./placePlusItem";
-import ViewItem, { ViewItemProps } from "./viewItem";
+import ViewItem from "./viewItem";
 import { GetReviewDetailProps } from "@/types/review";
+import { getBookmarks } from "@/data/functions/bookmark";
+import useUserStore from "@/zustand/userStore";
 
 export default function SelectBookmark() {
   const [tab, setTab] = useState(0);
+  const [reviewBookmark, setReviewBookmark] = useState<GetReviewDetailProps[]>([]);
+  const [loading, setLoading] = useState(false);
+  const token = useUserStore((state) => state.token);
 
   const placeBookmark: PlacePlusItemProps[] = [
     {
@@ -15,53 +20,74 @@ export default function SelectBookmark() {
       desc: "빨간 등대와 동백꽃이 유명한 섬",
       reviewRating: 4.8,
       reviewCount: 126,
-      // imgUrl: "/images/user3.png",
     },
     {
       place: "속초 해수욕장",
       desc: "맑은 바다와 가깝게 즐기는 맛집 투어",
       reviewRating: 4.5,
       reviewCount: 98,
-      // imgUrl: "/images/user1.png",
     },
     {
       place: "속초 해수욕장",
       desc: "맑은 바다와 가깝게 즐기는 맛집 투어",
       reviewRating: 4.5,
       reviewCount: 98,
-      // imgUrl: "/images/user1.png",
     },
   ];
 
-  const reviewBookmark: GetReviewDetailProps[] = [
-    {
-      _id: 1,
-      type: "reviewAll",
-      title: "여름 바다 여행",
-      content: "햇살 가득한 해운대에서 여유로운 시간을 보냈어요!",
-      user: {
-        type: "user",
-        email: "test",
-        _id: 101,
-        name: "홍길동",
-        // image: "/images/user2.png",
-      },
-      createdAt: "2025-07-11",
-      updatedAt: "2025-07-11",
-      extra: {
-        plan_id: 501,
-        startDate: "2025-07-10",
-        endDate: "2025-07-12",
-        // images: ["/images/user1.png", "/images/user2.png", "/images/user3.png"],
-        starRate: 4.5,
-        location: ["부산 해운대"],
-        tags: ["여행", "바다", "여름"],
-      },
-      views: 123,
-      bookmarks: 45,
-      repliesCount: 8,
-    },
-  ];
+  // API로 북마크 데이터 조회
+  useEffect(() => {
+    if (token && tab === 1) {
+      fetchBookmarkData();
+    }
+  }, [token, tab]);
+
+  const fetchBookmarkData = async () => {
+    if (!token) return;
+
+    setLoading(true);
+    try {
+      console.log("북마크 데이터 조회 시작...");
+      const bookmarkData = await getBookmarks(token);
+      console.log("받은 북마크 데이터:", bookmarkData);
+
+      if (bookmarkData?.ok === 1 && bookmarkData.item) {
+        const convertedReviews: GetReviewDetailProps[] = bookmarkData.item
+          .filter((bookmark: any) => bookmark.post && typeof bookmark.post === "object")
+          .map((bookmark: any) => {
+            console.log("=== 북마크 데이터 변환 ===");
+            console.log("bookmark._id (북마크 ID):", bookmark._id);
+            console.log("bookmark.post._id (게시물 ID):", bookmark.post._id);
+
+            return {
+              _id: bookmark.post._id,
+              type: bookmark.post.type || "reviewAll",
+              title: bookmark.post.title,
+              content: bookmark.post.content,
+              user: bookmark.post.user,
+              createdAt: bookmark.post.createdAt,
+              updatedAt: bookmark.post.updatedAt,
+              extra: bookmark.post.extra,
+              views: bookmark.post.views || 0,
+              bookmarks: bookmark.post.bookmarks || 0,
+              myBookmarkId: bookmark._id,
+              repliesCount: bookmark.post.repliesCount || 0,
+            };
+          });
+
+        console.log("변환된 리뷰 데이터:", convertedReviews);
+        setReviewBookmark(convertedReviews);
+      } else {
+        console.log("북마크 데이터 없음");
+        setReviewBookmark([]);
+      }
+    } catch (error) {
+      console.error("북마크 데이터 조회 실패:", error);
+      setReviewBookmark([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const tabData = [
     {
@@ -96,9 +122,15 @@ export default function SelectBookmark() {
       </div>
 
       <div className="space-y-4 p-4">
-        {tab === 0
-          ? placeBookmark.map((item, idx) => <PlacePlusItem key={idx} {...item} />)
-          : reviewBookmark.map((item, idx) => <ViewItem key={idx} {...item} />)}
+        {tab === 0 ? (
+          placeBookmark.map((item, idx) => <PlacePlusItem key={idx} {...item} />)
+        ) : loading ? (
+          <div className="text-center py-8 text-travel-gray400">북마크를 불러오는 중...</div>
+        ) : reviewBookmark.length > 0 ? (
+          reviewBookmark.map((item, idx) => <ViewItem key={idx} {...item} />)
+        ) : (
+          <div className="text-center py-8 text-travel-gray400">북마크한 후기가 없습니다.</div>
+        )}
       </div>
     </div>
   );
