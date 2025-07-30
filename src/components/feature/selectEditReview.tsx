@@ -81,9 +81,6 @@ export default function SelectEditReview() {
 
   // reviewType과 reviewData에 따른 초기 설정
   useEffect(() => {
-    console.log("reviewType:", reviewType);
-    console.log("reviewData:", reviewData);
-
     // reviewType이 있으면 해당 타입으로 탭 설정
     if (reviewType) {
       if (reviewType === "reviewAll") setTab(0);
@@ -104,57 +101,24 @@ export default function SelectEditReview() {
       setSelectItem(null);
       return;
     }
-
-    const targetList = tab === 1 ? reviewDaily : reviewPlace;
-    console.log("targetList:", targetList);
-
-    if (targetList.length > 0) {
-      if (reviewData) {
-        let matchingItem = null;
-
-        if (tab === 1 && reviewData.type === "reviewDaily") {
-          matchingItem = targetList.find((item) => item.days === reviewData.extra?.visitDate);
-        } else if (tab === 2 && reviewData.type === "reviewPlace") {
-          matchingItem = targetList.find((item) => {
-            if (typeof item.place === "object" && "contentId" in item.place) {
-              const location = reviewData.extra?.location;
-              if (location && "contentId" in location) {
-                return location.contentId === item.place.contentId;
-              }
-            }
-            return false;
-          });
-        }
-
-        const selectedItem = matchingItem || targetList[0];
-        console.log("선택된 아이템:", selectedItem);
-        setSelectItem(selectedItem);
-      } else {
-        console.log("기본값 설정:", targetList[0]);
-        setSelectItem(targetList[0]);
-      }
-    } else {
-      // planReply가 없을 때 더미 데이터로 폼을 표시할 수 있도록 설정
-      console.log("targetList가 비어있음 - 더미 데이터 생성");
-      if (reviewData) {
-        if (tab === 1) {
-          setSelectItem({
-            days: reviewData.extra?.visitDate || "선택된 날짜",
-            place: Array.isArray(reviewData.extra?.location)
-              ? reviewData.extra.location
-              : reviewData.extra?.location
-              ? [reviewData.extra.location]
-              : [],
-          });
-        } else if (tab === 2) {
-          setSelectItem({
-            days: reviewData.extra?.visitDate || "선택된 날짜",
-            place: reviewData.extra?.location || { title: "선택된 장소", contentId: "" },
-          });
-        }
+    if (reviewData) {
+      if (tab === 1) {
+        setSelectItem({
+          days: reviewData.extra?.visitDate || "선택된 날짜",
+          place: Array.isArray(reviewData.extra?.location)
+            ? reviewData.extra.location
+            : reviewData.extra?.location
+            ? [reviewData.extra.location]
+            : [],
+        });
+      } else if (tab === 2) {
+        setSelectItem({
+          days: reviewData.extra?.visitDate || "선택된 날짜",
+          place: reviewData.extra?.location || { title: "선택된 장소", contentId: "" },
+        });
       }
     }
-  }, [tab, reviewDaily, reviewPlace, reviewData]);
+  }, [tab, reviewData]);
 
   // 리뷰 데이터 가져오기
   useEffect(() => {
@@ -192,8 +156,8 @@ export default function SelectEditReview() {
     fetchReviewData();
   }, [reviewId]);
 
-  console.log("reviewData", reviewData);
-  console.log("planReviewInfo", planReviewInfo);
+  // console.log("reviewData", reviewData);
+  // console.log("planReviewInfo", planReviewInfo);
 
   // 로딩중
   if (loading) {
@@ -258,19 +222,6 @@ export default function SelectEditReview() {
           );
         })}
       </div>
-
-      {/* 디버깅 정보 (개발 중에만 사용) */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="p-2 bg-gray-100 text-xs">
-          <p>Tab: {tab}</p>
-          <p>ReviewType: {reviewType}</p>
-          <p>PlanReply Length: {planReply.length}</p>
-          <p>ReviewDaily Length: {reviewDaily.length}</p>
-          <p>ReviewPlace Length: {reviewPlace.length}</p>
-          <p>SelectItem: {selectItem ? "OK" : "NULL"}</p>
-          {selectItem && <p>SelectItem Days: {selectItem.days}</p>}
-        </div>
-      )}
 
       {tab === 0 && <ReviewFormAll planReviewInfo={planReviewInfo} initialData={reviewData} />}
 

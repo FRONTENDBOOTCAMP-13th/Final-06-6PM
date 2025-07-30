@@ -22,7 +22,6 @@ export default function DrawerBtn({ reviewId, reviewType, onDelete }: DrawerBtnP
   const pathname = usePathname();
 
   const modifyPlan = () => {
-    console.log("수정");
     router.push(`/review/edit/${reviewId}?reviewType=${reviewType}`);
   };
 
