@@ -69,22 +69,18 @@ export default function SelectMypage() {
         ))}
       </div>
 
-      <div className="space-y-4 p-4">
+      <div className="p-4">
         {tabData[tab].description.length > 0 ? (
           tabData[tab].description.map((item) => {
             const dday = getDday(item.extra?.startDate);
-
             return (
-              <DayItem
-                key={item._id}
-                place={item.title}
-                period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
-                dday={dday}
-              />
+              <Link key={item._id} href={`/plan/${item._id}`} className="block mb-4">
+                <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} dday={dday} />
+              </Link>
             );
           })
         ) : (
-          <Link href="/plan">
+          <Link href="/plan" className="block mb4">
             <DayItem />
           </Link>
         )}

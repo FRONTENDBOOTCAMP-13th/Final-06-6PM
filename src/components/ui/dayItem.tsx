@@ -14,10 +14,7 @@ export default function DayItem({
   dday,
 }: DayItemProps) {
   const filterPlaceImg = (place: string): string => {
-    return (
-      destinationList.find((destination) => destination.name === place)
-        ?.image || "/images/place-default.webp"
-    );
+    return destinationList.find((destination) => destination.name === place)?.image || "/images/place-default.webp";
   };
 
   const placeImg = filterPlaceImg(place);
@@ -27,13 +24,7 @@ export default function DayItem({
       <div className="flex gap-3 items-center">
         <div className="w-[50px] h-[50px] rounded-full bg-travel-gray200 overflow-hidden aspect-square">
           {placeImg && (
-            <Image
-              width={100}
-              height={100}
-              src={placeImg}
-              alt={place}
-              className="object-cover w-full h-full"
-            />
+            <Image width={100} height={100} src={placeImg} alt={place} className="object-cover w-full h-full" />
           )}
         </div>
         <div className="space-y-1 text-travel-text100">

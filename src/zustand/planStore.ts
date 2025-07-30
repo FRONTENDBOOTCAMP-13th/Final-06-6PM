@@ -133,6 +133,7 @@ const usePlanStore = create<PlanStore>()(
         selectedArea: state.selectedArea,
         startDate: state.startDate,
         endDate: state.endDate,
+        postId: state.postId,
         selectedCategory: state.selectedCategory,
         selectedPlaces: state.selectedPlaces,
         dailyPlans: state.dailyPlans,

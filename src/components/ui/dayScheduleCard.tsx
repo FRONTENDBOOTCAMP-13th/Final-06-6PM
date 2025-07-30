@@ -11,17 +11,25 @@ export interface DayScheduleCardPlusProps {
   date: string;
   daylist?: DayListItem[];
   isPreview?: boolean;
+  planId?: number;
+  replyId?: number;
 }
 
-export default function DayScheduleCard({ day, date, daylist, isPreview = false }: DayScheduleCardPlusProps) {
+export default function DayScheduleCard({ day, date, daylist, isPreview = false, planId }: DayScheduleCardPlusProps) {
   const router = useRouter();
 
   const handleAddPlace = () => {
-    router.push(`/plan/edit/search?targetDay=${day}`);
+    // planId가 있으면 수정 모드
+    if (planId) {
+      router.push(`/plan/edit/search?targetDay=${day}&from=modify&postId=${planId}`);
+    } else {
+      // 일반 모드
+      router.push(`/plan/edit/search?targetDay=${day}`);
+    }
   };
 
   return (
-    <div className="border-travel-gray200 w-full rounded-2xl border bg-white p-5">
+    <div className="border-travel-gray200 w-full rounded-2xl border bg-white p-5 relative">
       <div className="mb-3 flex items-center gap-2">
         <CalendarDays className="h-4.5 w-4.5 -translate-y-0.5" />
         <h2 className="text-18 font-semibold">{day}일차</h2>

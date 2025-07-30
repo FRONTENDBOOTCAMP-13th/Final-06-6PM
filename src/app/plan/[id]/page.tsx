@@ -1,4 +1,17 @@
-// 여행지상세조회
-export default function TravelDedailPage() {
-  return <h2>여행지상세조회</h2>;
+import BackButton from "@/components/feature/backButton";
+import Navbar from "@/components/Navbar";
+import PlanDetailContent from "@/components/plan/planDetailContent";
+
+export default function PlanDetailPage() {
+  return (
+    <div>
+      <div className="w-full relative py-5 px-4">
+        <BackButton path="/mypage" />
+        <p className="text-center">여행일정 살펴보기</p>
+      </div>
+
+      <PlanDetailContent />
+      <Navbar />
+    </div>
+  );
 }
