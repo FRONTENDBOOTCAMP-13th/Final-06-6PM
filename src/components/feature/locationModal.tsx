@@ -44,7 +44,7 @@ export default function ModalItem({ location }: ModalItemProps) {
     <>
       <button
         className="flex items-center gap-1 cursor-pointer text-14 text-travel-info100"
-        id={location.contentId}
+        data-contentid={location.contentId}
         onClick={() => openModal()}
       >
         <MapPin className="size-4" />
