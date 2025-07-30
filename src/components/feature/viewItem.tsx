@@ -85,12 +85,7 @@ export default function ViewItem({
   const place = extra.place;
 
   // 리뷰 타입에 따른 방문일자 처리
-  const visitDate =
-    type === "reviewAll"
-      ? extra.startDate && extra.endDate
-        ? `${extra.startDate} ~ ${extra.endDate}`
-        : extra.startDate || ""
-      : extra.visitDate || extra.startDate || "";
+  const visitDate = type === "reviewAll" ? `${extra.startDate} ~ ${extra.endDate}` : `${extra.visitDate}`;
 
   // 작성일자
   const regdate = createdAt;
