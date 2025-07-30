@@ -14,9 +14,10 @@ export interface ReviewSelectProps {
   list: ReviewDayItem[];
   selected: ReviewDayItem;
   onChange: (item: ReviewDayItem) => void;
+  disabled?: boolean;
 }
 
-export default function ReviewSelect({ list, selected, onChange, reviewType }: ReviewSelectProps) {
+export default function ReviewSelect({ list, selected, onChange, reviewType, disabled = false }: ReviewSelectProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -74,8 +75,15 @@ export default function ReviewSelect({ list, selected, onChange, reviewType }: R
   return (
     <div className="relative text-travel-gray700 text-12" ref={ref}>
       <div
-        className="flex items-center justify-between px-4 py-2 bg-white border rounded-lg cursor-pointer text-travel-text100 border-travel-gray400"
-        onClick={() => setOpen((prev) => !prev)}
+        className={`flex items-center justify-between px-4 py-2 border rounded-lg transition-colors duration-200
+    ${
+      disabled
+        ? "bg-travel-gray100 border-gray-300 text-gray-500 cursor-not-allowed"
+        : "bg-white border-travel-gray400 text-travel-text100 cursor-pointer"
+    }`}
+        onClick={() => {
+          if (!disabled) setOpen((prev) => !prev);
+        }}
       >
         <div className="space-y-1">
           <p className="flex items-center gap-1 font-medium text-16">
@@ -87,7 +95,7 @@ export default function ReviewSelect({ list, selected, onChange, reviewType }: R
             {locationItem(selected.place)}
           </p>
         </div>
-        <ChevronDown />
+        <ChevronDown className={disabled ? "opacity-60" : ""} />
       </div>
 
       {open && (

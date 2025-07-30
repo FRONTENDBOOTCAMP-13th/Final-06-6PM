@@ -152,7 +152,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
       <input type="hidden" name="imageCount" value={images.length.toString()} />
 
       {/* 일자/장소 선택 */}
-      <ReviewSelect list={list} selected={selected} onChange={onChange} />
+      <ReviewSelect list={list} selected={selected} onChange={onChange} disabled={isEditMode && !!initialData} />
 
       {/* 별점 */}
       <ReviewStar name="starRate" defaultValue={initialData?.extra?.starRate?.toString() || "5"} />
