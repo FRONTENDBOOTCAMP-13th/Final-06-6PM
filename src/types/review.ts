@@ -16,7 +16,7 @@ export interface GetReviewDetailProps {
     visitDate?: string; // 방문일
     images?: string[]; // 이미지 URL 배열
     starRate: number; // 사용자 별점
-    location: string[]; // 방문한 장소 목록
+    location: ReviewLocation[]; // 방문한 장소 목록
     tags?: string[]; // 태그 목록
   };
   views: number; // 조회수
@@ -35,4 +35,10 @@ export interface ReviewReply {
     name: string;
     image?: string;
   };
+}
+
+export interface ReviewLocation {
+  title: string;
+  contentId?: string;
+  areaCode?: string;
 }

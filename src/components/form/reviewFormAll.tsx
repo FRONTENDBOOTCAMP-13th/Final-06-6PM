@@ -131,7 +131,11 @@ export default function ReviewFormAll({ initialData }: ReviewFormAllProps) {
         <input type="hidden" name="reviewId" value={initialData._id?.toString() || initialData._id?.toString()} />
       )}
       <input type="hidden" name="plan_id" value={initialData?.extra?.plan_id} />
-      <input type="hidden" name="location" value={initialData?.extra?.location || ""} />
+      <input
+        type="hidden"
+        name="location"
+        value={initialData?.extra?.location ? JSON.stringify(initialData.extra.location) : ""}
+      />
       <input type="hidden" name="startDate" value={initialData?.extra?.startDate || ""} />
       <input type="hidden" name="endDate" value={initialData?.extra?.endDate || ""} />
       <input

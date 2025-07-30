@@ -34,6 +34,7 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
 
       if (targetReview) {
         const detailRes = await getReviewDetail(id);
+        console.log("detailRes", detailRes);
 
         if (detailRes?.ok === 1 && detailRes.item) {
           const updatedReviewData = {

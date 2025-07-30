@@ -38,6 +38,10 @@ export interface AreaTravelProps {
   title: string; // 여행지 제목
   categoryId?: string;
 }
+export interface RandomTravelSpot extends AreaTravelProps {
+  regionName?: string;
+  overview?: string;
+}
 
 // 지역 기반 여행지 목록 API 응답 타입
 export interface GetAreaTravelProps {
