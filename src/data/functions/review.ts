@@ -81,7 +81,6 @@ export async function getReviewDetail(id: string): ApiResPromise<GetReviewDetail
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
       },
-      // cache: "force-cache",
     });
     return res.json();
   } catch (err) {

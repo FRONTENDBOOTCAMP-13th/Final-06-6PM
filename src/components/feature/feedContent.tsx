@@ -78,8 +78,7 @@ export default function FeedContent() {
   return (
     <>
       <div className="flex flex-col-reverse xs:flex-row items-end xs:items-center gap-y-3 my-3 px-0.5">
-        <DropdownItem label="오래된순" />
-        <div className="flex w-full xs:w-fit flex-start items-center gap-0.5 before:hidden xs:before:block before:content-['|'] before:mx-1 before:text-travel-gray400">
+        <div className="flex w-full xs:w-fit flex-start items-center gap-0.5">
           <TagItem variant={currentType === "all" ? "primary" : "outline"}>
             <span onClick={() => handleTypeChange("all")}>전체</span>
           </TagItem>

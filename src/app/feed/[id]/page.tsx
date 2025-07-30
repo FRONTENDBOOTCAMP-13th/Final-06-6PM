@@ -1,12 +1,12 @@
-import FeedDetailContent from "@/components/feature/feedDetailContent";
+import FeedDetailContainer from "@/components/feature/feedDetailContainer";
 
-interface FeedViewPageProps {
+interface FeedDetailPageProps {
   params: Promise<{
     id: string;
   }>;
 }
 
-export default async function FeedViewPage({ params }: FeedViewPageProps) {
+export default async function FeedDetailPage({ params }: FeedDetailPageProps) {
   const { id } = await params;
-  return <FeedDetailContent reviewId={id} />;
+  return <FeedDetailContainer reviewId={id} />;
 }

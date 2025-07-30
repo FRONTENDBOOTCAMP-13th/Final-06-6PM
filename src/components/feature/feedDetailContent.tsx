@@ -4,14 +4,16 @@ import CommentItem from "@/components/ui/commentItem";
 import ViewItem from "@/components/feature/viewItem";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
+import { ReviewReply } from "@/types/review";
 
 interface FeedDetailContentProps {
   reviewId: string;
+  newComment?: ReviewReply | null;
 }
 
-export default function FeedDetailContent({ reviewId }: FeedDetailContentProps) {
+export default function FeedDetailContent({ reviewId, newComment }: FeedDetailContentProps) {
   const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<ReviewReply[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchReviewDetail = async (id: string) => {
@@ -60,6 +62,20 @@ export default function FeedDetailContent({ reviewId }: FeedDetailContentProps) 
   };
 
   useEffect(() => {
+    if (newComment) {
+      setComments((prev) => [...prev, newComment]);
+      setReviewData((prev) =>
+        prev
+          ? {
+              ...prev,
+              repliesCount: (prev.repliesCount || 0) + 1,
+            }
+          : null,
+      );
+    }
+  }, [newComment]);
+
+  useEffect(() => {
     if (reviewId) {
       fetchReviewDetail(reviewId);
     }
@@ -87,7 +103,7 @@ export default function FeedDetailContent({ reviewId }: FeedDetailContentProps) 
         <ViewItem {...reviewData} />
       </div>
 
-      <div>
+      <div className="mt-6">
         {comments.length > 0 ? (
           comments.map((comment, index) => (
             <div key={comment._id || index}>
