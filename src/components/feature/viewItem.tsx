@@ -57,6 +57,9 @@ export default function ViewItem({
   })();
   // console.log(user.image);
 
+  // 글 타입
+  const reviewType = type;
+
   // 별점 및 태그
   const starRate = extra.starRate ?? 0;
   const tags = extra.tags ?? [];
@@ -121,7 +124,7 @@ export default function ViewItem({
         {/* 수정/삭제 모달창 버튼*/}
         {sameUser && (
           <div onClick={(e) => e.stopPropagation()}>
-            <DrawerBtn reviewId={_id} onDelete={onDelete} />
+            <DrawerBtn reviewId={_id} reviewType={reviewType} onDelete={onDelete} />
           </div>
         )}
       </div>

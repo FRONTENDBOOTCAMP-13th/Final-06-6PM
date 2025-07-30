@@ -11,10 +11,11 @@ import Button from "@/components/ui/btn";
 
 interface DrawerBtnProps {
   reviewId: number;
+  reviewType: string;
   onDelete?: (reviewId: number) => void;
 }
 
-export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
+export default function DrawerBtn({ reviewId, reviewType, onDelete }: DrawerBtnProps) {
   const [open, setOpen] = useState(false);
   const accessToken = useUserStore((state) => state.token);
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
 
   const modifyPlan = () => {
     console.log("수정");
-    router.push(`/review/edit/${reviewId}`);
+    router.push(`/review/edit/${reviewId}?reviewType=${reviewType}`);
   };
 
   const DeleteAction = async (formData: FormData) => {
