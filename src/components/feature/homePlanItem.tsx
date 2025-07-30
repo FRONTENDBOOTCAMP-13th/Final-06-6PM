@@ -9,7 +9,7 @@ import { getPlanListUser } from "@/lib/api/plan";
 import useUserStore from "@/zustand/userStore";
 import { getDday } from "@/lib/getDday";
 
-export default function TripPage() {
+export default function HomePlanItem() {
   const token = useUserStore((state) => state.token);
   const [plan, setPlan] = useState<GetPlanDetailProps[]>([]);
 

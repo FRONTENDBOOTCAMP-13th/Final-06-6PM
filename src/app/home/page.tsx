@@ -4,7 +4,7 @@ import RandomItem from "@/components/ui/randomItem";
 import Link from "next/link";
 import { todayString } from "@/lib/todayString";
 import LocationWeatherBox from "@/components/feature/locationWeatherBox";
-import TripPage from "@/components/feature/homePlanItem";
+import HomePlanItem from "@/components/feature/homePlanItem";
 
 export default function HomePage() {
   return (
@@ -17,7 +17,7 @@ export default function HomePage() {
       </div>
 
       <div className="w-full flex-1 px-4 py-7 bg-white/65 rounded-t-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] flex flex-col space-y-8">
-        <TripPage />
+        <HomePlanItem />
         <div className="space-y-2">
           <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
             <ThumbsUp className="size-6" />
