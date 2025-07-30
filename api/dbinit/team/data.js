@@ -1,10 +1,7 @@
 import dayjs from "dayjs";
 
 function getTime(day = 0, second = 0) {
-  return dayjs()
-    .add(day, "days")
-    .add(second, "seconds")
-    .format("YYYY.MM.DD HH:mm:ss");
+  return dayjs().add(day, "days").add(second, "seconds").format("YYYY.MM.DD HH:mm:ss");
 }
 
 export const initData = async (clientId, nextSeq) => {
@@ -14,8 +11,7 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("user"),
         email: "admin@market.com",
-        password:
-          "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
+        password: "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
         name: "문서인",
         address: "서울시 강남구 역삼동 123",
         type: "admin",
@@ -27,8 +23,7 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("user"),
         email: "  u1@market.com",
-        password:
-          "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
+        password: "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
         name: "박선영",
         address: "서울시 강남구 삼성동 456",
         type: "user",
@@ -40,8 +35,7 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("user"),
         email: "u3@market.com",
-        password:
-          "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
+        password: "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
         name: "차형주",
         address: "서울시 강남구 삼성동 456",
         type: "user",
@@ -53,8 +47,7 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("user"),
         email: "u2@market.com",
-        password:
-          "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
+        password: "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
         name: "송아현",
         address: "서울시 강남구 삼성동 456",
         type: "user",
@@ -66,8 +59,7 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("user"),
         email: "u4@market.com",
-        password:
-          "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
+        password: "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
         name: "남주성",
         address: "서울시 강남구 삼성동 456",
         type: "user",
@@ -473,12 +465,7 @@ export const initData = async (clientId, nextSeq) => {
         title: "서울에서 1박 2일",
         content:
           "짧지만 알찬 서울 여행이었어요! 첫날에는 경복궁에서 조선왕조의 웅장한 역사를 느끼고, 북촌한옥마을의 고즈넉한 골목길을 거닐며 전통의 아름다움에 빠졌어요. 인사동에서는 전통차를 마시며 여유로운 시간을 보냈고, 둘째 날에는 여의도 한강공원에서 상쾌한 아침을 맞이한 후 명동에서 쇼핑과 맛집 탐방을 즐겼답니다. 마지막으로 남산서울타워에서 서울 전경을 내려다보며 여행을 마무리했는데, 짧지만 서울의 매력을 제대로 느낄 수 있었어요!",
-        images: [
-          `images/user1.png`,
-          `images/user2.png`,
-          `images/user3.png`,
-          `images/user4.png`,
-        ],
+        images: [`images/user1.png`, `images/user2.png`, `images/user3.png`, `images/user4.png`],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
@@ -486,12 +473,12 @@ export const initData = async (clientId, nextSeq) => {
           startDate: "2025-06-25",
           endDate: "2025-06-26",
           starRate: 4,
-          location: [
-            "경복궁",
-            "북촌한옥마을",
-            "여의도한강공원",
-            "명동",
-            "남산서울타워",
+          locations: [
+            { title: "경복궁", contentId: 264337 },
+            { title: "북촌한옥마을", contentId: 129821 },
+            { title: "여의도한강공원", contentId: 1879114 },
+            { title: "명동", contentId: 127885 },
+            { title: "남산서울타워", contentId: 264161 },
           ],
           tags: ["서울", "도심여행", "전통문화", "야경"],
         },
@@ -503,8 +490,7 @@ export const initData = async (clientId, nextSeq) => {
               name: "박선영",
               image: "user-jayg.webp",
             },
-            content:
-              "북촌한옥마을 정말 예쁘죠! 한복 입고 사진 찍으면 더 예뻐요~",
+            content: "북촌한옥마을 정말 예쁘죠! 한복 입고 사진 찍으면 더 예뻐요~",
             createdAt: getTime(),
           },
         ],
@@ -522,17 +508,18 @@ export const initData = async (clientId, nextSeq) => {
         title: "전통의 향기 가득한 서울 1일차",
         content:
           "서울 여행 첫날은 전통문화 투어로 시작했어요! 경복궁에서 수문장 교대식을 보는 것부터 정말 인상 깊었고, 광화문부터 근정전까지 이어지는 궁궐의 건축미에 감탄했답니다. 북촌한옥마을은 고즈넉한 분위기가 인상적이었고, 인사동 전통찻집에서 마신 차 한 잔은 하루의 피로를 잊게 해줬어요.",
-        images: [
-          `files/${clientId}/seoul-1.png`,
-          `files/${clientId}/seoul-2.png`,
-        ],
+        images: [`files/${clientId}/seoul-1.png`, `files/${clientId}/seoul-2.png`],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
           plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 5,
-          location: ["경복궁", "북촌한옥마을", "인사동"],
+          location: [
+            { title: "경복궁", contentId: 264337 },
+            { title: "북촌한옥마을", contentId: 129821 },
+            { title: "인사동", contentId: 129345 },
+          ],
           tags: ["서울", "궁궐투어", "전통문화", "한옥마을"],
         },
         replies: [
@@ -543,8 +530,7 @@ export const initData = async (clientId, nextSeq) => {
               name: "차형주",
               image: "user-jayg.webp",
             },
-            content:
-              "수문장 교대식 정말 볼 만하죠! 시간 맞춰서 가야 하는데 꼭 보세요!",
+            content: "수문장 교대식 정말 볼 만하죠! 시간 맞춰서 가야 하는데 꼭 보세요!",
             createdAt: getTime(),
           },
           {
@@ -578,7 +564,11 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 1,
           visitDate: "2025-06-26",
           starRate: 3,
-          location: ["여의도한강공원", "명동", "남산서울타워"],
+          location: [
+            { title: "여의도한강공원", contentId: 1879114 },
+            { title: "명동", contentId: 127885 },
+            { title: "남산서울타워", contentId: 264161 },
+          ],
           tags: ["서울", "명동쇼핑", "야경", "한강뷰"],
         },
         replies: [
@@ -607,17 +597,14 @@ export const initData = async (clientId, nextSeq) => {
         title: "조선왕조의 위엄을 느끼다! 경복궁",
         content:
           "경복궁은 서울 여행 필수 코스예요! 광화문부터 근정전, 경회루까지 이어지는 동선이 정말 웅장하고 아름다워요. 특히 수문장 교대식은 놓치면 아쉬운 명장면이에요. 한복을 입고 다니면 더욱 특별한 추억이 되니 꼭 한복 체험도 해보세요!",
-        images: [
-          `files/${clientId}/seoul-5.png`,
-          `files/${clientId}/seoul-6.png`,
-        ],
+        images: [`files/${clientId}/seoul-5.png`, `files/${clientId}/seoul-6.png`],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
           plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 5,
-          location: ["경복궁"],
+          location: [{ title: "경복궁", contentId: 264337 }],
           tags: ["수문장교대식", "한복체험", "궁궐투어"],
         },
         replies: [
@@ -628,8 +615,7 @@ export const initData = async (clientId, nextSeq) => {
               name: "박선영",
               image: "user-jayg.webp",
             },
-            content:
-              "한복 입고 경복궁 가면 정말 예쁜 사진 많이 나와요!! 추천이에요~",
+            content: "한복 입고 경복궁 가면 정말 예쁜 사진 많이 나와요!! 추천이에요~",
             createdAt: getTime(),
           },
         ],
@@ -646,19 +632,14 @@ export const initData = async (clientId, nextSeq) => {
         title: "전통과 예술이 어우러진 거리, 인사동",
         content:
           "인사동은 전통과 예술이 공존하는 매력적인 거리였어요. 골목골목마다 공예품 가게와 갤러리가 있어서 구경하는 재미가 쏠쏠했고, 전통 찻집에서 마신 유자차는 정말 향긋하고 따뜻했어요. 외국인 친구들에게 꼭 추천하고 싶은 서울의 명소예요!",
-        images: [
-          `images/user1.png`,
-          `images/user2.png`,
-          `images/user3.png`,
-          `images/user2.png`,
-        ],
+        images: [`images/user1.png`, `images/user2.png`, `images/user3.png`, `images/user2.png`],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
           plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 4,
-          location: ["인사동"],
+          location: [{ title: "인사동", contentId: 129345 }],
           tags: ["전통찻집", "전통문화", "공예거리"],
         },
         replies: [
@@ -688,12 +669,7 @@ export const initData = async (clientId, nextSeq) => {
         title: "울산에서 2박 3일",
         content:
           "울산은 자연과 역사, 그리고 현대가 완벽하게 조화를 이루는 도시였어요! 첫날에는 대왕암공원에서 웅장한 바다 풍경을 만끽하고, 울산대공원에서 여유로운 시간을 보낸 뒤 울산박물관에서 이 지역의 깊은 역사를 배웠어요. 둘째 날은 간절곶에서 일출의 감동을 느끼고, 태화강 국가정원의 아름다운 자연 속에서 힐링한 후 암각화박물관에서 선사시대 문화를 체험했습니다. 마지막 날엔 반구대 암각화의 역사적 가치를 느끼고, 장생포 고래문화마을에서 울산만의 독특한 문화를 경험한 뒤 진하해수욕장에서 시원한 바다를 만끽하며 여행을 마무리했어요.",
-        images: [
-          `images/user2.png`,
-          `images/user2.png`,
-          `images/user2.png`,
-          `images/user2.png`,
-        ],
+        images: [`images/user2.png`, `images/user2.png`, `images/user2.png`, `images/user2.png`],
         createdAt: getTime(),
         updatedAt: getTime(),
         extra: {
@@ -702,15 +678,15 @@ export const initData = async (clientId, nextSeq) => {
           endDate: "2025-08-05",
           starRate: 5,
           location: [
-            "대왕암공원",
-            "울산대공원",
-            "울산박물관",
-            "간절곶",
-            "태화강국가정원",
-            "암각화박물관",
-            "반구대암각화",
-            "장생포고래문화마을",
-            "진하해수욕장",
+            { title: "대왕암공원", contentId: 2657337 },
+            { title: "울산대공원", contentId: 2649737 },
+            { title: "울산박물관", contentId: 132470 },
+            { title: "간절곶", contentId: 125405 },
+            { title: "태화강국가정원", contentId: 2922069 },
+            { title: "암각화박물관", contentId: 129156 },
+            { title: "반구대암각화", contentId: 125409 },
+            { title: "장생포고래문화마을", contentId: 2647635 },
+            { title: "진하해수욕장", contentId: 126351 },
           ],
           tags: ["울산", "자연여행", "역사탐방", "힐링"],
         },
@@ -748,7 +724,11 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-03",
           starRate: 4,
-          location: ["대왕암공원", "울산대공원", "울산박물관"],
+          location: [
+            { title: "대왕암공원", contentId: 2657337 },
+            { title: "울산대공원", contentId: 2649737 },
+            { title: "울산박물관", contentId: 132470 },
+          ],
           tags: ["자연", "바다", "역사", "공원"],
         },
         replies: [
@@ -793,7 +773,11 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
-          location: ["간절곶", "태화강국가정원", "암각화박물관"],
+          location: [
+            { title: "간절곶", contentId: 125405 },
+            { title: "태화강국가정원", contentId: 2922069 },
+            { title: "암각화박물관", contentId: 129156 },
+          ],
           tags: ["일출", "자연", "역사"],
         },
         replies: [
@@ -830,7 +814,7 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
-          location: ["간절곶"],
+          location: [{ title: "간절곶", contentId: 125405 }],
           tags: ["일출", "등대", "바다풍경"],
         },
         replies: [
@@ -865,7 +849,7 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
-          location: ["태화강국가정원"],
+          location: [{ title: "태화강국가정원", contentId: 2922069 }],
           tags: ["대나무숲", "자연힐링"],
         },
         replies: [

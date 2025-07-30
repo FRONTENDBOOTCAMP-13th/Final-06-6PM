@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-  TransitionChild,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } from "@headlessui/react";
 import { ChevronDown, MapPin } from "lucide-react";
 import Image from "next/image";
 import Button from "@/components/ui/btn";
@@ -19,12 +13,7 @@ interface DrawerItemProps {
   desc?: string;
 }
 
-export default function DrawerItem({
-  title = "관광지",
-  location = "주소",
-  imgUrl,
-  desc = "설명",
-}: DrawerItemProps) {
+export default function DrawerItem({ title = "관광지", location = "주소", imgUrl, desc = "설명" }: DrawerItemProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -51,10 +40,7 @@ export default function DrawerItem({
               aria-label="아래로 내리기"
               className="flex justify-center w-full cursor-pointer"
             >
-              <ChevronDown
-                aria-hidden="true"
-                className="size-7 text-travel-text200"
-              />
+              <ChevronDown aria-hidden="true" className="size-7 text-travel-text200" />
             </button>
           </TransitionChild>
 
@@ -79,7 +65,7 @@ export default function DrawerItem({
               />
             )}
             {/* 설명 */}
-            <p className="text-14 line-clamp-4">{desc}</p>
+            <p className="text-14">{desc}</p>
           </div>
 
           {/* 버튼 */}
