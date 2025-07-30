@@ -210,10 +210,15 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
       };
     }
 
-    // selectedPlace가 쉼표로 구분된 문자열인 경우 배열로 변환
-    const locationArray = selectedPlace.includes(",")
-      ? selectedPlace.split(",").map((place) => place.trim())
-      : [selectedPlace];
+    // selectedPlace가 JSON 문자열 '[{"title":"title1","contentId":"id1"},{"title":"title2","contentId":"id2"}]'
+    const locationArray = (() => {
+      try {
+        return JSON.parse(selectedPlace);
+      } catch {
+        // fallback: 단순 문자열 처리
+        return selectedPlace ? selectedPlace.split(",").map((title) => ({ title: title.trim() })) : [];
+      }
+    })();
 
     // API 요청 body 구성
     const body = {
