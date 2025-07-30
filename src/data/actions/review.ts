@@ -31,7 +31,7 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
     const token = formData.get("token") as string;
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
-    const planId = parseInt(formData.get("plan_id") as string);
+    const plan_id = parseInt(formData.get("plan_id") as string);
     const starRate = parseInt(formData.get("starRate") as string);
     const place = formData.get("place") as string;
     const startDate = formData.get("startDate") as string;
@@ -74,7 +74,7 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
       title: title,
       content: content,
       extra: {
-        plan_id: planId,
+        plan_id: plan_id,
         startDate: startDate,
         endDate: endDate,
         images: imagePaths,
@@ -118,7 +118,7 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
 
     // 관련 페이지 캐시 무효화
     revalidatePath("/review");
-    revalidatePath(`/plan/${planId}`);
+    revalidatePath(`/plan/${plan_id}`);
   } catch (error) {
     console.error("reviewAll  작성 오류:", error);
 
@@ -164,7 +164,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
     // FormData에서 데이터 추출
     const token = formData.get("token") as string;
     const reviewType = formData.get("review_type") as string;
-    const planId = parseInt(formData.get("plan_id") as string);
+    const plan_id = parseInt(formData.get("plan_id") as string);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
     const starRate = parseInt(formData.get("starRate") as string);
@@ -226,7 +226,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
       title: title,
       content: content,
       extra: {
-        plan_id: planId,
+        plan_id: plan_id,
         starRate: starRate,
         visitDate: selectedDays,
         location: locationArray,
@@ -270,7 +270,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
 
     // 관련 페이지 캐시 무효화
     revalidatePath("/review");
-    revalidatePath(`/plan/${planId}`);
+    revalidatePath(`/plan/${plan_id}`);
   } catch (error) {
     console.error("일자별/장소별 리뷰 작성 오류:", error);
 
@@ -360,16 +360,16 @@ export async function updateReviewPost(prevState: any, formData: FormData): Prom
   try {
     const token = formData.get("token") as string;
     const reviewId = formData.get("reviewId") as string;
-
-    const planId = parseInt(formData.get("plan_id") as string);
-    const starRate = parseInt(formData.get("starRate") as string);
+    const plan_id = parseInt(formData.get("plan_id") as string);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
+    const starRate = parseInt(formData.get("starRate") as string);
     const tags = JSON.parse((formData.get("tags") as string) || "[]");
+    const place = formData.get("place") as string;
+    const location = formData.get("location") as string;
     const startDate = formData.get("startDate") as string;
     const endDate = formData.get("endDate") as string;
     const visitDate = formData.get("selected_days") as string;
-    const location = formData.get("location") as string;
 
     const imagePaths: string[] = [];
     let imgIdx = 0;
@@ -424,14 +424,15 @@ export async function updateReviewPost(prevState: any, formData: FormData): Prom
       content,
       extra: {
         ...extra,
-        planId,
+        plan_id,
         starRate,
         tags,
         images: imagePaths,
+        place,
+        location,
         startDate,
         endDate,
         visitDate,
-        location,
       },
     };
 

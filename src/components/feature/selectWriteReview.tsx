@@ -20,7 +20,7 @@ export default function SelectWriteReview() {
   });
 
   const params = useParams();
-  const planId = Number(params?.id);
+  const plan_id = Number(params?.id);
   const [selectItem, setSelectItem] = useState<ReviewDayItem | null>(null);
 
   // reviewDaily
@@ -89,12 +89,12 @@ export default function SelectWriteReview() {
   useEffect(() => {
     const fetchPlanData = async () => {
       try {
-        const res = await getPlanDetail(planId);
+        const res = await getPlanDetail(plan_id);
         console.log("res 데이터: ", res);
         if (res.ok) {
           setPlanReply(res.item.replies); // 일정별 계획
           setPlanReviewInfo({
-            plan_id: planId,
+            plan_id: plan_id,
             title: res.item.title,
             startDate: res.item.extra.startDate,
             endDate: res.item.extra.endDate,
@@ -105,10 +105,10 @@ export default function SelectWriteReview() {
       }
     };
 
-    if (planId) {
+    if (plan_id) {
       fetchPlanData();
     }
-  }, [planId]);
+  }, [plan_id]);
 
   return (
     <div>

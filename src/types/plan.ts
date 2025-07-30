@@ -26,8 +26,8 @@ export interface PlanExtra {
 
 // 여행 리뷰 정보
 export interface PlanReviewInfo {
-  plan_id: number;
-  title: string;
+  plan_id?: number;
+  title?: string;
   startDate?: string;
   endDate?: string;
 }
