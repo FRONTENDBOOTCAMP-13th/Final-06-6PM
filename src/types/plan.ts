@@ -26,9 +26,10 @@ export interface PlanExtra {
 
 // 여행 리뷰 정보
 export interface PlanReviewInfo {
+  plan_id: number;
   title: string;
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 // 여행 일정 단위 정보

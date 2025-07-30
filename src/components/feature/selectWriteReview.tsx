@@ -13,6 +13,7 @@ export default function SelectWriteReview() {
   const [tab, setTab] = useState(0);
   const [planReply, setPlanReply] = useState<PlanReply[]>([]);
   const [planReviewInfo, setPlanReviewInfo] = useState<PlanReviewInfo>({
+    plan_id: 0,
     title: "",
     startDate: "",
     endDate: "",
@@ -93,6 +94,7 @@ export default function SelectWriteReview() {
         if (res.ok) {
           setPlanReply(res.item.replies); // 일정별 계획
           setPlanReviewInfo({
+            plan_id: planId,
             title: res.item.title,
             startDate: res.item.extra.startDate,
             endDate: res.item.extra.endDate,

@@ -1,36 +1,64 @@
 "use client";
-
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { GetReviewDetailProps } from "@/types/review";
-import { getReviewDetail } from "@/data/functions/review";
-import ReviewDetailForm from "@/components/form/reviewDetailForm";
-import ReviewFormAll from "@/components/form/reviewFormAll";
+import { useEffect, useMemo, useState } from "react";
+
 import Button from "@/components/ui/btn";
-import { CalendarDays, LayoutList, Link, MapPin } from "lucide-react";
+import ReviewFormAll from "@/components/form/reviewFormAll";
 import { ReviewDayItem } from "@/components/form/reviewSelect";
+import ReviewDetailForm from "@/components/form/reviewDetailForm";
+import { getReviewDetail } from "@/data/functions/review";
+import { GetReviewDetailProps } from "@/types/review";
+import { CalendarDays, LayoutList, Link, MapPin } from "lucide-react";
+import { PlanReply } from "@/types/plan";
 
 export default function SelectEditReview() {
   const [tab, setTab] = useState(0);
-  const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectItem, setSelectItem] = useState<ReviewDayItem | null>(null);
-
   const params = useParams();
   const reviewId = Number(params?.id);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [planReply, setPlanReply] = useState<PlanReply[]>([]);
+  const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
+  const [selectItem, setSelectItem] = useState<ReviewDayItem | null>(null);
+
   // 디버깅용 로그
-  console.log("SelectEditReview 렌더링:", {
-    reviewId,
-    reviewData: reviewData ? "로드됨" : "로딩중",
-    tab,
-    loading,
-  });
+  // console.log("SelectEditReview 렌더링:", {
+  //   reviewId,
+  //   reviewData: reviewData ? "로드됨" : "로딩중",
+  //   tab,
+  //   loading,
+  // });
 
-  const reviewDaily: ReviewDayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
-  const reviewPlace: ReviewDayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
+  // reviewDaily
+  const reviewDaily: ReviewDayItem[] = useMemo(() => {
+    return planReply.map((day) => ({
+      days: day.planDate,
+      place: day.locations.map((location) => ({
+        title: location.title,
+        contentId: location.contentId,
+      })),
+    }));
+  }, [planReply]);
 
+  // reviewPlace
+  const reviewPlace: ReviewDayItem[] = useMemo(() => {
+    const places: ReviewDayItem[] = [];
+    planReply.forEach((day) => {
+      day.locations.forEach((location) => {
+        places.push({
+          days: day.planDate,
+          place: {
+            title: location.title,
+            contentId: location.contentId,
+          },
+        });
+      });
+    });
+    return places;
+  }, [planReply]);
+
+  // 탭구분
   const data = [
     {
       id: 0,
@@ -50,6 +78,31 @@ export default function SelectEditReview() {
       description: reviewPlace,
     },
   ];
+
+  // 탭 선택에 따른 데이터 출력
+  useEffect(() => {
+    if (tab === 0) {
+      setSelectItem(null);
+      return;
+    }
+
+    const targetList = tab === 1 ? reviewDaily : reviewPlace;
+    if (targetList.length > 0) {
+      if (reviewData) {
+        let matchingItem = null;
+
+        if (tab === 1 && reviewData.type === "reviewDaily") {
+          matchingItem = targetList.find((item) => item.days === reviewData.extra?.visitDate);
+        } else if (tab === 2 && reviewData.type === "reviewPlace") {
+          matchingItem = targetList.find((item) => item.place === reviewData.extra?.location);
+        }
+
+        setSelectItem(matchingItem || targetList[0]);
+      } else {
+        setSelectItem(targetList[0]);
+      }
+    }
+  }, [tab, reviewDaily, reviewPlace, reviewData]);
 
   // 리뷰 데이터 조회
   useEffect(() => {
@@ -81,31 +134,6 @@ export default function SelectEditReview() {
 
     fetchReviewData();
   }, [reviewId]);
-
-  // selectItem 설정
-  useEffect(() => {
-    if (tab === 0) {
-      setSelectItem(null);
-      return;
-    }
-
-    const targetList = tab === 1 ? reviewDaily : reviewPlace;
-    if (targetList.length > 0) {
-      if (reviewData) {
-        let matchingItem = null;
-
-        if (tab === 1 && reviewData.type === "reviewDaily") {
-          matchingItem = targetList.find((item) => item.days === reviewData.extra?.visitDate);
-        } else if (tab === 2 && reviewData.type === "reviewPlace") {
-          matchingItem = targetList.find((item) => item.place === reviewData.extra?.location);
-        }
-
-        setSelectItem(matchingItem || targetList[0]);
-      } else {
-        setSelectItem(targetList[0]);
-      }
-    }
-  }, [tab, reviewDaily, reviewPlace, reviewData]);
 
   // 로딩중
   if (loading) {
@@ -174,7 +202,7 @@ export default function SelectEditReview() {
 
       {tab === 1 && selectItem && reviewDaily.length > 0 && (
         <ReviewDetailForm
-          key={`review-daily-${reviewData._id || reviewData._id}-${selectItem.days}`}
+          key={`reviewdaily-${reviewData._id}`}
           list={reviewDaily}
           selected={selectItem}
           onChange={setSelectItem}
@@ -185,7 +213,7 @@ export default function SelectEditReview() {
 
       {tab === 2 && selectItem && reviewPlace.length > 0 && (
         <ReviewDetailForm
-          key={`review-place-${reviewData._id || reviewData._id}-${selectItem.place}`}
+          key={`reviewplace-${reviewData._id}`}
           list={reviewPlace}
           selected={selectItem}
           onChange={setSelectItem}

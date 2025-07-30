@@ -1,37 +1,43 @@
 "use client";
-
-import { useActionState, useRef, useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Camera, ImagePlus, X } from "lucide-react";
+import { useActionState, useRef, useState, useEffect } from "react";
+
+import { toast } from "react-toastify";
+import useUserStore from "@/zustand/userStore";
+import { PlanReviewInfo } from "@/types/plan";
+import { GetReviewDetailProps } from "@/types/review";
+import Button from "@/components/ui/btn";
+import ReviewTag from "@/components/form/reviewTag";
+import ReviewStar from "@/components/form/reviewStar";
+import { ReviewTitle } from "@/components/form/reviewTitle";
+import ReviewContent from "@/components/form/reviewContent";
+import ReviewSelect, { ReviewSelectProps } from "@/components/form/reviewSelect";
 import { uploadFile } from "@/data/actions/file";
 import { createReviewDetailPost, updateReviewPost } from "@/data/actions/review";
-import { GetReviewDetailProps } from "@/types/review";
-import ReviewStar from "@/components/form/reviewStar";
-import ReviewContent from "@/components/form/reviewContent";
-import ReviewTag from "@/components/form/reviewTag";
-import ReviewSelect, { ReviewSelectProps } from "@/components/form/reviewSelect";
-import Button from "@/components/ui/btn";
-import useUserStore from "@/zustand/userStore";
-import { toast } from "react-toastify";
-import { ReviewTitle } from "@/components/form/reviewTitle";
+import { Camera, ImagePlus, X } from "lucide-react";
 
 interface ReviewFormProps extends ReviewSelectProps {
   reviewType: "reviewDaily" | "reviewPlace";
-  initialData?: GetReviewDetailProps | null;
+  initialData?: GetReviewDetailProps;
+  planReviewInfo?: PlanReviewInfo;
 }
 
 export default function ReviewDetailForm({ list, selected, reviewType, onChange, initialData }: ReviewFormProps) {
-  const token = useUserStore((state) => state.token);
+  // 글작성 또는 수정모드(initialData있을 경우)
   const isEditMode = !!initialData;
+
+  const token = useUserStore((state) => state.token);
   const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewDetailPost, null);
+  const router = useRouter();
+  const params = useParams();
+  const planId = params?.id || "";
+
+  // 이미지 관련 상태
   const [images, setImages] = useState<{ path: string; name: string; preview: string }[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
-  const params = useParams();
-  const router = useRouter();
-  const planId = params?.id || "";
 
-  // 수정 모드 초기값 세팅
+  // 초기 데이터 설정 (수정 모드)
   useEffect(() => {
     if (initialData && isEditMode) {
       if (initialData.extra?.images) {
@@ -56,12 +62,14 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
     }
   }, [state]);
 
+  // 파일 선택 Dialog
   const openFileDialog = () => {
     if (!isUploading && !isPending) {
       fileRef.current?.click();
     }
   };
 
+  // 이미지 업로드 함수
   const uploadImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -103,12 +111,14 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
     }
   };
 
+  // 이미지 삭제 함수
   const removeImg = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
     <form action={formAction} className="grid grid-cols-1 gap-3 p-4 relative">
+      {/* 로딩 오버레이 */}
       {(isUploading || isPending) && (
         <div className="absolute inset-0 z-20 bg-black/70 backdrop-blur-xs flex flex-col items-center justify-center space-y-4">
           <div className="w-16 h-16 border-[6px] border-travel-primary100 border-t-transparent rounded-full animate-spin shadow-lg"></div>
@@ -124,11 +134,13 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
 
       {/* Hidden Inputs */}
       <input type="hidden" name="token" value={token || ""} />
+      {isEditMode && initialData && <input type="hidden" name="reviewId" value={initialData._id?.toString() || ""} />}
       <input type="hidden" name="review_type" value={reviewType} />
+
       <input type="hidden" name="plan_id" value={planId.toString()} />
       <input type="hidden" name="selected_days" value={selected.days} />
       <input type="hidden" name="selected_place" value={JSON.stringify(selected.place)} />
-      {isEditMode && initialData && <input type="hidden" name="reviewId" value={initialData._id?.toString() || ""} />}
+
       {images.map((img, index) => (
         <input key={index} type="hidden" name={`imagePath_${index}`} value={img.path} />
       ))}

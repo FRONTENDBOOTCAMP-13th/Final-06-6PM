@@ -1,19 +1,19 @@
 "use client";
-
 import { useActionState, useRef, useState, useEffect } from "react";
-import { Camera, ImagePlus, X } from "lucide-react";
-import { uploadFile } from "@/data/actions/file";
-import ReviewStar from "@/components/form/reviewStar";
-import ReviewContent from "@/components/form/reviewContent";
-import ReviewTag from "@/components/form/reviewTag";
-import Button from "@/components/ui/btn";
-import useUserStore from "@/zustand/userStore";
-import { toast } from "react-toastify";
-import { createReviewAllPost, updateReviewPost } from "@/data/actions/review";
-import { GetReviewDetailProps } from "@/types/review";
-import { ReviewTitle } from "@/components/form/reviewTitle";
 import { useRouter } from "next/navigation";
+
+import { toast } from "react-toastify";
+import useUserStore from "@/zustand/userStore";
 import { PlanReviewInfo } from "@/types/plan";
+import { GetReviewDetailProps } from "@/types/review";
+import Button from "@/components/ui/btn";
+import ReviewTag from "@/components/form/reviewTag";
+import ReviewStar from "@/components/form/reviewStar";
+import { ReviewTitle } from "@/components/form/reviewTitle";
+import ReviewContent from "@/components/form/reviewContent";
+import { uploadFile } from "@/data/actions/file";
+import { createReviewAllPost, updateReviewPost } from "@/data/actions/review";
+import { Camera, ImagePlus, X } from "lucide-react";
 
 interface ReviewFormAllProps {
   initialData?: GetReviewDetailProps;
@@ -21,12 +21,14 @@ interface ReviewFormAllProps {
 }
 
 export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFormAllProps) {
+  // 글작성 또는 수정모드(initialData있을 경우)
+  const isEditMode = !!initialData;
+
   const token = useUserStore((state) => state.token);
-  const isEditMode = !!initialData; // initialData가 있으면 수정 모드
   const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewAllPost, null);
   const router = useRouter();
 
-  /* 이미지 관련 상태 */
+  // 이미지 관련 상태
   const [images, setImages] = useState<{ path: string; name: string; preview: string }[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -34,7 +36,7 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
   // 초기 데이터 설정 (수정 모드)
   useEffect(() => {
     if (initialData && isEditMode) {
-      console.log("ReviewFormAll 초기 데이터 설정:", initialData);
+      console.log("ReviewFormAll 초기 데이터", initialData);
 
       // 기존 이미지 데이터 설정
       if (initialData.extra?.images && Array.isArray(initialData.extra.images)) {
@@ -133,11 +135,12 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
         <input type="hidden" name="reviewId" value={initialData._id?.toString() || initialData._id?.toString()} />
       )}
 
-      <input type="hidden" name="plan_id" value={initialData?.extra?.plan_id} />
-      <input type="hidden" name="startDate" value={planReviewInfo?.startDate || ""} />
-      <input type="hidden" name="endDate" value={planReviewInfo?.endDate || ""} />
+      <input type="hidden" name="plan_id" value={planReviewInfo?.plan_id ?? initialData?.extra.plan_id ?? ""} />
+      <input type="hidden" name="startDate" value={planReviewInfo?.startDate ?? initialData?.extra?.startDate ?? ""} />
 
-      <input type="hidden" name="place" value={planReviewInfo?.title || ""} />
+      <input type="hidden" name="endDate" value={planReviewInfo?.endDate ?? initialData?.extra?.endDate ?? ""} />
+
+      <input type="hidden" name="place" value={planReviewInfo?.title ?? ""} />
       <input
         type="hidden"
         name="location"
