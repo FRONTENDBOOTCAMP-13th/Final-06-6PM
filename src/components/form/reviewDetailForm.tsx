@@ -1,51 +1,70 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
-import { useParams } from "next/navigation";
+import { useActionState, useRef, useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { Camera, ImagePlus, X } from "lucide-react";
 import { uploadFile } from "@/data/actions/file";
+import { createReviewDetailPost, updateReviewPost } from "@/data/actions/review";
+import { GetReviewDetailProps } from "@/types/review";
 import ReviewStar from "@/components/form/reviewStar";
-import ReviewTitle from "@/components/form/reviewTitle";
 import ReviewContent from "@/components/form/reviewContent";
 import ReviewTag from "@/components/form/reviewTag";
 import ReviewSelect, { ReviewSelectProps } from "@/components/form/reviewSelect";
 import Button from "@/components/ui/btn";
 import useUserStore from "@/zustand/userStore";
 import { toast } from "react-toastify";
-import { createReviewDetailPost } from "@/data/actions/review"; // 일자별/장소별 리뷰 액션
+import { ReviewTitle } from "@/components/form/reviewTitle";
 
 interface ReviewFormProps extends ReviewSelectProps {
   reviewType: "reviewDaily" | "reviewPlace";
+  initialData?: GetReviewDetailProps | null;
 }
 
-export default function ReviewDetailForm({ list, selected, reviewType, onChange }: ReviewFormProps) {
+export default function ReviewDetailForm({ list, selected, reviewType, onChange, initialData }: ReviewFormProps) {
   const token = useUserStore((state) => state.token);
-  const [state, formAction, isPending] = useActionState(createReviewDetailPost, null);
-
-  /* 이미지 관련 상태
-    path: 서버에 업로드된 파일 경로
-    name: 원본 파일명
-    preview: 브라우저에서 미리보기용 base64 데이터
-  */
+  const isEditMode = !!initialData;
+  const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewDetailPost, null);
   const [images, setImages] = useState<{ path: string; name: string; preview: string }[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
-
   const params = useParams();
+  const router = useRouter();
   const planId = params?.id || "";
 
-  // 파일 선택 Dialog
+  // 수정 모드 초기값 세팅
+  useEffect(() => {
+    if (initialData && isEditMode) {
+      if (initialData.extra?.images) {
+        const existingImages = initialData.extra.images.map((img: string, idx: number) => ({
+          path: img,
+          name: `기존이미지-${img.split("/").pop() || idx}`,
+          preview: img.startsWith("http") ? img : `${process.env.NEXT_PUBLIC_API_SERVER}/${img}`,
+        }));
+        setImages(existingImages);
+      }
+
+      // onChange?.({
+      //   days: initialData.extra?.selected_days || "",
+      //   place: initialData.extra?.selected_place?.split(",") || [],
+      // });
+    }
+  }, [initialData]);
+
+  useEffect(() => {
+    if (state?.ok) {
+      router.back();
+    }
+  }, [state]);
+
   const openFileDialog = () => {
     if (!isUploading && !isPending) {
       fileRef.current?.click();
     }
   };
 
-  // 이미지 업로드 함수
   const uploadImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-
     if (images.length + files.length > 10) {
       toast.warning("사진은 최대 10장까지 첨부할 수 있습니다.");
       return;
@@ -54,14 +73,12 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
 
     try {
       const uploadPromises = Array.from(files).map(async (file) => {
-        // 미리보기 생성
         const preview = await new Promise<string>((resolve) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result as string);
           reader.readAsDataURL(file);
         });
 
-        // 파일 업로드
         const formData = new FormData();
         formData.append("attach", file);
         const res = await uploadFile(formData);
@@ -86,23 +103,26 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
     }
   };
 
-  // 이미지 삭제 함수
   const removeImg = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
     <form action={formAction} className="grid grid-cols-1 gap-3 p-4 relative">
-      {/* 로딩 오버레이 */}
       {(isUploading || isPending) && (
         <div className="absolute inset-0 z-20 bg-black/70 backdrop-blur-xs flex flex-col items-center justify-center space-y-4">
           <div className="w-16 h-16 border-[6px] border-travel-primary100 border-t-transparent rounded-full animate-spin shadow-lg"></div>
           <span className="text-white text-base font-medium animate-pulse tracking-wide">
-            {isUploading ? "이미지를 업로드하고 있어요" : "리뷰를 저장하는 중이에요"}
+            {isUploading
+              ? "이미지를 업로드하고 있어요"
+              : isEditMode
+              ? "리뷰를 수정하는 중이에요"
+              : "리뷰를 저장하는 중이에요"}
           </span>
         </div>
       )}
 
+      {/* Hidden Inputs */}
       <input type="hidden" name="token" value={token || ""} />
       <input type="hidden" name="plan_id" value={planId.toString()} />
       <input type="hidden" name="review_type" value={reviewType} />
@@ -112,21 +132,25 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
         name="selected_place"
         value={Array.isArray(selected.place) ? selected.place.join(",") : selected.place}
       />
-
-      {/* 이미지 경로들을 hidden input으로 전송 */}
+      {isEditMode && initialData && <input type="hidden" name="reviewId" value={initialData._id?.toString() || ""} />}
       {images.map((img, index) => (
         <input key={index} type="hidden" name={`imagePath_${index}`} value={img.path} />
       ))}
+      <input type="hidden" name="imageCount" value={images.length.toString()} />
 
       {/* 일자/장소 선택 */}
       <ReviewSelect list={list} selected={selected} onChange={onChange} />
 
       {/* 별점 */}
-      <ReviewStar name="starRate" defaultValue="5" />
+      <ReviewStar
+        name="starRate"
+        key={`star-${initialData?._id || "new"}`}
+        defaultValue={initialData?.extra?.starRate?.toString() || "5"}
+      />
 
       {/* 제목 */}
       <div>
-        <ReviewTitle name="title" />
+        <ReviewTitle name="title" key={`title-${initialData?._id || "new"}`} defaultValue={initialData?.title || ""} />
         {state?.ok === 0 && state.errors?.title && (
           <p className="mt-1 text-sm text-red-500">{state.errors.title.msg}</p>
         )}
@@ -134,7 +158,11 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
 
       {/* 내용 */}
       <div>
-        <ReviewContent name="content" />
+        <ReviewContent
+          name="content"
+          key={`content-${initialData?._id || "new"}`}
+          defaultValue={initialData?.content || ""}
+        />
         {state?.ok === 0 && state.errors?.content && (
           <p className="mt-1 text-sm text-red-500">{state.errors.content.msg}</p>
         )}
@@ -144,25 +172,33 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
       <div className="space-y-1.5">
         <div className="flex items-center gap-1.5">
           <Camera className="size-5" />
-          <h3 className="font-semibold text-18">사진첨부</h3>
+          <h3 className="font-semibold text-18">
+            사진첨부
+            {images.length > 0 && <span className="ml-1 text-sm text-travel-gray400">({images.length}/10)</span>}
+          </h3>
         </div>
 
         <div className="grid grid-cols-4 gap-2">
-          {/* 업로드 버튼 */}
-          <div
-            className="relative flex items-center justify-center p-2 transition-colors bg-white border border-dashed rounded-lg cursor-pointer h-21 border-travel-gray400 hover:bg-gray-50"
-            onClick={openFileDialog}
-          >
-            <ImagePlus className="w-10 h-10 text-travel-gray400" />
-          </div>
-
-          {/* 업로드된 이미지들 */}
+          {images.length < 10 && (
+            <div
+              className="relative flex items-center justify-center p-2 transition-colors bg-white border border-dashed rounded-lg cursor-pointer h-21 border-travel-gray400 hover:bg-gray-50"
+              onClick={openFileDialog}
+            >
+              <ImagePlus className="w-10 h-10 text-travel-gray400" />
+            </div>
+          )}
           {images.map((img, index) => (
-            <div key={index} className="relative p-2 bg-white border rounded-lg border-travel-gray400 h-21">
+            <div
+              key={`${img.path}-${index}`}
+              className="relative p-2 bg-white border rounded-lg border-travel-gray400 h-21"
+            >
               <img
                 src={img.preview}
                 alt={`첨부이미지-${index + 1}`}
                 className="object-cover w-full h-full rounded-lg"
+                onError={(e) => {
+                  e.currentTarget.src = "/images/no-image.png";
+                }}
               />
               <button
                 type="button"
@@ -176,7 +212,6 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
           ))}
         </div>
 
-        {/* 파일 선택용 숨겨진 input */}
         <input
           type="file"
           ref={fileRef}
@@ -189,12 +224,24 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange 
       </div>
 
       {/* 태그 */}
-      <ReviewTag name="tags" />
+      <ReviewTag name="tags" key={`tags-${initialData?._id || "new"}`} defaultValue={initialData?.extra?.tags || []} />
+
+      {/* 에러 메시지 */}
+      {state?.ok === 0 && state.message && (
+        <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg">{state.message}</div>
+      )}
+
+      {/* 성공 메시지 */}
+      {state?.ok === 1 && (
+        <div className="p-3 text-sm text-green-600 bg-green-50 border border-green-200 rounded-lg">
+          {isEditMode ? "리뷰가 성공적으로 수정되었습니다!" : "리뷰가 성공적으로 작성되었습니다!"}
+        </div>
+      )}
 
       {/* 제출 버튼 */}
       <div className="bg-white fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-4 max-h-21 z-20 shadow-[0_-8px_16px_-4px_rgba(0,0,0,0.1)]">
         <Button className="w-full text-16" type="submit" disabled={isPending || isUploading}>
-          {isPending ? "작성 중..." : "리뷰 작성 완료"}
+          {isPending ? (isEditMode ? "수정 중..." : "작성 중...") : isEditMode ? "리뷰 수정 완료" : "리뷰 작성 완료"}
         </Button>
       </div>
     </form>

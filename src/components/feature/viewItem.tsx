@@ -17,6 +17,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
 
 export type ViewItemProps = GetReviewDetailProps & {
   onClick?: () => void;
+  onDelete?: (reviewId: number) => void;
 };
 
 export default function ViewItem({
@@ -31,6 +32,7 @@ export default function ViewItem({
   repliesCount,
   createdAt,
   onClick,
+  onDelete,
 }: ViewItemProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -112,7 +114,7 @@ export default function ViewItem({
         {/* 수정/삭제 모달창 버튼*/}
         {sameUser && (
           <div onClick={(e) => e.stopPropagation()}>
-            <DrawerBtn reviewId={_id} />
+            <DrawerBtn reviewId={_id} onDelete={onDelete} />
           </div>
         )}
       </div>

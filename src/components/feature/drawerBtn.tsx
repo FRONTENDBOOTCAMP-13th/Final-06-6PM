@@ -11,9 +11,10 @@ import Button from "@/components/ui/btn";
 
 interface DrawerBtnProps {
   reviewId: number;
+  onDelete?: (reviewId: number) => void;
 }
 
-export default function DrawerBtn({ reviewId }: DrawerBtnProps) {
+export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
   const [open, setOpen] = useState(false);
   const accessToken = useUserStore((state) => state.token);
   const router = useRouter();
@@ -21,25 +22,27 @@ export default function DrawerBtn({ reviewId }: DrawerBtnProps) {
 
   const modifyPlan = () => {
     console.log("수정");
+    router.push(`/review/edit/${reviewId}`);
   };
 
-  const deletePlan = async () => {
+  const DeleteAction = async (formData: FormData) => {
     const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
     if (!confirmDelete) return;
 
     try {
-      const formData = new FormData();
-      formData.append("token", accessToken!);
-      formData.append("reviewId", String(reviewId));
-
       const result = await deleteReviewPost(null, formData);
 
-      // result가 undefined인 경우 처리
       if (result && result.ok === 1) {
         toast.success("리뷰가 삭제되었습니다.");
         setOpen(false);
+
+        // 부모 컴포넌트에 삭제 성공 알림 (reviewId 전달)
+        onDelete?.(reviewId);
+
         if (pathname.startsWith("/mypage/review")) {
           router.push("/mypage/review");
+        } else if (pathname.startsWith("/plan")) {
+          router.push("/mypage");
         } else {
           router.push("/feed");
         }
@@ -83,9 +86,14 @@ export default function DrawerBtn({ reviewId }: DrawerBtnProps) {
           <Button size="lg" variant="primary" className="w-full" onClick={() => modifyPlan()}>
             게시글 수정하기
           </Button>
-          <Button size="lg" variant="outline" className="w-full" onClick={() => deletePlan()}>
-            게시글 삭제하기
-          </Button>
+
+          <form action={DeleteAction} className="w-full">
+            <input type="hidden" name="token" value={accessToken ?? ""} />
+            <input type="hidden" name="reviewId" value={String(reviewId)} />
+            <Button size="lg" variant="outline" className="w-full" type="submit">
+              게시글 삭제하기
+            </Button>
+          </form>
         </DialogPanel>
       </Dialog>
     </>
