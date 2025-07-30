@@ -28,15 +28,15 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
 
   try {
     // FormData에서 데이터 추출
-    const starRate = parseInt(formData.get("starRate") as string);
+    const token = formData.get("token") as string;
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
-    const tags = JSON.parse((formData.get("tags") as string) || "[]");
-    const token = formData.get("token") as string;
     const planId = parseInt(formData.get("plan_id") as string);
+    const starRate = parseInt(formData.get("starRate") as string);
     const place = formData.get("place") as string;
     const startDate = formData.get("startDate") as string;
     const endDate = formData.get("endDate") as string;
+    const tags = JSON.parse((formData.get("tags") as string) || "[]");
 
     // 이미지 경로들 수집
     const imagePaths: string[] = [];
@@ -74,13 +74,13 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
       title: title,
       content: content,
       extra: {
+        plan_id: planId,
         startDate: startDate,
         endDate: endDate,
-        plan_id: planId,
-        starRate: starRate,
-        location: place,
-        tags: tags,
         images: imagePaths,
+        starRate: starRate,
+        place: place,
+        tags: tags,
       },
     };
 
@@ -162,13 +162,14 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
 
   try {
     // FormData에서 데이터 추출
-    const starRate = parseInt(formData.get("starRate") as string);
+    const token = formData.get("token") as string;
+    const reviewType = formData.get("review_type") as string;
+    const planId = parseInt(formData.get("plan_id") as string);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
+    const starRate = parseInt(formData.get("starRate") as string);
     const tags = JSON.parse((formData.get("tags") as string) || "[]");
-    const token = formData.get("token") as string;
-    const planId = parseInt(formData.get("plan_id") as string);
-    const reviewType = formData.get("review_type") as string;
+    const place = formData.get("place") as string;
     const selectedDays = formData.get("selected_days") as string;
     const selectedPlace = formData.get("selected_place") as string;
 
@@ -215,7 +216,6 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
       try {
         return JSON.parse(selectedPlace);
       } catch {
-        // fallback: 단순 문자열 처리
         return selectedPlace ? selectedPlace.split(",").map((title) => ({ title: title.trim() })) : [];
       }
     })();
@@ -230,6 +230,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
         starRate: starRate,
         visitDate: selectedDays,
         location: locationArray,
+        place: place,
         tags: tags,
         images: imagePaths,
       },

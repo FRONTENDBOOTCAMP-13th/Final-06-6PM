@@ -124,8 +124,8 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
 
       {/* Hidden Inputs */}
       <input type="hidden" name="token" value={token || ""} />
-      <input type="hidden" name="plan_id" value={planId.toString()} />
       <input type="hidden" name="review_type" value={reviewType} />
+      <input type="hidden" name="plan_id" value={planId.toString()} />
       <input type="hidden" name="selected_days" value={selected.days} />
       <input type="hidden" name="selected_place" value={JSON.stringify(selected.place)} />
       {isEditMode && initialData && <input type="hidden" name="reviewId" value={initialData._id?.toString() || ""} />}

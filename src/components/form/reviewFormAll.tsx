@@ -13,12 +13,14 @@ import { createReviewAllPost, updateReviewPost } from "@/data/actions/review";
 import { GetReviewDetailProps } from "@/types/review";
 import { ReviewTitle } from "@/components/form/reviewTitle";
 import { useRouter } from "next/navigation";
+import { PlanReviewInfo } from "@/types/plan";
 
 interface ReviewFormAllProps {
   initialData?: GetReviewDetailProps;
+  planReviewInfo?: PlanReviewInfo;
 }
 
-export default function ReviewFormAll({ initialData }: ReviewFormAllProps) {
+export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFormAllProps) {
   const token = useUserStore((state) => state.token);
   const isEditMode = !!initialData; // initialData가 있으면 수정 모드
   const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewAllPost, null);
@@ -130,24 +132,17 @@ export default function ReviewFormAll({ initialData }: ReviewFormAllProps) {
       {isEditMode && initialData && (
         <input type="hidden" name="reviewId" value={initialData._id?.toString() || initialData._id?.toString()} />
       )}
+
       <input type="hidden" name="plan_id" value={initialData?.extra?.plan_id} />
+      <input type="hidden" name="startDate" value={planReviewInfo?.startDate || ""} />
+      <input type="hidden" name="endDate" value={planReviewInfo?.endDate || ""} />
+
+      <input type="hidden" name="place" value={planReviewInfo?.title || ""} />
       <input
         type="hidden"
         name="location"
         value={initialData?.extra?.location ? JSON.stringify(initialData.extra.location) : ""}
       />
-      <input type="hidden" name="startDate" value={initialData?.extra?.startDate || ""} />
-      <input type="hidden" name="endDate" value={initialData?.extra?.endDate || ""} />
-      <input
-        type="hidden"
-        name="selected_days"
-        value={
-          initialData?.extra?.startDate && initialData?.extra?.endDate
-            ? `${initialData.extra.startDate} ~ ${initialData.extra.endDate}`
-            : ""
-        }
-      />
-      <input type="hidden" name="review_type" value={initialData?.type || ""} />
 
       {/* 이미지 경로들을 hidden input으로 전송 */}
       {images.map((img, index) => (
