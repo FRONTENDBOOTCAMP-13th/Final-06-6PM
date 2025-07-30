@@ -73,10 +73,7 @@ export default function ReviewNew() {
             if (dday >= 0) return null;
 
             return (
-              <Link
-                href={`/review/${item._id}?place=${item.title}&startDate=${item.extra?.startDate}&endDate=${item.extra?.endDate}`}
-                key={item._id}
-              >
+              <Link href={`/review/${item._id}?place=${item.title}`} key={item._id}>
                 <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} dday={dday} />
               </Link>
             );
