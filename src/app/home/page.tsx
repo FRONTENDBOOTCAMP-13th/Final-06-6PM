@@ -4,7 +4,7 @@ import RandomItem from "@/components/ui/randomItem";
 import Link from "next/link";
 import { todayString } from "@/lib/todayString";
 import LocationWeatherBox from "@/components/feature/locationWeatherBox";
-import TripPage from "@/app/home/depth/trip";
+import TripPage from "@/components/feature/homePlanItem";
 
 export default function HomePage() {
   return (
