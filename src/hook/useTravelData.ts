@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getTravelList } from "@/data/functions/travel";
 import usePlanStore from "@/zustand/planStore";
 
-// 여행 데이터 로딩 (지역/카테고리 기반)
+// 선택된 지역과 카테고리에 따라 여행지 목록을 API로 조회해서 filteredData에 저장
 export const useTravelData = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { selectedArea, selectedCategory, setFilteredData } = usePlanStore();

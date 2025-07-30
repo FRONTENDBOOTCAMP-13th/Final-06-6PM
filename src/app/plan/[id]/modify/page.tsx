@@ -1,0 +1,17 @@
+import BackButton from "@/components/feature/backButton";
+import PlanReplyForm from "@/components/form/plan/planReplyForm";
+import ModifyScheduleContent from "@/components/plan/modifyScheduleContent";
+
+export default function PlanModifyPage() {
+  return (
+    <div>
+      <div className="w-full relative py-5 px-4">
+        <BackButton path="/plan" />
+        <p className="text-center">여행일정 수정하기</p>
+      </div>
+
+      <ModifyScheduleContent />
+      <PlanReplyForm />
+    </div>
+  );
+}

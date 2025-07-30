@@ -17,9 +17,7 @@ export type ServerValidationErrors<E> = Partial<Record<keyof E, ServerValidation
 // E = never: E가 생략되면 errors 속성도 없음
 export type ApiRes<T, E = never> = { ok: 1; item: T } | { ok: 0; message: string; errors?: ServerValidationErrors<E> };
 
-// 서버 함수에서 반환할 타입(Promise를 반환해야 함)
-export type ApiResPromise<T> = Promise<ApiRes<T>>;
-
+// API 서버 댓글 응답
 export interface ApiReplyRes<T> {
   ok: number;
   message?: string;
@@ -27,4 +25,19 @@ export interface ApiReplyRes<T> {
   errors?: any;
 }
 
+// API 서버 얼러트 메시지
+export type ApiMsgRes<T> = {
+  ok: number;
+  data?: T;
+  message?: string;
+};
+
+// 서버 함수에서 반환할 타입(Promise를 반환해야 함)
+export type ApiResPromise<T> = Promise<ApiRes<T>>;
 export type ApiReplyResPromise<T> = Promise<ApiReplyRes<T>>;
+
+// 지도에 쓸 사진 타입(지역 정보와 이미지 url)
+export type UserPhoto = {
+  regionId: string;
+  imageUrl: string;
+};

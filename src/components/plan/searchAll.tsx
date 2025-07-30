@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import CategorySelect from "@/components/plan/categorySelect";
 import SearchSection from "@/components/plan/searchSection";
 import SearchResult from "@/components/plan/searchResult";
@@ -15,23 +14,14 @@ import { usePlanInitializer } from "@/hook/usePlanInitializer";
 import { useTravelData } from "@/hook/useTravelData";
 import { useContentDetail } from "@/hook/useContentDetail";
 import { useSearchHandlers } from "@/hook/useSearchHandler";
+import { useSearchReset } from "@/hook/useSearchReset";
 
 export default function SearchAll() {
   const [keyword, setKeyword] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const searchParams = useSearchParams();
-  const targetDay = searchParams.get("targetDay") ? parseInt(searchParams.get("targetDay")!) : null;
-
-  const {
-    selectedArea,
-    startDate,
-    endDate,
-    searchList,
-    contentData,
-    selectedCategory,
-    selectedPlaces,
-    addPlaceToDailyPlan,
-  } = usePlanStore();
+  const { selectedArea, startDate, endDate, searchList, contentData, selectedCategory, selectedPlaces } =
+    usePlanStore();
+  const targetDay = useSearchReset(setKeyword, setIsSearching);
 
   usePlanInitializer();
   useTravelData();

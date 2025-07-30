@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import usePlanStore from "@/zustand/planStore";
 
+// 여행 기간에 맞는 일정표를 생성하고 SelectedPlace를 DayListItem으로 변환해서 반환
 export function usePlanSchedule() {
   const { selectedArea, startDate, endDate, dailyPlans, setDailyPlans, selectedPlaces, setSelectedPlaces } =
     usePlanStore();

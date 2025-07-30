@@ -1,17 +1,22 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tags } from "lucide-react";
 import TagItem from "@/components/feature/tagItem";
 import { toast } from "react-toastify";
 
 interface ReviewTagProps {
   name?: string; // FormData에서 사용할 name
+  defaultValue?: string[]; // 초기 태그 배열
 }
 
-export default function ReviewTag({ name = "tags" }: ReviewTagProps) {
-  const [tags, setTags] = useState<string[]>([]);
+export default function ReviewTag({ name = "tags", defaultValue = [] }: ReviewTagProps) {
+  const [tags, setTags] = useState<string[]>(defaultValue);
   const [tagValue, setTagValue] = useState("");
+
+  // defaultValue가 변경되면 tags 상태 업데이트 (편집 모드용)
+  useEffect(() => {
+    setTags(defaultValue);
+  }, [defaultValue]);
 
   const tagKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -61,12 +66,7 @@ export default function ReviewTag({ name = "tags" }: ReviewTagProps) {
 
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <TagItem
-            key={tag}
-            closeIcon
-            onRemove={() => removeTag(tag)}
-            variant="outline"
-          >
+          <TagItem key={tag} closeIcon onRemove={() => removeTag(tag)} variant="outline">
             {tag}
           </TagItem>
         ))}

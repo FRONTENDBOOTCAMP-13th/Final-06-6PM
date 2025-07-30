@@ -4,11 +4,11 @@ import { useState } from "react";
 import { getKeywordData } from "@/data/functions/travel";
 import { AreaTravelProps, KeywordTravelProps } from "@/types/travel";
 import { SelectedPlace } from "@/types/plan";
-import { categories } from "@/lib/data/categoryList"; // 추가
+import { categories } from "@/lib/data/categoryList";
 import { toast } from "react-toastify";
 import usePlanStore from "@/zustand/planStore";
 
-// 검색 관련 핸들러들
+// 검색, 카테고리 변경, 장소 추가/제거 등 검색 페이지의 모든 사용자 액션 처리
 export const useSearchHandlers = () => {
   const [keyword, setKeyword] = useState("");
   const [isSearching, setIsSearching] = useState(false);

@@ -7,7 +7,7 @@ export type PlanListItemProps = {
   tag?: string;
 };
 
-function PlanListItem({ number, place, tag }: PlanListItemProps) {
+export default function PlanListItem({ number, place, tag }: PlanListItemProps) {
   return (
     <div className="flex items-start gap-3 text-travel-text100">
       {/* 숫자 */}
@@ -27,5 +27,3 @@ function PlanListItem({ number, place, tag }: PlanListItemProps) {
     </div>
   );
 }
-
-export default PlanListItem;

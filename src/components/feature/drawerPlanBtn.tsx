@@ -9,20 +9,21 @@ import { toast } from "react-toastify";
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
 import Button from "@/components/ui/btn";
 
-interface DrawerBtnProps {
+interface DrawerPlanBtnProps {
   reviewId: number;
   onDelete?: (reviewId: number) => void;
 }
 
-export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
+export default function DrawerPlanBtn({ reviewId, onDelete }: DrawerPlanBtnProps) {
   const [open, setOpen] = useState(false);
   const accessToken = useUserStore((state) => state.token);
   const router = useRouter();
   const pathname = usePathname();
 
   const modifyPlan = () => {
-    console.log("수정");
-    router.push(`/review/edit/${reviewId}`);
+    console.log("여행일정 수정으로 이동:", reviewId);
+    router.push(`/plan/${reviewId}/modify`);
+    setOpen(false);
   };
 
   const DeleteAction = async (formData: FormData) => {
@@ -33,18 +34,14 @@ export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
       const result = await deleteReviewPost(null, formData);
 
       if (result && result.ok === 1) {
-        toast.success("리뷰가 삭제되었습니다.");
+        toast.success("여행 일정이 삭제되었습니다.");
         setOpen(false);
 
-        // 부모 컴포넌트에 삭제 성공 알림 (reviewId 전달)
+        // 부모 컴포넌트에 삭제 성공 알림
         onDelete?.(reviewId);
 
-        if (pathname.startsWith("/mypage/review")) {
-          router.push("/mypage/review");
-        } else if (pathname.startsWith("/plan")) {
+        if (pathname.startsWith("/plan")) {
           router.push("/mypage");
-        } else {
-          router.push("/feed");
         }
       } else {
         toast.warn(result?.message || "삭제에 실패했습니다.");
@@ -84,14 +81,14 @@ export default function DrawerBtn({ reviewId, onDelete }: DrawerBtnProps) {
           </TransitionChild>
 
           <Button size="lg" variant="primary" className="w-full" onClick={() => modifyPlan()}>
-            게시글 수정하기
+            여행 일정 수정하기
           </Button>
 
           <form action={DeleteAction} className="w-full">
             <input type="hidden" name="token" value={accessToken ?? ""} />
             <input type="hidden" name="reviewId" value={String(reviewId)} />
             <Button size="lg" variant="outline" className="w-full" type="submit">
-              게시글 삭제하기
+              여행 일정 삭제하기
             </Button>
           </form>
         </DialogPanel>

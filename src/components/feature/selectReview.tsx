@@ -25,12 +25,27 @@ export default function SelectReview() {
   const [reviewAll, setReviewAll] = useState<GetReviewDetailProps[]>([]);
   const [reviewDaily, setReviewDaily] = useState<GetReviewDetailProps[]>([]);
   const [reviewPlace, setReviewPlace] = useState<GetReviewDetailProps[]>([]);
+  const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
 
   const [reviewType, setReviewType] = useState<ReviewTypeProps>({
     all: false,
     daily: false,
     place: false,
   });
+
+  // 삭제 성공 시 데이터 새로고침하는 콜백 함수
+  const handleDelete = (reviewId: number) => {
+    setDeleteReviewId(reviewId);
+
+    // 현재 탭에 따라 해당하는 상태에서 리뷰 제거
+    if (tab === 0) {
+      setReviewAll((prev) => prev.filter((item) => item._id !== reviewId));
+    } else if (tab === 1) {
+      setReviewDaily((prev) => prev.filter((item) => item._id !== reviewId));
+    } else if (tab === 2) {
+      setReviewPlace((prev) => prev.filter((item) => item._id !== reviewId));
+    }
+  };
 
   // 탭에 해당하는 리뷰데이터 요청
   useEffect(() => {
@@ -108,7 +123,7 @@ export default function SelectReview() {
 
       <div className="space-y-4 p-4 min-h-25 content-center">
         {filterReview.length > 0 ? (
-          filterReview.map((item) => <ViewItem key={item._id} {...item} />)
+          filterReview.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
         ) : (
           <div className="text-center text-travel-gray300 text-sm">리뷰가 없습니다.</div>
         )}

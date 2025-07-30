@@ -8,17 +8,13 @@ export interface Category {
   name: string;
 }
 
-export interface CategorySelectorProps {
+export interface CategorySelectProps {
   categories: Category[];
   selectedCategory: string;
   onSelectCategory: (id: string) => void;
 }
 
-export default function CategorySelector({
-  categories,
-  selectedCategory,
-  onSelectCategory,
-}: CategorySelectorProps) {
+export default function CategorySelect({ categories, selectedCategory, onSelectCategory }: CategorySelectProps) {
   return (
     <div className="flex gap-1 flex-wrap">
       {categories.map((category) => (
