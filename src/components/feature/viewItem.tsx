@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { GetReviewDetailProps } from "@/types/review";
+import { GetReviewDetailProps, ReviewLocation } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
 
 const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
@@ -55,7 +55,13 @@ export default function ViewItem({
   const starRate = extra.starRate ?? 0;
   const tags = extra.tags ?? [];
   const contentImg = extra.images ?? [];
-  const locationList = Array.isArray(extra.location) ? extra.location : [extra.location ?? ""];
+  const locationList: ReviewLocation[] = Array.isArray(extra.location)
+    ? extra.location
+    : extra.location
+    ? [extra.location]
+    : [];
+  console.log(Array.isArray(locationList)); // true 여야 함
+  console.log(locationList);
 
   // 리뷰 타입에 따른 방문일자 처리
   const visitDate =
@@ -129,8 +135,11 @@ export default function ViewItem({
       <div className="grid grid-cols-[3.4375rem_auto] gap-2 text-14">
         <p>방문장소</p>
         <div className="flex flex-wrap gap-1" onClick={(e) => e.stopPropagation()}>
-          {locationList.map((location, idx) => (
-            <ModalItem key={idx} location={location} />
+          {locationList.map((location) => (
+            <ModalItem
+              key={location.contentId ?? location.title} // contentId 없으면 title로 key 처리
+              location={location} // location 객체 전체를 넘김
+            />
           ))}
         </div>
       </div>

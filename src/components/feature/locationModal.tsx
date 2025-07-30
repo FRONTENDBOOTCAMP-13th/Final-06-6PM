@@ -1,11 +1,16 @@
 "use client";
 
 import Button from "@/components/ui/btn";
+import { ReviewLocation } from "@/types/review";
 import { MapPin, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+interface ModalItemProps {
+  location: ReviewLocation;
+}
 
-export default function ModalItem({ location }: { location: string }) {
+export default function ModalItem({ location }: ModalItemProps) {
+  console.log(location);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -39,10 +44,11 @@ export default function ModalItem({ location }: { location: string }) {
     <>
       <button
         className="flex items-center gap-1 cursor-pointer text-14 text-travel-info100"
+        id={location.contentId}
         onClick={() => openModal()}
       >
         <MapPin className="size-4" />
-        {location}
+        {location.title}
       </button>
 
       {modalOpen && (
@@ -61,9 +67,7 @@ export default function ModalItem({ location }: { location: string }) {
             <div className="flex flex-col gap-4">
               {/* 제목 */}
               <div>
-                <h2 className="text-24 font-bold text-travel-text200 mb-1.5">
-                  제주도해변
-                </h2>
+                <h2 className="text-24 font-bold text-travel-text200 mb-1.5">제주도해변</h2>
                 <div className="flex items-center text-travel-gray600">
                   <MapPin className="w-4 h-4 mr-1" />
                   <span className="text-14">제주특별자치도 서귀포시</span>
@@ -81,20 +85,14 @@ export default function ModalItem({ location }: { location: string }) {
 
               {/* 설명 */}
               <p className="text-14 text-travel-text100 line-clamp-4">
-                섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의
-                에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한 관광자원인
-                제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가
-                하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 이 해변 ...
+                섬 전체가 하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가
+                하나의 거대한 관광자원인 제주도. 이 해변은 제주도의 에메랄드빛 물빛이 인상적인 섬 전체가 하나의 거대한
+                관광자원인 제주도. 이 해변은 제주도의 이 해변 ...
               </p>
             </div>
 
             {/* 버튼 */}
-            <Button
-              size="lg"
-              variant="primary"
-              className="w-full mt-7"
-              onClick={() => saveBookmark()}
-            >
+            <Button size="lg" variant="primary" className="w-full mt-7" onClick={() => saveBookmark()}>
               북마크 저장하기
             </Button>
           </div>
