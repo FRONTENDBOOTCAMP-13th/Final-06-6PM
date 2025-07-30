@@ -155,15 +155,11 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
       <ReviewSelect list={list} selected={selected} onChange={onChange} />
 
       {/* 별점 */}
-      <ReviewStar
-        name="starRate"
-        key={`star-${initialData?._id || "new"}`}
-        defaultValue={initialData?.extra?.starRate?.toString() || "5"}
-      />
+      <ReviewStar name="starRate" defaultValue={initialData?.extra?.starRate?.toString() || "5"} />
 
       {/* 제목 */}
       <div>
-        <ReviewTitle name="title" key={`title-${initialData?._id || "new"}`} defaultValue={initialData?.title || ""} />
+        <ReviewTitle name="title" defaultValue={initialData?.title || ""} />
         {state?.ok === 0 && state.errors?.title && (
           <p className="mt-1 text-sm text-red-500">{state.errors.title.msg}</p>
         )}
@@ -171,11 +167,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
 
       {/* 내용 */}
       <div>
-        <ReviewContent
-          name="content"
-          key={`content-${initialData?._id || "new"}`}
-          defaultValue={initialData?.content || ""}
-        />
+        <ReviewContent name="content" defaultValue={initialData?.content || ""} />
         {state?.ok === 0 && state.errors?.content && (
           <p className="mt-1 text-sm text-red-500">{state.errors.content.msg}</p>
         )}
@@ -237,7 +229,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
       </div>
 
       {/* 태그 */}
-      <ReviewTag name="tags" key={`tags-${initialData?._id || "new"}`} defaultValue={initialData?.extra?.tags || []} />
+      <ReviewTag name="tags" defaultValue={initialData?.extra?.tags || []} />
 
       {/* 에러 메시지 */}
       {state?.ok === 0 && state.message && (
