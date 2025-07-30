@@ -1,18 +1,17 @@
 import Image from "next/image";
+import CommentDeleteForm from "@/components/feature/commentDeleteForm";
+import { ReviewReply } from "@/types/review";
 
 interface CommentItemProps {
   imgUrl?: string;
   author: string;
   date: string;
   content: string;
+  comment?: ReviewReply;
+  onCommentDeleted?: (replyId: number) => void;
 }
 
-export default function CommentItem({
-  imgUrl,
-  author,
-  date,
-  content,
-}: CommentItemProps) {
+export default function CommentItem({ imgUrl, author, date, content, comment, onCommentDeleted }: CommentItemProps) {
   return (
     <div className="rounded-lg text-travel-text100 text-16">
       <div className="flex items-center gap-3 mb-2">
@@ -27,8 +26,11 @@ export default function CommentItem({
             />
           )}
         </div>
-        <div className="space-y-0.5">
-          <p className="font-semibold">{author}</p>
+        <div className="space-y-0.5 flex-1">
+          <div className="flex items-center justify-between">
+            <p className="font-semibold">{author}</p>
+            {comment && onCommentDeleted && <CommentDeleteForm reply={comment} onCommentDeleted={onCommentDeleted} />}
+          </div>
           <p className="text-travel-gray500 text-14">{date}</p>
         </div>
       </div>
