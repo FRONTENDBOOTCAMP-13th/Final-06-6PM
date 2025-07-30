@@ -366,10 +366,10 @@ export async function updateReviewPost(prevState: any, formData: FormData): Prom
     const starRate = parseInt(formData.get("starRate") as string);
     const tags = JSON.parse((formData.get("tags") as string) || "[]");
     const place = formData.get("place") as string;
-    const location = formData.get("location") as string;
     const startDate = formData.get("startDate") as string;
     const endDate = formData.get("endDate") as string;
     const visitDate = formData.get("selected_days") as string;
+    const selectedPlace = formData.get("selected_place") as string;
 
     const imagePaths: string[] = [];
     let imgIdx = 0;
@@ -400,6 +400,15 @@ export async function updateReviewPost(prevState: any, formData: FormData): Prom
       };
     }
 
+    // selectedPlace가 JSON 문자열 '[{"title":"title1","contentId":"id1"},{"title":"title2","contentId":"id2"}]'
+    const locationArray = (() => {
+      try {
+        return JSON.parse(selectedPlace);
+      } catch {
+        return selectedPlace ? selectedPlace.split(",").map((title) => ({ title: title.trim() })) : [];
+      }
+    })();
+
     // 기존 리뷰 데이터 불러오기
     const originalRes = await fetch(`${API_URL}/posts/${reviewId}`, {
       headers: {
@@ -429,7 +438,7 @@ export async function updateReviewPost(prevState: any, formData: FormData): Prom
         tags,
         images: imagePaths,
         place,
-        location,
+        location: locationArray,
         startDate,
         endDate,
         visitDate,
