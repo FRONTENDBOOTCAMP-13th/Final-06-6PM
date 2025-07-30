@@ -12,7 +12,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { GetReviewDetailProps, ReviewLocation } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
-
+import { useState } from "react";
 const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
 
 export type ViewItemProps = GetReviewDetailProps & {
@@ -29,14 +29,16 @@ export default function ViewItem({
   extra,
   views,
   bookmarks,
+  myBookmarkId,
   repliesCount,
   createdAt,
   onClick,
   onDelete,
 }: ViewItemProps) {
+  console.log(myBookmarkId);
   const pathname = usePathname();
   const router = useRouter();
-
+  const [bookmarkCount, setBookmarkCount] = useState(bookmarks || 0);
   // 수정/삭제버튼 show-hidden 여부
   const loginUserInfo = useUserStore((state) => state.userInfo);
   // console.log(loginUserInfo);
@@ -94,6 +96,14 @@ export default function ViewItem({
     if (!isDetailView) {
       router.push(`/feed/${_id}`);
     }
+  };
+  // 토글아이콘이랑 연결
+  const handleBookmarkChange = (newBookmarkState: boolean) => {
+    setBookmarkCount((prev) => {
+      // 북마크 추가되면 하트가 +1 제거되면 -1
+      const newCount = newBookmarkState ? prev + 1 : prev - 1;
+      return newCount;
+    });
   };
 
   return (
@@ -229,7 +239,7 @@ export default function ViewItem({
           </span>
           <span className="flex items-center gap-1">
             <Heart className="w-4 h-4" />
-            {bookmarks}
+            {bookmarkCount}
           </span>
           <span className="flex items-center gap-1">
             <MessageCircleMore className="w-4 h-4" />
@@ -238,7 +248,12 @@ export default function ViewItem({
         </div>
 
         <div onClick={(e) => e.stopPropagation()}>
-          <ToggleIcon type="book" />
+          <ToggleIcon
+            type="book"
+            onBookmarkChange={handleBookmarkChange}
+            reviewId={_id}
+            myBookmarkedId={myBookmarkId}
+          />
         </div>
       </div>
     </div>
