@@ -127,11 +127,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
       <input type="hidden" name="plan_id" value={planId.toString()} />
       <input type="hidden" name="review_type" value={reviewType} />
       <input type="hidden" name="selected_days" value={selected.days} />
-      <input
-        type="hidden"
-        name="selected_place"
-        value={Array.isArray(selected.place) ? selected.place.join(",") : selected.place}
-      />
+      <input type="hidden" name="selected_place" value={JSON.stringify(selected.place)} />
       {isEditMode && initialData && <input type="hidden" name="reviewId" value={initialData._id?.toString() || ""} />}
       {images.map((img, index) => (
         <input key={index} type="hidden" name={`imagePath_${index}`} value={img.path} />

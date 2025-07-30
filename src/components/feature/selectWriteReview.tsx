@@ -2,7 +2,7 @@
 
 import ReviewDetailForm from "@/components/form/reviewDetailForm";
 import ReviewFormAll from "@/components/form/reviewFormAll";
-import { DayItem } from "@/components/form/reviewSelect";
+import { ReviewDayItem } from "@/components/form/reviewSelect";
 import { getPlanDetail } from "@/data/functions/plan";
 import { PlanReply } from "@/types/plan";
 import { CalendarDays, LayoutList, MapPin } from "lucide-react";
@@ -14,24 +14,30 @@ export default function SelectWriteReview() {
   const [planReply, setPlanReply] = useState<PlanReply[]>([]);
   const params = useParams();
   const planId = Number(params?.id);
-  const [selectItem, setSelectItem] = useState<DayItem | null>(null);
+  const [selectItem, setSelectItem] = useState<ReviewDayItem | null>(null);
 
   // reviewDaily
-  const reviewDaily: DayItem[] = useMemo(() => {
+  const reviewDaily: ReviewDayItem[] = useMemo(() => {
     return planReply.map((day) => ({
       days: day.planDate,
-      place: day.locations.map((location) => location.title),
+      place: day.locations.map((location) => ({
+        title: location.title,
+        contentId: location.contentId,
+      })),
     }));
   }, [planReply]);
 
   // reviewPlace
-  const reviewPlace: DayItem[] = useMemo(() => {
-    const places: DayItem[] = [];
+  const reviewPlace: ReviewDayItem[] = useMemo(() => {
+    const places: ReviewDayItem[] = [];
     planReply.forEach((day) => {
       day.locations.forEach((location) => {
         places.push({
           days: day.planDate,
-          place: location.title,
+          place: {
+            title: location.title,
+            contentId: location.contentId,
+          },
         });
       });
     });

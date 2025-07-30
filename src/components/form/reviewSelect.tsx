@@ -1,24 +1,21 @@
 "use client";
 
+import { ReviewLocation } from "@/types/review";
 import { CalendarDays, ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-export interface DayItem {
+export interface ReviewDayItem {
   days: string;
-  place: string[] | string;
+  place: ReviewLocation | ReviewLocation[];
 }
 
 export interface ReviewSelectProps {
-  list: DayItem[];
-  selected: DayItem;
-  onChange: (item: DayItem) => void;
+  list: ReviewDayItem[];
+  selected: ReviewDayItem;
+  onChange: (item: ReviewDayItem) => void;
 }
 
-export default function ReviewSelect({
-  list,
-  selected,
-  onChange,
-}: ReviewSelectProps) {
+export default function ReviewSelect({ list, selected, onChange }: ReviewSelectProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,11 +40,18 @@ export default function ReviewSelect({
             <CalendarDays />
             <span>{selected.days}</span>
           </p>
-          <p className="line-clamp-1">
-            방문 장소:{" "}
-            {Array.isArray(selected.place)
-              ? selected.place.join(", ")
-              : selected.place}
+          <p className="line-clamp-1 break-keep">
+            <span>방문 장소: </span>
+            {Array.isArray(selected.place) &&
+              selected.place.map((location, idx) => (
+                <span
+                  key={location.contentId}
+                  id={location.contentId}
+                  className="after:content-[','] mr-0.5 last:after:content-[''] last:mr-0"
+                >
+                  {location.title}
+                </span>
+              ))}
           </p>
         </div>
         <ChevronDown />
@@ -57,10 +61,7 @@ export default function ReviewSelect({
         <ul className="absolute top-[64px] left-0 w-full border rounded-lg bg-white shadow-xl z-10 max-h-64 overflow-auto">
           {list.map((item) => (
             <li
-              key={
-                item.days +
-                (Array.isArray(item.place) ? item.place.join(",") : item.place)
-              }
+              key={item.days + (Array.isArray(item.place) ? item.place.join(",") : item.place)}
               onClick={() => {
                 onChange(item);
                 setOpen(false);
@@ -71,9 +72,25 @@ export default function ReviewSelect({
                 <CalendarDays />
                 <span>{item.days}</span>
               </p>
-              <p className="line-clamp-1">
-                방문 장소:{" "}
-                {Array.isArray(item.place) ? item.place.join(", ") : item.place}
+              <p className="line-clamp-2">
+                <span>방문 장소: </span>
+                {Array.isArray(item.place) ? (
+                  item.place.map((location) => (
+                    <span
+                      className="after:content-[','] mr-0.5 last:after:content-[''] last:mr-0"
+                      key={location.contentId}
+                    >
+                      {location.title}
+                    </span>
+                  ))
+                ) : (
+                  <span
+                    className="after:content-[','] mr-0.5 last:after:content-[''] last:mr-0"
+                    key={item.place.contentId}
+                  >
+                    {item.place.title}
+                  </span>
+                )}
               </p>
             </li>
           ))}
