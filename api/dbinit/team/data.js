@@ -456,7 +456,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewAll",
-        views: 89,
         user: {
           _id: 1,
           name: "문서인",
@@ -473,15 +472,18 @@ export const initData = async (clientId, nextSeq) => {
           startDate: "2025-06-25",
           endDate: "2025-06-26",
           starRate: 4,
+          place: "서울",
           locations: [
-            { title: "경복궁", contentId: 264337 },
-            { title: "북촌한옥마을", contentId: 129821 },
-            { title: "여의도한강공원", contentId: 1879114 },
-            { title: "명동", contentId: 127885 },
-            { title: "남산서울타워", contentId: 264161 },
+            { title: "경복궁", contentId: "264337" },
+            { title: "북촌한옥마을", contentId: "129821" },
+            { title: "여의도한강공원", contentId: "1879114" },
+            { title: "명동", contentId: "127885" },
+            { title: "남산서울타워", contentId: "264161" },
           ],
           tags: ["서울", "도심여행", "전통문화", "야경"],
         },
+        views: 89,
+        bookmarks: 2,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -499,7 +501,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewDaily",
-        views: 67,
         user: {
           _id: 1,
           name: "문서인",
@@ -515,13 +516,16 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 5,
+          place: "서울",
           location: [
-            { title: "경복궁", contentId: 264337 },
-            { title: "북촌한옥마을", contentId: 129821 },
-            { title: "인사동", contentId: 129345 },
+            { title: "경복궁", contentId: "264337" },
+            { title: "북촌한옥마을", contentId: "129821" },
+            { title: "인사동", contentId: "129345" },
           ],
           tags: ["서울", "궁궐투어", "전통문화", "한옥마을"],
         },
+        views: 67,
+        bookmarks: 31,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -548,7 +552,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewDaily",
-        views: 124,
         user: {
           _id: 1,
           name: "문서인",
@@ -564,13 +567,16 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 1,
           visitDate: "2025-06-26",
           starRate: 3,
+          place: "서울",
           location: [
-            { title: "여의도한강공원", contentId: 1879114 },
-            { title: "명동", contentId: 127885 },
-            { title: "남산서울타워", contentId: 264161 },
+            { title: "여의도한강공원", contentId: "1879114" },
+            { title: "명동", contentId: "127885" },
+            { title: "남산서울타워", contentId: "264161" },
           ],
           tags: ["서울", "명동쇼핑", "야경", "한강뷰"],
         },
+        views: 124,
+        bookmark: 100,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -588,7 +594,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewPlace",
-        views: 178,
         user: {
           _id: 1,
           name: "문서인",
@@ -604,9 +609,11 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 5,
-          location: [{ title: "경복궁", contentId: 264337 }],
+          place: "서울",
+          location: [{ title: "경복궁", contentId: "264337" }],
           tags: ["수문장교대식", "한복체험", "궁궐투어"],
         },
+        views: 178,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -623,7 +630,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewPlace",
-        views: 142,
         user: {
           _id: 1,
           name: "문서인",
@@ -639,9 +645,11 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 1,
           visitDate: "2025-06-25",
           starRate: 4,
-          location: [{ title: "인사동", contentId: 129345 }],
+          place: "서울",
+          location: [{ title: "인사동", contentId: "129345" }],
           tags: ["전통찻집", "전통문화", "공예거리"],
         },
+        views: 142,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -660,7 +668,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewAll",
-        views: 127,
         user: {
           _id: 4,
           name: "송아현",
@@ -677,19 +684,21 @@ export const initData = async (clientId, nextSeq) => {
           startDate: "2025-08-03",
           endDate: "2025-08-05",
           starRate: 5,
+          place: "울산",
           location: [
-            { title: "대왕암공원", contentId: 2657337 },
-            { title: "울산대공원", contentId: 2649737 },
-            { title: "울산박물관", contentId: 132470 },
-            { title: "간절곶", contentId: 125405 },
-            { title: "태화강국가정원", contentId: 2922069 },
-            { title: "암각화박물관", contentId: 129156 },
-            { title: "반구대암각화", contentId: 125409 },
-            { title: "장생포고래문화마을", contentId: 2647635 },
-            { title: "진하해수욕장", contentId: 126351 },
+            { title: "대왕암공원", contentId: "2657337" },
+            { title: "울산대공원", contentId: "2649737" },
+            { title: "울산박물관", contentId: "132470" },
+            { title: "간절곶", contentId: "125405" },
+            { title: "태화강국가정원", contentId: "2922069" },
+            { title: "암각화박물관", contentId: "129156" },
+            { title: "반구대암각화", contentId: "125409" },
+            { title: "장생포고래문화마을", contentId: "2647635" },
+            { title: "진하해수욕장", contentId: "126351" },
           ],
           tags: ["울산", "자연여행", "역사탐방", "힐링"],
         },
+        views: 127,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -708,7 +717,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewDaily",
-        views: 89,
         user: {
           _id: 4,
           name: "송아현",
@@ -724,13 +732,15 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-03",
           starRate: 4,
+          place: "울산",
           location: [
-            { title: "대왕암공원", contentId: 2657337 },
-            { title: "울산대공원", contentId: 2649737 },
-            { title: "울산박물관", contentId: 132470 },
+            { title: "대왕암공원", contentId: "2657337" },
+            { title: "울산대공원", contentId: "2649737" },
+            { title: "울산박물관", contentId: "132470" },
           ],
           tags: ["자연", "바다", "역사", "공원"],
         },
+        views: 89,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -757,7 +767,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewDaily",
-        views: 156,
         user: {
           _id: 4,
           name: "송아현",
@@ -773,13 +782,15 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
+          place: "울산",
           location: [
-            { title: "간절곶", contentId: 125405 },
-            { title: "태화강국가정원", contentId: 2922069 },
-            { title: "암각화박물관", contentId: 129156 },
+            { title: "간절곶", contentId: "125405" },
+            { title: "태화강국가정원", contentId: "2922069" },
+            { title: "암각화박물관", contentId: "129156" },
           ],
           tags: ["일출", "자연", "역사"],
         },
+        views: 156,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -798,7 +809,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewPlace",
-        views: 134,
         user: {
           _id: 4,
           name: "송아현",
@@ -814,9 +824,11 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
-          location: [{ title: "간절곶", contentId: 125405 }],
+          place: "울산",
+          location: [{ title: "간절곶", contentId: "125405" }],
           tags: ["일출", "등대", "바다풍경"],
         },
+        views: 134,
         replies: [
           {
             _id: await nextSeq("reply"),
@@ -833,7 +845,6 @@ export const initData = async (clientId, nextSeq) => {
       {
         _id: await nextSeq("post"),
         type: "reviewPlace",
-        views: 98,
         user: {
           _id: 4,
           name: "송아현",
@@ -849,9 +860,11 @@ export const initData = async (clientId, nextSeq) => {
           plan_id: 2,
           visitDate: "2025-08-04",
           starRate: 5,
-          location: [{ title: "태화강국가정원", contentId: 2922069 }],
+          place: "울산",
+          location: [{ title: "태화강국가정원", contentId: "2922069" }],
           tags: ["대나무숲", "자연힐링"],
         },
+        views: 98,
         replies: [
           {
             _id: await nextSeq("reply"),
