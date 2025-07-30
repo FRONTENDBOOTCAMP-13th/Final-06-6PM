@@ -7,8 +7,8 @@ interface SearchInputProps {
   size?: "sm" | "md" | "lg";
   placeholder?: string;
   className?: string;
-  value?: string; // 외부에서 값 제어
-  onSearch?: (value: string) => void;
+  value?: string;
+  onSearch?: (value: string) => void | Promise<void>;
 }
 
 export default function SearchInput({
@@ -19,6 +19,7 @@ export default function SearchInput({
   onSearch,
 }: SearchInputProps) {
   const [inputValue, setInputValue] = useState(value || "");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (value !== undefined) {
@@ -38,13 +39,22 @@ export default function SearchInput({
     lg: "size-6",
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (onSearch) {
-      onSearch(inputValue);
-    } else {
-      console.log("onSearch 함수가 없음");
+    if (!onSearch || isSubmitting) {
+      return;
+    }
+
+    const searchText = inputValue.trim();
+    setIsSubmitting(true);
+
+    try {
+      await onSearch(searchText);
+    } catch (error) {
+      console.error("검색 오류:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -64,11 +74,13 @@ export default function SearchInput({
         placeholder={placeholder}
         value={inputValue}
         onChange={handleChange}
-        className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100`}
+        disabled={isSubmitting}
+        className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
       />
       <button
         type="submit"
-        className="absolute -translate-y-1/2 cursor-pointer right-3 top-1/2 text-travel-text100 hover:text-travel-primary200 transition-colors"
+        disabled={isSubmitting}
+        className={`absolute -translate-y-1/2 cursor-pointer right-3 top-1/2 text-travel-text100 hover:text-travel-primary200 transition-colors ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         <Search className={`${iconSize[size]} stroke-2`} />
       </button>

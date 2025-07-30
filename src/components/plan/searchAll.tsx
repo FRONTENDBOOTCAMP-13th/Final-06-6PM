@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CategorySelect from "@/components/plan/categorySelect";
 import SearchSection from "@/components/plan/searchSection";
 import SearchResult from "@/components/plan/searchResult";
@@ -19,24 +19,59 @@ import { useSearchReset } from "@/hook/useSearchReset";
 export default function SearchAll() {
   const [keyword, setKeyword] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const { selectedArea, startDate, endDate, searchList, contentData, selectedCategory, selectedPlaces } =
-    usePlanStore();
+  const {
+    selectedArea,
+    startDate,
+    endDate,
+    searchList,
+    contentData,
+    selectedCategory,
+    selectedPlaces,
+    setSelectedCategory,
+  } = usePlanStore();
   const targetDay = useSearchReset(setKeyword, setIsSearching);
 
   usePlanInitializer();
   useTravelData();
   useContentDetail();
 
-  // 검색 관련 핸들러들
+  // 페이지 진입 시 검색 상태, 카테고리 초기화
+  useEffect(() => {
+    setKeyword("");
+    setIsSearching(false);
+    setSelectedCategory("all");
+  }, [targetDay, setSelectedCategory]);
+
   const { searchSubmit, handleCategoryChange, handleAddPlace, handleRemovePlace, setSelectContentID, getCategoryName } =
     useSearchHandlers();
 
-  // ~일차 있을 때 사용할 함수
+  // 카테고리 변경 시 검색 상태 초기화
+  const handleCategoryChangeWithReset = (categoryId: string) => {
+    setKeyword("");
+    handleCategoryChange(categoryId);
+  };
+
+  const handleSearch = async (searchKeyword: string) => {
+    if (!searchKeyword.trim()) {
+      return;
+    }
+
+    setKeyword(searchKeyword);
+    setIsSearching(true);
+
+    try {
+      await searchSubmit(searchKeyword);
+    } catch (error) {
+      console.error("검색 오류:", error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
   const handleAddPlaceTarget = (data: any) => {
     handleAddPlace(data);
   };
 
-  // 선택된 지역이 없으면 로딩
   if (!selectedArea) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
@@ -67,14 +102,14 @@ export default function SearchAll() {
             selectedArea={selectedArea}
             keyword={keyword}
             isSearching={isSearching}
-            onSearch={searchSubmit}
+            onSearch={handleSearch}
           />
 
           {/* 카테고리 선택 */}
           <CategorySelect
             categories={categories}
             selectedCategory={selectedCategory}
-            onSelectCategory={handleCategoryChange}
+            onSelectCategory={handleCategoryChangeWithReset}
           />
 
           {/* 검색 결과 표시 */}
