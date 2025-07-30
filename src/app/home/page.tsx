@@ -23,12 +23,7 @@ export default function HomePage() {
             <ThumbsUp className="size-6" />
             랜덤 여행지 추천
           </div>
-          <RandomItem
-            image="/images/sea.png"
-            title="무슨해변"
-            location="제주특별자치도 서귀포시"
-            desc="기차에서 바다를 감상하는 특별한 해변! 인생사진 남기기 좋은 스팟."
-          />
+          <RandomItem />
         </div>
       </div>
     </div>
