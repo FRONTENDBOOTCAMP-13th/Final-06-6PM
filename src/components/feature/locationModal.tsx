@@ -10,7 +10,6 @@ interface ModalItemProps {
 }
 
 export default function ModalItem({ location }: ModalItemProps) {
-  console.log(location);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
