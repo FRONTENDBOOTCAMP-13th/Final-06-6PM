@@ -24,8 +24,8 @@ export default function ViewItem({
   _id,
   type,
   title,
-  user,
   content,
+  user,
   extra,
   views,
   bookmarks,
@@ -37,48 +37,32 @@ export default function ViewItem({
   const pathname = usePathname();
   const router = useRouter();
 
+  // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
+  const isDetailView = pathname.startsWith("/feed/");
+  const listClass = `relative w-full space-y-2 ${isDetailView ? "" : "rounded-xl bg-white shadow p-4"}`;
+  const listTextClass = `text-14 text-travel-text100 ${isDetailView ? "" : "line-clamp-3"}`;
+
   // 수정/삭제버튼 show-hidden 여부
   const loginUserInfo = useUserStore((state) => state.userInfo);
   // console.log(loginUserInfo);
-  // console.log(user);
+  // console.log(user)
   const sameUser = loginUserInfo?._id === user._id;
 
+  // 사용자 정보
   const userName = user.name;
   const userImgURL = (() => {
     const img = user?.image;
     if (!img || img === "undefined") return "/images/user-default.webp";
     return img.startsWith("http") ? img : `${API_URL}/${img}`;
   })();
-
   // console.log(user.image);
 
+  // 별점 및 태그
   const starRate = extra.starRate ?? 0;
   const tags = extra.tags ?? [];
+
+  // 이미지 관련
   const contentImg = extra.images ?? [];
-  const locationList: ReviewLocation[] = Array.isArray(extra.location)
-    ? extra.location
-    : extra.location
-    ? [extra.location]
-    : [];
-  console.log(Array.isArray(locationList)); // true 여야 함
-  console.log(locationList);
-
-  // 리뷰 타입에 따른 방문일자 처리
-  const visitDate =
-    type === "reviewAll"
-      ? extra.startDate && extra.endDate
-        ? `${extra.startDate} ~ ${extra.endDate}`
-        : extra.startDate || ""
-      : extra.visitDate || extra.startDate || "";
-
-  const regdate = createdAt;
-
-  // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
-  const isDetailView = pathname.startsWith("/feed/");
-  const listClass = `relative w-full space-y-2 ${isDetailView ? "" : "rounded-xl bg-white shadow p-4"}`;
-  const listTextClass = `text-14 text-travel-text100 ${isDetailView ? "" : "line-clamp-3"}`;
-
-  // 이미지 갯수 제한
   const maxImg = 2;
   const showImg = isDetailView ? contentImg : contentImg.slice(0, maxImg);
   const moreCount = isDetailView ? 0 : contentImg.length - maxImg;
@@ -88,6 +72,28 @@ export default function ViewItem({
     if (!imgPath) return "/files/user-default.webp";
     return imgPath.startsWith("http") ? imgPath : `${API_URL}/${imgPath}`;
   };
+
+  // 방문 장소
+  const locationList: ReviewLocation[] = Array.isArray(extra.location)
+    ? extra.location
+    : extra.location
+    ? [extra.location]
+    : [];
+  // console.log(locationList);
+
+  // 방문 지역
+  const place = extra.place;
+
+  // 리뷰 타입에 따른 방문일자 처리
+  const visitDate =
+    type === "reviewAll"
+      ? extra.startDate && extra.endDate
+        ? `${extra.startDate} ~ ${extra.endDate}`
+        : extra.startDate || ""
+      : extra.visitDate || extra.startDate || "";
+
+  // 작성일자
+  const regdate = createdAt;
 
   // 상세페이지로 이동하는 함수
   const handleItemClick = () => {
@@ -135,12 +141,11 @@ export default function ViewItem({
       <div className="grid grid-cols-[3.4375rem_auto] gap-2 text-14">
         <p>방문장소</p>
         <div className="flex flex-wrap gap-1" onClick={(e) => e.stopPropagation()}>
-          {locationList.map((location) => (
-            <ModalItem
-              key={location.contentId ?? location.title} // contentId 없으면 title로 key 처리
-              location={location} // location 객체 전체를 넘김
-            />
-          ))}
+          {type === "reviewAll" ? (
+            <span className="text-travel-gray700">{place}</span>
+          ) : (
+            locationList.map((location) => <ModalItem key={location.contentId ?? location.title} location={location} />)
+          )}
         </div>
       </div>
 
