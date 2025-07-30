@@ -61,6 +61,18 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
     }
   };
 
+  const handleCommentDeleted = (replyId: number) => {
+    setComments((prev) => prev.filter((comment) => comment._id !== replyId));
+    setReviewData((prev) =>
+      prev
+        ? {
+            ...prev,
+            repliesCount: Math.max((prev.repliesCount || 0) - 1, 0),
+          }
+        : null,
+    );
+  };
+
   useEffect(() => {
     if (newComment) {
       setComments((prev) => [...prev, newComment]);
@@ -109,9 +121,12 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
             <div key={comment._id || index}>
               <hr className="my-6 text-travel-gray200" />
               <CommentItem
+                // imgUrl={comment.user?.image}
                 author={comment.user?.name || "익명"}
                 date={comment.createdAt || "날짜 없음"}
                 content={comment.content || "내용 없음"}
+                comment={comment}
+                onCommentDeleted={handleCommentDeleted}
               />
             </div>
           ))
