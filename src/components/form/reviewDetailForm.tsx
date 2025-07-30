@@ -23,6 +23,11 @@ interface ReviewFormProps extends ReviewSelectProps {
 }
 
 export default function ReviewDetailForm({ list, selected, reviewType, onChange, initialData }: ReviewFormProps) {
+  // ReviewDetailForm에서 디버깅
+  console.log("selected:", selected);
+  console.log("selected.days:", selected.days);
+  console.log("list:", list);
+
   // 글작성 또는 수정모드(initialData있을 경우)
   const isEditMode = !!initialData;
 
@@ -30,7 +35,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
   const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewDetailPost, null);
   const router = useRouter();
   const params = useParams();
-  const planId = params?.id || "";
+  const plan_id = params?.id || "";
 
   // 이미지 관련 상태
   const [images, setImages] = useState<{ path: string; name: string; preview: string }[]>([]);
@@ -137,7 +142,7 @@ export default function ReviewDetailForm({ list, selected, reviewType, onChange,
       {isEditMode && initialData && <input type="hidden" name="reviewId" value={initialData._id?.toString() || ""} />}
       <input type="hidden" name="review_type" value={reviewType} />
 
-      <input type="hidden" name="plan_id" value={planId.toString()} />
+      <input type="hidden" name="plan_id" value={plan_id.toString()} />
       <input type="hidden" name="selected_days" value={selected.days} />
       <input type="hidden" name="selected_place" value={JSON.stringify(selected.place)} />
 

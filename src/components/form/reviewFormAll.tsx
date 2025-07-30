@@ -137,10 +137,8 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
 
       <input type="hidden" name="plan_id" value={planReviewInfo?.plan_id ?? initialData?.extra.plan_id ?? ""} />
       <input type="hidden" name="startDate" value={planReviewInfo?.startDate ?? initialData?.extra?.startDate ?? ""} />
-
       <input type="hidden" name="endDate" value={planReviewInfo?.endDate ?? initialData?.extra?.endDate ?? ""} />
-
-      <input type="hidden" name="place" value={planReviewInfo?.title ?? ""} />
+      <input type="hidden" name="place" value={planReviewInfo?.title ?? initialData?.extra?.place ?? ""} />
       <input
         type="hidden"
         name="location"
