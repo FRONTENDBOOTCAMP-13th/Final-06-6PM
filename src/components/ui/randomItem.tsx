@@ -57,7 +57,7 @@ export default function RandomItem() {
 
             return {
               ...randomSpot,
-              overview: overview,
+              overview: overview.replace(/<[^>]*>/g, "").trim(),
               regionName: randomDestination.name,
             } as RandomTravelSpot;
           }
