@@ -18,6 +18,7 @@ export async function getReviewAllList(token: string): ApiResPromise<GetReviewDe
       headers: {
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${token}`,
       },
       // cache: "force-cache",
     });
@@ -40,6 +41,7 @@ export async function getReviewDailyList(token: string): ApiResPromise<GetReview
       headers: {
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${token}`,
       },
       // cache: "force-cache",
     });
@@ -62,6 +64,7 @@ export async function getReviewPlaceList(token: string): ApiResPromise<GetReview
       headers: {
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${token}`,
       },
       // cache: "force-cache",
     });
