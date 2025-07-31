@@ -5,7 +5,6 @@ import { AreaTravelProps, ContentDataProps, KeywordTravelProps } from "@/types/t
 // 여행 계획 상세 정보 응답 타입
 export interface GetPlanDetailProps {
   _id: number; // 여행 계획 고유 ID
-  plan_id: number; // 참조용 계획 ID (별도 필드로 존재)
   type: string; // 계획 유형 (예: "plan")
   views: number; // 조회수
   user: User; // 작성자 정보
@@ -20,8 +19,17 @@ export interface GetPlanDetailProps {
 
 // 여행 추가 정보 (기간 관련)
 export interface PlanExtra {
+  title?: string;
   startDate: string; // 여행 시작일 (ISO 문자열 또는 날짜 문자열)
   endDate: string; // 여행 종료일
+}
+
+// 여행 리뷰 정보
+export interface PlanReviewInfo {
+  plan_id?: number;
+  title?: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 // 여행 일정 단위 정보

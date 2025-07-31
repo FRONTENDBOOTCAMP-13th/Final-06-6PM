@@ -10,7 +10,6 @@ interface ModalItemProps {
 }
 
 export default function ModalItem({ location }: ModalItemProps) {
-  console.log(location);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -43,7 +42,7 @@ export default function ModalItem({ location }: ModalItemProps) {
   return (
     <>
       <button
-        className="flex items-center gap-1 cursor-pointer text-14 text-travel-info100"
+        className="flex items-center gap-1 cursor-pointer text-14 text-travel-info100 hover:text-travel-primary100 hover:underline"
         data-contentid={location.contentId}
         onClick={() => openModal()}
       >

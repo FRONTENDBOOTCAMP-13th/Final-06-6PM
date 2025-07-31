@@ -1,36 +1,64 @@
 "use client";
+import { useParams, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { GetReviewDetailProps } from "@/types/review";
-import { getReviewDetail } from "@/data/functions/review";
-import ReviewDetailForm from "@/components/form/reviewDetailForm";
-import ReviewFormAll from "@/components/form/reviewFormAll";
 import Button from "@/components/ui/btn";
+import ReviewFormAll from "@/components/form/reviewFormAll";
+import { ReviewDayItem } from "@/components/form/reviewSelect";
+import ReviewDetailForm from "@/components/form/reviewDetailForm";
+import { getReviewDetail } from "@/data/functions/review";
+import { GetReviewDetailProps } from "@/types/review";
 import { CalendarDays, LayoutList, Link, MapPin } from "lucide-react";
-import { DayItem } from "@/components/form/reviewSelect";
+import { PlanReply, PlanReviewInfo } from "@/types/plan";
 
 export default function SelectEditReview() {
   const [tab, setTab] = useState(0);
-  const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectItem, setSelectItem] = useState<DayItem | null>(null);
-
   const params = useParams();
   const reviewId = Number(params?.id);
+  const searchParams = useSearchParams();
+  const reviewType = searchParams.get("reviewType");
 
-  // 디버깅용 로그
-  console.log("SelectEditReview 렌더링:", {
-    reviewId,
-    reviewData: reviewData ? "로드됨" : "로딩중",
-    tab,
-    loading,
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [planReply, setPlanReply] = useState<PlanReply[]>([]);
+  const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
+  const [selectItem, setSelectItem] = useState<ReviewDayItem | null>(null);
+  const [planReviewInfo, setPlanReviewInfo] = useState<PlanReviewInfo>({
+    plan_id: 0,
+    title: "",
+    startDate: "",
+    endDate: "",
   });
 
-  const reviewDaily: DayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
-  const reviewPlace: DayItem[] = []; // Plan 데이터 제거로 빈 배열 유지
+  // reviewDaily
+  const reviewDaily: ReviewDayItem[] = useMemo(() => {
+    return planReply.map((day) => ({
+      days: day.planDate,
+      place: day.locations.map((location) => ({
+        title: location.title,
+        contentId: location.contentId,
+      })),
+    }));
+  }, [planReply]);
 
+  // reviewPlace
+  const reviewPlace: ReviewDayItem[] = useMemo(() => {
+    const places: ReviewDayItem[] = [];
+    planReply.forEach((day) => {
+      day.locations.forEach((location) => {
+        places.push({
+          days: day.planDate,
+          place: {
+            title: location.title,
+            contentId: location.contentId,
+          },
+        });
+      });
+    });
+    return places;
+  }, [planReply]);
+
+  // 탭구분
   const data = [
     {
       id: 0,
@@ -51,7 +79,48 @@ export default function SelectEditReview() {
     },
   ];
 
-  // 리뷰 데이터 조회
+  // reviewType과 reviewData에 따른 초기 설정
+  useEffect(() => {
+    // reviewType이 있으면 해당 타입으로 탭 설정
+    if (reviewType) {
+      if (reviewType === "reviewAll") setTab(0);
+      else if (reviewType === "reviewDaily") setTab(1);
+      else if (reviewType === "reviewPlace") setTab(2);
+    }
+    // reviewData가 있으면 리뷰 타입으로 탭 설정
+    else if (reviewData) {
+      if (reviewData.type === "reviewAll") setTab(0);
+      else if (reviewData.type === "reviewDaily") setTab(1);
+      else if (reviewData.type === "reviewPlace") setTab(2);
+    }
+  }, [reviewType, reviewData]);
+
+  // 선택 아이템 설정
+  useEffect(() => {
+    if (tab === 0) {
+      setSelectItem(null);
+      return;
+    }
+    if (reviewData) {
+      if (tab === 1) {
+        setSelectItem({
+          days: reviewData.extra?.visitDate || "선택된 날짜",
+          place: Array.isArray(reviewData.extra?.location)
+            ? reviewData.extra.location
+            : reviewData.extra?.location
+            ? [reviewData.extra.location]
+            : [],
+        });
+      } else if (tab === 2) {
+        setSelectItem({
+          days: reviewData.extra?.visitDate || "선택된 날짜",
+          place: reviewData.extra?.location || { title: "선택된 장소", contentId: "" },
+        });
+      }
+    }
+  }, [tab, reviewData]);
+
+  // 리뷰 데이터 가져오기
   useEffect(() => {
     const fetchReviewData = async () => {
       if (!reviewId) {
@@ -61,16 +130,21 @@ export default function SelectEditReview() {
       }
 
       try {
-        const res = await getReviewDetail(String(reviewId));
-        if (res.ok === 1 && res.item) {
-          setReviewData(res.item);
-
-          if (res.item.type === "reviewAll") setTab(0);
-          else if (res.item.type === "reviewDaily") setTab(1);
-          else if (res.item.type === "reviewPlace") setTab(2);
-        } else {
+        const reviewRes = await getReviewDetail(String(reviewId));
+        if (reviewRes.ok !== 1 || !reviewRes.item) {
           setError("리뷰 데이터를 불러올 수 없습니다.");
+          setLoading(false);
+          return;
         }
+
+        const reviewItem = reviewRes.item;
+        setReviewData(reviewItem);
+        setPlanReviewInfo({
+          plan_id: reviewItem?.extra.plan_id,
+          title: reviewItem?.extra.place,
+          startDate: reviewItem?.extra.startDate,
+          endDate: reviewItem?.extra.endDate,
+        });
       } catch (error) {
         console.error("리뷰 데이터 로드 실패:", error);
         setError("리뷰 데이터 로드 중 오류가 발생했습니다.");
@@ -82,30 +156,8 @@ export default function SelectEditReview() {
     fetchReviewData();
   }, [reviewId]);
 
-  // selectItem 설정
-  useEffect(() => {
-    if (tab === 0) {
-      setSelectItem(null);
-      return;
-    }
-
-    const targetList = tab === 1 ? reviewDaily : reviewPlace;
-    if (targetList.length > 0) {
-      if (reviewData) {
-        let matchingItem = null;
-
-        if (tab === 1 && reviewData.type === "reviewDaily") {
-          matchingItem = targetList.find((item) => item.days === reviewData.extra?.visitDate);
-        } else if (tab === 2 && reviewData.type === "reviewPlace") {
-          matchingItem = targetList.find((item) => item.place === reviewData.extra?.location);
-        }
-
-        setSelectItem(matchingItem || targetList[0]);
-      } else {
-        setSelectItem(targetList[0]);
-      }
-    }
-  }, [tab, reviewDaily, reviewPlace, reviewData]);
+  // console.log("reviewData", reviewData);
+  // console.log("planReviewInfo", planReviewInfo);
 
   // 로딩중
   if (loading) {
@@ -170,11 +222,11 @@ export default function SelectEditReview() {
           );
         })}
       </div>
-      {tab === 0 && <ReviewFormAll key={`review-all-${reviewData._id || reviewData._id}`} initialData={reviewData} />}
 
-      {tab === 1 && selectItem && reviewDaily.length > 0 && (
+      {tab === 0 && <ReviewFormAll planReviewInfo={planReviewInfo} initialData={reviewData} />}
+
+      {tab === 1 && selectItem && (
         <ReviewDetailForm
-          key={`review-daily-${reviewData._id || reviewData._id}-${selectItem.days}`}
           list={reviewDaily}
           selected={selectItem}
           onChange={setSelectItem}
@@ -183,15 +235,23 @@ export default function SelectEditReview() {
         />
       )}
 
-      {tab === 2 && selectItem && reviewPlace.length > 0 && (
+      {tab === 2 && selectItem && (
         <ReviewDetailForm
-          key={`review-place-${reviewData._id || reviewData._id}-${selectItem.place}`}
           list={reviewPlace}
           selected={selectItem}
           onChange={setSelectItem}
           reviewType="reviewPlace"
           initialData={reviewData}
         />
+      )}
+
+      {/* 데이터 없음 메시지 */}
+      {(tab === 1 || tab === 2) && !selectItem && (
+        <div className="p-4 text-center">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <p className="text-yellow-600">선택된 항목이 없습니다.</p>
+          </div>
+        </div>
       )}
     </div>
   );
