@@ -45,13 +45,11 @@ export default function ProfileItemEdit() {
     >
       {/* 프로필이미지 */}
       <div className="relative overflow-hidden rounded-full cursor-pointer w-25 h-25 bg-travel-gray200 aspect-square group">
-        {/* 프로필이미지 */}
-        <div className="overflow-hidden rounded-full w-25 h-25 bg-travel-gray200 aspect-square">
+        <div className="relative w-25 h-25 bg-travel-gray200 aspect-square">
           {imgUrl && (
             <Image
-              width={100}
-              height={100}
-              src={imgUrl || "/images/user1.png"}
+              fill
+              src={imgUrl || "/images/user-default.webp"}
               alt={user?.name || "사용자"}
               className="object-cover w-full h-full"
             />
@@ -73,28 +71,7 @@ export default function ProfileItemEdit() {
         <Input size="sm" id="description" name="description" defaultValue={userInfo?.desc} />
       </div>
 
-      {/* 비밀번호 */}
-      {/* <div className="w-full">
-        <Input
-          size="sm"
-          id="password"
-          name="password"
-          type="password"
-          placeholder="새 비밀번호"
-        />
-      </div>
-
-      <div className="w-full">
-        <Input
-          size="sm"
-          id="passwordConfirm"
-          name="passwordConfirm"
-          type="password"
-          placeholder="비밀번호 재확인"
-        />
-      </div> */}
-
-      <div className=" text-travel-gray700 flex w-full gap-1.5">
+      <div className="grid grid-cols-2 gap-1.5 w-full">
         <Link href="/mypage" className="w-full">
           <ButtonRounded size="md" variant="outline" className="w-full">
             취소
