@@ -8,6 +8,8 @@ import SearchInput from "@/components/form/searchInput";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
+import { AlertCircle, RotateCcw } from "lucide-react";
+import Button from "@/components/ui/btn";
 
 type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
 
@@ -121,13 +123,20 @@ export default function FeedContent() {
   if (error) {
     return (
       <div className="text-center py-8">
-        <p className="text-travel-fail100 mb-4">{error}</p>
-        <button
+        <div className="flex items-start gap-2 rounded-md border bg-red-50 p-3 text-red-500 mb-4">
+          <AlertCircle className="size-5 shrink-0" />
+          <p className="text-14 font-medium">{error}</p>
+        </div>
+
+        <Button
+          variant="fill"
+          size="md"
           onClick={() => fetchReviewData(currentType)}
-          className="px-4 py-2 bg-travel-primary100 text-white rounded-md hover:bg-travel-primary200 transition-colors"
+          className="w-full flex items-center justify-center gap-2"
         >
+          <RotateCcw className="size-4" />
           다시 시도
-        </button>
+        </Button>
       </div>
     );
   }
