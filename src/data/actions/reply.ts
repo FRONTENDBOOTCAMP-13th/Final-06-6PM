@@ -49,3 +49,105 @@ export async function createReviewReply(
 
   return data;
 }
+
+/**
+ * 리뷰 댓글을 삭제하는 함수
+ * @param {ApiReplyRes<ReviewReply> | null} state - 이전 상태(사용하지 않음)
+ * @param {FormData} formData - 삭제할 댓글 정보를 담은 FormData 객체
+ * @returns {Promise<ApiReplyRes<ReviewReply>>} - 삭제 결과 응답 객체
+ */
+export async function deleteReviewReply(
+  state: ApiReplyRes<ReviewReply> | null,
+  formData: FormData,
+): ApiReplyResPromise<ReviewReply> {
+  const _id = formData.get("_id");
+  const replyId = formData.get("replyId");
+  const accessToken = formData.get("accessToken");
+
+  if (!_id || !replyId || !accessToken) {
+    return { ok: 0, message: "필수 정보가 누락되었습니다." };
+  }
+
+  let res: Response;
+  let data: ApiReplyRes<ReviewReply>;
+
+  try {
+    res = await fetch(`${API_URL}/posts/${_id}/replies/${replyId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    data = await res.json();
+  } catch (error) {
+    console.error("댓글 삭제 실패:", error);
+    return { ok: 0, message: "일시적인 네트워크 문제로 삭제에 실패했습니다." };
+  }
+
+  if (data.ok) {
+    revalidatePath("/feed");
+    revalidatePath("/mypage");
+  }
+
+  return data;
+}
+
+/**
+ * 리뷰 댓글을 수정하는 함수
+ * @param {ApiReplyRes<ReviewReply> | null} state - 이전 상태(사용하지 않음)
+ * @param {FormData} formData - 수정할 댓글 정보를 담은 FormData 객체
+ * @returns {Promise<ApiReplyRes<ReviewReply>>} - 수정 결과 응답 객체
+ */
+export async function updateReviewReply(
+  state: ApiReplyRes<ReviewReply> | null,
+  formData: FormData,
+): ApiReplyResPromise<ReviewReply> {
+  const body = {
+    content: formData.get("content"),
+  };
+  const _id = formData.get("_id");
+  const replyId = formData.get("replyId");
+  const accessToken = formData.get("accessToken");
+
+  if (!_id || !replyId || !accessToken || !body.content) {
+    return { ok: 0, message: "필수 정보가 누락되었습니다." };
+  }
+
+  let res: Response;
+  let data: ApiReplyRes<ReviewReply>;
+
+  try {
+    res = await fetch(`${API_URL}/posts/${_id}/replies/${replyId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    data = await res.json();
+  } catch (error) {
+    console.error("댓글 수정 실패:", error);
+    return { ok: 0, message: "일시적인 네트워크 문제로 수정에 실패했습니다." };
+  }
+
+  if (data.ok) {
+    revalidatePath("/feed");
+    revalidatePath("/mypage");
+  }
+
+  return data;
+}
