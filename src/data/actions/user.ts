@@ -4,8 +4,7 @@ import { uploadFile } from "@/data/actions/file";
 import { ApiRes, ApiResPromise } from "@/types/api";
 import { User } from "@/types/user";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
+const API_URL = process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 /**
@@ -16,10 +15,7 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
  * @description
  * 첨부파일(프로필 이미지)이 있으면 파일 업로드 후, 회원가입 API를 호출합니다.
  */
-export async function createUser(
-  state: ApiRes<User> | null,
-  formData: FormData
-): ApiResPromise<User> {
+export async function createUser(state: ApiRes<User> | null, formData: FormData): ApiResPromise<User> {
   let res: Response;
   let data: ApiRes<User>;
 
@@ -48,7 +44,7 @@ export async function createUser(
       ...(image ? { image } : {}),
     };
 
-    console.log(`body`, body);
+    // console.log(`body`, body);
 
     // 회원가입 API 호출
     res = await fetch(`${API_URL}/users`, {
@@ -71,6 +67,75 @@ export async function createUser(
 }
 
 /**
+ * 회원수정 함수
+ * @param state - 이전 상태(사용하지 않음)
+ * @param formData - 회원수정 폼 데이터(FormData 객체)
+ * @returns 회원수정 결과 응답 객체
+ * @description 사용자 정보를 수정하고 프로필 이미지 업로드를 처리합니다.
+ */
+export async function UpdateUser(state: ApiRes<User> | null, formData: FormData, id: string): ApiResPromise<User> {
+  let res: Response;
+  let data: ApiRes<User>;
+
+  try {
+    // 첨부파일(프로필 이미지) 처리
+    const attach = formData.get("attach") as File;
+    let image;
+
+    if (attach && attach.size > 0) {
+      // 파일 업로드 API 호출
+      const fileRes = await uploadFile(formData);
+      console.log(`fileRes`, fileRes);
+
+      if (fileRes.ok) {
+        image = fileRes.item[0].path;
+      } else {
+        return fileRes;
+      }
+    }
+
+    // 회원수정 요청 바디 생성 (빈 문자열 체크 추가)
+    const body = {
+      type: formData.get("type") || "user",
+      name: formData.get("name"),
+      email: formData.get("email"),
+      desc: formData.get("desc"),
+      // 비밀번호가 있을 때만 포함 (수정 시 비밀번호는 선택사항일 수 있음)
+      ...(formData.get("password") ? { password: formData.get("password") } : {}),
+      // 이미지가 업로드된 경우에만 포함
+      ...(image ? { image } : {}),
+    };
+
+    // 회원수정 API 호출 (PATCH 메서드 사용, id 변수 사용)
+    res = await fetch(`${API_URL}/users/${id}`, {
+      method: "PATCH", // 수정 작업이므로 PATCH 사용
+      headers: {
+        "Content-Type": "application/json",
+        "Client-Id": CLIENT_ID,
+      },
+      body: JSON.stringify(body),
+    });
+
+    data = await res.json();
+
+    if (!res.ok) {
+      return {
+        ok: 0,
+        message: "일시적인 네트워크 문제가 발생했습니다.",
+      };
+    }
+  } catch (error) {
+    // 네트워크 오류 처리
+    console.error("UpdateUser Error:", error);
+    return {
+      ok: 0,
+      message: "일시적인 네트워크 문제가 발생했습니다.",
+    };
+  }
+
+  return data;
+}
+/**
  * 로그인 함수
  * @param state - 이전 상태(사용하지 않음)
  * @param formData - 로그인 폼 데이터(FormData 객체)
@@ -78,10 +143,7 @@ export async function createUser(
  * @description
  * 이메일/비밀번호로 로그인 API를 호출합니다.
  */
-export async function login(
-  state: ApiRes<User> | null,
-  formData: FormData
-): ApiResPromise<User> {
+export async function login(state: ApiRes<User> | null, formData: FormData): ApiResPromise<User> {
   const body = Object.fromEntries(formData.entries());
 
   let res: Response;
