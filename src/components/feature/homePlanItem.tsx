@@ -65,12 +65,14 @@ export default function HomePlanItem() {
           showUpcomingTrips.map((item) => {
             const dday = getDday(item.extra?.startDate);
             return (
-              <DayItem
-                key={item._id}
-                place={item.title}
-                period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
-                dday={dday}
-              />
+              <Link href={`/plan/${item._id}`}>
+                <DayItem
+                  key={item._id}
+                  place={item.title}
+                  period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
+                  dday={dday}
+                />
+              </Link>
             );
           })
         ) : (
@@ -88,7 +90,7 @@ export default function HomePlanItem() {
         <div className="flex flex-col gap-3">
           {showCompletedTrips.length > 0 ? (
             showCompletedTrips.map((item) => (
-              <Link href="/review" key={item._id}>
+              <Link href={`/review/${item._id}?place=${item.title}`} key={item._id}>
                 <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} />
               </Link>
             ))
