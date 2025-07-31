@@ -8,3 +8,12 @@ export interface WeatherItem {
   nx: number; // 격자 X 좌표
   ny: number; // 격자 Y 좌표
 }
+
+export interface LocationInfo {
+  region: string;
+  city: string;
+  district?: string;
+  fullAddress?: string;
+  latitude: number;
+  longitude: number;
+}
