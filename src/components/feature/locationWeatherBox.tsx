@@ -1,50 +1,92 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MapPin } from "lucide-react";
+import { Loader2, MapPin } from "lucide-react";
+import { LocationInfo, WeatherItem } from "@/types/weather";
 import ServerLocation from "@/components/feature/serverLocation";
-import WeatherItem from "@/components/feature/weatherApi";
-import { convertLatLngToGrid } from "@/lib/togrid";
-import { getLocationData } from "@/lib/api/weather";
+import WeatherItemComponent from "@/components/feature/weatherApi";
+import { getCurrentLocationWeather } from "@/lib/api/weather";
 
-interface LocationInfo {
-  region: string;
-  city: string;
-  latitude: number;
-  longitude: number;
-}
+type FullWeatherData = {
+  location: LocationInfo;
+  weatherData: WeatherItem[];
+  gridCoords: { nx: string; ny: string };
+};
 
 export default function LocationWeatherBox() {
-  const [weatherData, setWeatherData] = useState<LocationInfo | null>(null);
-  const [coords, setCoords] = useState<{ nx: string; ny: string } | null>(null);
+  const [weatherData, setWeatherData] = useState<FullWeatherData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getLocationData();
-      if (!data) return;
+    const fetchWeatherData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-      setWeatherData(data);
-
-      const { latitude, longitude } = data;
-      const { nx, ny } = convertLatLngToGrid(latitude, longitude);
-      setCoords({ nx: String(nx), ny: String(ny) });
+        const data = await getCurrentLocationWeather();
+        if (data) {
+          // console.log("위치:", data.location.city);
+          // console.log("날씨:", data.weatherData);
+          setWeatherData(data);
+        } else {
+          setError("위치 정보를 가져올 수 없습니다");
+        }
+      } catch (err) {
+        console.error("날씨 데이터 로딩 오류:", err);
+        setError("데이터 로딩 중 오류가 발생했습니다");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchData();
+    fetchWeatherData();
   }, []);
 
+  // 로딩 중일 때
+  if (loading) {
+    return (
+      <>
+        <div className="flex items-center gap-2 text-16">
+          <Loader2 className="size-4 animate-spin text-white ml-1" />
+          <span>위치 확인 중</span>
+        </div>
+        <div className="absolute right-4 top-3 flex items-center gap-2">
+          <Loader2 className="size-4 animate-spin text-white" />
+          <span>날씨 로딩 중</span>
+        </div>
+      </>
+    );
+  }
+
+  // 에러가 있을 때
+  if (error) {
+    return (
+      <>
+        <div className="flex items-center gap-1">
+          <MapPin className="size-4" />
+          <span className="text-travel-text100">{error}</span>
+        </div>
+        <div className="absolute right-4 top-3">
+          <span>날씨 정보 없음</span>
+        </div>
+      </>
+    );
+  }
+
+  // 데이터가 있을 때
   return (
     <>
-      <div className="flex items-center gap-1 text-16">
-        <MapPin className="w-4 h-4 mr-1" />
+      <div className="flex items-center gap-1">
+        <MapPin className="size-4" />
         <ServerLocation
-          region={weatherData?.region || ""}
-          city={weatherData?.city ?? "위치 정보 없음"}
+          region={weatherData?.location.region || ""}
+          city={weatherData?.location.city ?? "위치 정보 없음"}
         />
       </div>
       <div className="absolute right-4 top-3">
-        {coords ? (
-          <WeatherItem nx={coords.nx} ny={coords.ny} />
+        {weatherData?.gridCoords ? (
+          <WeatherItemComponent nx={weatherData.gridCoords.nx} ny={weatherData.gridCoords.ny} />
         ) : (
           <span>날씨 정보 없음</span>
         )}

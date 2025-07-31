@@ -1,19 +1,14 @@
 /**
- * 위도(latitude)와 경도(longitude)를 기상청 단기예보 격자 좌표(nx, ny)로 변환하는 함수
+ * GPS 좌표를 기상청 격자 좌표로 변환하는 함수
+ * (기상청 API는 위경도가 아닌 격자 좌표 시스템 사용)
  *
- * @param {number} lat - 위도 (degree, 예: 37.5665)
- * @param {number} lon - 경도 (degree, 예: 126.9780)
- * @returns {{ nx: number; ny: number }} 변환된 격자 좌표 객체
+ * 기상청에서 제공하는 좌표 변환 공식 적용
  *
- * @description
- * 한국 기상청의 격자 기반 단기예보 API에서 사용하는 좌표 체계로 변환합니다.
- * 위도와 경도를 입력받아 해당 좌표에 맞는 격자 x, y 값을 계산하여 반환합니다.
- *
- * @example
- * const { nx, ny } = convertLatLngToGrid(37.5665, 126.9780);
- * console.log(nx, ny); // 예: 60, 127
+ * @param lat - 위도
+ * @param lon - 경도
+ * @returns 기상청 격자 좌표 {nx, ny}
  */
-export function convertLatLngToGrid(lat: number, lon: number) {
+export function convertToGrid(lat: number, lon: number) {
   const RE = 6371.00877; // 지구 반경(km)
   const GRID = 5.0; // 격자 간격(km)
   const SLAT1 = 30.0; // 투영 위도1(degree)
@@ -30,9 +25,7 @@ export function convertLatLngToGrid(lat: number, lon: number) {
   const olon = OLON * DEGRAD;
   const olat = OLAT * DEGRAD;
 
-  let sn =
-    Math.tan(Math.PI * 0.25 + slat2 * 0.5) /
-    Math.tan(Math.PI * 0.25 + slat1 * 0.5);
+  let sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5);
   sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
 
   let sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5);
@@ -51,7 +44,7 @@ export function convertLatLngToGrid(lat: number, lon: number) {
   theta *= sn;
 
   return {
-    nx: Math.floor(ra * Math.sin(theta) + XO + 0.5),
-    ny: Math.floor(ro - ra * Math.cos(theta) + YO + 0.5),
+    nx: String(Math.floor(ra * Math.sin(theta) + XO + 0.5)),
+    ny: String(Math.floor(ro - ra * Math.cos(theta) + YO + 0.5)),
   };
 }
