@@ -26,6 +26,8 @@ export default function CommentItem({
 }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useUserStore();
+  const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
+  const imgSrc = `${SERVER}/${imgUrl}`;
 
   const showActionButtons = comment && userInfo && comment.user._id === userInfo._id;
 
@@ -37,7 +39,7 @@ export default function CommentItem({
             <Image
               width={50}
               height={50}
-              src={imgUrl}
+              src={imgSrc}
               alt={`${author} 프로필`}
               className="object-cover w-full h-full"
             />
