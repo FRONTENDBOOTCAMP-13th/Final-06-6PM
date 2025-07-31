@@ -51,30 +51,7 @@ export default function SelectBookmark() {
       const bookmarkData = await getBookmarks(token);
       console.log("받은 북마크 데이터:", bookmarkData);
 
-      if (bookmarkData?.ok === 1 && bookmarkData.item) {
-        const convertedReviews: GetReviewDetailProps[] = bookmarkData.item
-          .filter((bookmark: any) => bookmark.post && typeof bookmark.post === "object")
-          .map((bookmark: any) => {
-            console.log("=== 북마크 데이터 변환 ===");
-            console.log("bookmark._id (북마크 ID):", bookmark._id);
-            console.log("bookmark.post._id (게시물 ID):", bookmark.post._id);
-
-            return {
-              _id: bookmark.post._id,
-              type: bookmark.post.type || "reviewAll",
-              title: bookmark.post.title,
-              content: bookmark.post.content,
-              user: bookmark.post.user,
-              createdAt: bookmark.post.createdAt,
-              updatedAt: bookmark.post.updatedAt,
-              extra: bookmark.post.extra,
-              views: bookmark.post.views || 0,
-              bookmarks: bookmark.post.bookmarks || 0,
-              myBookmarkId: bookmark._id,
-              repliesCount: bookmark.post.repliesCount || 0,
-            };
-          });
-
+     
         console.log("변환된 리뷰 데이터:", convertedReviews);
         setReviewBookmark(convertedReviews);
       } else {

@@ -11,7 +11,7 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
  *
  * @returns {Promise<ApiRes<any>>} 전체 리뷰 리스트 응답 객체
  */
-export async function getReviewAllList(): ApiResPromise<GetReviewDetailProps[]> {
+export async function getReviewAllList(token: string): ApiResPromise<GetReviewDetailProps[]> {
   try {
     const res = await fetch(`${API_URL}/posts?type=reviewAll`, {
       method: "GET",
@@ -33,7 +33,7 @@ export async function getReviewAllList(): ApiResPromise<GetReviewDetailProps[]> 
  *
  * @returns {Promise<ApiRes<any>>} 일별 리뷰 리스트 응답 객체
  */
-export async function getReviewDailyList(): ApiResPromise<GetReviewDetailProps[]> {
+export async function getReviewDailyList(token: string): ApiResPromise<GetReviewDetailProps[]> {
   try {
     const res = await fetch(`${API_URL}/posts?type=reviewDaily`, {
       method: "GET",
@@ -55,7 +55,7 @@ export async function getReviewDailyList(): ApiResPromise<GetReviewDetailProps[]
  *
  * @returns {Promise<ApiRes<any>>} 장소별 리뷰 리스트 응답 객체
  */
-export async function getReviewPlaceList(): ApiResPromise<GetReviewDetailProps[]> {
+export async function getReviewPlaceList(token: string): ApiResPromise<GetReviewDetailProps[]> {
   try {
     const res = await fetch(`${API_URL}/posts?type=reviewPlace`, {
       method: "GET",

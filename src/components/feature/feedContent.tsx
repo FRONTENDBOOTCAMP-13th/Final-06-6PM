@@ -8,6 +8,7 @@ import ViewItem from "@/components/feature/viewItem";
 import SearchInput from "@/components/form/searchInput";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
+import useUserStore from "@/zustand/userStore";
 
 type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
 
@@ -20,6 +21,7 @@ export default function FeedContent() {
   const [loading, setLoading] = useState(false);
   const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
   const [searchText, setSearchText] = useState("");
+  const token = useUserStore((state) => state.token);
 
   // 현재 검색창의 상태 없으면 ""
   useEffect(() => {
@@ -64,9 +66,9 @@ export default function FeedContent() {
 
       if (type === "all") {
         const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
-          getReviewAllList(),
-          getReviewDailyList(),
-          getReviewPlaceList(),
+          getReviewAllList(token!),
+          getReviewDailyList(token!),
+          getReviewPlaceList(token!),
         ]);
 
         const reviewAllData = reviewAllRes?.ok === 1 ? reviewAllRes.item || [] : [];
@@ -78,13 +80,13 @@ export default function FeedContent() {
         let response;
         switch (type) {
           case "reviewAll":
-            response = await getReviewAllList();
+            response = await getReviewAllList(token!);
             break;
           case "reviewDaily":
-            response = await getReviewDailyList();
+            response = await getReviewDailyList(token!);
             break;
           case "reviewPlace":
-            response = await getReviewPlaceList();
+            response = await getReviewPlaceList(token!);
             break;
           default:
             response = { ok: 0, item: [] };
@@ -116,7 +118,7 @@ export default function FeedContent() {
   useEffect(() => {
     fetchReviewData(currentType);
   }, [currentType]);
-
+  console.log(filteredData, "필터데이터");
   return (
     <>
       {/* 서치인풋폼 및 기존코드  */}

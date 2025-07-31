@@ -16,6 +16,7 @@ export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkCha
   const token = useUserStore((state) => state.token);
   const [toggle, setIsToggle] = useState(!!myBookmarkId);
   const [loading, setLoading] = useState(false);
+
   // props로 마이북마크아이디 값이 들어오면 토글상태 업데이트
   // 북마크가 안되어있으면 언디파인드라 업데이트 안댐
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkCha
   }, [myBookmarkId]);
 
   const toggleClick = async () => {
-    if (!token || loading) return; // 토큰없으면 무시
+    if (!token) return; // 토큰없으면 무시
     setLoading(true);
 
     try {
@@ -42,6 +43,7 @@ export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkCha
       } else {
         //없으면 추가
         const addResult = await addBookmark(reviewId, token);
+        console.log(myBookmarkId, "북마크");
         setIsToggle(true);
         onBookmarkChange?.(true);
       }
