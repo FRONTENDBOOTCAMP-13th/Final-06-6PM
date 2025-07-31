@@ -93,7 +93,9 @@ export default function HomePlanItem() {
               </Link>
             ))
           ) : (
-            <div className="text-center text-black py-8">완료된 여행이 없습니다.</div>
+            <Link href="/plan">
+              <DayItem place="완료된 여행이 없어요" />
+            </Link>
           )}
         </div>
       </div>
