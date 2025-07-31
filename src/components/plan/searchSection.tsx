@@ -16,13 +16,6 @@ export default function SearchSection({ selectedArea, keyword, isSearching, onSe
         value={keyword}
         onSearch={onSearch}
       />
-
-      {/* 로딩 상태 표시 */}
-      {isSearching && (
-        <div className="text-center py-4">
-          <p className="text-gray-500">검색 중...</p>
-        </div>
-      )}
     </div>
   );
 }

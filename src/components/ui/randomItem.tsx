@@ -4,11 +4,9 @@ import React, { useEffect, useState } from "react";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import DrawerItem from "@/components/feature/drawerItem";
-import { getTravelList, getContentData } from "@/data/functions/travel";
+import { getRandomTravelList, getContentData } from "@/data/functions/travel";
 import { RandomTravelSpot } from "@/types/travel";
 import { destinationList } from "@/lib/data/destinationList";
-
-const randomContentID = "12";
 
 export default function RandomItem() {
   const [travelSpot, setTravelSpot] = useState<RandomTravelSpot | null>(null);
@@ -27,7 +25,7 @@ export default function RandomItem() {
         const randomAreaCode = randomDestination.areaCode;
 
         // 해당 지역 관광지 목록 조회
-        const response = await getTravelList(randomAreaCode, randomContentID);
+        const response = await getRandomTravelList(randomAreaCode);
 
         if (response?.body?.items?.item && response.body.items.item.length > 0) {
           const travelSpots = response.body.items.item;
@@ -57,7 +55,7 @@ export default function RandomItem() {
 
             return {
               ...randomSpot,
-              overview: overview,
+              overview: overview.replace(/<[^>]*>/g, "").trim(),
               regionName: randomDestination.name,
             } as RandomTravelSpot;
           }

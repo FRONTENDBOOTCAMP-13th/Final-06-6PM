@@ -71,7 +71,7 @@ export default function PlanDetailContent() {
       </div>
 
       <div className="flex flex-col justify-between pt-7 gap-5">
-        {planData.replies.map((reply) => (
+        {planData.replies?.map((reply) => (
           <DayScheduleCard
             key={reply.day}
             day={reply.day}

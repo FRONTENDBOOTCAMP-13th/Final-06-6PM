@@ -141,3 +141,22 @@ export async function getContentData(contentId: string) {
   const res = await fetchTravel("/detailCommon2", params);
   return res.response;
 }
+
+/**
+ * 랜덤 관광 정보 조회 함수
+ */
+export async function getRandomTravelList(areaCode: number): Promise<GetAreaTravelProps> {
+  const params: Record<string, string> = {
+    serviceKey: API_KEY,
+    areaCode: String(areaCode),
+    contentTypeId: "12",
+    numOfRows: "150",
+    pageNo: "1",
+    MobileOS: "ETC",
+    MobileApp: "TravelDiary",
+    _type: "json",
+  };
+
+  const res = await fetchTravel("/areaBasedList2", params);
+  return res.response;
+}
