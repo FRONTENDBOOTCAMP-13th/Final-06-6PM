@@ -1,19 +1,63 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import ButtonRounded from "@/components/ui/btnRound";
-import DropdownItem from "@/components/feature/dropdownItem";
 import TagItem from "@/components/feature/tagItem";
 import ViewItem from "@/components/feature/viewItem";
+import SearchInput from "@/components/form/searchInput";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
+import useUserStore from "@/zustand/userStore";
 
 type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
 
 export default function FeedContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [reviewData, setReviewData] = useState<GetReviewDetailProps[]>([]);
+  const [filteredData, setFilteredData] = useState<GetReviewDetailProps[]>([]);
   const [currentType, setCurrentType] = useState<ReviewType>("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
+  const [searchText, setSearchText] = useState("");
+  const token = useUserStore((state) => state.token);
+
+  // 현재 검색창의 상태 없으면 ""
+  useEffect(() => {
+    const query = searchParams.get("search") || "";
+    setSearchText(query);
+  }, [searchParams]);
+
+  // 검색어 제목+내용으로 필터링
+  useEffect(() => {
+    if (!searchText.trim()) {
+      //검색어가 없거나 공백만 있으면 싹다 출력
+      setFilteredData(reviewData);
+    } else {
+      //영어 검색을 위한 대소문자 구분없애기
+      const lowerCaseSearch = searchText.toLowerCase();
+      const filtered = reviewData.filter(
+        (item) =>
+          (item.title ?? "").toLowerCase().includes(lowerCaseSearch) ||
+          (item.content ?? "").toLowerCase().includes(lowerCaseSearch),
+      );
+      setFilteredData(filtered);
+    }
+  }, [reviewData, searchText]);
+
+  const handleSearch = (value: string) => {
+    setSearchText(value); // 서치텍스트의 현재 상태 업데이트
+
+    // 새로고침 버튼
+    const params = new URLSearchParams(searchParams);
+    if (value.trim()) {
+      params.set("search", value.trim());
+    } else {
+      params.delete("search");
+    }
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
 
   const fetchReviewData = useCallback(async (type: ReviewType = "all") => {
     setLoading(true);
@@ -24,9 +68,9 @@ export default function FeedContent() {
 
       if (type === "all") {
         const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
-          getReviewAllList(),
-          getReviewDailyList(),
-          getReviewPlaceList(),
+          getReviewAllList(token!),
+          getReviewDailyList(token!),
+          getReviewPlaceList(token!),
         ]);
 
         const reviewAllData = reviewAllRes?.ok === 1 ? reviewAllRes.item || [] : [];
@@ -38,13 +82,13 @@ export default function FeedContent() {
         let response;
         switch (type) {
           case "reviewAll":
-            response = await getReviewAllList();
+            response = await getReviewAllList(token!);
             break;
           case "reviewDaily":
-            response = await getReviewDailyList();
+            response = await getReviewDailyList(token!);
             break;
           case "reviewPlace":
-            response = await getReviewPlaceList();
+            response = await getReviewPlaceList(token!);
             break;
           default:
             response = { ok: 0, item: [] };
@@ -88,8 +132,28 @@ export default function FeedContent() {
     );
   }
 
+  console.log(filteredData, "필터데이터");
   return (
     <>
+      {/* 서치인풋폼 및 기존코드  */}
+      <div>
+        <SearchInput
+          size="md"
+          placeholder="가고 싶은 국내 여행지의 리뷰를 살펴보세요"
+          value={searchText} // 상태값 표시 및 업데이트
+          onSearch={handleSearch}
+        />
+
+        <button // search=으로 링크가 들어가버려서 f5눌러도 그대로라 버튼을 따로 만듬
+          onClick={() => handleSearch("")}
+          className="text-sm text-travel-gray500 hover:text-travel-primary200 "
+          aria-label="새로고침"
+          type="button"
+        >
+          새로고침
+        </button>
+      </div>
+
       <div className="flex flex-col-reverse xs:flex-row items-end xs:items-center gap-y-3 my-3 px-0.5">
         {/* <DropdownItem label="오래된순" />
         <div className="flex w-full xs:w-fit flex-start items-center gap-0.5 before:hidden xs:before:block before:content-['|'] before:mx-1 before:text-travel-gray400"></div> */}
@@ -119,10 +183,12 @@ export default function FeedContent() {
             <div className="animate-spin w-6 h-6 border-2 border-travel-primary100 border-t-transparent rounded-full mx-auto mb-2"></div>
             로딩 중...
           </div>
-        ) : reviewData.length > 0 ? (
-          reviewData.map((item) => <ViewItem key={item._id} {...item} onDelete={handleDelete} />)
+        ) : filteredData.length > 0 ? (
+          filteredData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
         ) : (
-          <div className="text-center py-8 text-travel-gray400">후기가 없습니다.</div>
+          <div className="text-center py-8 text-travel-gray400">
+            {searchText ? "검색 결과가 없습니다." : "후기가 없습니다."}
+          </div>
         )}
       </div>
     </>

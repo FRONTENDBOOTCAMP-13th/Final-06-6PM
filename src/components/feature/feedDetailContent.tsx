@@ -2,8 +2,9 @@
 import { useState, useEffect, useCallback } from "react";
 import CommentItem from "@/components/ui/commentItem";
 import ViewItem from "@/components/feature/viewItem";
-import { getReviewDetail } from "@/data/functions/review";
 import { GetReviewDetailProps, ReviewReply } from "@/types/review";
+import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
+import useUserStore from "@/zustand/userStore";
 
 interface FeedDetailContentProps {
   reviewId: string;
@@ -16,35 +17,46 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchReviewDetail = useCallback(async (id: string) => {
-    setLoading(true);
-    setError(null);
+  // 컴포넌트 레벨에서 token 가져오기
+  const token = useUserStore((state) => state.token);
 
-    try {
-      const detailRes = await getReviewDetail(id);
+  const fetchReviewDetail = useCallback(
+    async (id: string) => {
+      setLoading(true);
+      setError(null);
 
-      if (detailRes?.ok === 1 && detailRes.item) {
-        const updatedReviewData = {
-          ...detailRes.item,
-          repliesCount: detailRes.item.repliesCount || detailRes.item.replies?.length || 0,
-        };
+      try {
+        const detailRes = await getReviewDetail(id);
+        const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
+          getReviewAllList(token!),
+          getReviewDailyList(token!),
+          getReviewPlaceList(token!),
+        ]);
 
-        setReviewData(updatedReviewData);
-        setComments(detailRes.item.replies || []);
-      } else {
-        setError("리뷰를 찾을 수 없습니다.");
+        if (detailRes?.ok === 1 && detailRes.item) {
+          const updatedReviewData = {
+            ...detailRes.item,
+            repliesCount: detailRes.item.repliesCount || detailRes.item.replies?.length || 0,
+          };
+
+          setReviewData(updatedReviewData);
+          setComments(detailRes.item.replies || []);
+        } else {
+          setError("리뷰를 찾을 수 없습니다.");
+          setReviewData(null);
+          setComments([]);
+        }
+      } catch (error) {
+        console.error("상세 데이터 로딩 실패:", error);
+        setError("데이터를 불러오는데 실패했습니다.");
         setReviewData(null);
         setComments([]);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("상세 데이터 로딩 실패:", error);
-      setError("데이터를 불러오는데 실패했습니다.");
-      setReviewData(null);
-      setComments([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    [token],
+  ); // token을 의존성 배열에 추가
 
   const handleCommentDeleted = (replyId: number) => {
     setComments((prev) => prev.filter((comment) => comment._id !== replyId));
