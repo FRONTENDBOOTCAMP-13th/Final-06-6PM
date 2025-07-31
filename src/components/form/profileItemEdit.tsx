@@ -17,9 +17,7 @@ export default function ProfileItemEdit() {
   const router = useRouter();
   const [userInfo, setUserInfo] = useState<User | null>(null);
   const user = useUserStore((state) => state.userInfo);
-  const imgUrl = user?.image?.startsWith("http")
-    ? user.image
-    : `${API_URL}/${user?.image}`;
+  const imgUrl = user?.image?.startsWith("http") ? user.image : `${API_URL}/${user?.image}`;
 
   // 사용자 정보
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function ProfileItemEdit() {
   return (
     <form
       action={formSubmit}
-      className="relative flex flex-col items-center gap-4 px-5 py-8 text-center bg-white shadow rounded-xl"
+      className="relative flex flex-col items-center w-full gap-6 px-5 py-8 text-center bg-white shadow rounded-xl"
     >
       {/* 프로필이미지 */}
       <div className="relative overflow-hidden rounded-full cursor-pointer w-25 h-25 bg-travel-gray200 aspect-square group">
@@ -60,40 +58,19 @@ export default function ProfileItemEdit() {
           )}
         </div>
 
-        <div
-          className="absolute inset-0 flex items-center justify-center bg-black/60"
-          onClick={() => imageClick()}
-        >
+        <div className="absolute inset-0 flex items-center justify-center bg-black/60" onClick={() => imageClick()}>
           <Camera className="text-white size-7" />
         </div>
       </div>
 
-      {/* 프로필기본내용 */}
-      <div className="space-y-1">
-        <h2 className="font-semibold text-20">{user?.name}</h2>
-        <p className="px-3 break-keep text-travel-gray700 line-clamp-3">
-          {userInfo?.desc || "소개글이 없습니다."}
-        </p>
-      </div>
-
       {/* 닉네임 */}
       <div className="w-full">
-        <Input
-          size="sm"
-          id="username"
-          name="username"
-          defaultValue={user?.name}
-        />
+        <Input size="sm" id="username" name="username" defaultValue={user?.name} />
       </div>
 
       {/* 한줄소개 */}
       <div className="w-full">
-        <Input
-          size="sm"
-          id="description"
-          name="description"
-          defaultValue={userInfo?.desc}
-        />
+        <Input size="sm" id="description" name="description" defaultValue={userInfo?.desc} />
       </div>
 
       {/* 비밀번호 */}
@@ -117,13 +94,13 @@ export default function ProfileItemEdit() {
         />
       </div> */}
 
-      <div className=" text-travel-gray700 flex gap-1.5">
-        <Link href="/mypage">
-          <ButtonRounded size="md" variant="outline">
+      <div className=" text-travel-gray700 flex w-full gap-1.5">
+        <Link href="/mypage" className="w-full">
+          <ButtonRounded size="md" variant="outline" className="w-full">
             취소
           </ButtonRounded>
         </Link>
-        <ButtonRounded size="md" variant="fill" type="submit">
+        <ButtonRounded size="md" variant="fill" type="submit" className="w-full">
           수정
         </ButtonRounded>
       </div>
