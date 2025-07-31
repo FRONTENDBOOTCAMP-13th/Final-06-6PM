@@ -4,8 +4,7 @@ import { WeatherItem } from "@/types/weather";
 import { todayDate } from "@/lib/todayDate";
 import { baseTime } from "@/lib/baseTime";
 
-const API_URL =
-  "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+const API_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
 /**
@@ -16,10 +15,7 @@ const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
  * @returns 날씨 정보 배열 (WeatherItem[])
  * @throws API 호출 실패 또는 데이터 없음 시 오류 발생
  */
-export async function fetchWeather(
-  nx: string,
-  ny: string
-): Promise<WeatherItem[]> {
+export async function fetchWeather(nx: string, ny: string): Promise<WeatherItem[]> {
   const params = new URLSearchParams({
     serviceKey: API_KEY ?? "",
     numOfRows: "10",
