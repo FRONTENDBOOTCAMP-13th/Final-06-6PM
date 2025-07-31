@@ -71,7 +71,7 @@ export default function ModalItem({ location }: ModalItemProps) {
 
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
-          <div className="relative w-full p-6 bg-white shadow-lg rounded-2xl max-w-100 min-h-[420px]">
+          <div className="relative w-full p-6 bg-white shadow-lg rounded-2xl max-w-100">
             {/* 닫기 버튼 */}
             <button className="absolute cursor-pointer right-4 top-4" onClick={onClose}>
               <X className="w-6 h-6 text-travel-gray600" />
@@ -82,10 +82,10 @@ export default function ModalItem({ location }: ModalItemProps) {
               <div>
                 {isLoading ? (
                   <>
-                    <div className="h-6 w-3/4 bg-travel-gray200 rounded-md animate-pulse mb-2" />
+                    <div className="w-3/4 h-6 mb-2 rounded-md bg-travel-gray200 animate-pulse" />
                     <div className="flex items-center gap-1">
-                      <div className="w-4 h-4 bg-travel-gray200 rounded-full animate-pulse" />
-                      <div className="h-4 w-1/2 bg-travel-gray200 rounded-md animate-pulse" />
+                      <div className="w-4 h-4 rounded-full bg-travel-gray200 animate-pulse" />
+                      <div className="w-1/2 h-4 rounded-md bg-travel-gray200 animate-pulse" />
                     </div>
                   </>
                 ) : (
@@ -117,7 +117,7 @@ export default function ModalItem({ location }: ModalItemProps) {
               {/* 설명 */}
               {isLoading ? (
                 <div className="flex flex-col gap-2">
-                  <div className="h-4 w-full bg-travel-gray200 rounded animate-pulse" />
+                  <div className="w-full h-4 rounded bg-travel-gray200 animate-pulse" />
                   <div className="h-4 w-[90%] bg-travel-gray200 rounded animate-pulse" />
                   <div className="h-4 w-[85%] bg-travel-gray200 rounded animate-pulse" />
                 </div>
