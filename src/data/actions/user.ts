@@ -70,10 +70,17 @@ export async function createUser(state: ApiRes<User> | null, formData: FormData)
  * 회원수정 함수
  * @param state - 이전 상태(사용하지 않음)
  * @param formData - 회원수정 폼 데이터(FormData 객체)
+ * @param _id - 사용자 ID
+ * @param token - 인증 토큰
  * @returns 회원수정 결과 응답 객체
  * @description 사용자 정보를 수정하고 프로필 이미지 업로드를 처리합니다.
  */
-export async function UpdateUser(state: ApiRes<User> | null, formData: FormData, id: string): ApiResPromise<User> {
+export async function UpdateUser(
+  state: ApiRes<User> | null,
+  formData: FormData,
+  _id: number,
+  token: string,
+): Promise<ApiRes<User>> {
   let res: Response;
   let data: ApiRes<User>;
 
@@ -94,29 +101,49 @@ export async function UpdateUser(state: ApiRes<User> | null, formData: FormData,
       }
     }
 
-    // 회원수정 요청 바디 생성 (빈 문자열 체크 추가)
-    const body = {
-      type: formData.get("type") || "user",
-      name: formData.get("name"),
-      email: formData.get("email"),
-      desc: formData.get("desc"),
-      // 비밀번호가 있을 때만 포함 (수정 시 비밀번호는 선택사항일 수 있음)
-      ...(formData.get("password") ? { password: formData.get("password") } : {}),
-      // 이미지가 업로드된 경우에만 포함
-      ...(image ? { image } : {}),
-    };
+    // 회원수정 요청 생성
+    const name = formData.get("username") as string;
+    const desc = formData.get("desc") as string;
 
-    // 회원수정 API 호출 (PATCH 메서드 사용, id 변수 사용)
-    res = await fetch(`${API_URL}/users/${id}`, {
-      method: "PATCH", // 수정 작업이므로 PATCH 사용
+    // 디버깅용 로그
+    console.log("FormData values:", {
+      name,
+      desc,
+      descLength: desc?.length,
+      descTrimmed: desc?.trim(),
+    });
+
+    const body: Record<string, string> = {};
+
+    // 바디 데이터 연계
+    if (name && name.trim()) {
+      body.name = name.trim();
+    }
+
+    // desc 처리 - null이나 undefined가 아니면 빈 문자열이어도 전송
+    if (desc !== null && desc !== undefined) {
+      body.desc = desc.trim();
+    }
+
+    if (image) {
+      body.image = image;
+    }
+
+    console.log("Request body:", body);
+
+    // 회원수정 API 호출
+    res = await fetch(`${API_URL}/users/${_id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Client-Id": CLIENT_ID,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     });
 
     data = await res.json();
+    console.log("Server response:", data);
 
     if (!res.ok) {
       return {
@@ -126,15 +153,15 @@ export async function UpdateUser(state: ApiRes<User> | null, formData: FormData,
     }
   } catch (error) {
     // 네트워크 오류 처리
-    console.error("UpdateUser Error:", error);
+    console.error("회원정보 업데이트에 실패하였습니다", error);
     return {
       ok: 0,
       message: "일시적인 네트워크 문제가 발생했습니다.",
     };
   }
-
   return data;
 }
+
 /**
  * 로그인 함수
  * @param state - 이전 상태(사용하지 않음)
