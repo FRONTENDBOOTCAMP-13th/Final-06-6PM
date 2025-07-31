@@ -1,10 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import CommentItem from "@/components/ui/commentItem";
 import ViewItem from "@/components/feature/viewItem";
-import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
-import { GetReviewDetailProps } from "@/types/review";
-import { ReviewReply } from "@/types/review";
+import { getReviewDetail } from "@/data/functions/review";
+import { GetReviewDetailProps, ReviewReply } from "@/types/review";
 
 interface FeedDetailContentProps {
   reviewId: string;
@@ -15,52 +14,37 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
   const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
   const [comments, setComments] = useState<ReviewReply[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchReviewDetail = async (id: string) => {
+  const fetchReviewDetail = useCallback(async (id: string) => {
     setLoading(true);
+    setError(null);
+
     try {
-      const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
-        getReviewAllList(),
-        getReviewDailyList(),
-        getReviewPlaceList(),
-      ]);
+      const detailRes = await getReviewDetail(id);
 
-      let allReviews: GetReviewDetailProps[] = [];
-      if (reviewAllRes?.ok === 1) allReviews.push(...(reviewAllRes.item || []));
-      if (reviewDailyRes?.ok === 1) allReviews.push(...(reviewDailyRes.item || []));
-      if (reviewPlaceRes?.ok === 1) allReviews.push(...(reviewPlaceRes.item || []));
+      if (detailRes?.ok === 1 && detailRes.item) {
+        const updatedReviewData = {
+          ...detailRes.item,
+          repliesCount: detailRes.item.repliesCount || detailRes.item.replies?.length || 0,
+        };
 
-      const targetReview = allReviews.find((item) => item._id.toString() === id);
-
-      if (targetReview) {
-        const detailRes = await getReviewDetail(id);
-        console.log("detailRes", detailRes);
-
-        if (detailRes?.ok === 1 && detailRes.item) {
-          const updatedReviewData = {
-            ...detailRes.item,
-            repliesCount: detailRes.item.repliesCount || detailRes.item.replies?.length || 0,
-          };
-
-          setReviewData(updatedReviewData);
-          setComments(detailRes.item.replies || []);
-        } else {
-          setReviewData(targetReview);
-          setComments([]);
-        }
+        setReviewData(updatedReviewData);
+        setComments(detailRes.item.replies || []);
       } else {
-        console.error("해당 ID의 리뷰를 찾을 수 없습니다:", id);
+        setError("리뷰를 찾을 수 없습니다.");
         setReviewData(null);
         setComments([]);
       }
     } catch (error) {
       console.error("상세 데이터 로딩 실패:", error);
+      setError("데이터를 불러오는데 실패했습니다.");
       setReviewData(null);
       setComments([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const handleCommentDeleted = (replyId: number) => {
     setComments((prev) => prev.filter((comment) => comment._id !== replyId));
@@ -72,6 +56,10 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
           }
         : null,
     );
+  };
+
+  const handleCommentUpdated = (updatedReply: ReviewReply) => {
+    setComments((prev) => prev.map((comment) => (comment._id === updatedReply._id ? updatedReply : comment)));
   };
 
   useEffect(() => {
@@ -92,12 +80,31 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
     if (reviewId) {
       fetchReviewDetail(reviewId);
     }
-  }, [reviewId]);
+  }, [reviewId, fetchReviewDetail]);
 
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-center py-8">로딩 중...</div>
+        <div className="text-center py-8">
+          <div className="animate-spin w-6 h-6 border-2 border-travel-primary100 border-t-transparent rounded-full mx-auto mb-2"></div>
+          로딩 중...
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center py-8">
+          <p className="text-travel-fail100 mb-4">{error}</p>
+          <button
+            onClick={() => fetchReviewDetail(reviewId)}
+            className="px-4 py-2 bg-travel-primary100 text-white rounded-md hover:bg-travel-primary200 transition-colors"
+          >
+            다시 시도
+          </button>
+        </div>
       </div>
     );
   }
@@ -118,8 +125,8 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
 
       <div className="mt-6">
         {comments.length > 0 ? (
-          comments.map((comment, index) => (
-            <div key={comment._id || index}>
+          comments.map((comment) => (
+            <div key={comment._id}>
               <hr className="my-6 text-travel-gray200" />
               <CommentItem
                 // imgUrl={comment.user?.image}
@@ -128,6 +135,7 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
                 content={comment.content || "내용 없음"}
                 comment={comment}
                 onCommentDeleted={handleCommentDeleted}
+                onCommentUpdated={handleCommentUpdated}
               />
             </div>
           ))
