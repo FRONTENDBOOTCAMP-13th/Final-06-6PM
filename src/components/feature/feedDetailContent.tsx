@@ -5,6 +5,7 @@ import ViewItem from "@/components/feature/viewItem";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
 import { ReviewReply } from "@/types/review";
+import useUserStore from "@/zustand/userStore";
 
 interface FeedDetailContentProps {
   reviewId: string;
@@ -15,14 +16,14 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
   const [reviewData, setReviewData] = useState<GetReviewDetailProps | null>(null);
   const [comments, setComments] = useState<ReviewReply[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const token = useUserStore((state) => state.token);
   const fetchReviewDetail = async (id: string) => {
     setLoading(true);
     try {
       const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
-        getReviewAllList(),
-        getReviewDailyList(),
-        getReviewPlaceList(),
+        getReviewAllList(token!),
+        getReviewDailyList(token!),
+        getReviewPlaceList(token!),
       ]);
 
       let allReviews: GetReviewDetailProps[] = [];
