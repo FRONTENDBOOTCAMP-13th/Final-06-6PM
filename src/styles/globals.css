@@ -49,6 +49,14 @@
   --text-32: 2rem;
 }
 
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 .custom-scroll {
   scrollbar-width: thin;
   overflow-y: auto;
