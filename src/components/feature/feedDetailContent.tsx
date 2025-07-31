@@ -46,6 +46,7 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
     }
   }, []);
 
+  console.log("test", comments);
   const handleCommentDeleted = (replyId: number) => {
     setComments((prev) => prev.filter((comment) => comment._id !== replyId));
     setReviewData((prev) =>
@@ -129,7 +130,7 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
             <div key={comment._id}>
               <hr className="my-6 text-travel-gray200" />
               <CommentItem
-                // imgUrl={comment.user?.image}
+                imgUrl={comment.user?.image}
                 author={comment.user?.name || "익명"}
                 date={comment.createdAt || "날짜 없음"}
                 content={comment.content || "내용 없음"}
