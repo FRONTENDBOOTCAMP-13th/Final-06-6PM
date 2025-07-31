@@ -1,7 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ButtonRounded from "@/components/ui/btnRound";
-import DropdownItem from "@/components/feature/dropdownItem";
 import TagItem from "@/components/feature/tagItem";
 import ViewItem from "@/components/feature/viewItem";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
@@ -13,10 +12,12 @@ export default function FeedContent() {
   const [reviewData, setReviewData] = useState<GetReviewDetailProps[]>([]);
   const [currentType, setCurrentType] = useState<ReviewType>("all");
   const [loading, setLoading] = useState(false);
-  const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchReviewData = async (type: ReviewType = "all") => {
+  const fetchReviewData = useCallback(async (type: ReviewType = "all") => {
     setLoading(true);
+    setError(null);
+
     try {
       let allData: GetReviewDetailProps[] = [];
 
@@ -53,27 +54,38 @@ export default function FeedContent() {
       setReviewData(allData);
     } catch (error) {
       console.error("데이터 로딩 실패:", error);
+      setError("데이터를 불러오는데 실패했습니다. 다시 시도해주세요.");
       setReviewData([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const handleTypeChange = (type: ReviewType) => {
     setCurrentType(type);
   };
 
-  // 삭제 성공 시 데이터 새로고침하는 콜백 함수
   const handleDelete = (reviewId: number) => {
-    setDeleteReviewId(reviewId);
-
-    // 로컬 상태에서 해당 리뷰 제거
     setReviewData((prev) => prev.filter((item) => item._id !== reviewId));
   };
 
   useEffect(() => {
     fetchReviewData(currentType);
-  }, [currentType]);
+  }, [currentType, fetchReviewData]);
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-travel-fail100 mb-4">{error}</p>
+        <button
+          onClick={() => fetchReviewData(currentType)}
+          className="px-4 py-2 bg-travel-primary100 text-white rounded-md hover:bg-travel-primary200 transition-colors"
+        >
+          다시 시도
+        </button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -100,9 +112,12 @@ export default function FeedContent() {
 
       <div className="flex flex-col gap-6">
         {loading ? (
-          <div className="text-center py-8">로딩 중...</div>
+          <div className="text-center py-8">
+            <div className="animate-spin w-6 h-6 border-2 border-travel-primary100 border-t-transparent rounded-full mx-auto mb-2"></div>
+            로딩 중...
+          </div>
         ) : reviewData.length > 0 ? (
-          reviewData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
+          reviewData.map((item) => <ViewItem key={item._id} {...item} onDelete={handleDelete} />)
         ) : (
           <div className="text-center py-8 text-travel-gray400">후기가 없습니다.</div>
         )}
