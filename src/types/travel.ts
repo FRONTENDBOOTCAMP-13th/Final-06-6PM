@@ -82,6 +82,7 @@ export interface KeywordTravelProps {
   mapy: string; // 지도 Y좌표 (위도)
   mlevel: string; // 지도 확대 수준
   modifiedtime: string; // 수정 일시 (YYYYMMDDhhmmss 형식)
+  overview: string; // 내용
   sigungucode: string; // 시군구 코드 (지역 하위 구분)
   tel: string; // 전화번호
   title: string; // 장소 또는 콘텐츠 제목
