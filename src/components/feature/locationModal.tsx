@@ -14,6 +14,7 @@ interface ModalItemProps {
 export default function ModalItem({ location }: ModalItemProps) {
   const locationContentId = location.contentId;
   const [modalData, setModalData] = useState<KeywordTravelProps>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -42,6 +43,8 @@ export default function ModalItem({ location }: ModalItemProps) {
           setModalData(data[0]);
         } catch (error) {
           console.error("데이터 로딩 실패:", error);
+        } finally {
+          setIsLoading(false);
         }
       };
 
@@ -55,8 +58,6 @@ export default function ModalItem({ location }: ModalItemProps) {
     };
   }, [modalOpen, locationContentId]);
 
-  useEffect(() => {}, []);
-
   return (
     <>
       <button
@@ -65,49 +66,74 @@ export default function ModalItem({ location }: ModalItemProps) {
         onClick={() => openModal()}
       >
         <MapPin className="size-4" />
-        {location.title}
+        <span className="line-clamp-1 text-start">{location.title}</span>
       </button>
 
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
           <div className="relative w-full p-6 bg-white shadow-lg rounded-2xl max-w-100 min-h-[420px]">
-            {/* 화살표 */}
-            <button
-              className="absolute cursor-pointer right-4 top-4"
-              onClick={() => {
-                onClose();
-              }}
-            >
+            {/* 닫기 버튼 */}
+            <button className="absolute cursor-pointer right-4 top-4" onClick={onClose}>
               <X className="w-6 h-6 text-travel-gray600" />
             </button>
 
             <div className="flex flex-col gap-4">
-              {/* 제목 */}
+              {/* 제목 & 주소 */}
               <div>
-                <h2 className="text-24 font-bold text-travel-text200 mb-1.5">{modalData?.title}</h2>
-                <div className="flex items-center text-travel-gray600">
-                  <MapPin className="w-4 h-4 mr-1" />
-                  <span className="text-14">{modalData?.addr1}</span>
-                </div>
+                {isLoading ? (
+                  <>
+                    <div className="h-6 w-3/4 bg-travel-gray200 rounded-md animate-pulse mb-2" />
+                    <div className="flex items-center gap-1">
+                      <div className="w-4 h-4 bg-travel-gray200 rounded-full animate-pulse" />
+                      <div className="h-4 w-1/2 bg-travel-gray200 rounded-md animate-pulse" />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h2 className="text-24 font-bold text-travel-text200 mb-1.5">{modalData?.title}</h2>
+                    <div className="flex items-center text-travel-gray600">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      <span className="text-14">{modalData?.addr1}</span>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* 이미지 */}
-              {modalData?.firstimage && (
-                <Image
-                  width={200}
-                  height={190}
-                  src={modalData?.firstimage}
-                  alt={modalData?.title}
-                  className="max-h-[190px] aspect-[5/3] w-full object-cover rounded-lg overflow-hidden bg-travel-gray200" // 이미지 못불러올시 회색
-                />
+              {isLoading ? (
+                <div className="w-full h-[190px] bg-travel-gray200 rounded-lg animate-pulse" />
+              ) : (
+                modalData?.firstimage && (
+                  <Image
+                    width={200}
+                    height={190}
+                    src={modalData?.firstimage}
+                    alt={modalData?.title}
+                    className="max-h-[190px] aspect-[5/3] w-full object-cover rounded-lg overflow-hidden bg-travel-gray200"
+                  />
+                )
               )}
 
               {/* 설명 */}
-              <p className="custom-scroll text-14 text-travel-text100 max-h-50">{modalData?.overview}</p>
+              {isLoading ? (
+                <div className="flex flex-col gap-2">
+                  <div className="h-4 w-full bg-travel-gray200 rounded animate-pulse" />
+                  <div className="h-4 w-[90%] bg-travel-gray200 rounded animate-pulse" />
+                  <div className="h-4 w-[85%] bg-travel-gray200 rounded animate-pulse" />
+                </div>
+              ) : (
+                <p className="custom-scroll text-14 text-travel-text100 max-h-[210px]">{modalData?.overview}</p>
+              )}
             </div>
 
             {/* 버튼 */}
-            <Button size="lg" variant="primary" className="w-full mt-7" onClick={() => saveBookmark()}>
+            <Button
+              size="lg"
+              variant="primary"
+              className={`w-full mt-7 ${isLoading ? "pointer-events-none opacity-50" : ""}`}
+              disabled={isLoading}
+              onClick={() => saveBookmark()}
+            >
               북마크 저장하기
             </Button>
           </div>
