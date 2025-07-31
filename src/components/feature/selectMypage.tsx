@@ -17,7 +17,6 @@ export default function SelectMypage() {
   useEffect(() => {
     const planListUserData = async () => {
       const res = await getPlanListUser(token);
-      // console.log("API 응답:", res);
       if (res.ok) {
         setPlan(res.item);
       }
@@ -80,7 +79,7 @@ export default function SelectMypage() {
             );
           })
         ) : (
-          <Link href="/plan" className="block mb4">
+          <Link href="/plan" className="block mb-4">
             <DayItem />
           </Link>
         )}
