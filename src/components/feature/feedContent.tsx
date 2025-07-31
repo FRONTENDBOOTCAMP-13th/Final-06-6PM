@@ -32,7 +32,7 @@ export default function FeedContent() {
   // 검색어 제목+내용으로 필터링
   useEffect(() => {
     if (!searchText.trim()) {
-      //검색어가 없거나 공백만 있으면 싹다 출력
+      //검색어가 없거나 공백만 있으면 리뷰데이타 그대로 출력
       setFilteredData(reviewData);
     } else {
       //영어 검색을 위한 대소문자 구분없애기
@@ -132,7 +132,6 @@ export default function FeedContent() {
     );
   }
 
-  console.log(filteredData, "필터데이터");
   return (
     <>
       {/* 서치인풋폼 및 기존코드  */}
@@ -186,6 +185,7 @@ export default function FeedContent() {
         ) : filteredData.length > 0 ? (
           filteredData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
         ) : (
+          //그냥 아이템만 있으면 충돌날수도 있는데 그럼 큰일나서 앞에 타입까지 붙여줌
           <div className="text-center py-8 text-travel-gray400">
             {searchText ? "검색 결과가 없습니다." : "후기가 없습니다."}
           </div>
