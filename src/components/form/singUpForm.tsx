@@ -40,9 +40,7 @@ export default function SignupForm() {
           srOnly={false}
           placeholder="이메일을 입력해주세요"
         />
-        <p className="mt-1 text-14 font-medium text-travel-fail100">
-          {state?.ok === 0 && state.errors?.email?.msg}
-        </p>
+        <p className="mt-1 text-14 font-medium text-travel-fail100">{state?.ok === 0 && state.errors?.email?.msg}</p>
       </div>
 
       {/* 비밀번호 */}
@@ -56,24 +54,13 @@ export default function SignupForm() {
           srOnly={false}
           placeholder="비밀번호를 입력해주세요"
         />
-        <p className="mt-1 text-14 font-medium text-travel-fail100">
-          {state?.ok === 0 && state.errors?.password?.msg}
-        </p>
+        <p className="mt-1 text-14 font-medium text-travel-fail100">{state?.ok === 0 && state.errors?.password?.msg}</p>
       </div>
 
       {/* 이름 */}
       <div className="w-full">
-        <Input
-          size="sm"
-          id="name"
-          name="name"
-          labelTitle="닉네임"
-          srOnly={false}
-          placeholder="닉네임을 입력해주세요"
-        />
-        <p className="mt-1 text-14 font-medium text-travel-fail100">
-          {state?.ok === 0 && state.errors?.name?.msg}
-        </p>
+        <Input size="sm" id="name" name="name" labelTitle="닉네임" srOnly={false} placeholder="닉네임을 입력해주세요" />
+        <p className="mt-1 text-14 font-medium text-travel-fail100">{state?.ok === 0 && state.errors?.name?.msg}</p>
       </div>
 
       {/* 소개 */}
@@ -92,12 +79,12 @@ export default function SignupForm() {
       <ImageUploader />
 
       {/* 버튼 그룹 */}
-      <div className="flex justify-center items-center gap-4">
-        <Button type="submit" variant="primary" size="md">
+      <div className="grid grid-cols-2   items-center gap-4 w-full">
+        <Button type="submit" variant="primary" size="md" className="w-full">
           회원가입
         </Button>
-        <Link href="/">
-          <Button variant="outline" size="md">
+        <Link href="/login" className="w-full">
+          <Button variant="outline" size="md" className="w-full">
             취소
           </Button>
         </Link>
