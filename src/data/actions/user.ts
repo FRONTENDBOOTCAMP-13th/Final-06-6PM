@@ -75,7 +75,7 @@ export async function createUser(state: ApiRes<User> | null, formData: FormData)
  * @returns 회원수정 결과 응답 객체
  * @description 사용자 정보를 수정하고 프로필 이미지 업로드를 처리합니다.
  */
-export async function UpdateUser(
+export async function updateUser(
   state: ApiRes<User> | null,
   formData: FormData,
   _id: number,
