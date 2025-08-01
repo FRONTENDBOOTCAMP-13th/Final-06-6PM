@@ -24,9 +24,9 @@ interface ReviewFormProps extends ReviewSelectProps {
 
 export default function ReviewDetailForm({ list, selected, reviewType, onChange, initialData }: ReviewFormProps) {
   // ReviewDetailForm에서 디버깅
-  console.log("selected:", selected);
-  console.log("selected.days:", selected.days);
-  console.log("list:", list);
+  // console.log("selected:", selected);
+  // console.log("selected.days:", selected.days);
+  // console.log("list:", list);
 
   // 글작성 또는 수정모드(initialData있을 경우)
   const isEditMode = !!initialData;

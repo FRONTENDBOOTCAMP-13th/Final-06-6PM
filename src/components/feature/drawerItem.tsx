@@ -65,7 +65,7 @@ export default function DrawerItem({ title = "관광지", location = "주소", i
               />
             )}
             {/* 설명 */}
-            <p className="text-14">{desc}</p>
+            <p className="text-14 custom-scroll  max-h-[200px]">{desc}</p>
           </div>
 
           {/* 버튼 */}

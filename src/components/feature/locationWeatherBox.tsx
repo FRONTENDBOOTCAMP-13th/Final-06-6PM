@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, MapPin } from "lucide-react";
+import { AlertTriangle, Loader2, MapPin } from "lucide-react";
 import { LocationInfo, WeatherItem } from "@/types/weather";
 import ServerLocation from "@/components/feature/serverLocation";
-import WeatherItemComponent from "@/components/feature/weatherApi";
+import WeatherItemComponent from "@/components/feature/weatherItem";
 import { getCurrentLocationWeather } from "@/lib/api/weather";
 
 type FullWeatherData = {
@@ -64,11 +64,12 @@ export default function LocationWeatherBox() {
     return (
       <>
         <div className="flex items-center gap-1">
-          <MapPin className="size-4" />
-          <span className="text-travel-text100">{error}</span>
+          <AlertTriangle className="size-4 text-white90" />
+          <span className="text-white/90">{error}</span>
         </div>
-        <div className="absolute right-4 top-3">
-          <span>날씨 정보 없음</span>
+        <div className="absolute right-4 top-3 flex items-center gap-1">
+          <AlertTriangle className="size-4 text-white90" />
+          <span className="text-white90">날씨 정보 없음</span>
         </div>
       </>
     );

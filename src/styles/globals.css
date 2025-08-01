@@ -48,3 +48,30 @@
   --text-28: 1.75rem;
   --text-32: 2rem;
 }
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scroll {
+  scrollbar-width: thin;
+  overflow-y: auto;
+  scrollbar-color: rgba(40, 127, 211, 0.8) #e9f3ff;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(40, 127, 211, 0.8);
+  border-radius: 9999px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #e9f3ff;
+}

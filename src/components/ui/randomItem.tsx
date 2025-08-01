@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, MapPinX } from "lucide-react";
 import Image from "next/image";
 import DrawerItem from "@/components/feature/drawerItem";
 import { getRandomTravelList, getContentData } from "@/data/functions/travel";
@@ -118,9 +118,10 @@ export default function RandomItem() {
 
   if (error || !travelSpot) {
     return (
-      <div className="relative rounded-xl overflow-hidden shadow-lg w-full flex items-center justify-center min-h-[220px] bg-gray-200">
-        <div className="text-center">
-          <div className="text-gray-500">현재 추천할 수 있는 여행지가 없습니다.</div>
+      <div className="relative rounded-xl overflow-hidden shadow-md w-full flex items-center justify-center min-h-[220px] bg-white/80 border border-travel-gray500">
+        <div className="text-center flex flex-col items-center gap-2 text-travel-gray700">
+          <MapPinX />
+          <p className="font-medium">현재 추천할 수 있는 여행지가 없습니다.</p>
         </div>
       </div>
     );
@@ -136,7 +137,7 @@ export default function RandomItem() {
         className="object-cover"
         draggable={false}
       />
-      <div className="absolute inset-0 top-0 left-0 bg-black/40" />
+      <div className="absolute inset-0 top-0 left-0 bg-black/50" />
       <div className="relative z-10 w-full p-5">
         <div className="mb-3 space-y-1 text-white">
           <h3 className="font-bold text-20">{travelSpot.title}</h3>
