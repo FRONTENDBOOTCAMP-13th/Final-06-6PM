@@ -92,7 +92,7 @@ export async function UpdateUser(
     if (attach && attach.size > 0) {
       // 파일 업로드 API 호출
       const fileRes = await uploadFile(formData);
-      console.log(`fileRes`, fileRes);
+      // console.log(`fileRes`, fileRes);
 
       if (fileRes.ok) {
         image = fileRes.item[0].path;
@@ -105,31 +105,18 @@ export async function UpdateUser(
     const name = formData.get("username") as string;
     const desc = formData.get("desc") as string;
 
-    // 디버깅용 로그
-    console.log("FormData values:", {
-      name,
-      desc,
-      descLength: desc?.length,
-      descTrimmed: desc?.trim(),
-    });
-
     const body: Record<string, string> = {};
 
     // 바디 데이터 연계
     if (name && name.trim()) {
       body.name = name.trim();
     }
-
-    // desc 처리 - null이나 undefined가 아니면 빈 문자열이어도 전송
     if (desc !== null && desc !== undefined) {
       body.desc = desc.trim();
     }
-
     if (image) {
       body.image = image;
     }
-
-    console.log("Request body:", body);
 
     // 회원수정 API 호출
     res = await fetch(`${API_URL}/users/${_id}`, {
@@ -143,12 +130,12 @@ export async function UpdateUser(
     });
 
     data = await res.json();
-    console.log("Server response:", data);
+    console.log("서버응답:", data);
 
     if (!res.ok) {
       return {
         ok: 0,
-        message: "일시적인 네트워크 문제가 발생했습니다.",
+        message: "회원정보 업데이트에 실패하였습니다.",
       };
     }
   } catch (error) {
