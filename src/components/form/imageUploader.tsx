@@ -1,7 +1,8 @@
 "use client";
 
 import { ImagePlus, X } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function SignUpImg() {
   // 현재 선택된 이미지의 URL
@@ -12,18 +13,38 @@ export default function SignUpImg() {
   // 파일선택
   const attachImgPath = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      // 파일 객체를 브라우저가 보여줄 수 있는 임시 URL처리
-      const url = URL.createObjectURL(file);
-      setImgSrc(url);
+    if (!file) return;
+
+    // 파일 타입 검증
+    if (!file.type.startsWith("image/")) {
+      toast.error("이미지 파일만 업로드 가능합니다.");
+      return;
     }
+
+    // URL.createObjectURL로 미리보기 설정
+    const imgUrl = URL.createObjectURL(file);
+    setImgSrc(imgUrl);
   };
 
   const imgRemove = () => {
     setImgSrc("");
-    // input 초기화
-    if (inputRef.current) inputRef.current.value = "";
+
+    if (imgSrc && imgSrc.startsWith("blob:")) {
+      URL.revokeObjectURL(imgSrc);
+    }
+    if (inputRef.current)
+      // input 초기화
+      inputRef.current.value = "";
   };
+
+  // 컴포넌트 언마운트 시 URL 해제
+  useEffect(() => {
+    return () => {
+      if (imgSrc && imgSrc.startsWith("blob:")) {
+        URL.revokeObjectURL(imgSrc);
+      }
+    };
+  }, [imgSrc]);
 
   return (
     <div className="w-full">
@@ -36,18 +57,12 @@ export default function SignUpImg() {
         {/* 이미지 표시 */}
         <div
           className={`w-full h-full rounded-lg border ${
-            imgSrc
-              ? "border-travel-gray400"
-              : "border-dashed border-travel-gray300"
+            imgSrc ? "border-travel-gray400" : "border-dashed border-travel-gray300"
           } overflow-hidden flex items-center justify-center cursor-pointer`}
           onClick={() => inputRef.current?.click()}
         >
           {imgSrc ? (
-            <img
-              src={imgSrc}
-              alt="미리보기"
-              className="w-full h-full object-cover"
-            />
+            <img src={imgSrc} alt="미리보기" className="w-full h-full object-cover" />
           ) : (
             <ImagePlus className="w-10 h-10 text-travel-gray400" />
           )}
