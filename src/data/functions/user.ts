@@ -1,7 +1,6 @@
 "use server";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
+const API_URL = process.env.NEXT_PUBLIC_API_SERVER || "https://fesp-api.koyeb.app/market";
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
 
 /**
@@ -16,7 +15,7 @@ export async function getUserList() {
       headers: {
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
     return res.json();
   } catch (error) {
@@ -42,7 +41,7 @@ export async function getUser(_id: number) {
       headers: {
         "Client-Id": CLIENT_ID,
       },
-      cache: "force-cache",
+      // cache: "force-cache",
     });
     return res.json();
   } catch (error) {

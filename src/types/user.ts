@@ -44,4 +44,5 @@ export interface UserState {
   setToken: (token: string) => void; // 토큰 저장 함수
   setUserInfo: (info: User) => void; // 사용자 정보 저장 함수
   logout: () => void; // 로그아웃 처리 함수
+  updateUser: (updates: Partial<User>) => void; // 사용자 업데이트
 }

@@ -22,19 +22,17 @@ export default function MypagePage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="h-screen flex justify-center items-center w-full pb-40">
-        <div className="w-20 h-20 border-4 border-travel-primary200 border-t-transparent rounded-full animate-spin" />
+      <div className="flex items-center justify-center w-full h-screen pb-40">
+        <div className="w-20 h-20 border-4 rounded-full border-travel-primary200 border-t-transparent animate-spin" />
       </div>
     );
   }
 
   return (
     <>
-      <div className="flex flex-col gap-5 items-center">
-        <div className="w-full">
-          <ProfileItem />
-        </div>
-        <div className="w-full flex flex-col gap-5">
+      <div className="space-y-6">
+        <ProfileItem />
+        <div className="flex flex-col w-full gap-4">
           <Link href="/mypage/bookmark">
             <BookmarkItem type="bookmark" count={2} />
           </Link>
@@ -42,9 +40,9 @@ export default function MypagePage() {
             <BookmarkItem type="review" count={4} />
           </Link>
         </div>
-      </div>
-      <div className="bg-white shadow-xl rounded-2xl overflow-hidden mt-5">
-        <SelectMypage />
+        <div className="w-full overflow-hidden bg-white shadow-xl rounded-2xl ">
+          <SelectMypage />
+        </div>
       </div>
     </>
   );

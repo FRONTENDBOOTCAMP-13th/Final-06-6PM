@@ -1,3 +1,4 @@
+import MyPassword from "@/components/feature/myPassword";
 import LoginForm from "@/components/form/loginForm";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,19 +18,11 @@ export default function LoginPage() {
       <LoginForm />
 
       <div className="text-travel-gray400 text-16 flex items-center gap-2">
-        <Link
-          href="/signup"
-          className="hover:text-travel-primary100 transition text-travel-text100"
-        >
+        <Link href="/signup" className="hover:text-travel-primary100 transition text-travel-text100">
           회원가입
         </Link>
         <span>|</span>
-        <Link
-          href="#"
-          className="hover:text-travel-primary100 transition text-travel-text100"
-        >
-          비밀번호 찾기
-        </Link>
+        <MyPassword />
       </div>
     </div>
   );
