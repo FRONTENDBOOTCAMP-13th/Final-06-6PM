@@ -30,18 +30,17 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
         // 리뷰 상세정보랑 북마크 조회코드 가져오기
         const [detailRes, bookmarksRes] = await Promise.all([getReviewDetail(id), getBookmarks(token!)]);
         if (detailRes?.ok === 1 && detailRes.item) {
-          // 현재 리뷰에 대한 북마크 찾기
+          // 현재 리뷰에 북마크가 있는지 없는지 조회하기
           let myBookmarkId = undefined;
           if (bookmarksRes?.ok === 1 && bookmarksRes.item) {
             const currentBookmark = bookmarksRes.item.find((bookmark: any) => bookmark.post?._id === parseInt(id));
             myBookmarkId = currentBookmark?._id;
-            // 비교하는 코드
           }
 
           // 북마크 아이디를 포함한 리뷰 데이터 재구성
           const updatedReviewData: GetReviewDetailProps = {
             ...detailRes.item,
-            myBookmarkId, // 북마크 ID 추가
+            myBookmarkId, // 북마크아이디 추가
             repliesCount: detailRes.item.repliesCount || detailRes.item.replies?.length || 0,
           };
 
