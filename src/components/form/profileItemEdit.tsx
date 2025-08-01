@@ -19,13 +19,12 @@ const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
 export default function ProfileItemEdit() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const [userInfo, setUserInfo] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [newImg, setNewImg] = useState<string | null>(null);
   const [selectFile, setSelectFile] = useState<File | null>(null);
 
-  const user = useUserStore((state) => state.userInfo);
+  const userInfo = useUserStore((state) => state.userInfo);
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
   const userToken = useUserStore((state) => state.token);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 
@@ -34,8 +33,7 @@ export default function ProfileItemEdit() {
 
   useEffect(() => {
     if (state?.ok) {
-      // 성공 시 Zustand store 업데이트
-      updateUser(state.item);
+      setUserInfo(state.item);
       toast.success("프로필이 성공적으로 업데이트되었습니다.");
       router.push("/mypage");
     } else if (state?.ok === 0 && !state?.errors) {
@@ -44,15 +42,15 @@ export default function ProfileItemEdit() {
   }, [state, updateUser, router]);
 
   // 프로필 이미지 URL 생성
-  const imgUrl = user?.image?.startsWith("http")
-    ? user.image
-    : user?.image
-    ? `${API_URL}/${user.image}`
+  const imgUrl = userInfo?.image?.startsWith("http")
+    ? userInfo.image
+    : userInfo?.image
+    ? `${API_URL}/${userInfo.image}`
     : "/images/user-default.webp";
 
   // 사용자 정보 조회
   useEffect(() => {
-    if (!isLoggedIn || !user?._id) {
+    if (!isLoggedIn || !userInfo?._id) {
       router.push("/login");
       return;
     }
@@ -60,7 +58,7 @@ export default function ProfileItemEdit() {
     const fetchUserData = async () => {
       setIsLoading(true);
       try {
-        const res = await getUser(user._id);
+        const res = await getUser(userInfo._id);
         if (res.ok) {
           setUserInfo(res.item);
         } else {
@@ -73,7 +71,7 @@ export default function ProfileItemEdit() {
       }
     };
     fetchUserData();
-  }, [user?._id, isLoggedIn, router]);
+  }, [userInfo?._id, isLoggedIn, router]);
 
   // 파일 선택
   const attachImgPath = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +129,7 @@ export default function ProfileItemEdit() {
       <input ref={fileInputRef} type="file" accept="image/*" onChange={attachImgPath} className="hidden" />
 
       {/* 사용자 ID와 토큰을 히든 필드로 전달 */}
-      <input type="hidden" name="userId" value={user?._id || ""} />
+      <input type="hidden" name="userId" value={userInfo?._id || ""} />
       <input type="hidden" name="userToken" value={userToken || ""} />
 
       {/* 프로필 이미지 섹션 */}
@@ -141,7 +139,7 @@ export default function ProfileItemEdit() {
             <Image
               fill
               src={displayImage}
-              alt={user?.name || "사용자"}
+              alt={userInfo?.name || "사용자"}
               className="object-cover w-full h-full"
               onError={() => {
                 setNewImg("/images/user-default.webp");
@@ -170,7 +168,7 @@ export default function ProfileItemEdit() {
           id="username"
           name="username"
           placeholder="닉네임을 입력하세요"
-          defaultValue={user?.name || ""}
+          defaultValue={userInfo?.name || ""}
         />
         <p className="mt-1 text-14 font-medium text-travel-fail100">{state?.ok === 0 && state.errors?.name?.msg}</p>
       </div>
