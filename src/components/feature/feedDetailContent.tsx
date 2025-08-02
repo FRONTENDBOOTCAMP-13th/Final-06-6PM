@@ -5,6 +5,7 @@ import ViewItem from "@/components/feature/viewItem";
 import { GetReviewDetailProps, ReviewReply } from "@/types/review";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
 import useUserStore from "@/zustand/userStore";
+import { getBookmarks } from "@/data/functions/bookmark";
 
 interface FeedDetailContentProps {
   reviewId: string;
@@ -26,16 +27,20 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
       setError(null);
 
       try {
-        const detailRes = await getReviewDetail(id);
-        const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
-          getReviewAllList(token!),
-          getReviewDailyList(token!),
-          getReviewPlaceList(token!),
-        ]);
-
+        // 리뷰 상세정보랑 북마크 조회코드 가져오기
+        const [detailRes, bookmarksRes] = await Promise.all([getReviewDetail(id), getBookmarks(token!)]);
         if (detailRes?.ok === 1 && detailRes.item) {
-          const updatedReviewData = {
+          // 현재 리뷰에 북마크가 있는지 없는지 조회하기
+          let myBookmarkId = undefined;
+          if (bookmarksRes?.ok === 1 && bookmarksRes.item) {
+            const currentBookmark = bookmarksRes.item.find((bookmark: any) => bookmark.post?._id === parseInt(id));
+            myBookmarkId = currentBookmark?._id;
+          }
+
+          // 북마크 아이디를 포함한 리뷰 데이터 재구성
+          const updatedReviewData: GetReviewDetailProps = {
             ...detailRes.item,
+            myBookmarkId, // 북마크아이디 추가
             repliesCount: detailRes.item.repliesCount || detailRes.item.replies?.length || 0,
           };
 
@@ -56,9 +61,8 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
       }
     },
     [token],
-  ); // token을 의존성 배열에 추가
+  );
 
-  console.log("test", comments);
   const handleCommentDeleted = (replyId: number) => {
     setComments((prev) => prev.filter((comment) => comment._id !== replyId));
     setReviewData((prev) =>
@@ -73,6 +77,18 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
 
   const handleCommentUpdated = (updatedReply: ReviewReply) => {
     setComments((prev) => prev.map((comment) => (comment._id === updatedReply._id ? updatedReply : comment)));
+  };
+  // 위에꺼랑 똑같은 갱신용 함수, 북마크가 없다면 언디파인드
+  const handleBookmarkChange = (isBookmarked: boolean) => {
+    setReviewData((prev) => {
+      if (!prev) return null;
+
+      return {
+        ...prev,
+        bookmarks: isBookmarked ? (prev.bookmarks || 0) + 1 : Math.max((prev.bookmarks || 0) - 1, 0),
+        myBookmarkId: isBookmarked ? prev.myBookmarkId : undefined,
+      };
+    });
   };
 
   useEffect(() => {

@@ -6,7 +6,7 @@ const CLIENT_ID = "febc13-final06-emjf";
 // 북마크 추가
 export async function addBookmark(reviewId: number, token: string) {
   const body = {
-    target_id: reviewId, // 게시글 아이디값
+    target_id: reviewId, // 게시글 아이디값 필수바디
     memo: "",
     extra: {},
   };

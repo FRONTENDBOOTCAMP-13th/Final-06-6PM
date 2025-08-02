@@ -8,6 +8,8 @@ import SearchInput from "@/components/form/searchInput";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
+import { AlertCircle, RotateCcw } from "lucide-react";
+import Button from "@/components/ui/btn";
 
 type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
 
@@ -32,7 +34,7 @@ export default function FeedContent() {
   // 검색어 제목+내용으로 필터링
   useEffect(() => {
     if (!searchText.trim()) {
-      //검색어가 없거나 공백만 있으면 싹다 출력
+      //검색어가 없거나 공백만 있으면 리뷰데이타 그대로 출력
       setFilteredData(reviewData);
     } else {
       //영어 검색을 위한 대소문자 구분없애기
@@ -121,18 +123,24 @@ export default function FeedContent() {
   if (error) {
     return (
       <div className="text-center py-8">
-        <p className="text-travel-fail100 mb-4">{error}</p>
-        <button
+        <div className="flex items-start gap-2 rounded-md border bg-red-50 p-3 text-red-500 mb-4">
+          <AlertCircle className="size-5 shrink-0" />
+          <p className="text-14 font-medium">{error}</p>
+        </div>
+
+        <Button
+          variant="fill"
+          size="md"
           onClick={() => fetchReviewData(currentType)}
-          className="px-4 py-2 bg-travel-primary100 text-white rounded-md hover:bg-travel-primary200 transition-colors"
+          className="w-full flex items-center justify-center gap-2"
         >
+          <RotateCcw className="size-4" />
           다시 시도
-        </button>
+        </Button>
       </div>
     );
   }
 
-  console.log(filteredData, "필터데이터");
   return (
     <>
       {/* 서치인풋폼 및 기존코드  */}
@@ -186,6 +194,7 @@ export default function FeedContent() {
         ) : filteredData.length > 0 ? (
           filteredData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
         ) : (
+          //그냥 아이템만 있으면 충돌날수도 있는데 그럼 큰일나서 앞에 타입까지 붙여줌
           <div className="text-center py-8 text-travel-gray400">
             {searchText ? "검색 결과가 없습니다." : "후기가 없습니다."}
           </div>

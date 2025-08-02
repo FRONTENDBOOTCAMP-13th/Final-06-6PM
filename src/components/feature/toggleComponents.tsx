@@ -32,7 +32,7 @@ export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkCha
 
       let currentBookmark = null;
       if (bookmarkList?.ok === 1 && bookmarkList.item) {
-        // post._id값과 비교
+        // 조회되면 post._id값과 비교해서 북마크 목록에 있는지 없는지 찾기
         currentBookmark = bookmarkList.item.find((bookmark: any) => bookmark.post?._id === reviewId);
       }
       if (currentBookmark) {
@@ -43,7 +43,6 @@ export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkCha
       } else {
         //없으면 추가
         const addResult = await addBookmark(reviewId, token);
-        console.log(myBookmarkId, "북마크");
         setIsToggle(true);
         onBookmarkChange?.(true);
       }
@@ -59,6 +58,7 @@ export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkCha
     <button onClick={toggleClick} disabled={loading}>
       <Icon
         className={`size-7 ${toggle ? "text-amber-300" : "text-travel-gray400"} ${loading ? "opacity-50" : ""}`}
+        //함수가 돌아가면서 시간이 생각보다 꽤 걸려서 사용자가 당황할까봐 로딩중이라는 것을 알리기 위해 넣어둠
         fill="currentColor"
       />
     </button>

@@ -1,13 +1,18 @@
 "use client";
 
 import { MapPinned } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlacePlusItem, { PlacePlusItemProps } from "./placePlusItem";
 import ViewItem, { ViewItemProps } from "./viewItem";
 import { GetReviewDetailProps } from "@/types/review";
+import { getReviewAllList } from "@/data/functions/review";
+import useUserStore from "@/zustand/userStore";
 
 export default function SelectBookmark() {
   const [tab, setTab] = useState(0);
+  const [reviewBookmark, setReviewBookmark] = useState<GetReviewDetailProps[]>([]);
+  const [loading, setLoading] = useState(false);
+  const token = useUserStore((state) => state.token);
 
   const placeBookmark: PlacePlusItemProps[] = [
     {
@@ -33,35 +38,37 @@ export default function SelectBookmark() {
     },
   ];
 
-  const reviewBookmark: GetReviewDetailProps[] = [
-    {
-      _id: 1,
-      type: "reviewAll",
-      title: "여름 바다 여행",
-      content: "햇살 가득한 해운대에서 여유로운 시간을 보냈어요!",
-      user: {
-        type: "user",
-        email: "test",
-        _id: 101,
-        name: "홍길동",
-        // image: "/images/user2.png",
-      },
-      createdAt: "2025-07-11",
-      updatedAt: "2025-07-11",
-      extra: {
-        plan_id: 501,
-        startDate: "2025-07-10",
-        endDate: "2025-07-12",
-        // images: ["/images/user1.png", "/images/user2.png", "/images/user3.png"],
-        starRate: 4.5,
-        location: ["부산 해운대"],
-        tags: ["여행", "바다", "여름"],
-      },
-      views: 123,
-      bookmarks: 45,
-      repliesCount: 8,
-    },
-  ];
+  // 후기 탭을 누를때 호출하는 함수
+  useEffect(() => {
+    if (token && tab === 1) {
+      fetchBookmarkedReviews();
+    }
+  }, [token, tab]);
+
+  const fetchBookmarkedReviews = async () => {
+    if (!token) return; //로그인안대면못함
+
+    setLoading(true);
+    try {
+      const reviewsData = await getReviewAllList(token); //전체 리뷰 리스트를 가져옴
+
+      if (reviewsData?.ok === 1 && reviewsData.item) {
+        //북마크 되어 있는 게시물만 필터링
+        const bookmarkedReviews = reviewsData.item.filter((review: GetReviewDetailProps) => {
+          //북마크 아이디가 잘 있는지 확인
+          return review.myBookmarkId !== undefined && review.myBookmarkId !== null;
+        });
+        setReviewBookmark(bookmarkedReviews);
+      } else {
+        setReviewBookmark([]);
+      }
+    } catch (error) {
+      console.error("북마크된 게시물 조회 실패:", error);
+      setReviewBookmark([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const tabData = [
     {
@@ -96,9 +103,15 @@ export default function SelectBookmark() {
       </div>
 
       <div className="space-y-4 p-4">
-        {tab === 0
-          ? placeBookmark.map((item, idx) => <PlacePlusItem key={idx} {...item} />)
-          : reviewBookmark.map((item, idx) => <ViewItem key={idx} {...item} />)}
+        {tab === 0 ? (
+          placeBookmark.map((item, idx) => <PlacePlusItem key={idx} {...item} />)
+        ) : reviewBookmark.length > 0 ? (
+          // 리뷰가 있을 때만 리뷰를 가져와서 띄워줌
+          reviewBookmark.map((item, idx) => <ViewItem key={idx} {...item} />)
+        ) : (
+          // 리뷰가 없을 때
+          <div className="text-center py-8 text-travel-gray400">북마크한 게시물이 없습니다.</div>
+        )}
       </div>
     </div>
   );
