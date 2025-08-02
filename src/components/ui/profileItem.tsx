@@ -2,6 +2,7 @@
 
 import DrawerMypage from "@/components/feature/drawerMypage";
 import { getUser } from "@/data/functions/user";
+import { getUserStats, UserStats } from "@/data/functions/userStats";
 import { User } from "@/types/user";
 import useUserStore from "@/zustand/userStore";
 import Image from "next/image";
@@ -15,24 +16,54 @@ export interface ProfileItemProps {
   totalLikes?: number;
 }
 
-export default function ProfileItem({ postsCount = 0, likesCount = 0, totalLikes = 0 }: ProfileItemProps) {
+export default function ProfileItem({
+  postsCount: propPostsCount,
+  likesCount: propLikesCount,
+  totalLikes: propTotalLikes,
+}: ProfileItemProps) {
   const [userInfo, setUserInfo] = useState<User | null>(null);
+  const [stats, setStats] = useState<UserStats>({
+    postsCount: propPostsCount || 0,
+    totalBookmarks: propLikesCount || 0,
+    totalViews: propTotalLikes || 0,
+  });
+  const [loading, setLoading] = useState(true);
 
   const user = useUserStore((state) => state.userInfo);
+  const token = useUserStore((state) => state.token);
   const imgUrl = user?.image?.startsWith("http") ? user.image : `${API_URL}/${user?.image}`;
 
-  // 사용자 정보
+  // 회원 정보 및 통계
   useEffect(() => {
-    const userId = user!._id;
-    const userData = async () => {
-      const res = await getUser(userId);
-      setUserInfo(res.item);
+    const fetchUserData = async () => {
+      if (!user?._id || !token) return;
+
+      setLoading(true);
+      try {
+        const [userResponse, statsResponse] = await Promise.all([
+          getUser(user._id),
+          getUserStats(user._id, token || ""),
+        ]);
+
+        if (userResponse.ok) {
+          setUserInfo(userResponse.item);
+        }
+
+        if (statsResponse.ok && statsResponse.item) {
+          setStats(statsResponse.item);
+        }
+      } catch (error) {
+        console.error("데이터 로딩 오류:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    userData();
-  }, []);
+
+    fetchUserData();
+  }, [user?._id, token]);
 
   return (
-    <div className="relative flex flex-col items-center w-full gap-4 px-5 py-8 font-sans text-center bg-white shadow rounded-xl">
+    <div className="relative flex flex-col items-center gap-4 px-5 py-8 font-sans text-center bg-white shadow rounded-xl">
       <DrawerMypage />
 
       {/* 프로필이미지 */}
@@ -57,15 +88,15 @@ export default function ProfileItem({ postsCount = 0, likesCount = 0, totalLikes
       {/* 작성한글/좋아요/조회수 */}
       <div className="flex items-center justify-center gap-8">
         <div className="space-y-1">
-          <p className="font-semibold text-24 text-travel-success100">{postsCount}</p>
+          <p className="font-semibold text-24 text-travel-success100">{loading ? "-" : stats.postsCount}</p>
           <p className="text-14 text-travel-gray700">작성한 글</p>
         </div>
         <div className="space-y-1">
-          <p className="font-semibold text-24 text-travel-info100">{likesCount}</p>
+          <p className="font-semibold text-24 text-travel-info100">{loading ? "-" : stats.totalBookmarks}</p>
           <p className="text-14 text-travel-gray700">받은 좋아요</p>
         </div>
         <div className="space-y-1">
-          <p className="font-semibold text-24 text-travel-warn100">{totalLikes}</p>
+          <p className="font-semibold text-24 text-travel-warn100">{loading ? "-" : stats.totalViews}</p>
           <p className="text-14 text-travel-gray700">총 조회수</p>
         </div>
       </div>
