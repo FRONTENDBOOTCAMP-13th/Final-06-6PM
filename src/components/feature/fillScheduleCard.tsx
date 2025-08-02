@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import PlanListItem from "@/components/ui/planListItem";
 import ButtonRounded from "@/components/ui/btnRound";
 import { DayListItem } from "@/types/plan";
+import NaverMap from "@/components/plan/naverMap";
 
 interface FillScheduleCardProps {
   daylist: DayListItem[];
@@ -13,13 +14,10 @@ interface FillScheduleCardProps {
 
 export default function FillScheduleCard({ daylist, day, onAddPlace }: FillScheduleCardProps) {
   return (
-    // 나중에 지도 API 연동 예정
     <div className="w-full space-y-4 overflow-hidden rounded-2xl">
-      <div className="w-full bg-travel-gray200 rounded-2xl h-[240px] flex items-center justify-center">
-        <div className="text-travel-gray500 text-center">
-          <p className="text-14">지도 영역</p>
-          <p className="text-12">(추후 구현 예정)</p>
-        </div>
+      {/* 네이버 지도 하드코딩 */}
+      <div className="w-full rounded-2xl overflow-hidden">
+        <NaverMap height="240px" center={{ lat: 37.5665, lng: 126.978 }} zoom={15} />
       </div>
 
       {/* planListItem 컴포넌트 사용 */}
