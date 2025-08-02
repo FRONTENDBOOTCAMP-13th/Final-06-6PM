@@ -1,17 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { useActionState, useEffect } from "react";
-import { createUser } from "@/data/actions/user";
 import { useRouter } from "next/navigation";
-import Input from "@/components/ui/input";
-import Button from "@/components/ui/btn";
+import Link from "next/link";
 import { toast } from "react-toastify";
+
+import Button from "@/components/ui/btn";
+import Input from "@/components/ui/input";
 import ImageUploader from "@/components/form/imageUploader";
+import { createUser } from "@/data/actions/user";
 
 export default function SignupForm() {
-  const [state, formAction] = useActionState(createUser, null);
   const router = useRouter();
+  const [state, formAction] = useActionState(createUser, null);
 
   useEffect(() => {
     if (state?.ok) {

@@ -65,13 +65,8 @@ export default function HomePlanItem() {
           showUpcomingTrips.map((item) => {
             const dday = getDday(item.extra?.startDate);
             return (
-              <Link href={`/plan/${item._id}`}>
-                <DayItem
-                  key={item._id}
-                  place={item.title}
-                  period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`}
-                  dday={dday}
-                />
+              <Link href={`/plan/${item._id}`} key={item._id}>
+                <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} dday={dday} />
               </Link>
             );
           })
