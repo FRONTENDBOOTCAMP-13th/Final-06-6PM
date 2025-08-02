@@ -139,21 +139,21 @@
             {
               "title": "대왕암공원",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "125877",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "울산대공원",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "125877",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "울산박물관",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "131351",
               "mapx": "",
               "mapy": ""
             }
@@ -167,21 +167,21 @@
             {
               "title": "간절곶",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "125838",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "태화강 국가정원",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "2766430",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "울산암각화박물관",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "139566",
               "mapx": "",
               "mapy": ""
             }
@@ -195,21 +195,21 @@
             {
               "title": "반구대 암각화",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "125859",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "장생포 고래문화마을",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "2042336",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "진하해수욕장",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "126352",
               "mapx": "",
               "mapy": ""
             }
@@ -240,35 +240,35 @@
             {
               "title": "전북 전주 한옥마을 [슬로시티]",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127417",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "경기전",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "126842",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전주전동성당",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127418",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전주 풍남문",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127419",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "오목대와 이목대",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127422",
               "mapx": "",
               "mapy": ""
             }
@@ -282,35 +282,35 @@
             {
               "title": "전주향교",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127420",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전주공예품전시관",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "132046",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전주전통한지원",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "1881767",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전주 남부시장",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127578",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "자만마을 벽화갤러리",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "2640525",
               "mapx": "",
               "mapy": ""
             }
@@ -324,28 +324,28 @@
             {
               "title": "완산공원",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "126906",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "덕진공원",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127817",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전주동물원",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127351",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전북대학교 문회루",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "2071438",
               "mapx": "",
               "mapy": ""
             }
@@ -359,21 +359,21 @@
             {
               "title": "삼례문화예술촌",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "2038434",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "전주 풍남문",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "127419",
               "mapx": "",
               "mapy": ""
             },
             {
               "title": "팔복예술공장",
               "types": "관광지",
-              "contentId": "",
+              "contentId": "2639447",
               "mapx": "",
               "mapy": ""
             }
@@ -403,11 +403,11 @@
         "starRate": 4,
         "place": "서울",
         "locations": [
-          { "title": "경복궁", "contentId": "264337" },
-          { "title": "북촌한옥마을", "contentId": "129821" },
-          { "title": "여의도한강공원", "contentId": "1879114" },
-          { "title": "명동", "contentId": "127885" },
-          { "title": "남산서울타워", "contentId": "264161" }
+          { "title": "경복궁", "contentId": "126508" },
+          { "title": "북촌한옥마을", "contentId": "126049" },
+          { "title": "여의도한강공원", "contentId": "126545" },
+          { "title": "명동", "contentId": "126288" },
+          { "title": "남산서울타워", "contentId": "126289" }
         ],
         "tags": ["서울", "도심여행", "전통문화", "야경"]
       },
@@ -439,9 +439,9 @@
         "starRate": 5,
         "place": "서울",
         "location": [
-          { "title": "경복궁", "contentId": "264337" },
-          { "title": "북촌한옥마을", "contentId": "129821" },
-          { "title": "인사동", "contentId": "129345" }
+          { "title": "경복궁", "contentId": "126508" },
+          { "title": "북촌한옥마을", "contentId": "126049" },
+          { "title": "인사동", "contentId": "126592" }
         ],
         "tags": ["서울", "궁궐투어", "전통문화", "한옥마을"]
       },
@@ -481,9 +481,9 @@
         "starRate": 3,
         "place": "서울",
         "location": [
-          { "title": "여의도한강공원", "contentId": "1879114" },
-          { "title": "명동", "contentId": "127885" },
-          { "title": "남산서울타워", "contentId": "264161" }
+          { "title": "여의도한강공원", "contentId": "126545" },
+          { "title": "명동", "contentId": "126288" },
+          { "title": "남산서울타워", "contentId": "126289" }
         ],
         "tags": ["서울", "명동쇼핑", "야경", "한강뷰"]
       },
@@ -514,7 +514,7 @@
         "visitDate": "2025-06-25",
         "starRate": 5,
         "place": "서울",
-        "location": [{ "title": "경복궁", "contentId": "264337" }],
+        "location": [{ "title": "경복궁", "contentId": "126508" }],
         "tags": ["수문장교대식", "한복체험", "궁궐투어"]
       },
       "views": 178,
@@ -548,7 +548,7 @@
         "visitDate": "2025-06-25",
         "starRate": 4,
         "place": "서울",
-        "location": [{ "title": "인사동", "contentId": "129345" }],
+        "location": [{ "title": "인사동", "contentId": "126592" }],
         "tags": ["전통찻집", "전통문화", "공예거리"]
       },
       "views": 142,
@@ -584,15 +584,15 @@
         "starRate": 5,
         "place": "울산",
         "location": [
-          { "title": "대왕암공원", "contentId": "2657337" },
-          { "title": "울산대공원", "contentId": "2649737" },
-          { "title": "울산박물관", "contentId": "132470" },
-          { "title": "간절곶", "contentId": "125405" },
-          { "title": "태화강국가정원", "contentId": "2922069" },
-          { "title": "암각화박물관", "contentId": "129156" },
-          { "title": "반구대암각화", "contentId": "125409" },
-          { "title": "장생포고래문화마을", "contentId": "2647635" },
-          { "title": "진하해수욕장", "contentId": "126351" }
+          { "title": "대왕암공원", "contentId": "125877" },
+          { "title": "울산대공원", "contentId": "125877" },
+          { "title": "울산박물관", "contentId": "131351" },
+          { "title": "간절곶", "contentId": "125838" },
+          { "title": "태화강국가정원", "contentId": "2766430" },
+          { "title": "암각화박물관", "contentId": "139566" },
+          { "title": "반구대암각화", "contentId": "125859" },
+          { "title": "장생포고래문화마을", "contentId": "2042336" },
+          { "title": "진하해수욕장", "contentId": "126352" }
         ],
         "tags": ["울산", "자연여행", "역사탐방", "힐링"]
       },
@@ -624,9 +624,9 @@
         "starRate": 4,
         "place": "울산",
         "location": [
-          { "title": "대왕암공원", "contentId": "2657337" },
-          { "title": "울산대공원", "contentId": "2649737" },
-          { "title": "울산박물관", "contentId": "132470" }
+          { "title": "대왕암공원", "contentId": "125877" },
+          { "title": "울산대공원", "contentId": "125877" },
+          { "title": "울산박물관", "contentId": "131351" }
         ],
         "tags": ["자연", "바다", "역사", "공원"]
       },
@@ -657,9 +657,9 @@
         "starRate": 5,
         "place": "울산",
         "location": [
-          { "title": "간절곶", "contentId": "125405" },
-          { "title": "태화강국가정원", "contentId": "2922069" },
-          { "title": "암각화박물관", "contentId": "129156" }
+          { "title": "간절곶", "contentId": "125838" },
+          { "title": "태화강국가정원", "contentId": "2766430" },
+          { "title": "암각화박물관", "contentId": "139566" }
         ],
         "tags": ["일출", "자연", "역사"]
       },
@@ -689,7 +689,7 @@
         "visitDate": "2025-08-04",
         "starRate": 5,
         "place": "울산",
-        "location": [{ "title": "간절곶", "contentId": "125405" }],
+        "location": [{ "title": "간절곶", "contentId": "125838" }],
         "tags": ["일출", "등대", "바다풍경"]
       },
       "views": 134,
@@ -719,7 +719,7 @@
         "visitDate": "2025-08-04",
         "starRate": 5,
         "place": "울산",
-        "location": [{ "title": "태화강국가정원", "contentId": "2922069" }],
+        "location": [{ "title": "태화강국가정원", "contentId": "2766430" }],
         "tags": ["대나무숲", "자연힐링"]
       },
       "views": 98,
