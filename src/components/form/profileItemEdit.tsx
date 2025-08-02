@@ -31,15 +31,29 @@ export default function ProfileItemEdit() {
   // useActionState로 폼 상태 관리
   const [state, formAction, isPending] = useActionState(updateUser, null);
 
+  // 로그인 체크
+  useEffect(() => {
+    if (!isLoggedIn || !userInfo?._id) {
+      router.replace("/login");
+      return;
+    }
+  }, [isLoggedIn, userInfo?._id]);
+
+  // API 응답 처리
   useEffect(() => {
     if (state?.ok) {
-      setUserInfo(state.item);
+      // API 응답에서 받은 사용자 정보로 스토어 업데이트
+      const updatedUserInfo = {
+        ...userInfo, // 기존 정보 유지
+        ...state.item, // 업데이트된 정보로 덮어쓰기
+      };
+      setUserInfo(updatedUserInfo);
       toast.success("프로필이 성공적으로 업데이트되었습니다.");
-      router.push("/mypage");
+      router.replace("/mypage");
     } else if (state?.ok === 0 && !state?.errors) {
       toast.error(state?.message);
     }
-  }, [state, updateUser, router]);
+  }, [state]);
 
   // 프로필 이미지 URL 생성
   const imgUrl = userInfo?.image?.startsWith("http")
@@ -50,10 +64,7 @@ export default function ProfileItemEdit() {
 
   // 사용자 정보 조회
   useEffect(() => {
-    if (!isLoggedIn || !userInfo?._id) {
-      router.push("/login");
-      return;
-    }
+    if (!isLoggedIn || !userInfo?._id) return;
 
     const fetchUserData = async () => {
       setIsLoading(true);
@@ -62,7 +73,8 @@ export default function ProfileItemEdit() {
         if (res.ok) {
           setUserInfo(res.item);
         } else {
-          console.error("유저 정보를 조회하는데 실패했습니다:", res.message);
+          console.error("사용자 정보를 조회하는데 실패했습니다:", res.message);
+          toast.error("사용자 정보를 불러오는데 실패했습니다.");
         }
       } catch (error) {
         console.error("네트워크 오류가 발생하였습니다.", error);
@@ -71,7 +83,7 @@ export default function ProfileItemEdit() {
       }
     };
     fetchUserData();
-  }, [userInfo?._id, isLoggedIn, router]);
+  }, [userInfo?._id, isLoggedIn]);
 
   // 파일 선택
   const attachImgPath = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,8 +124,19 @@ export default function ProfileItemEdit() {
     };
   }, [newImg]);
 
-  // 로딩 중 상태
-  if (isLoading) {
+  // 폼 제출 시 파일 추가
+  const handleFormSubmit = (formData: FormData) => {
+    // 선택된 파일이 있으면 FormData에 추가
+    if (selectFile) {
+      formData.set("attach", selectFile);
+    }
+
+    // 기존 formAction 호출
+    formAction(formData);
+  };
+
+  // 로딩 중이거나 로그인되지 않은 상태
+  if (isLoading || !isLoggedIn || !userInfo) {
     return (
       <div className="flex items-center justify-center w-full h-64">
         <Loader2 className="size-8 animate-spin text-travel-primary" />
@@ -123,13 +146,12 @@ export default function ProfileItemEdit() {
 
   return (
     <form
-      action={formAction}
+      action={handleFormSubmit}
       className="relative flex flex-col items-center w-full gap-6 px-5 py-8 text-center bg-white shadow rounded-xl"
     >
       <input ref={fileInputRef} type="file" accept="image/*" onChange={attachImgPath} className="hidden" />
 
-      {/* 사용자 ID와 토큰을 히든 필드로 전달 */}
-      <input type="hidden" name="userId" value={userInfo?._id || ""} />
+      <input type="hidden" name="userId" value={userInfo._id} />
       <input type="hidden" name="userToken" value={userToken || ""} />
 
       {/* 프로필 이미지 섹션 */}
@@ -139,7 +161,7 @@ export default function ProfileItemEdit() {
             <Image
               fill
               src={displayImage}
-              alt={userInfo?.name || "사용자"}
+              alt={userInfo.name || "사용자"}
               className="object-cover w-full h-full"
               onError={() => {
                 setNewImg("/images/user-default.webp");
@@ -168,7 +190,7 @@ export default function ProfileItemEdit() {
           id="username"
           name="username"
           placeholder="닉네임을 입력하세요"
-          defaultValue={userInfo?.name || ""}
+          defaultValue={userInfo.name || ""}
         />
         <p className="mt-1 text-14 font-medium text-travel-fail100">{state?.ok === 0 && state.errors?.name?.msg}</p>
       </div>
@@ -176,12 +198,12 @@ export default function ProfileItemEdit() {
       {/* 한줄소개 입력 필드 */}
       <div className="w-full">
         <Input
-          key={userInfo?._id || "loading"}
+          key={userInfo._id}
           size="sm"
           id="desc"
           name="desc"
           placeholder="자신을 소개해보세요"
-          defaultValue={userInfo?.desc || ""}
+          defaultValue={userInfo.desc || ""}
         />
       </div>
 
