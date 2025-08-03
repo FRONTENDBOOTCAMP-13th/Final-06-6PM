@@ -1,15 +1,5 @@
 "use client";
 import React, { useRef, useState } from "react";
-export interface ApiRes<T> {
-  ok: number;
-  data?: T;
-  message?: string;
-}
-
-export interface UserPhoto {
-  regionId: string;
-  imageUrl: string;
-}
 
 export default function KoreaMapClipPathImg() {
   const [imgMap, setImgMap] = useState<{ [key: string]: string }>({});
@@ -35,13 +25,8 @@ export default function KoreaMapClipPathImg() {
   };
 
   return (
-    <div style={{ position: "relative", width: 850, height: 800 }}>
-      <svg
-        viewBox="55 400 1600 600"
-        width={850}
-        height={800}
-        style={{ display: "block" }}
-      >
+    <div className="relative w-full max-w-[400px] h-screen">
+      <svg viewBox="-30 -150 900 1700" className="block w-full h-full" preserveAspectRatio="xMidYMid meet">
         <defs>
           <clipPath id="clip-seoul">
             <path d="M 222.51 281.77 222.15 273.95 216.56 273.73 211.56 271.61 210.33 270.04 216.11 263.22 217.95 261.31 217.95 261.31 217.51 260.44 217.19 259.78 218.26 257.25 221.56 260.32 230.64 264.96 233.39 264.31 239.33 253.73 240.52 249.64 246.23 244.76 246.68 244.08 250.17 245.09 251.5 251.06 255.72 249.36 254.81 244.28 260.5 237.08 262.79 232.67 265.38 234.02 269.06 234.51 269.23 235.27 269.52 236.56 270.99 235.24 275.75 234 278.62 235.74 278.8 235.85 277.82 243.46 281.93 248.03 281.79 248.89 281.96 250.77 281.16 252.07 281.98 253.9 280.63 263.68 280.22 263.94 279.73 268.87 282.62 270.13 284.22 268.39 291.28 265.87 294.38 264.12 295.41 263.84 296.22 272.81 290.83 284.19 291.48 287.53 285.78 293.17 282.65 295.55 277.33 297.94 272.44 302.92 272.25 303.17 267.92 302.07 266.3 299.21 265.99 294.58 265.9 294.03 264.76 295.03 262.38 296.02 260.96 296.27 259.5 293.07 246.03 301.21 243.94 297.52 238.67 301.67 237.92 299.7 232.31 288.37 232.29 288.28 220.5 291.04 222.2 287.08 220.5 285.65 222.51 282.19 222.51 281.77 Z" />
@@ -429,29 +414,18 @@ export default function KoreaMapClipPathImg() {
           className="land"
         />
       </svg>
-      <input
-        type="file"
-        accept="image/*"
-        ref={inputRef}
-        style={{ display: "none" }}
-        onChange={onSelectFile}
-        name="attach"
-      />
+      <input type="file" accept="image/*" ref={inputRef} className="hidden" onChange={onSelectFile} name="attach" />
 
-      <style>{`
-       
-        .land:hover { fill: #000; }
-       .land {
-        
-        stroke: #000;
-        stroke-width: 1;
-        cursor: pointer;
-      }
-
-
-
-
-      `}</style>
+      <style>
+        {`
+          .land:hover { fill: #000; }
+          .land {
+          stroke: #000;
+          stroke-width: 1;
+          cursor: pointer;
+        }
+        `}
+      </style>
     </div>
   );
 }
