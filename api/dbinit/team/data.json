@@ -415,6 +415,7 @@
       "bookmarks": 2,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 2,
             "name": "박선영"
@@ -438,7 +439,7 @@
         "visitDate": "2025-06-25",
         "starRate": 5,
         "place": "서울",
-        "images": ["uploadFiles/seoul1.jpg", "uploadFiles/seoul2.jpg"],
+        "images": ["uploadFiles/seoul6.jpg", "uploadFiles/seoul4.jpg"],
         "location": [
           { "title": "경복궁", "contentId": "126508" },
           { "title": "북촌한옥마을", "contentId": "126049" },
@@ -482,7 +483,7 @@
         "visitDate": "2025-06-26",
         "starRate": 3,
         "place": "서울",
-        "images": ["uploadFiles/seoul1.jpg", "uploadFiles/seoul2.jpg"],
+        "images": ["uploadFiles/seoul3.jpg", "uploadFiles/seoul2.jpg"],
         "location": [
           { "title": "여의도한강공원", "contentId": "126545" },
           { "title": "명동", "contentId": "126288" },
@@ -494,6 +495,7 @@
       "bookmark": 100,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 3,
             "name": "차형주"
@@ -524,6 +526,7 @@
       "views": 178,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 2,
             "name": "박선영"
@@ -559,6 +562,7 @@
       "views": 142,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 2,
             "name": "박선영"
@@ -605,6 +609,7 @@
       "views": 127,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 1,
             "name": "문서인",
@@ -629,7 +634,7 @@
         "visitDate": "2025-08-03",
         "starRate": 4,
         "place": "울산",
-        "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan2.jpg", "uploadFiles/ulsan3.jpg"],
+        "images": ["uploadFiles/ulsan4.jpg", "uploadFiles/ulsan3.jpg", "uploadFiles/ulsan3.jpg"],
         "location": [
           { "title": "대왕암공원", "contentId": "125877" },
           { "title": "울산대공원", "contentId": "125877" },
@@ -640,6 +645,7 @@
       "views": 89,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 2,
             "name": "박선영"
@@ -663,7 +669,7 @@
         "visitDate": "2025-08-04",
         "starRate": 5,
         "place": "울산",
-        "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan2.jpg", "uploadFiles/ulsan1.jpg"],
+        "images": ["uploadFiles/ulsan2.jpg", "uploadFiles/ulsan3.jpg", "uploadFiles/ulsan1.jpg"],
         "location": [
           { "title": "간절곶", "contentId": "125838" },
           { "title": "태화강국가정원", "contentId": "2766430" },
@@ -674,6 +680,7 @@
       "views": 156,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 3,
             "name": "차형주"
@@ -704,6 +711,7 @@
       "views": 134,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 1,
             "name": "문서인",
@@ -735,6 +743,7 @@
       "views": 98,
       "replies": [
         {
+          "_id": 1,
           "user": {
             "_id": 2,
             "name": "박선영"
@@ -743,6 +752,7 @@
           "createdAt": "2025.08.03 13:14:22"
         },
         {
+          "_id": 2,
           "user": {
             "_id": 3,
             "name": "차형주"
