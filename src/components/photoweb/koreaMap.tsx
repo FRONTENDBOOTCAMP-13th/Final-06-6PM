@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { uploadUserPhoto, fetchUserPhotos } from "@/app/photomap/view/mapcom/depth/photoweb";
+import { uploadUserPhoto, fetchUserPhotos } from "@/data/functions/photoweb";
 import useUserStore from "@/zustand/userStore";
 import { ApiMsgRes, UserPhoto } from "@/types/api";
 

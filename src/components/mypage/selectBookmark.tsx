@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import PlacePlusItem, { PlacePlusItemProps } from "./placePlusItem";
 import ViewItem, { ViewItemProps } from "../feature/viewItem";
 import { GetReviewDetailProps } from "@/types/review";
-import { getReviewAllList } from "@/data/functions/review";
+import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import useUserStore from "@/zustand/userStore";
 
 export default function SelectBookmark() {
@@ -50,18 +50,24 @@ export default function SelectBookmark() {
 
     setLoading(true);
     try {
-      const reviewsData = await getReviewAllList(token); //전체 리뷰 리스트를 가져옴
+      // 리뷰 3개 전부 호출
+      const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
+        getReviewAllList(token),
+        getReviewDailyList(token),
+        getReviewPlaceList(token),
+      ]);
+      const reviewAllData = reviewAllRes?.ok === 1 ? reviewAllRes.item || [] : [];
+      const reviewDailyData = reviewDailyRes?.ok === 1 ? reviewDailyRes.item || [] : [];
+      const reviewPlaceData = reviewPlaceRes?.ok === 1 ? reviewPlaceRes.item || [] : [];
 
-      if (reviewsData?.ok === 1 && reviewsData.item) {
-        //북마크 되어 있는 게시물만 필터링
-        const bookmarkedReviews = reviewsData.item.filter((review: GetReviewDetailProps) => {
-          //북마크 아이디가 잘 있는지 확인
-          return review.myBookmarkId !== undefined && review.myBookmarkId !== null;
-        });
-        setReviewBookmark(bookmarkedReviews);
-      } else {
-        setReviewBookmark([]);
-      }
+      const allData = [...reviewAllData, ...reviewDailyData, ...reviewPlaceData];
+
+      //북마크 되어 있는 게시물만 필터링
+      const bookmarkedReviews = allData.filter((review: GetReviewDetailProps) => {
+        //북마크 아이디가 잘 있는지 확인
+        return review.myBookmarkId !== undefined && review.myBookmarkId !== null;
+      });
+      setReviewBookmark(bookmarkedReviews);
     } catch (error) {
       console.error("북마크된 게시물 조회 실패:", error);
       setReviewBookmark([]);
