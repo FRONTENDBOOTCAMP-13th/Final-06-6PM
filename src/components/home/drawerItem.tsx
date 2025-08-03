@@ -35,7 +35,7 @@ export default function DrawerItem({
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 
   // useActionState로 폼 상태 관리
-  const [state, formAction, isPending] = useActionState(bookmarkUser, null);
+  const [state, formAction] = useActionState(bookmarkUser, null);
 
   // 로그인 체크
   useEffect(() => {
