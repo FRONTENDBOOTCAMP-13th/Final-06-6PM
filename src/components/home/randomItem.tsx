@@ -147,6 +147,7 @@ export default function RandomItem() {
         <div className="float-right">
           <DrawerItem
             title={travelSpot.title}
+            contentId={String(travelSpot.contentid)}
             location={getLocationString(travelSpot.addr1)}
             imgUrl={travelSpot.firstimage!}
             desc={getDescriptionText(travelSpot)}
