@@ -390,18 +390,18 @@
       },
       "title": "서울에서 1박 2일",
       "content": "짧지만 알찬 서울 여행이었어요! 첫날에는 경복궁에서 조선왕조의 웅장한 역사를 느끼고, 북촌한옥마을의 고즈넉한 골목길을 거닐며 전통의 아름다움에 빠졌어요. 인사동에서는 전통차를 마시며 여유로운 시간을 보냈고, 둘째 날에는 여의도 한강공원에서 상쾌한 아침을 맞이한 후 명동에서 쇼핑과 맛집 탐방을 즐겼답니다. 마지막으로 남산서울타워에서 서울 전경을 내려다보며 여행을 마무리했는데, 짧지만 서울의 매력을 제대로 느낄 수 있었어요!",
-      "images": [
-        "uploadFiles/seoul1.jpg",
-        "uploadFiles/seoul2.jpg",
-        "uploadFiles/seoul3.jpg",
-        "uploadFiles/seoul4.jpg"
-      ],
       "extra": {
         "plan_id": 1,
         "startDate": "2025-06-25",
         "endDate": "2025-06-26",
         "starRate": 4,
         "place": "서울",
+        "images": [
+          "uploadFiles/seoul1.jpg",
+          "uploadFiles/seoul2.jpg",
+          "uploadFiles/seoul3.jpg",
+          "uploadFiles/seoul4.jpg"
+        ],
         "locations": [
           { "title": "경복궁", "contentId": "126508" },
           { "title": "북촌한옥마을", "contentId": "126049" },
@@ -419,7 +419,8 @@
             "_id": 2,
             "name": "박선영"
           },
-          "content": "북촌한옥마을 정말 예쁘죠! 한복 입고 사진 찍으면 더 예뻐요~"
+          "content": "북촌한옥마을 정말 예쁘죠! 한복 입고 사진 찍으면 더 예뻐요~",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -432,12 +433,12 @@
       },
       "title": "전통의 향기 가득한 서울 1일차",
       "content": "서울 여행 첫날은 전통문화 투어로 시작했어요! 경복궁에서 수문장 교대식을 보는 것부터 정말 인상 깊었고, 광화문부터 근정전까지 이어지는 궁궐의 건축미에 감탄했답니다. 북촌한옥마을은 고즈넉한 분위기가 인상적이었고, 인사동 전통찻집에서 마신 차 한 잔은 하루의 피로를 잊게 해줬어요.",
-      "images": ["uploadFiles/seoul1.jpg", "uploadFiles/seoul2.jpg"],
       "extra": {
         "plan_id": 1,
         "visitDate": "2025-06-25",
         "starRate": 5,
         "place": "서울",
+        "images": ["uploadFiles/seoul1.jpg", "uploadFiles/seoul2.jpg"],
         "location": [
           { "title": "경복궁", "contentId": "126508" },
           { "title": "북촌한옥마을", "contentId": "126049" },
@@ -453,7 +454,8 @@
             "_id": 3,
             "name": "차형주"
           },
-          "content": "수문장 교대식 정말 볼 만하죠! 시간 맞춰서 가야 하는데 꼭 보세요!"
+          "content": "수문장 교대식 정말 볼 만하죠! 시간 맞춰서 가야 하는데 꼭 보세요!",
+          "createdAt": "2025.08.03 13:14:22"
         },
         {
           "user": {
@@ -461,7 +463,8 @@
             "name": "송아현",
             "image": "uploadFiles/user-neo.png"
           },
-          "content": "인사동 전통찻집 추천해주세요! 어디가 제일 좋았나요??"
+          "content": "인사동 전통찻집 추천해주세요! 어디가 제일 좋았나요??",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -474,12 +477,12 @@
       },
       "title": "현대적 매력의 서울 2일차",
       "content": "둘째 날은 서울의 현대적인 매력을 즐긴 하루였어요. 여의도 한강공원에서 아침 산책을 하며 여유롭게 하루를 시작했고, 명동에서는 쇼핑과 길거리 음식 탐방을 마음껏 했어요. 특히 명동교자 만두가 정말 맛있었어요! 마지막으로 남산서울타워에서 야경을 보며 서울 여행을 마무리했답니다.",
-      "images": ["uploadFiles/seoul1.jpg", "uploadFiles/seoul2.jpg"],
       "extra": {
         "plan_id": 1,
         "visitDate": "2025-06-26",
         "starRate": 3,
         "place": "서울",
+        "images": ["uploadFiles/seoul1.jpg", "uploadFiles/seoul2.jpg"],
         "location": [
           { "title": "여의도한강공원", "contentId": "126545" },
           { "title": "명동", "contentId": "126288" },
@@ -495,7 +498,8 @@
             "_id": 3,
             "name": "차형주"
           },
-          "content": "남산타워 야경 정말 예쁘죠! 데이트 코스로도 완벽해요ㅎㅎ"
+          "content": "남산타워 야경 정말 예쁘죠! 데이트 코스로도 완벽해요ㅎㅎ",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -508,12 +512,12 @@
       },
       "title": "조선왕조의 위엄을 느끼다! 경복궁",
       "content": "경복궁은 서울 여행 필수 코스예요! 광화문부터 근정전, 경회루까지 이어지는 동선이 정말 웅장하고 아름다워요. 특히 수문장 교대식은 놓치면 아쉬운 명장면이에요. 한복을 입고 다니면 더욱 특별한 추억이 되니 꼭 한복 체험도 해보세요!",
-      "images": ["uploadFiles/seoul3.jpg", "uploadFiles/seoul4.jpg"],
       "extra": {
         "plan_id": 1,
         "visitDate": "2025-06-25",
         "starRate": 5,
         "place": "서울",
+        "images": ["uploadFiles/seoul3.jpg", "uploadFiles/seoul4.jpg"],
         "location": [{ "title": "경복궁", "contentId": "126508" }],
         "tags": ["수문장교대식", "한복체험", "궁궐투어"]
       },
@@ -524,7 +528,8 @@
             "_id": 2,
             "name": "박선영"
           },
-          "content": "한복 입고 경복궁 가면 정말 예쁜 사진 많이 나와요!! 추천이에요~"
+          "content": "한복 입고 경복궁 가면 정말 예쁜 사진 많이 나와요!! 추천이에요~",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -537,17 +542,17 @@
       },
       "title": "전통과 예술이 어우러진 거리, 인사동",
       "content": "인사동은 전통과 예술이 공존하는 매력적인 거리였어요. 골목골목마다 공예품 가게와 갤러리가 있어서 구경하는 재미가 쏠쏠했고, 전통 찻집에서 마신 유자차는 정말 향긋하고 따뜻했어요. 외국인 친구들에게 꼭 추천하고 싶은 서울의 명소예요!",
-      "images": [
-        "uploadFiles/seoul5.jpg",
-        "uploadFiles/seoul6.jpg",
-        "uploadFiles/seoul1.jpg",
-        "uploadFiles/seoul2.jpg"
-      ],
       "extra": {
         "plan_id": 1,
         "visitDate": "2025-06-25",
         "starRate": 4,
         "place": "서울",
+        "images": [
+          "uploadFiles/seoul5.jpg",
+          "uploadFiles/seoul6.jpg",
+          "uploadFiles/seoul1.jpg",
+          "uploadFiles/seoul2.jpg"
+        ],
         "location": [{ "title": "인사동", "contentId": "126592" }],
         "tags": ["전통찻집", "전통문화", "공예거리"]
       },
@@ -558,7 +563,8 @@
             "_id": 2,
             "name": "박선영"
           },
-          "content": "인사동은 볼거리도 많고 선물 사기 딱 좋죠!"
+          "content": "인사동은 볼거리도 많고 선물 사기 딱 좋죠!",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -571,18 +577,18 @@
       },
       "title": "울산에서 2박 3일",
       "content": "울산은 자연과 역사, 그리고 현대가 완벽하게 조화를 이루는 도시였어요! 첫날에는 대왕암공원에서 웅장한 바다 풍경을 만끽하고, 울산대공원에서 여유로운 시간을 보낸 뒤 울산박물관에서 이 지역의 깊은 역사를 배웠어요. 둘째 날은 간절곶에서 일출의 감동을 느끼고, 태화강 국가정원의 아름다운 자연 속에서 힐링한 후 암각화박물관에서 선사시대 문화를 체험했습니다. 마지막 날엔 반구대 암각화의 역사적 가치를 느끼고, 장생포 고래문화마을에서 울산만의 독특한 문화를 경험한 뒤 진하해수욕장에서 시원한 바다를 만끽하며 여행을 마무리했어요.",
-      "images": [
-        "uploadFiles/ulsan1.jpg",
-        "uploadFiles/ulsan2.jpg",
-        "uploadFiles/ulsan3.jpg",
-        "uploadFiles/ulsan4.jpg"
-      ],
       "extra": {
         "plan_id": 2,
         "startDate": "2025-08-03",
         "endDate": "2025-08-05",
         "starRate": 5,
         "place": "울산",
+        "images": [
+          "uploadFiles/ulsan1.jpg",
+          "uploadFiles/ulsan2.jpg",
+          "uploadFiles/ulsan3.jpg",
+          "uploadFiles/ulsan4.jpg"
+        ],
         "location": [
           { "title": "대왕암공원", "contentId": "125877" },
           { "title": "울산대공원", "contentId": "125877" },
@@ -604,7 +610,8 @@
             "name": "문서인",
             "image": "uploadFiles/user-muzi.png"
           },
-          "content": "간절곶 일출 정말 유명하죠! 저도 꼭 가보고 싶어요!"
+          "content": "간절곶 일출 정말 유명하죠! 저도 꼭 가보고 싶어요!",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -617,12 +624,12 @@
       },
       "title": "바다와 역사의 울산 1일차",
       "content": "대왕암공원에서 시작한 울산 여행! 기암괴석과 푸른 바다가 만나는 절경이 정말 장관이었어요. 특히 대왕암까지 이어지는 산책로가 너무 아름다워서 사진을 엄청 많이 찍었답니다. 울산대공원은 넓고 잘 조성되어 있어 가족 단위 여행에 제격이고, 울산박물관에서는 울산의 과거부터 현재까지를 한눈에 볼 수 있었어요.",
-      "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan2.jpg", "uploadFiles/ulsan3.jpg"],
       "extra": {
         "plan_id": 2,
         "visitDate": "2025-08-03",
         "starRate": 4,
         "place": "울산",
+        "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan2.jpg", "uploadFiles/ulsan3.jpg"],
         "location": [
           { "title": "대왕암공원", "contentId": "125877" },
           { "title": "울산대공원", "contentId": "125877" },
@@ -637,7 +644,8 @@
             "_id": 2,
             "name": "박선영"
           },
-          "content": "대왕암공원 정말 예쁘죠!!! 어디서 찍어도 포토존이에요!!"
+          "content": "대왕암공원 정말 예쁘죠!!! 어디서 찍어도 포토존이에요!!",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -650,12 +658,12 @@
       },
       "title": "일출과 자연의 울산 2일차",
       "content": "간절곶에서 본 일출은 정말 잊지 못할 만큼 감동적이었어요. 등대와 함께 어우러진 풍경이 정말 아름다웠고, 일출의 여운을 안고 태화강 국가정원으로 이동했어요. 대나무숲길이 특히 인상 깊었고, 암각화박물관에서는 선사시대 문화에 대해 새롭게 알게 되었어요.",
-      "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan2.jpg", "uploadFiles/ulsan1.jpg"],
       "extra": {
         "plan_id": 2,
         "visitDate": "2025-08-04",
         "starRate": 5,
         "place": "울산",
+        "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan2.jpg", "uploadFiles/ulsan1.jpg"],
         "location": [
           { "title": "간절곶", "contentId": "125838" },
           { "title": "태화강국가정원", "contentId": "2766430" },
@@ -670,7 +678,8 @@
             "_id": 3,
             "name": "차형주"
           },
-          "content": "간절곶 일출 보러 일찍 일어나셨겠어요! 대단하시네요ㅎㅎ"
+          "content": "간절곶 일출 보러 일찍 일어나셨겠어요! 대단하시네요ㅎㅎ",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -683,12 +692,12 @@
       },
       "title": "한반도 최동단의 감동 간절곶",
       "content": "간절곶은 한반도에서 가장 먼저 해가 뜨는 곳이라는 의미도 있고, 그 자체로도 정말 아름다운 장소예요. 등대, 바위, 바다, 일출이 어우러진 장면은 정말 감동적이었어요. 주변 산책로도 잘 조성되어 있어서 여유롭게 둘러보기 좋고, 포토존도 많아서 사진 찍기에도 최고예요.",
-      "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan4.jpg"],
       "extra": {
         "plan_id": 2,
         "visitDate": "2025-08-04",
         "starRate": 5,
         "place": "울산",
+        "images": ["uploadFiles/ulsan1.jpg", "uploadFiles/ulsan4.jpg"],
         "location": [{ "title": "간절곶", "contentId": "125838" }],
         "tags": ["일출", "등대", "바다풍경"]
       },
@@ -700,7 +709,8 @@
             "name": "문서인",
             "image": "uploadFiles/user-muzi.png"
           },
-          "content": "일출 보러 가고 싶은데 몇 시쯤 가야 하나요??"
+          "content": "일출 보러 가고 싶은데 몇 시쯤 가야 하나요??",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     },
@@ -713,12 +723,12 @@
       },
       "title": "도심 속 자연 힐링 태화강 국가정원",
       "content": "태화강 국가정원은 울산 도심 한복판에서 만나는 자연의 쉼터였어요. 강변을 따라 걷는 산책로와 대나무숲길이 특히 인상 깊었고, 계절마다 다른 꽃들을 감상할 수 있어 또 오고 싶어지는 곳이에요. 가족 단위 피크닉 장소로도 정말 추천드려요!",
-      "images": ["uploadFiles/ulsan1.jpg"],
       "extra": {
         "plan_id": 2,
         "visitDate": "2025-08-04",
         "starRate": 5,
         "place": "울산",
+        "images": ["uploadFiles/ulsan1.jpg"],
         "location": [{ "title": "태화강국가정원", "contentId": "2766430" }],
         "tags": ["대나무숲", "자연힐링"]
       },
@@ -729,14 +739,16 @@
             "_id": 2,
             "name": "박선영"
           },
-          "content": "대나무숲이 정말 예쁘겠어요! 꼭 가볼게요!!"
+          "content": "대나무숲이 정말 예쁘겠어요! 꼭 가볼게요!!",
+          "createdAt": "2025.08.03 13:14:22"
         },
         {
           "user": {
             "_id": 3,
             "name": "차형주"
           },
-          "content": "피크닉 하기 좋다니 가족여행으로 딱이겠네요~"
+          "content": "피크닉 하기 좋다니 가족여행으로 딱이겠네요~",
+          "createdAt": "2025.08.03 13:14:22"
         }
       ]
     }
