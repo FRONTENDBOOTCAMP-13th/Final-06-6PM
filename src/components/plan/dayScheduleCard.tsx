@@ -3,30 +3,32 @@
 import { useRouter } from "next/navigation";
 import { CalendarDays } from "lucide-react";
 import FillScheduleCard from "@/components/plan/fillScheduleCard";
-import { DayListItem } from "@/types/plan";
 import EmptyScheduleCard from "@/components/plan/emptyScheduleCard";
+import usePlanStore from "@/zustand/planStore";
 
 export interface DayScheduleCardPlusProps {
   day: number;
   date: string;
-  daylist?: DayListItem[];
   isPreview?: boolean;
   planId?: number;
   replyId?: number;
 }
 
-export default function DayScheduleCard({ day, date, daylist, isPreview = false, planId }: DayScheduleCardPlusProps) {
+export default function DayScheduleCard({ day, date, isPreview = false, planId }: DayScheduleCardPlusProps) {
   const router = useRouter();
+  const { dailyPlans } = usePlanStore();
 
   const handleAddPlace = () => {
-    // planId가 있으면 수정 모드
     if (planId) {
       router.push(`/plan/edit/search?targetDay=${day}&from=modify&postId=${planId}`);
     } else {
-      // 일반 모드
       router.push(`/plan/edit/search?targetDay=${day}`);
     }
   };
+
+  // 해당 일차에 일정이 있는지 확인
+  const currentDayPlan = dailyPlans.find((plan) => plan.day === day);
+  const hasPlaces = currentDayPlan?.places?.length;
 
   return (
     <div className="border-travel-gray200 w-full rounded-2xl border bg-white p-5 relative">
@@ -36,8 +38,8 @@ export default function DayScheduleCard({ day, date, daylist, isPreview = false,
         <p className="text-14">({date})</p>
       </div>
 
-      {daylist?.length ? (
-        <FillScheduleCard daylist={daylist} day={day} onAddPlace={isPreview ? undefined : handleAddPlace} />
+      {hasPlaces ? (
+        <FillScheduleCard day={day} onAddPlace={isPreview ? undefined : handleAddPlace} />
       ) : isPreview ? (
         <div className="text-travel-gray500 text-center py-4">등록된 일정이 없습니다.</div>
       ) : (

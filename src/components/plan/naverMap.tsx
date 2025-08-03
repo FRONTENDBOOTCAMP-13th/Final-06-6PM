@@ -8,6 +8,15 @@ declare global {
   }
 }
 
+// 장소 데이터 타입 정의
+interface Place {
+  id: number;
+  title: string;
+  lat: number;
+  lng: number;
+  tag?: string;
+}
+
 interface NaverMapProps {
   width?: string;
   height?: string;
@@ -16,13 +25,15 @@ interface NaverMapProps {
     lng: number;
   };
   zoom?: number;
+  places?: Place[];
 }
 
 export default function NaverMap({
   width = "100%",
   height = "400px",
-  center = { lat: 37.5665, lng: 126.978 }, // 서울시청 기본값
-  zoom = 15,
+  center = { lat: 37.5665, lng: 126.978 },
+  zoom = 20,
+  places = [],
 }: NaverMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
@@ -33,24 +44,66 @@ export default function NaverMap({
         const mapOptions = {
           center: new window.naver.maps.LatLng(center.lat, center.lng),
           zoom: zoom,
-          mapTypeControl: true,
+          draggable: true,
+          scrollWheel: false,
         };
 
         mapInstance.current = new window.naver.maps.Map(mapRef.current, mapOptions);
 
-        // 마커 추가 (선택사항)
-        new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(center.lat, center.lng),
-          map: mapInstance.current,
-        });
+        // 장소 배열이 있으면 각 장소에 마커 추가
+        if (places.length > 0) {
+          places.forEach((place, index) => {
+            // 마커 생성
+            const marker = new window.naver.maps.Marker({
+              position: new window.naver.maps.LatLng(place.lat, place.lng),
+              map: mapInstance.current,
+            });
+
+            // 마커 클릭 시 정보창 표시
+            const infoWindow = new window.naver.maps.InfoWindow({
+              content: `
+                <div style="padding: 5px; min-width: 120px; text-align: center;">
+                  <p>${index + 1}. ${place.title}</p>
+                </div>
+              `,
+            });
+
+            window.naver.maps.Event.addListener(marker, "click", function () {
+              if (infoWindow.getMap()) {
+                infoWindow.close();
+              } else {
+                infoWindow.open(mapInstance.current, marker);
+              }
+            });
+          });
+
+          // 장소가 1개면 해당 위치로 이동, 2개 이상이면 모든 마커가 보이도록 자동 줌
+          if (places.length === 1) {
+            // 해당 위치로 지도 중심 이동
+            mapInstance.current.setCenter(new window.naver.maps.LatLng(places[0].lat, places[0].lng));
+          } else if (places.length > 1) {
+            // 모든 마커가 보이도록 줌
+            const bounds = new window.naver.maps.LatLngBounds();
+            places.forEach((place) => {
+              bounds.extend(new window.naver.maps.LatLng(place.lat, place.lng));
+            });
+            mapInstance.current.fitBounds(bounds, {
+              padding: 50,
+            });
+          }
+        } else {
+          // 기본 마커
+          new window.naver.maps.Marker({
+            position: new window.naver.maps.LatLng(center.lat, center.lng),
+            map: mapInstance.current,
+          });
+        }
       }
     };
 
-    // 네이버 지도 스크립트가 이미 로드되었는지 확인
     if (window.naver && window.naver.maps) {
       initMap();
     } else {
-      // 스크립트 동적 로드
       const script = document.createElement("script");
       script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}`;
       script.async = true;
@@ -60,12 +113,15 @@ export default function NaverMap({
       };
       document.head.appendChild(script);
 
-      // 컴포넌트 언마운트 시 스크립트 제거
       return () => {
-        document.head.removeChild(script);
+        try {
+          document.head.removeChild(script);
+        } catch (e) {
+          // 이미 제거된 경우 무시
+        }
       };
     }
-  }, [center.lat, center.lng, zoom]);
+  }, [center.lat, center.lng, zoom, places.length, JSON.stringify(places)]);
 
   return (
     <div
@@ -74,6 +130,8 @@ export default function NaverMap({
         width,
         height,
         borderRadius: "8px",
+        position: "relative",
+        zIndex: 1,
       }}
     />
   );
