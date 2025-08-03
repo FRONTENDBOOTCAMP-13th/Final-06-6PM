@@ -8,9 +8,14 @@ import { GetReviewDetailProps } from "@/types/review";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import useUserStore from "@/zustand/userStore";
 
-export default function SelectBookmark() {
+interface SelectBookmarkProps {
+  sortType: "latest" | "oldest";
+}
+
+export default function SelectBookmark({ sortType }: SelectBookmarkProps) {
   const [tab, setTab] = useState(0);
   const [reviewBookmark, setReviewBookmark] = useState<GetReviewDetailProps[]>([]);
+  const [filteredData, setFilteredData] = useState<GetReviewDetailProps[]>([]);
   const [loading, setLoading] = useState(false);
   const token = useUserStore((state) => state.token);
 
@@ -37,6 +42,23 @@ export default function SelectBookmark() {
       // imgUrl: "/images/user1.png",
     },
   ];
+
+  useEffect(() => {
+    const sorted = [...reviewBookmark].sort((a, b) => {
+      const getDate = (item: GetReviewDetailProps) => {
+        const dateStr = item.extra?.startDate || item.extra?.visitDate || item.createdAt;
+        const date = new Date(dateStr);
+        return isNaN(date.getTime()) ? 0 : date.getTime();
+      };
+
+      const dateA = getDate(a);
+      const dateB = getDate(b);
+
+      return sortType === "latest" ? dateB - dateA : dateA - dateB;
+    });
+
+    setFilteredData(sorted);
+  }, [reviewBookmark, sortType]);
 
   // 후기 탭을 누를때 호출하는 함수
   useEffect(() => {
@@ -111,9 +133,9 @@ export default function SelectBookmark() {
       <div className="space-y-4 p-4">
         {tab === 0 ? (
           placeBookmark.map((item, idx) => <PlacePlusItem key={idx} {...item} />)
-        ) : reviewBookmark.length > 0 ? (
+        ) : filteredData.length > 0 ? (
           // 리뷰가 있을 때만 리뷰를 가져와서 띄워줌
-          reviewBookmark.map((item, idx) => <ViewItem key={idx} {...item} />)
+          filteredData.map((item, idx) => <ViewItem key={idx} {...item} />)
         ) : (
           // 리뷰가 없을 때
           <div className="text-center py-8 text-travel-gray400">북마크한 게시물이 없습니다.</div>
