@@ -4,10 +4,10 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/zustand/userStore";
-import ProfileItem from "@/components/ui/profileItem";
-import BookmarkItem from "@/components/ui/bookmarkItem";
+import ProfileItem from "@/components/mypage/profileItem";
+import BookmarkItem from "@/components/mypage/bookmarkItem";
 import Link from "next/link";
-import SelectMypage from "@/components/feature/selectMypage";
+import SelectMypage from "@/components/mypage/selectMypage";
 
 export default function MypagePage() {
   const { isLoggedIn } = useUserStore();

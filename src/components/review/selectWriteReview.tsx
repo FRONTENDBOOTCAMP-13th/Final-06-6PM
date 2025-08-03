@@ -2,9 +2,9 @@
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import ReviewDetailForm from "@/components/form/reviewDetailForm";
-import ReviewFormAll from "@/components/form/reviewFormAll";
-import { ReviewDayItem } from "@/components/form/reviewSelect";
+import ReviewDetailForm from "@/components/form/review/reviewDetailForm";
+import ReviewFormAll from "@/components/form/review/reviewFormAll";
+import { ReviewDayItem } from "@/components/form/review/reviewSelect";
 import { getPlanDetail } from "@/data/functions/plan";
 import { PlanReply, PlanReviewInfo } from "@/types/plan";
 import { CalendarDays, LayoutList, MapPin } from "lucide-react";

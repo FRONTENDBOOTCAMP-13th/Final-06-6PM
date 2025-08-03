@@ -1,4 +1,4 @@
-import SelectWriteReview from "@/components/feature/selectWriteReview";
+import SelectWriteReview from "@/components/review/selectWriteReview";
 
 // 여행기록_세부사항선택하기
 export default function ReviewDetailPage() {

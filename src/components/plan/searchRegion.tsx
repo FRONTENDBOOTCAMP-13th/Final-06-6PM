@@ -3,25 +3,20 @@
 import { useState } from "react";
 import SearchInput from "@/components/form/searchInput";
 import { Destination } from "@/lib/data/destinationList";
-import DestinationCard from "@/components/feature/destinationCard";
+import DestinationCard from "@/components/plan/destinationCard";
 
 interface SearchRegionProps {
   regions: Destination[];
   onRegionClick: (name: string, areaCode: number) => void;
 }
 
-export default function SearchRegion({
-  regions,
-  onRegionClick,
-}: SearchRegionProps) {
+export default function SearchRegion({ regions, onRegionClick }: SearchRegionProps) {
   const [search, setSearch] = useState("");
 
   // 지역 목록 필터링
   const filteredRegions = regions.filter((region) => {
     const nameMatch = region.name.includes(search);
-    const keywordMatch =
-      region.keywords?.some((keyword: string) => keyword.includes(search)) ||
-      false;
+    const keywordMatch = region.keywords?.some((keyword: string) => keyword.includes(search)) || false;
     return nameMatch || keywordMatch;
   });
 
@@ -45,16 +40,10 @@ export default function SearchRegion({
 
   return (
     <div className="pt-3">
-      <SearchInput
-        size="md"
-        placeholder="가고 싶은 국내 여행지를 검색해보세요"
-        onSearch={handleSearch}
-      />
+      <SearchInput size="md" placeholder="가고 싶은 국내 여행지를 검색해보세요" onSearch={handleSearch} />
       {renderRegionList()}
       {filteredRegions.length === 0 && search && (
-        <div className="pb-4 text-center text-travel-gray500">
-          검색 결과가 없습니다.
-        </div>
+        <div className="pb-4 text-center text-travel-gray500">검색 결과가 없습니다.</div>
       )}
     </div>
   );

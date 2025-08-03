@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, Loader2, MapPin } from "lucide-react";
 import { LocationInfo, WeatherItem } from "@/types/weather";
-import ServerLocation from "@/components/feature/serverLocation";
-import WeatherItemComponent from "@/components/feature/weatherItem";
+import WeatherItemComponent from "@/components/home/weatherItem";
 import { getCurrentLocationWeather } from "@/lib/api/weather";
+import ServerLocation from "@/components/home/serverLocation";
 
 type FullWeatherData = {
   location: LocationInfo;

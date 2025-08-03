@@ -1,5 +1,4 @@
-import PlanCalendar from '@/components/feature/planCalendar';
-
+import PlanCalendar from "@/components/plan/planCalendar";
 
 // 여행날짜
 export default function TravelPage() {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Plus, Star } from "lucide-react";
-import TagItem from "./tagItem";
 import { categories } from "@/lib/data/categoryList";
+import TagItem from "@/components/feature/tagItem";
 
 export default function PlaceCard({
   item,
@@ -12,7 +12,7 @@ export default function PlaceCard({
   onClick?: () => void;
   onAdd?: (e: React.MouseEvent) => void;
 }) {
-  const categoryName = categories.find(cat => cat.id === String(item.contenttypeid))?.name || "기타";
+  const categoryName = categories.find((cat) => cat.id === String(item.contenttypeid))?.name || "기타";
 
   return (
     <div
@@ -30,9 +30,7 @@ export default function PlaceCard({
             priority
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400">
-            No Image
-          </div>
+          <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
         )}
       </div>
 
@@ -44,9 +42,7 @@ export default function PlaceCard({
           </TagItem>
         </div>
 
-        <p className="my-1 truncate text-travel-gray600 text-14 whitespace-nowrap">
-          {item.addr1 || "주소 정보 없음"}
-        </p>
+        <p className="my-1 truncate text-travel-gray600 text-14 whitespace-nowrap">{item.addr1 || "주소 정보 없음"}</p>
 
         <div className="flex items-center gap-1">
           <div className="flex items-center">
@@ -55,11 +51,7 @@ export default function PlaceCard({
                 key={i}
                 fill="currentColor"
                 stroke="currentColor"
-                className={`size-4 ${
-                  i < Math.floor(0)
-                    ? "text-travel-warn100"
-                    : "text-travel-gray400"
-                }`}
+                className={`size-4 ${i < Math.floor(0) ? "text-travel-warn100" : "text-travel-gray400"}`}
               />
             ))}
           </div>

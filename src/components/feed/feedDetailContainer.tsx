@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import FeedDetailContent from "@/components/feature/feedDetailContent";
-import CommentForm from "@/components/feature/commentForm";
+import FeedDetailContent from "@/components/feed/feedDetailContent";
+import CommentForm from "@/components/feed/commentForm";
 import { ReviewReply } from "@/types/review";
 
 interface FeedDetailContainerProps {

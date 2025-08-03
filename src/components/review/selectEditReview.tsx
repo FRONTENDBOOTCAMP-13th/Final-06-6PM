@@ -3,9 +3,9 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import Button from "@/components/ui/btn";
-import ReviewFormAll from "@/components/form/reviewFormAll";
-import { ReviewDayItem } from "@/components/form/reviewSelect";
-import ReviewDetailForm from "@/components/form/reviewDetailForm";
+import ReviewFormAll from "@/components/form/review/reviewFormAll";
+import { ReviewDayItem } from "@/components/form/review/reviewSelect";
+import ReviewDetailForm from "@/components/form/review/reviewDetailForm";
 import { getReviewDetail } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
 import { CalendarDays, LayoutList, Link, MapPin } from "lucide-react";

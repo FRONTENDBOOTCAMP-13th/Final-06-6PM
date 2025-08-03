@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { MapPin, MapPinX } from "lucide-react";
 import Image from "next/image";
-import DrawerItem from "@/components/feature/drawerItem";
+import DrawerItem from "@/components/home/drawerItem";
 import { getRandomTravelList, getContentData } from "@/data/functions/travel";
 import { RandomTravelSpot } from "@/types/travel";
 import { destinationList } from "@/lib/data/destinationList";
-import RandomItemSkeleton from "@/components/ui/randomItemSkeleton";
+import RandomItemSkeleton from "@/components/home/randomItemSkeleton";
 
 export default function RandomItem() {
   const [travelSpot, setTravelSpot] = useState<RandomTravelSpot | null>(null);

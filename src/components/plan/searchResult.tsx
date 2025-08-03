@@ -1,4 +1,4 @@
-import PlaceCard from "@/components/feature/placeCard";
+import PlaceCard from "@/components/plan/placeCard";
 import { KeywordTravelProps } from "@/types/travel";
 
 interface SearchResultProps {

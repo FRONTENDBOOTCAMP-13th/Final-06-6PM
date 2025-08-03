@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
-import CommentDeleteForm from "@/components/feature/commentDeleteForm";
-import CommentEditForm from "@/components/feature/commentEditForm";
+import CommentDeleteForm from "@/components/feed/commentDeleteForm";
+import CommentEditForm from "@/components/feed/commentEditForm";
 import { ReviewReply } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
 

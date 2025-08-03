@@ -1,5 +1,5 @@
-import SelectReview from "@/components/feature/selectReview";
-import SelectReviewTab from "@/components/feature/selectReviewTab";
+import SelectReview from "@/components/mypage/selectReview";
+import SelectReviewTab from "@/components/mypage/selectReviewTab";
 
 // 마이페이지/리뷰
 export default function MypageReviewPage() {

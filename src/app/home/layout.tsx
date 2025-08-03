@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import "../../styles/globals.css";
-import LoginCheck from "@/components/feature/loginCkeck";
+import LoginCheck from "@/components/home/loginCkeck";
 
 export default function NavbarLayout({
   children,

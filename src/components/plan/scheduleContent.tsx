@@ -1,5 +1,5 @@
 "use client";
-import DayScheduleCard from "@/components/ui/dayScheduleCard";
+import DayScheduleCard from "@/components/plan/dayScheduleCard";
 import { usePlanSchedule } from "@/hook/usePlanSchedule";
 
 export default function ScheduleContent() {

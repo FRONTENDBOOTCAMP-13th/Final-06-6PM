@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import CommentItem from "@/components/ui/commentItem";
+import CommentItem from "@/components/feed/commentItem";
 import ViewItem from "@/components/feature/viewItem";
 import { GetReviewDetailProps, ReviewReply } from "@/types/review";
-import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
+import { getReviewDetail } from "@/data/functions/review";
 import useUserStore from "@/zustand/userStore";
 import { getBookmarks } from "@/data/functions/bookmark";
 import ViewItemSkeleton from "@/components/feature/viewItemSkeleton";
-import CommentItemSkeleton from "@/components/ui/commentitemSkeleton";
+import CommentItemSkeleton from "@/components/feed/commentitemSkeleton";
 
 interface FeedDetailContentProps {
   reviewId: string;

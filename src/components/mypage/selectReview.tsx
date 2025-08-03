@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { GetReviewDetailProps } from "@/types/review";
 import { getReviewAllUser, getReviewDailyUser, getReviewPlaceUser } from "@/lib/api/review";
 import { CalendarDays, LayoutList, MapPin } from "lucide-react";
-import ViewItem from "./viewItem";
+import ViewItem from "../feature/viewItem";
 
 // 리뷰 타입별 요청
 interface ReviewTypeProps {

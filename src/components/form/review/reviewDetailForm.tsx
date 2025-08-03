@@ -1,32 +1,41 @@
 "use client";
+import { useParams, useRouter } from "next/navigation";
 import { useActionState, useRef, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 import { toast } from "react-toastify";
 import useUserStore from "@/zustand/userStore";
 import { PlanReviewInfo } from "@/types/plan";
 import { GetReviewDetailProps } from "@/types/review";
 import Button from "@/components/ui/btn";
-import ReviewTag from "@/components/form/reviewTag";
-import ReviewStar from "@/components/form/reviewStar";
-import { ReviewTitle } from "@/components/form/reviewTitle";
-import ReviewContent from "@/components/form/reviewContent";
+import ReviewTag from "@/components/form/review/reviewTag";
+import ReviewStar from "@/components/form/review/reviewStar";
+import { ReviewTitle } from "@/components/form/review/reviewTitle";
+import ReviewContent from "@/components/form/review/reviewContent";
+import ReviewSelect, { ReviewSelectProps } from "@/components/form/review/reviewSelect";
 import { uploadFile } from "@/data/actions/file";
-import { createReviewAllPost, updateReviewPost } from "@/data/actions/review";
+import { createReviewDetailPost, updateReviewPost } from "@/data/actions/review";
 import { Camera, ImagePlus, X } from "lucide-react";
 
-interface ReviewFormAllProps {
+interface ReviewFormProps extends ReviewSelectProps {
+  reviewType: "reviewDaily" | "reviewPlace";
   initialData?: GetReviewDetailProps;
   planReviewInfo?: PlanReviewInfo;
 }
 
-export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFormAllProps) {
+export default function ReviewDetailForm({ list, selected, reviewType, onChange, initialData }: ReviewFormProps) {
+  // ReviewDetailForm에서 디버깅
+  // console.log("selected:", selected);
+  // console.log("selected.days:", selected.days);
+  // console.log("list:", list);
+
   // 글작성 또는 수정모드(initialData있을 경우)
   const isEditMode = !!initialData;
 
   const token = useUserStore((state) => state.token);
-  const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewAllPost, null);
+  const [state, formAction, isPending] = useActionState(isEditMode ? updateReviewPost : createReviewDetailPost, null);
   const router = useRouter();
+  const params = useParams();
+  const plan_id = params?.id || "";
 
   // 이미지 관련 상태
   const [images, setImages] = useState<{ path: string; name: string; preview: string }[]>([]);
@@ -36,19 +45,21 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
   // 초기 데이터 설정 (수정 모드)
   useEffect(() => {
     if (initialData && isEditMode) {
-      // console.log("ReviewFormAll 초기 데이터", initialData);
-
-      // 기존 이미지 데이터 설정
-      if (initialData.extra?.images && Array.isArray(initialData.extra.images)) {
-        const existingImages = initialData.extra.images.map((imagePath: string, index: number) => ({
-          path: imagePath,
-          name: `기존이미지-${imagePath.split("/").pop() || index}`,
-          preview: imagePath.startsWith("http") ? imagePath : `${process.env.NEXT_PUBLIC_API_SERVER}/${imagePath}`,
+      if (initialData.extra?.images) {
+        const existingImages = initialData.extra.images.map((img: string, idx: number) => ({
+          path: img,
+          name: `기존이미지-${img.split("/").pop() || idx}`,
+          preview: img.startsWith("http") ? img : `${process.env.NEXT_PUBLIC_API_SERVER}/${img}`,
         }));
         setImages(existingImages);
       }
+
+      // onChange?.({
+      //   days: initialData.extra?.selected_days || "",
+      //   place: initialData.extra?.selected_place?.split(",") || [],
+      // });
     }
-  }, [initialData, isEditMode]);
+  }, [initialData]);
 
   useEffect(() => {
     if (state?.ok) {
@@ -67,7 +78,6 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
   const uploadImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-
     if (images.length + files.length > 10) {
       toast.warning("사진은 최대 10장까지 첨부할 수 있습니다.");
       return;
@@ -76,14 +86,12 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
 
     try {
       const uploadPromises = Array.from(files).map(async (file) => {
-        // 미리보기 생성
         const preview = await new Promise<string>((resolve) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result as string);
           reader.readAsDataURL(file);
         });
 
-        // 파일 업로드
         const formData = new FormData();
         formData.append("attach", file);
         const res = await uploadFile(formData);
@@ -129,43 +137,29 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
         </div>
       )}
 
-      {/* Hidden inputs */}
+      {/* Hidden Inputs */}
       <input type="hidden" name="token" value={token || ""} />
-      {isEditMode && initialData && (
-        <input type="hidden" name="reviewId" value={initialData._id?.toString() || initialData._id?.toString()} />
-      )}
+      {isEditMode && initialData && <input type="hidden" name="reviewId" value={initialData._id?.toString() || ""} />}
+      <input type="hidden" name="review_type" value={reviewType} />
 
-      <input type="hidden" name="plan_id" value={planReviewInfo?.plan_id ?? initialData?.extra.plan_id ?? ""} />
-      <input type="hidden" name="startDate" value={planReviewInfo?.startDate ?? initialData?.extra?.startDate ?? ""} />
-      <input type="hidden" name="endDate" value={planReviewInfo?.endDate ?? initialData?.extra?.endDate ?? ""} />
-      <input type="hidden" name="place" value={planReviewInfo?.title ?? initialData?.extra?.place ?? ""} />
-      <input
-        type="hidden"
-        name="location"
-        value={initialData?.extra?.location ? JSON.stringify(initialData.extra.location) : ""}
-      />
+      <input type="hidden" name="plan_id" value={plan_id.toString()} />
+      <input type="hidden" name="selected_days" value={selected.days} />
+      <input type="hidden" name="selected_place" value={JSON.stringify(selected.place)} />
 
-      {/* 이미지 경로들을 hidden input으로 전송 */}
       {images.map((img, index) => (
         <input key={index} type="hidden" name={`imagePath_${index}`} value={img.path} />
       ))}
-      {/* 이미지 총 개수도 전송 */}
       <input type="hidden" name="imageCount" value={images.length.toString()} />
 
+      {/* 일자/장소 선택 */}
+      <ReviewSelect list={list} selected={selected} onChange={onChange} disabled={isEditMode && !!initialData} />
+
       {/* 별점 */}
-      <ReviewStar
-        name="starRate"
-        key={`star-${initialData?._id || "new"}`} // key 추가로 리렌더링 강제
-        defaultValue={initialData?.extra?.starRate?.toString() || "5"}
-      />
+      <ReviewStar name="starRate" defaultValue={initialData?.extra?.starRate?.toString() || "5"} />
 
       {/* 제목 */}
       <div>
-        <ReviewTitle
-          name="title"
-          key={`title-${initialData?._id || "new"}`} // key 추가로 리렌더링 강제
-          defaultValue={initialData?.title || ""}
-        />
+        <ReviewTitle name="title" defaultValue={initialData?.title || ""} />
         {state?.ok === 0 && state.errors?.title && (
           <p className="mt-1 text-sm text-red-500">{state.errors.title.msg}</p>
         )}
@@ -173,11 +167,7 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
 
       {/* 내용 */}
       <div>
-        <ReviewContent
-          name="content"
-          key={`content-${initialData?._id || "new"}`} // key 추가로 리렌더링 강제
-          defaultValue={initialData?.content || ""}
-        />
+        <ReviewContent name="content" defaultValue={initialData?.content || ""} />
         {state?.ok === 0 && state.errors?.content && (
           <p className="mt-1 text-sm text-red-500">{state.errors.content.msg}</p>
         )}
@@ -194,7 +184,6 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
         </div>
 
         <div className="grid grid-cols-4 gap-2">
-          {/* 업로드 버튼 */}
           {images.length < 10 && (
             <div
               className="relative flex items-center justify-center p-2 transition-colors bg-white border border-dashed rounded-lg cursor-pointer h-21 border-travel-gray400 hover:bg-gray-50"
@@ -203,8 +192,6 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
               <ImagePlus className="w-10 h-10 text-travel-gray400" />
             </div>
           )}
-
-          {/* 업로드된 이미지들 */}
           {images.map((img, index) => (
             <div
               key={`${img.path}-${index}`}
@@ -215,9 +202,7 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
                 alt={`첨부이미지-${index + 1}`}
                 className="object-cover w-full h-full rounded-lg"
                 onError={(e) => {
-                  // 이미지 로드 실패 시 대체 이미지 또는 제거
-                  console.error("이미지 로드 실패:", img.preview);
-                  e.currentTarget.src = "/images/no-image.png"; // 대체 이미지 경로
+                  e.currentTarget.src = "/images/no-image.png";
                 }}
               />
               <button
@@ -232,7 +217,6 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
           ))}
         </div>
 
-        {/* 파일 선택용 숨겨진 input */}
         <input
           type="file"
           ref={fileRef}
@@ -245,15 +229,18 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
       </div>
 
       {/* 태그 */}
-      <ReviewTag
-        name="tags"
-        key={`tags-${initialData?._id || "new"}`} // key 추가로 리렌더링 강제
-        defaultValue={initialData?.extra?.tags || []}
-      />
+      <ReviewTag name="tags" defaultValue={initialData?.extra?.tags || []} />
 
-      {/* 에러 메시지 표시 */}
+      {/* 에러 메시지 */}
       {state?.ok === 0 && state.message && (
         <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg">{state.message}</div>
+      )}
+
+      {/* 성공 메시지 */}
+      {state?.ok === 1 && (
+        <div className="p-3 text-sm text-green-600 bg-green-50 border border-green-200 rounded-lg">
+          {isEditMode ? "리뷰가 성공적으로 수정되었습니다!" : "리뷰가 성공적으로 작성되었습니다!"}
+        </div>
       )}
 
       {/* 제출 버튼 */}

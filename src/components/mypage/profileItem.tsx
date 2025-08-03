@@ -1,6 +1,6 @@
 "use client";
 
-import DrawerMypage from "@/components/feature/drawerMypage";
+import DrawerMypage from "@/components/mypage/drawerMypage";
 import { getUser } from "@/data/functions/user";
 import { getUserStats, UserStats } from "@/data/functions/userStats";
 import { User } from "@/types/user";
