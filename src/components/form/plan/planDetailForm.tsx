@@ -23,7 +23,6 @@ export default function PlanDetailForm() {
     }
 
     const formData = new FormData();
-    formData.append("token", accessToken as string);
     formData.append("startDate", startDate);
     formData.append("endDate", endDate);
     formData.append("selectedRegion", selectedArea.name);
@@ -35,7 +34,7 @@ export default function PlanDetailForm() {
     });
 
     try {
-      const result = await createPlanPost(formData);
+      const result = await createPlanPost(formData, accessToken);
       console.log("서버 응답:", result);
       if (result.ok && result.item) {
         setPostId(result.item._id);
