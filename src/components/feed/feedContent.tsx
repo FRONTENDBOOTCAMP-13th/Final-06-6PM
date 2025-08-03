@@ -47,7 +47,7 @@ export default function FeedContent() {
     }
 
     const sorted = [...filtered].sort((a, b) => {
-      const getDate = (item: any) => {
+      const getDate = (item: GetReviewDetailProps) => {
         const dateStr = item.extra?.startDate || item.extra?.visitDate || item.createdAt;
         const date = new Date(dateStr);
         return isNaN(date.getTime()) ? 0 : date.getTime();
