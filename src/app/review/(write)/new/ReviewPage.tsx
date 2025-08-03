@@ -8,39 +8,31 @@ import { GetPlanDetailProps } from "@/types/plan";
 import { getDday } from "@/lib/getDday";
 import Link from "next/link";
 
-const dummyList = [
-  {
-    title: "최신순",
-  },
-  {
-    title: "오래된순",
-  },
-];
+type SortType = "latest" | "oldest";
 
 // 여행기록_일정선택하기
 export default function ReviewNew() {
-  const [selectOpen, setSelectOpen] = useState(false);
-  const [selectData, setSelectData] = useState(dummyList[0].title);
+  const [sortType, setSortType] = useState<SortType>("latest");
 
   const token = useUserStore((state) => state.token);
   const [plan, setPlan] = useState<GetPlanDetailProps[]>([]);
 
-  const listData = (
-    <>
-      {dummyList.map((item, idx) => (
-        <li
-          key={idx}
-          onClick={() => {
-            setSelectData(item.title);
-            setSelectOpen((prev) => !prev);
-          }}
-          className="hover:bg-travel-primary200 hover:text-white py-1 px-3 text-[13px]"
-        >
-          {item.title}
-        </li>
-      ))}
-    </>
-  );
+  const handleSortChange = (type: SortType) => {
+    setSortType(type);
+  };
+
+  const sortedPlan = [...plan].sort((a, b) => {
+    const getDate = (item: GetPlanDetailProps) => {
+      const dateStr = item.extra?.startDate || item.createdAt;
+      const date = new Date(dateStr);
+      return isNaN(date.getTime()) ? 0 : date.getTime();
+    };
+
+    const dateA = getDate(a);
+    const dateB = getDate(b);
+
+    return sortType === "latest" ? dateB - dateA : dateA - dateB;
+  });
 
   useEffect(() => {
     const planListUserData = async () => {
@@ -58,17 +50,12 @@ export default function ReviewNew() {
   return (
     <>
       <div className="relative flex flex-row-reverse my-3">
-        <DropdownItem label={selectData} openModal={() => setSelectOpen((prev) => !prev)} />
-
-        {selectOpen && (
-          <ul className="flex flex-col bg-white absolute top-[28px] right-0 w-24 border border-travel-gray400 rounded">
-            {listData}
-          </ul>
-        )}
+        <DropdownItem currentSort={sortType} onSortChange={handleSortChange} />
       </div>
+
       <div className="flex flex-col gap-4">
-        {plan.length > 0 ? (
-          plan.map((item) => {
+        {sortedPlan.length > 0 ? (
+          sortedPlan.map((item) => {
             const dday = getDday(item.extra?.startDate);
             if (dday >= 0) return null;
 

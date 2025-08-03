@@ -11,8 +11,10 @@ import useUserStore from "@/zustand/userStore";
 import { AlertCircle, RotateCcw } from "lucide-react";
 import Button from "@/components/ui/btn";
 import ViewItemSkeleton from "@/components/feature/viewItemSkeleton";
+import DropdownItem from "@/components/feature/dropdownItem";
 
 type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
+type SortType = "latest" | "oldest";
 
 export default function FeedContent() {
   const router = useRouter();
@@ -22,8 +24,8 @@ export default function FeedContent() {
   const [currentType, setCurrentType] = useState<ReviewType>("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
   const [searchText, setSearchText] = useState("");
+  const [sortType, setSortType] = useState<SortType>("latest");
   const token = useUserStore((state) => state.token);
 
   // 현재 검색창의 상태 없으면 ""
@@ -32,22 +34,33 @@ export default function FeedContent() {
     setSearchText(query);
   }, [searchParams]);
 
-  // 검색어 제목+내용으로 필터링
+  // 검색어 제목+내용으로 필터링 + 정렬 기능
   useEffect(() => {
-    if (!searchText.trim()) {
-      //검색어가 없거나 공백만 있으면 리뷰데이타 그대로 출력
-      setFilteredData(reviewData);
-    } else {
-      //영어 검색을 위한 대소문자 구분없애기
+    let filtered = reviewData;
+    if (searchText.trim()) {
       const lowerCaseSearch = searchText.toLowerCase();
-      const filtered = reviewData.filter(
+      filtered = reviewData.filter(
         (item) =>
           (item.title ?? "").toLowerCase().includes(lowerCaseSearch) ||
           (item.content ?? "").toLowerCase().includes(lowerCaseSearch),
       );
-      setFilteredData(filtered);
     }
-  }, [reviewData, searchText]);
+
+    const sorted = [...filtered].sort((a, b) => {
+      const getDate = (item: GetReviewDetailProps) => {
+        const dateStr = item.extra?.startDate || item.extra?.visitDate || item.createdAt;
+        const date = new Date(dateStr);
+        return isNaN(date.getTime()) ? 0 : date.getTime();
+      };
+
+      const dateA = getDate(a);
+      const dateB = getDate(b);
+
+      return sortType === "latest" ? dateB - dateA : dateA - dateB;
+    });
+
+    setFilteredData(sorted);
+  }, [reviewData, searchText, sortType]);
 
   const handleSearch = (value: string) => {
     setSearchText(value); // 서치텍스트의 현재 상태 업데이트
@@ -60,6 +73,10 @@ export default function FeedContent() {
       params.delete("search");
     }
     router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  const handleSortChange = (type: SortType) => {
+    setSortType(type);
   };
 
   const fetchReviewData = useCallback(async (type: ReviewType = "all") => {
@@ -164,9 +181,8 @@ export default function FeedContent() {
       </div>
 
       <div className="flex flex-col-reverse xs:flex-row items-end xs:items-center gap-y-3 my-3 px-0.5">
-        {/* <DropdownItem label="오래된순" />
-        <div className="flex w-full xs:w-fit flex-start items-center gap-0.5 before:hidden xs:before:block before:content-['|'] before:mx-1 before:text-travel-gray400"></div> */}
-        <div className="flex w-full xs:w-fit flex-start items-center gap-0.5">
+        <DropdownItem currentSort={sortType} onSortChange={handleSortChange} />
+        <div className="flex w-full xs:w-fit flex-start items-center gap-0.5 before:hidden xs:before:block before:content-['|'] before:mx-1 before:text-travel-gray400">
           <TagItem variant={currentType === "all" ? "primary" : "outline"}>
             <span onClick={() => handleTypeChange("all")}>전체</span>
           </TagItem>
