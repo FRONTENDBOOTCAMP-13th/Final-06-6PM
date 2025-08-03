@@ -6,6 +6,8 @@ import { GetReviewDetailProps, ReviewReply } from "@/types/review";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList, getReviewDetail } from "@/data/functions/review";
 import useUserStore from "@/zustand/userStore";
 import { getBookmarks } from "@/data/functions/bookmark";
+import ViewItemSkeleton from "@/components/feature/viewItemSkeleton";
+import CommentItemSkeleton from "@/components/ui/commentitemSkeleton";
 
 interface FeedDetailContentProps {
   reviewId: string;
@@ -113,10 +115,15 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-center py-8">
-          <div className="animate-spin w-6 h-6 border-2 border-travel-primary100 border-t-transparent rounded-full mx-auto mb-2"></div>
-          로딩 중...
+      <div className="py-6 px-4 relative bg-white rounded-2xl">
+        <div className="flex flex-col gap-8">
+          <ViewItemSkeleton />
+        </div>
+
+        <hr className="my-4 border-gray-200" />
+
+        <div className="mt-6 ">
+          <CommentItemSkeleton />
         </div>
       </div>
     );

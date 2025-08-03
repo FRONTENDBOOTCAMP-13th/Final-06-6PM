@@ -13,7 +13,6 @@ import "swiper/css/pagination";
 import { GetReviewDetailProps, ReviewLocation } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
 import { useState } from "react";
-const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
 
 export type ViewItemProps = GetReviewDetailProps & {
   onClick?: () => void;
@@ -52,11 +51,7 @@ export default function ViewItem({
 
   // 사용자 정보
   const userName = user.name;
-  const userImgURL = (() => {
-    const img = user?.image;
-    if (!img || img === "undefined") return "/images/user-default.webp";
-    return img.startsWith("http") ? img : `${API_URL}/${img}`;
-  })();
+  const userImgURL = user.image;
   // console.log(user.image);
 
   // 글 타입
@@ -71,12 +66,6 @@ export default function ViewItem({
   const maxImg = 2;
   const showImg = isDetailView ? contentImg : contentImg.slice(0, maxImg);
   const moreCount = isDetailView ? 0 : contentImg.length - maxImg;
-
-  // 이미지 URL설정
-  const getImageURL = (imgPath: string) => {
-    if (!imgPath) return "/files/user-default.webp";
-    return imgPath.startsWith("http") ? imgPath : `${API_URL}/${imgPath}`;
-  };
 
   // 방문 장소
   const locationList: ReviewLocation[] = Array.isArray(extra.location)
@@ -152,7 +141,7 @@ export default function ViewItem({
           {type === "reviewAll" ? (
             <span className="text-travel-gray700">{place}</span>
           ) : (
-            locationList.map((location) => <ModalItem key={location.contentId ?? location.title} location={location} />)
+            locationList.map((location, idx) => <ModalItem key={`${idx}-${location.contentId}`} location={location} />)
           )}
         </div>
       </div>
@@ -168,7 +157,7 @@ export default function ViewItem({
                   <Image
                     width={600}
                     height={400}
-                    src={getImageURL(img)}
+                    src={img}
                     alt={`Review image ${idx + 1}`}
                     className="object-cover w-full h-full"
                   />
@@ -192,7 +181,7 @@ export default function ViewItem({
                   <Image
                     width={400}
                     height={300}
-                    src={getImageURL(img)}
+                    src={img}
                     alt={`Review image ${idx + 1}`}
                     className="object-cover w-full h-full"
                   />
