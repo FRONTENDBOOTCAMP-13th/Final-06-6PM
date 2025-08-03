@@ -4,8 +4,10 @@ import React, { useRef, useState, useEffect } from "react";
 import { uploadUserPhoto, fetchUserPhotos } from "@/data/functions/photoweb";
 import useUserStore from "@/zustand/userStore";
 import { ApiMsgRes, UserPhoto } from "@/types/api";
+import { toast } from "react-toastify";
+import { Loader2 } from "lucide-react";
 
-export default function KoreaMapClipPathImg() {
+export default function KoreaMapContainer() {
   const [imgMap, setImgMap] = useState<{ [regionId: string]: string }>({});
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -19,7 +21,6 @@ export default function KoreaMapClipPathImg() {
   useEffect(() => {
     if (!userToken || !user?._id) {
       //토큰이나 유저아이디가 없다면 사진 로드를 건너뛰는 로직
-      //근데 어짜피 로그인안하면 하게만듬
       return;
     }
 
@@ -47,7 +48,7 @@ export default function KoreaMapClipPathImg() {
   // 지역 선택 시 인풋창 출력
   const handleRegionClick = (regionId: string) => {
     if (!userToken) {
-      alert("로그인이 필요합니다.");
+      toast.warning("로그인이 필요합니다.");
       return;
     }
     setSelectedId(regionId);
@@ -74,15 +75,15 @@ export default function KoreaMapClipPathImg() {
           [selectedId]: `${process.env.NEXT_PUBLIC_API_SERVER}/${res.data!.imageUrl}`,
         }));
 
-        alert(`${selectedId} 지역에 사진이 업로드되었습니다!`);
+        toast.success(`${selectedId} 지역에 사진이 업로드되었습니다!`);
 
         // 사진 데이터 불러오기
         await loadUserPhotos(userToken!, user!._id);
       } else {
-        alert(res.message || "사진 업로드 실패");
+        toast.error(res.message || "사진 업로드 실패");
       }
     } catch (err) {
-      alert(err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다.");
+      toast.error(err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다.");
     } finally {
       setLoading(false);
       // 파일 input 초기화
@@ -110,28 +111,18 @@ export default function KoreaMapClipPathImg() {
   };
 
   return (
-    <div style={{ position: "relative", width: 400, height: 800 }}>
-      {loading && ( //업로딩 빡스
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "white",
-            fontSize: "18px",
-            zIndex: 1000,
-          }}
-        >
-          업로드 중...
-        </div>
+    <div className="relative w-full max-w-[430px] h-full">
+      {loading && (
+        <>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="flex flex-col items-center gap-4 p-6 min-w-50 bg-white rounded-xl shadow-xl">
+              <Loader2 className="size-10 text-travel-primary100 animate-spin" />
+              <p className="text-travel-text100 text-14 font-medium">업로드 중...</p>
+            </div>
+          </div>
+        </>
       )}
-      <svg viewBox="55 400 1600 600" width={850} height={800} style={{ display: "block" }}>
+      <svg viewBox="-30 -150 900 1700" className="block w-full h-full" preserveAspectRatio="xMidYMid meet">
         <defs>
           <clipPath id="clip-seoul">
             <path d="M 222.51 281.77 222.15 273.95 216.56 273.73 211.56 271.61 210.33 270.04 216.11 263.22 217.95 261.31 217.95 261.31 217.51 260.44 217.19 259.78 218.26 257.25 221.56 260.32 230.64 264.96 233.39 264.31 239.33 253.73 240.52 249.64 246.23 244.76 246.68 244.08 250.17 245.09 251.5 251.06 255.72 249.36 254.81 244.28 260.5 237.08 262.79 232.67 265.38 234.02 269.06 234.51 269.23 235.27 269.52 236.56 270.99 235.24 275.75 234 278.62 235.74 278.8 235.85 277.82 243.46 281.93 248.03 281.79 248.89 281.96 250.77 281.16 252.07 281.98 253.9 280.63 263.68 280.22 263.94 279.73 268.87 282.62 270.13 284.22 268.39 291.28 265.87 294.38 264.12 295.41 263.84 296.22 272.81 290.83 284.19 291.48 287.53 285.78 293.17 282.65 295.55 277.33 297.94 272.44 302.92 272.25 303.17 267.92 302.07 266.3 299.21 265.99 294.58 265.9 294.03 264.76 295.03 262.38 296.02 260.96 296.27 259.5 293.07 246.03 301.21 243.94 297.52 238.67 301.67 237.92 299.7 232.31 288.37 232.29 288.28 220.5 291.04 222.2 287.08 220.5 285.65 222.51 282.19 222.51 281.77 Z" />
@@ -521,28 +512,22 @@ export default function KoreaMapClipPathImg() {
       </svg>
 
       {/* input은 svg뒤에 숨김 */}
-      <input type="file" accept="image/*" style={{ display: "none" }} ref={inputRef} onChange={onFileChange} />
+      <input type="file" accept="image/*" className="hidden" ref={inputRef} onChange={onFileChange} />
       {/* 스타일코드 지도 선이랑 이미지 호버  */}
       <style>
         {`
         .land:hover { 
-    fill: rgba(0, 0, 0, 0.2); 
-  }
-      svg image:hover {
-    opacity: 0.6;
-   
-  }
-      .land {
-        stroke: #000;
-        stroke-width: 1;
-        cursor: pointer;
+          fill: rgba(0, 0, 0, 0.2); 
+        }
+          svg image:hover {
+          opacity: 0.6;
+        }
+        .land {
+          stroke: #000;
+          stroke-width: 1;
+          cursor: pointer;
         }`}
       </style>
-      {/* 토큰이 인식되지 않으면 로그인 해야함 */}
-      <div style={{ marginTop: 10, fontSize: "14px", color: "#666" }}>
-        {!userToken && "로그인이 필요합니다."}
-        {loading && "업로드 중..."}
-      </div>
     </div>
   );
 }
