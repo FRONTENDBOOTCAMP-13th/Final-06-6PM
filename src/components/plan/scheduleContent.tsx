@@ -25,7 +25,7 @@ export default function ScheduleContent() {
       <div className="flex flex-col justify-between pt-7 gap-5">
         {dailyPlans.map((plan) => (
           <div key={plan.day} className="drop-zone">
-            <DayScheduleCard day={plan.day} date={plan.planDate} daylist={plan.daylist} />
+            <DayScheduleCard day={plan.day} date={plan.planDate} />
           </div>
         ))}
       </div>
