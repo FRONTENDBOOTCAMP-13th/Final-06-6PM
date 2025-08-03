@@ -1,3 +1,5 @@
+import { BookmarkPlace } from "@/types/bookmark";
+
 // 사용자 정보를 나타내는 타입
 export interface User {
   _id: number; // 사용자 고유 ID
@@ -15,6 +17,7 @@ export interface User {
     refreshToken: string; // 리프레시 토큰
   };
   extra?: {
+    bookmarkPlace?: BookmarkPlace[];
     seoul?: string;
     busan?: string;
     jejudo?: string;
