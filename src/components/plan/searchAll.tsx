@@ -8,6 +8,7 @@ import ContentDetail from "@/components/plan/contentDetail";
 import CategoryPlaceList from "@/components/plan/categoryList";
 import { categories } from "@/lib/data/categoryList";
 import usePlanStore from "@/zustand/planStore";
+import { ContentDataProps } from "@/types/travel";
 
 import { usePlanInitializer } from "@/hook/usePlanInitializer";
 import { useTravelData } from "@/hook/useTravelData";
@@ -19,6 +20,7 @@ import SearchNav from "@/components/plan/searchNav";
 export default function SearchAll() {
   const [keyword, setKeyword] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+
   const {
     selectedArea,
     startDate,
@@ -28,19 +30,21 @@ export default function SearchAll() {
     selectedCategory,
     selectedPlaces,
     setSelectedCategory,
+    setContentData,
   } = usePlanStore();
   const targetDay = useSearchReset(setKeyword, setIsSearching);
 
   usePlanInitializer();
   useTravelData();
-  useContentDetail();
+  const { isModalOpen, handleModalClose } = useContentDetail();
 
-  // 페이지 진입 시 검색 상태, 카테고리 초기화
+  // 페이지 진입 시 검색 상태, 카테고리, 컨텐츠 데이터 초기화
   useEffect(() => {
     setKeyword("");
     setIsSearching(false);
     setSelectedCategory("all");
-  }, [targetDay, setSelectedCategory]);
+    setContentData({} as ContentDataProps);
+  }, [targetDay, setSelectedCategory, setContentData]);
 
   const { searchSubmit, handleCategoryChange, handleAddPlace, handleRemovePlace, setSelectContentID, getCategoryName } =
     useSearchHandlers();
@@ -130,10 +134,10 @@ export default function SearchAll() {
           onItemClick={setSelectContentID}
           onItemAdd={handleAddPlaceTarget}
         />
-
-        {/* 선택된 콘텐츠 상세 정보 */}
-        {contentData && <ContentDetail contentData={contentData} />}
       </div>
+
+      {/* 선택된 콘텐츠 상세 정보 모달 */}
+      <ContentDetail contentData={contentData} isOpen={isModalOpen} onClose={handleModalClose} />
 
       <SearchNav path="/plan/edit/schedule" tagData={selectedPlaces} onRemoveTag={handleRemovePlace} />
     </>
