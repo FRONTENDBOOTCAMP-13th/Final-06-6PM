@@ -210,7 +210,7 @@ export default function FeedContent() {
             ))}
           </div>
         ) : filteredData.length > 0 ? (
-          filteredData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
+          filteredData.map((item, idx) => <ViewItem key={`${idx}-${item._id}`} {...item} onDelete={handleDelete} />)
         ) : (
           //그냥 아이템만 있으면 충돌날수도 있는데 그럼 큰일나서 앞에 타입까지 붙여줌
           <div className="text-center py-8 text-travel-gray400">
