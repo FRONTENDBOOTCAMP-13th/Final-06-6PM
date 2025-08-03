@@ -8,7 +8,7 @@ import SearchInput from "@/components/form/searchInput";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import { GetReviewDetailProps } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
-import { AlertCircle, RotateCcw } from "lucide-react";
+import { AlertCircle, RefreshCcw, RotateCcw } from "lucide-react";
 import Button from "@/components/ui/btn";
 import ViewItemSkeleton from "@/components/feature/viewItemSkeleton";
 
@@ -145,7 +145,7 @@ export default function FeedContent() {
   return (
     <>
       {/* 서치인풋폼 및 기존코드  */}
-      <div>
+      <div className="flex items-center gap-2">
         <SearchInput
           size="md"
           placeholder="가고 싶은 국내 여행지의 리뷰를 살펴보세요"
@@ -155,11 +155,11 @@ export default function FeedContent() {
 
         <button // search=으로 링크가 들어가버려서 f5눌러도 그대로라 버튼을 따로 만듬
           onClick={() => handleSearch("")}
-          className="text-sm text-travel-gray500 hover:text-travel-primary200 "
           aria-label="새로고침"
+          title="검색내용 초기화"
           type="button"
         >
-          새로고침
+          <RefreshCcw className="size-5 cursor-pointer text-travel-gray500 hover:text-travel-primary200 " />
         </button>
       </div>
 
