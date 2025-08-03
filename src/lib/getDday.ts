@@ -13,16 +13,8 @@ export function getDday(date: string): number {
   const travelDay = new Date(date);
 
   // 날짜를 UTC 기준으로 변환하여 시차 영향 제거
-  const todayUTC = Date.UTC(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  );
-  const travelUTC = Date.UTC(
-    travelDay.getFullYear(),
-    travelDay.getMonth(),
-    travelDay.getDate()
-  );
+  const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const travelUTC = Date.UTC(travelDay.getFullYear(), travelDay.getMonth(), travelDay.getDate());
 
   // ms 단위 차이를 day 단위로 환산
   const dday = (travelUTC - todayUTC) / (1000 * 60 * 60 * 24);
