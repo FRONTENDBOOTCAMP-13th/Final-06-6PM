@@ -33,7 +33,7 @@ export default function DayItem({
         </div>
       </div>
 
-      {dday && (
+      {dday !== undefined && (
         <div
           className={`px-4 py-1 text-center text-white text-14 rounded-3xl min-w-14 ${
             dday < 0 ? "bg-travel-gray500" : "bg-travel-primary100"
