@@ -10,7 +10,6 @@ import Input from "@/components/ui/input";
 import ButtonRounded from "@/components/ui/btnRound";
 import { getUser } from "@/data/functions/user";
 import { updateUser } from "@/data/actions/user";
-import { User } from "@/types/user";
 import { Camera, Loader2, ImagePlus } from "lucide-react";
 import { toast } from "react-toastify";
 

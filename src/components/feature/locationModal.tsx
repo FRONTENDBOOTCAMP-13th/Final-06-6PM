@@ -18,12 +18,10 @@ export default function ModalItem({ location }: ModalItemProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
-    console.log("모달창열기");
     setModalOpen(true);
   };
 
   const onClose = () => {
-    console.log("모달창닫기");
     setModalOpen(false);
   };
 
