@@ -7,6 +7,7 @@ import DrawerItem from "@/components/feature/drawerItem";
 import { getRandomTravelList, getContentData } from "@/data/functions/travel";
 import { RandomTravelSpot } from "@/types/travel";
 import { destinationList } from "@/lib/data/destinationList";
+import RandomItemSkeleton from "@/components/ui/randomItemSkeleton";
 
 export default function RandomItem() {
   const [travelSpot, setTravelSpot] = useState<RandomTravelSpot | null>(null);
@@ -109,11 +110,7 @@ export default function RandomItem() {
   };
 
   if (loading) {
-    return (
-      <div className="relative rounded-xl overflow-hidden shadow-lg w-full flex items-center justify-center min-h-[220px] bg-gray-200 animate-pulse">
-        <div className="text-gray-500">여행지를 찾고 있습니다...</div>
-      </div>
-    );
+    return <RandomItemSkeleton />;
   }
 
   if (error || !travelSpot) {

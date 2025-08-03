@@ -10,6 +10,7 @@ import { GetReviewDetailProps } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
 import { AlertCircle, RotateCcw } from "lucide-react";
 import Button from "@/components/ui/btn";
+import ViewItemSkeleton from "@/components/feature/viewItemSkeleton";
 
 type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
 
@@ -187,9 +188,10 @@ export default function FeedContent() {
 
       <div className="flex flex-col gap-6">
         {loading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin w-6 h-6 border-2 border-travel-primary100 border-t-transparent rounded-full mx-auto mb-2"></div>
-            로딩 중...
+          <div className="space-y-6">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <ViewItemSkeleton key={idx} />
+            ))}
           </div>
         ) : filteredData.length > 0 ? (
           filteredData.map((item) => <ViewItem key={`${item.type}-${item._id}`} {...item} onDelete={handleDelete} />)
