@@ -9,9 +9,9 @@ export default function LoginPage() {
       <Image
         src="/images/logo.png"
         alt="여행로그인 로고"
-        width={200}
-        height={200}
-        className="object-contain aspect-ratio w-[60%]"
+        width={170}
+        height={170}
+        className="object-contain aspect-ratio w-[50%]"
         priority
       />
 
