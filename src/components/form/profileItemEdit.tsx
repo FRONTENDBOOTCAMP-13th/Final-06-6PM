@@ -14,8 +14,6 @@ import { User } from "@/types/user";
 import { Camera, Loader2, ImagePlus } from "lucide-react";
 import { toast } from "react-toastify";
 
-const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
-
 export default function ProfileItemEdit() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -56,11 +54,7 @@ export default function ProfileItemEdit() {
   }, [state]);
 
   // 프로필 이미지 URL 생성
-  const imgUrl = userInfo?.image?.startsWith("http")
-    ? userInfo.image
-    : userInfo?.image
-    ? `${API_URL}/${userInfo.image}`
-    : "/images/user-default.webp";
+  const imgUrl = userInfo?.image ? userInfo.image : "/uploadFiles/user-default.webp";
 
   // 사용자 정보 조회
   useEffect(() => {

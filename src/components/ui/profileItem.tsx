@@ -8,8 +8,6 @@ import useUserStore from "@/zustand/userStore";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_SERVER;
-
 export interface ProfileItemProps {
   postsCount?: number;
   likesCount?: number;
@@ -31,7 +29,7 @@ export default function ProfileItem({
 
   const user = useUserStore((state) => state.userInfo);
   const token = useUserStore((state) => state.token);
-  const imgUrl = user?.image?.startsWith("http") ? user.image : `${API_URL}/${user?.image}`;
+  const imgUrl = user?.image || "/uploadFiles/user-default.webp";
 
   // 회원 정보 및 통계
   useEffect(() => {
@@ -72,7 +70,7 @@ export default function ProfileItem({
           <Image
             width={100}
             height={100}
-            src={imgUrl || "/images/user-default.png"}
+            src={imgUrl}
             alt={user?.name || "사용자"}
             className="object-cover w-full h-full"
           />
