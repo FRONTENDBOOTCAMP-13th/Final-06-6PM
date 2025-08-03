@@ -1,10 +1,8 @@
-import { CalendarDays, ThumbsUp, MapPin, NotebookPen } from "lucide-react";
-import DayItem from "@/components/ui/dayItem";
-import RandomItem from "@/components/ui/randomItem";
-import Link from "next/link";
+import { ThumbsUp } from "lucide-react";
+import RandomItem from "@/components/home/randomItem";
 import { todayString } from "@/lib/todayString";
-import LocationWeatherBox from "@/components/feature/locationWeatherBox";
-import HomePlanItem from "@/components/feature/homePlanItem";
+import HomePlanItem from "@/components/home/homePlanItem";
+import LocationWeatherBox from "@/components/home/locationWeatherBox";
 
 export default function HomePage() {
   return (

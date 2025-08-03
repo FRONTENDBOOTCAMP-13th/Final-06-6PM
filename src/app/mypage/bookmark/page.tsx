@@ -1,6 +1,6 @@
 import DropdownItem from "@/components/feature/dropdownItem";
 import TagItem from "@/components/feature/tagItem";
-import SelectBookmark from "@/components/feature/selectBookmark";
+import SelectBookmark from "@/components/mypage/selectBookmark";
 
 // 마이페이지/북마크
 export default function MypageBookmarkPage() {

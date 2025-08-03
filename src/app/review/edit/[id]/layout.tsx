@@ -1,4 +1,4 @@
-import CurrentPlace from "@/components/ui/currentPlace";
+import CurrentPlace from "@/components/review/currentPlace";
 import "../../../../styles/globals.css";
 import { ChevronLeft } from "lucide-react";
 

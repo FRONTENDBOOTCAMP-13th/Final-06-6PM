@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
-import DayScheduleCard from "@/components/ui/dayScheduleCard";
+import DayScheduleCard from "@/components/plan/dayScheduleCard";
 import { getPlanDetail } from "@/data/functions/plan";
 import { GetPlanDetailProps } from "@/types/plan";
 import usePlanStore from "@/zustand/planStore";

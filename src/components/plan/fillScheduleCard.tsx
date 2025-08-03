@@ -1,10 +1,10 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import PlanListItem from "@/components/ui/planListItem";
 import ButtonRounded from "@/components/ui/btnRound";
 import { DayListItem } from "@/types/plan";
 import NaverMap from "@/components/plan/naverMap";
+import PlanListItem from "@/components/plan/planListItem";
 
 interface FillScheduleCardProps {
   daylist: DayListItem[];

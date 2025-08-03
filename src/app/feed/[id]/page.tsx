@@ -1,4 +1,4 @@
-import FeedDetailContainer from "@/components/feature/feedDetailContainer";
+import FeedDetailContainer from "@/components/feed/feedDetailContainer";
 
 interface FeedDetailPageProps {
   params: Promise<{

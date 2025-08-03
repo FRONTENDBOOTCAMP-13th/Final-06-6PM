@@ -1,6 +1,6 @@
 "use client";
 
-import SearchRegion from "@/components/feature/searchRegion";
+import SearchRegion from "@/components/plan/searchRegion";
 import { destinationList } from "@/lib/data/destinationList";
 import { useRouter } from "next/navigation";
 import usePlanStore from "@/zustand/planStore";

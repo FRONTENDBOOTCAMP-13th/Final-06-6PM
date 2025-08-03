@@ -1,5 +1,5 @@
-import MyPassword from "@/components/feature/myPassword";
-import LoginForm from "@/components/form/loginForm";
+import MyPassword from "@/components/auth/myPassword";
+import LoginForm from "@/components/form/auth/loginForm";
 import Image from "next/image";
 import Link from "next/link";
 

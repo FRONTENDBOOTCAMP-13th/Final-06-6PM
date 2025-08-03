@@ -1,4 +1,4 @@
-import SelectEditReview from "@/components/feature/selectEditReview";
+import SelectEditReview from "@/components/review/selectEditReview";
 
 // 여행기록_수정하기
 export default function ReviewEditPage() {

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import PlaceCard from "@/components/feature/placeCard";
 import usePlanStore from "@/zustand/planStore";
 import { categories } from "@/lib/data/categoryList";
+import PlaceCard from "@/components/plan/placeCard";
 
 interface CategoryPlaceListProps {
   keyword: string;

@@ -3,7 +3,7 @@
 import { MapPinned } from "lucide-react";
 import { useState, useEffect } from "react";
 import PlacePlusItem, { PlacePlusItemProps } from "./placePlusItem";
-import ViewItem, { ViewItemProps } from "./viewItem";
+import ViewItem, { ViewItemProps } from "../feature/viewItem";
 import { GetReviewDetailProps } from "@/types/review";
 import { getReviewAllList } from "@/data/functions/review";
 import useUserStore from "@/zustand/userStore";

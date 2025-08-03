@@ -1,10 +1,10 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import DayScheduleCard from "@/components/ui/dayScheduleCard";
+import DayScheduleCard from "@/components/plan/dayScheduleCard";
 import { getPlanDetail } from "@/data/functions/plan";
 import { GetPlanDetailProps } from "@/types/plan";
-import DrawerPlanBtn from "@/components/feature/drawerPlanBtn";
+import DrawerPlanBtn from "@/components/plan/drawerPlanBtn";
 
 export default function PlanDetailContent() {
   const params = useParams();

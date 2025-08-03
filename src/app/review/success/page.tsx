@@ -1,4 +1,4 @@
-import SuccessLink from "@/components/feature/successLink";
+import SuccessLink from "@/components/review/successLink";
 import { CircleCheckBig } from "lucide-react";
 
 // 여행기록_일정선택하기
