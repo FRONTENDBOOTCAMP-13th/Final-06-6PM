@@ -7,7 +7,6 @@ import SearchResult from "@/components/plan/searchResult";
 import ContentDetail from "@/components/plan/contentDetail";
 import CategoryPlaceList from "@/components/plan/categoryList";
 import { categories } from "@/lib/data/categoryList";
-import SearchNav from "@/components/feature/searchNav";
 import usePlanStore from "@/zustand/planStore";
 
 import { usePlanInitializer } from "@/hook/usePlanInitializer";
@@ -15,6 +14,7 @@ import { useTravelData } from "@/hook/useTravelData";
 import { useContentDetail } from "@/hook/useContentDetail";
 import { useSearchHandlers } from "@/hook/useSearchHandler";
 import { useSearchReset } from "@/hook/useSearchReset";
+import SearchNav from "@/components/plan/searchNav";
 
 export default function SearchAll() {
   const [keyword, setKeyword] = useState("");
