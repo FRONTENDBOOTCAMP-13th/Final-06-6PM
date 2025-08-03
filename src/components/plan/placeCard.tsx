@@ -34,17 +34,17 @@ export default function PlaceCard({
         )}
       </div>
 
-      <div className="max-w-[240px] text-travel-text100 overflow-hidden">
-        <div className="w-full grid grid-cols-[1fr_auto] items-center gap-1">
+      <div className="max-w-[240px] xs:max-w-[270px] text-travel-text100 overflow-hidden">
+        <div className="w-full grid grid-cols-[1fr_auto] items-center gap-2">
           <h2 className="font-bold line-clamp-2">{item.title}</h2>
           <TagItem variant="primary" size="sm">
             {categoryName}
           </TagItem>
         </div>
 
-        <p className="my-1 truncate text-travel-gray600 text-14 whitespace-nowrap">{item.addr1 || "주소 정보 없음"}</p>
+        <p className="mt-1 line-clamp-1 text-travel-gray600 text-14">{item.addr1 || "주소 정보 없음"}</p>
 
-        <div className="flex items-center gap-1">
+        {/* <div className="flex items-center gap-1">
           <div className="flex items-center">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
@@ -59,7 +59,7 @@ export default function PlaceCard({
             <span>0</span>
             <span>(0)</span>
           </p>
-        </div>
+        </div> */}
       </div>
 
       <button

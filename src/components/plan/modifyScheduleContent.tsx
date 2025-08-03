@@ -153,7 +153,7 @@ export default function ModifyScheduleContent() {
               <DayScheduleCard
                 day={plan.day}
                 date={plan.planDate}
-                daylist={daylist}
+                // daylist={daylist}
                 isPreview={false}
                 planId={postId}
                 replyId={plan.replyId}

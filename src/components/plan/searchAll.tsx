@@ -87,19 +87,17 @@ export default function SearchAll() {
   const selectedCategoryInfo = categories.find((c) => c.id === selectedCategory);
 
   return (
-    <>
+    <div className="pb-25">
       {/* 지역, 날짜 정보 */}
-      <div className="relative w-full px-4">
-        <div>
-          <h2 className="text-28 text-travel-primary200 font-semibold">{selectedArea.name}</h2>
-          <p className="text-16 text-travel-gray700">
-            여행일정 : {startDate} ~ {endDate}
-          </p>
-        </div>
+      <div className="relative w-full px-4 mb-2">
+        <h2 className="text-28 text-travel-primary200 font-semibold">{selectedArea.name}</h2>
+        <p className="text-16 text-travel-gray700">
+          여행일정 : {startDate} ~ {endDate}
+        </p>
       </div>
 
       {/* 여행 검색 영역 */}
-      <div className="mb-20 space-y-4 px-4">
+      <div className="space-y-4 px-4">
         <div className="flex flex-col gap-2">
           {/* 검색 입력 + 검색 중 상태 */}
           <SearchSection
@@ -140,6 +138,6 @@ export default function SearchAll() {
       <ContentDetail contentData={contentData} isOpen={isModalOpen} onClose={handleModalClose} />
 
       <SearchNav path="/plan/edit/schedule" tagData={selectedPlaces} onRemoveTag={handleRemovePlace} />
-    </>
+    </div>
   );
 }
