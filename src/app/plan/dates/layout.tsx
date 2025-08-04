@@ -11,24 +11,18 @@ export default function MenubarLayout({
   return (
     <>
       <div className="w-full relative py-5 px-4">
-      <BackButton path="/plan" />
+        <BackButton path="/plan" />
         <p className="text-center">여행일정만들기</p>
       </div>
       <div className="relative w-full px-4 pb-25">
         <div>
-          <h2 className="text-28 text-travel-primary200 font-semibold">
-            여행 기간이 어떻게 되시나요?
-          </h2>
-          <p className="text-16 text-travel-gray700">
-            여행 기간은 최대 5일까지 선택 가능합니다.
-          </p>
+          <h2 className="text-28 text-travel-primary200 font-semibold">여행 기간이 어떻게 되시나요?</h2>
+          <p className="text-16 text-travel-gray700">여행 기간은 최대 5일까지 선택 가능합니다.</p>
         </div>
         {children}
       </div>
 
-      <Link href="/plan/edit/schedule">
-          <PlanDetailForm />
-      </Link>
+      <PlanDetailForm />
     </>
   );
 }

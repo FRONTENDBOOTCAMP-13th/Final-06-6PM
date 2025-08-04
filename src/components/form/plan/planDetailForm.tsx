@@ -4,8 +4,12 @@ import { createPlanPost } from "@/data/actions/plan";
 import useUserStore from "@/zustand/userStore";
 import usePlanStore from "@/zustand/planStore";
 import Button from "@/components/ui/btn";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function PlanDetailForm() {
+  const router = useRouter();
+
   // 여행 데이터 가져오기
   const { selectedArea, startDate, endDate, setPostId } = usePlanStore();
   const accessToken = useUserStore((state) => state.token);
@@ -13,12 +17,10 @@ export default function PlanDetailForm() {
   const handleClick = async () => {
     // 데이터 유효성 검사
     if (!selectedArea || !startDate || !endDate) {
-      console.error("여행 정보가 완전하지 않습니다.");
-      console.error("누락된 데이터:", {
-        selectedArea: selectedArea ? "있음" : "없음",
-        startDate: startDate ? "있음" : "없음",
-        endDate: endDate ? "없음" : "없음",
-      });
+      // 날짜 선택 안했을 때 경고창 표시
+      if (!startDate || !endDate) {
+        toast.error("여행 날짜를 선택해주세요!");
+      }
       return;
     }
 
@@ -37,11 +39,18 @@ export default function PlanDetailForm() {
       const result = await createPlanPost(formData, accessToken);
       console.log("서버 응답:", result);
       if (result.ok && result.item) {
-        setPostId(result.item._id);
-        console.log("PostId:", result.item._id);
+        const postId = result.item._id;
+        setPostId(postId);
+        console.log("PostId:", postId);
+
+        // 성공 시 다음 페이지로 이동
+        router.push("/plan/edit/schedule");
+      } else {
+        toast.error("여행 계획 저장에 실패했습니다.");
       }
     } catch (error) {
       console.error("API 호출 에러:", error);
+      toast.error("네트워크 오류가 발생했습니다.");
     }
   };
 
