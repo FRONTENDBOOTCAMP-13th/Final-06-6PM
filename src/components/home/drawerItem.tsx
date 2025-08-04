@@ -5,9 +5,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } fro
 import { ChevronDown, MapPin } from "lucide-react";
 import Image from "next/image";
 import Button from "@/components/ui/btn";
-import { updateUser } from "@/data/actions/user";
 import useUserStore from "@/zustand/userStore";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { bookmarkUser } from "@/data/actions/bookmark";
 
@@ -28,7 +26,6 @@ export default function DrawerItem({
 }: DrawerItemProps) {
   const [open, setOpen] = useState(false);
 
-  const router = useRouter();
   const userInfo = useUserStore((state) => state.userInfo);
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const userToken = useUserStore((state) => state.token);
@@ -36,14 +33,6 @@ export default function DrawerItem({
 
   // useActionState로 폼 상태 관리
   const [state, formAction] = useActionState(bookmarkUser, null);
-
-  // 로그인 체크
-  // useEffect(() => {
-  //   if (!isLoggedIn || !userInfo?._id) {
-  //     router.replace("/login");
-  //     return;
-  //   }
-  // }, [isLoggedIn, userInfo?._id]);
 
   // API 응답 처리
   useEffect(() => {
@@ -125,15 +114,21 @@ export default function DrawerItem({
             <input type="hidden" name="placeImgUrl" value={imgUrl || ""} />
             <input type="hidden" name="placeLocation" value={location || ""} />
 
-            <Button
-              size="lg"
-              variant={isBookmark ? "disable" : "primary"}
-              type="submit"
-              className="w-full mt-5"
-              disabled={isBookmark}
-            >
-              {isBookmark ? "저장된 북마크" : "북마크 저장하기"}
-            </Button>
+            {isLoggedIn ? (
+              <Button
+                size="lg"
+                variant={isBookmark ? "disable" : "primary"}
+                type="submit"
+                className="w-full mt-5"
+                disabled={isBookmark}
+              >
+                {isBookmark ? "저장된 북마크" : "북마크 저장하기"}
+              </Button>
+            ) : (
+              <Button size="lg" variant="disable" type="submit" disabled className="w-full mt-5">
+                북마크 기능은 로그인 후 이용 가능합니다.
+              </Button>
+            )}
           </form>
         </DialogPanel>
       </Dialog>

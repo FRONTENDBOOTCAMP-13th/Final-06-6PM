@@ -21,7 +21,6 @@ export default function ModalItem({ location }: ModalItemProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const router = useRouter();
   const userInfo = useUserStore((state) => state.userInfo);
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const userToken = useUserStore((state) => state.token);
@@ -29,14 +28,6 @@ export default function ModalItem({ location }: ModalItemProps) {
 
   // useActionState로 폼 상태 관리
   const [state, formAction] = useActionState(bookmarkUser, null);
-
-  // 로그인 체크
-  useEffect(() => {
-    if (!isLoggedIn || !userInfo?._id) {
-      router.replace("/login");
-      return;
-    }
-  }, [isLoggedIn, userInfo?._id]);
 
   // API 응답 처리
   useEffect(() => {
@@ -170,15 +161,21 @@ export default function ModalItem({ location }: ModalItemProps) {
               <input type="hidden" name="placeImgUrl" value={modalData?.firstimage || ""} />
               <input type="hidden" name="placeLocation" value={modalData?.addr1 || ""} />
 
-              <Button
-                size="lg"
-                variant={isBookmark ? "disable" : "primary"}
-                disabled={isBookmark}
-                className="w-full mt-7"
-                type="submit"
-              >
-                {isBookmark ? "저장된 북마크" : "북마크 저장하기"}
-              </Button>
+              {isLoggedIn ? (
+                <Button
+                  size="lg"
+                  variant={isBookmark ? "disable" : "primary"}
+                  type="submit"
+                  className="w-full mt-5"
+                  disabled={isBookmark}
+                >
+                  {isBookmark ? "저장된 북마크" : "북마크 저장하기"}
+                </Button>
+              ) : (
+                <Button size="lg" variant="disable" type="submit" disabled className="w-full mt-5">
+                  북마크 기능은 로그인 후 이용 가능합니다.
+                </Button>
+              )}
             </form>
           </div>
         </div>
