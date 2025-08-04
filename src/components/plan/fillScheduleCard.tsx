@@ -5,6 +5,9 @@ import PlanListItem from "@/components/plan/planListItem";
 import ButtonRounded from "@/components/ui/btnRound";
 import NaverMap from "@/components/plan/naverMap";
 import usePlanStore from "@/zustand/planStore";
+import useUserStore from "@/zustand/userStore";
+import { updateReply } from "@/data/actions/plan";
+import { useState } from "react";
 
 interface FillScheduleCardProps {
   day: number;
@@ -14,15 +17,63 @@ interface FillScheduleCardProps {
 
 export default function FillScheduleCard({ day, onAddPlace, isPreview = false }: FillScheduleCardProps) {
   // 해당 일차의 데이터 가져오기
-  const { dailyPlans, removePlaceFromDailyPlan } = usePlanStore();
+  const { dailyPlans, removePlaceFromDailyPlan, postId } = usePlanStore();
+  const accessToken = useUserStore((state) => state.token);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   // 현재 일차의 계획 찾기
   const currentDayPlan = dailyPlans.find((plan) => plan.day === day);
   const daylist = currentDayPlan?.places || [];
 
   // 장소 제거 함수
-  const handleRemovePlace = (placeId: number) => {
-    removePlaceFromDailyPlan(day, placeId);
+  const handleRemovePlace = async (placeId: number) => {
+    if (isUpdating) return;
+
+    // 수정 페이지 서버 업데이트
+    if (!isPreview && currentDayPlan?.replyId && postId && accessToken) {
+      setIsUpdating(true);
+
+      try {
+        removePlaceFromDailyPlan(day, placeId);
+        const updatedPlaces = daylist.filter((place) => place.id !== placeId);
+
+        // 서버에 업데이트
+        const formData = new FormData();
+        formData.append("content", `${day}일차`);
+        formData.append("postId", postId.toString());
+        formData.append("replyId", currentDayPlan.replyId.toString());
+        formData.append("accessToken", accessToken);
+        formData.append("day", day.toString());
+        formData.append("planDate", currentDayPlan.planDate);
+        formData.append(
+          "locations",
+          JSON.stringify(
+            updatedPlaces.map((place) => ({
+              title: place.name,
+              types: place.category || "관광지",
+              contentId: place.id.toString(),
+              mapx: place.mapx || "",
+              mapy: place.mapy || "",
+            })),
+          ),
+        );
+
+        const result = await updateReply(null, formData);
+
+        if (!result.ok) {
+          alert("장소 삭제에 실패했습니다.");
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("장소 삭제 중 오류:", error);
+        alert("오류가 발생했습니다.");
+        window.location.reload();
+      } finally {
+        setIsUpdating(false);
+      }
+    } else {
+      removePlaceFromDailyPlan(day, placeId);
+    }
   };
 
   // 지도용 장소 데이터 변환
