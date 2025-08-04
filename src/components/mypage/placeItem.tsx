@@ -83,7 +83,7 @@ export default function PlaceItem({
         <input type="hidden" name="placeContentId" value={contentId} />
 
         <div
-          className="w-full bg-white rounded-2xl shadow-[0_0_6px_rgba(0,0,0,0.3)] py-4 px-3 grid grid-cols-[auto_1fr_auto] items-center gap-2 cursor-pointer hover:shadow-lg transition-shadow"
+          className="w-full bg-white rounded-2xl shadow-md border border-travel-gray100/70 hover:border-travel-gray200/80 py-4 px-3 grid grid-cols-[auto_1fr_auto] items-center gap-2 cursor-pointer hover:shadow-lg transition-shadow"
           data-contentid={contentId}
           onClick={handleCardClick}
         >
