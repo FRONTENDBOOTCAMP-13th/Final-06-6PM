@@ -38,12 +38,12 @@ export default function DrawerItem({
   const [state, formAction] = useActionState(bookmarkUser, null);
 
   // 로그인 체크
-  useEffect(() => {
-    if (!isLoggedIn || !userInfo?._id) {
-      router.replace("/login");
-      return;
-    }
-  }, [isLoggedIn, userInfo?._id]);
+  // useEffect(() => {
+  //   if (!isLoggedIn || !userInfo?._id) {
+  //     router.replace("/login");
+  //     return;
+  //   }
+  // }, [isLoggedIn, userInfo?._id]);
 
   // API 응답 처리
   useEffect(() => {
