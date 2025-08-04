@@ -186,18 +186,17 @@ export default function FeedContent() {
           <TagItem variant={currentType === "all" ? "primary" : "outline"}>
             <span onClick={() => handleTypeChange("all")}>전체</span>
           </TagItem>
-          <ButtonRounded
+          <TagItem
             variant={currentType === "reviewAll" ? "primary" : "outline"}
-            size="sm"
             onClick={() => handleTypeChange("reviewAll")}
           >
-            전체리뷰
-          </ButtonRounded>
+            여행별
+          </TagItem>
           <TagItem variant={currentType === "reviewDaily" ? "primary" : "outline"}>
-            <span onClick={() => handleTypeChange("reviewDaily")}>일별리뷰</span>
+            <span onClick={() => handleTypeChange("reviewDaily")}>일별</span>
           </TagItem>
           <TagItem variant={currentType === "reviewPlace" ? "primary" : "outline"}>
-            <span onClick={() => handleTypeChange("reviewPlace")}>장소별리뷰</span>
+            <span onClick={() => handleTypeChange("reviewPlace")}>장소별</span>
           </TagItem>
         </div>
       </div>
