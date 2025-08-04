@@ -7,11 +7,17 @@ export function usePlanSchedule() {
   const { selectedArea, startDate, endDate, dailyPlans, setDailyPlans, selectedPlaces, setSelectedPlaces } =
     usePlanStore();
 
+  // 파싱 함수 추가
+  const parseDate = (dateString: string): Date => {
+    return new Date(dateString.replace(/\./g, "-"));
+  };
+
   // 날짜 기간으로 일정 초기화
   useEffect(() => {
     if (startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      // parseDate 사용
+      const start = parseDate(startDate);
+      const end = parseDate(endDate);
 
       const daysDiff = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 

@@ -29,14 +29,19 @@ export default function PlanCalendar() {
 
   const [isClient, setIsClient] = useState(false);
 
+  // 파싱함수 추가
+  const parseDate = (dateString: string): Date => {
+    return new Date(dateString.replace(/\./g, "-"));
+  };
+
   useEffect(() => {
     setIsClient(true);
 
-    // Zustand에 날짜가 있으면 반영
+    // parseDate 사용
     if (startDate && endDate) {
       setDates({
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: parseDate(startDate),
+        endDate: parseDate(endDate),
         key: "selection",
       });
     }
