@@ -35,11 +35,7 @@ export default function KoreaMapContainer() {
             const urlChange = String(imageUrl || "");
 
             if (urlChange) {
-              // URL 형식 확인
-              const fullUrl = urlChange.startsWith("http")
-                ? urlChange
-                : `${process.env.NEXT_PUBLIC_API_SERVER}/${urlChange}`;
-              map[regionId] = fullUrl;
+              map[regionId] = urlChange;
             }
           });
           setImgMap(map);
@@ -79,7 +75,7 @@ export default function KoreaMapContainer() {
         // 지도에 이미지 표시
         setImgMap((prev) => ({
           ...prev,
-          [selectedId]: `${process.env.NEXT_PUBLIC_API_SERVER}/${res.data!.imageUrl}`,
+          [selectedId]: res.data!.imageUrl,
         }));
 
         toast.success(`${selectedId} 지역에 사진이 업로드되었습니다!`);
@@ -112,11 +108,7 @@ export default function KoreaMapContainer() {
           const urlString = String(photo.imageUrl || "");
 
           if (urlString) {
-            const fullUrl = urlString.startsWith("http")
-              ? urlString
-              : `${process.env.NEXT_PUBLIC_API_SERVER}/${urlString}`;
-
-            newImgMap[photo.regionId] = fullUrl;
+            newImgMap[photo.regionId] = urlString;
           }
         });
         setImgMap(newImgMap);
