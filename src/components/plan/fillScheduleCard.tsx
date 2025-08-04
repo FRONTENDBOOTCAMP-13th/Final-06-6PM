@@ -9,15 +9,21 @@ import usePlanStore from "@/zustand/planStore";
 interface FillScheduleCardProps {
   day: number;
   onAddPlace?: () => void;
+  isPreview?: boolean;
 }
 
-export default function FillScheduleCard({ day, onAddPlace }: FillScheduleCardProps) {
+export default function FillScheduleCard({ day, onAddPlace, isPreview = false }: FillScheduleCardProps) {
   // 해당 일차의 데이터 가져오기
-  const { dailyPlans } = usePlanStore();
+  const { dailyPlans, removePlaceFromDailyPlan } = usePlanStore();
 
   // 현재 일차의 계획 찾기
   const currentDayPlan = dailyPlans.find((plan) => plan.day === day);
   const daylist = currentDayPlan?.places || [];
+
+  // 장소 제거 함수
+  const handleRemovePlace = (placeId: number) => {
+    removePlaceFromDailyPlan(day, placeId);
+  };
 
   // 지도용 장소 데이터 변환
   const mapPlaces = daylist
@@ -43,7 +49,7 @@ export default function FillScheduleCard({ day, onAddPlace }: FillScheduleCardPr
         <NaverMap height="240px" places={mapPlaces} zoom={daylist.length > 1 ? 10 : 14} />
       </div>
 
-      {/* planListItem 컴포넌트 사용 */}
+      {/* planListItem 컴포넌트 사용 - 미리보기가 아닐 때만 X 버튼 표시 */}
       <div className="space-y-2">
         {daylist.map((place, index) => (
           <PlanListItem
@@ -51,6 +57,8 @@ export default function FillScheduleCard({ day, onAddPlace }: FillScheduleCardPr
             number={index + 1}
             place={place.name}
             tag={place.category}
+            showDeleteButton={!isPreview}
+            onDelete={!isPreview ? () => handleRemovePlace(place.id) : undefined}
           />
         ))}
       </div>
