@@ -31,11 +31,14 @@ export default function KoreaMapContainer() {
         if (res.ok && res.data) {
           const map: { [key: string]: string } = {};
           res.data.forEach(({ regionId, imageUrl }) => {
-            map[regionId] = `${process.env.NEXT_PUBLIC_API_SERVER}/${imageUrl}`;
+            // imageUrl을 문자열로 변환
+            const urlChange = String(imageUrl || "");
+
+            if (urlChange) {
+              map[regionId] = urlChange;
+            }
           });
           setImgMap(map);
-        } else {
-          console.error("사진을 불러올 수 없습니다.");
         }
       } catch (error) {
         console.error("포토맵 로드 실패:", error);
@@ -72,7 +75,7 @@ export default function KoreaMapContainer() {
         // 지도에 이미지 표시
         setImgMap((prev) => ({
           ...prev,
-          [selectedId]: `${process.env.NEXT_PUBLIC_API_SERVER}/${res.data!.imageUrl}`,
+          [selectedId]: res.data!.imageUrl,
         }));
 
         toast.success(`${selectedId} 지역에 사진이 업로드되었습니다!`);
@@ -101,7 +104,12 @@ export default function KoreaMapContainer() {
       if (res.ok && res.data) {
         const newImgMap: Record<string, string> = {};
         res.data.forEach((photo) => {
-          newImgMap[photo.regionId] = `${process.env.NEXT_PUBLIC_API_SERVER}/${photo.imageUrl}`;
+          // imageUrl을 문자열로 변환
+          const urlString = String(photo.imageUrl || "");
+
+          if (urlString) {
+            newImgMap[photo.regionId] = urlString;
+          }
         });
         setImgMap(newImgMap);
       }
