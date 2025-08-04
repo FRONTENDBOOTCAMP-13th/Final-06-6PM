@@ -91,7 +91,7 @@ export default function SearchNav({ path, tagData, onRemoveTag }: SearchNavProps
 
   return (
     <div className="fixed bottom-0 left-1/2 z-20 w-full max-w-[430px] -translate-x-1/2 bg-white p-4 shadow-[0_-8px_16px_-4px_rgba(0,0,0,0.1)]">
-      <div className="flex flex-wrap gap-2 pb-3">
+      <div className="custom-scroll flex flex-wrap gap-2 mb-2 max-h-20 overflow-y-auto ">
         {tagData.map((place) => (
           <TagItem key={place.id} variant="outline" size="md" closeIcon onRemove={() => handleRemove(place.id)}>
             {place.name}

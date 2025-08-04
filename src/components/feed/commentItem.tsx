@@ -48,7 +48,7 @@ export default function CommentItem({
           <div className="flex items-center justify-between mb-1">
             <p className="font-semibold">{author}</p>
             {showActionButtons && !isEditing && (
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
                 {onCommentUpdated && (
                   <CommentEditForm
                     reply={comment}

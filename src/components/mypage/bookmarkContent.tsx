@@ -25,8 +25,7 @@ export default function BookmarkContent() {
           <TagItem variant="outline">축제</TagItem>
         </div>
       </div>
-      <h3 className="my-4 font-semibold">전체 도시</h3>
-      <div className="overflow-hidden bg-white rounded-2xl">
+      <div className="overflow-hidden bg-white rounded-2xl my-4 ">
         <SelectBookmark sortType={sortType} />
       </div>
     </>
