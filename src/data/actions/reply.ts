@@ -18,8 +18,13 @@ export async function createReviewReply(
   state: ApiReplyRes<ReviewReply> | null,
   formData: FormData,
 ): ApiReplyResPromise<ReviewReply> {
+  const contentData = formData.get("content");
+  if (!contentData || typeof contentData !== "string" || contentData.trim().length < 2) {
+    return { ok: 0, message: "댓글은 2글자 이상으로 작성해주세요." };
+  }
+
   const body = {
-    content: formData.get("content"),
+    content: contentData,
   };
   const _id = formData.get("_id");
   const accessToken = formData.get("accessToken");

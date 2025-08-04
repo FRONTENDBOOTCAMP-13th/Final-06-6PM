@@ -153,9 +153,9 @@ export default function ViewItem({
           <Swiper pagination={true} modules={[Pagination]} className="rounded-lg overflow-hidden">
             {showImg.map((img, idx) => (
               <SwiperSlide key={idx}>
-                <div className="aspect-[3/2] bg-travel-gray200">
+                <div className="aspect-square bg-travel-gray200">
                   <Image
-                    width={600}
+                    width={400}
                     height={400}
                     src={img}
                     alt={`Review image ${idx + 1}`}

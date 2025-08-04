@@ -33,11 +33,19 @@ export default function CommentItem({
     <div className="rounded-lg text-travel-text100 text-16">
       <div className="flex items-start gap-3">
         <div className="w-[50px] h-[50px] rounded-full bg-travel-gray200 overflow-hidden aspect-square flex-shrink-0">
-          {imgUrl && (
+          {imgUrl ? (
             <Image
               width={50}
               height={50}
-              src={imgUrl}
+              src={imgUrl || "/uploadFiles/user-default.webp"}
+              alt={`${author} 프로필`}
+              className="object-cover w-full h-full"
+            />
+          ) : (
+            <Image
+              width={50}
+              height={50}
+              src="/images/user-default.webp"
               alt={`${author} 프로필`}
               className="object-cover w-full h-full"
             />

@@ -7,8 +7,6 @@ import useUserStore from "@/zustand/userStore";
 import { createReviewReply } from "@/data/actions/reply";
 import { ReviewReply } from "@/types/review";
 import { toast } from "react-toastify";
-import Button from "@/components/ui/btn";
-import LoginCheck from "@/components/home/loginCkeck";
 import Link from "next/link";
 
 interface CommentFormProps {
@@ -26,6 +24,8 @@ export default function CommentForm({ onCommentAdded }: CommentFormProps) {
   useEffect(() => {
     if (state?.ok === 1 && state.item) {
       onCommentAdded(state.item);
+    } else if (state?.ok === 0 && state.message) {
+      toast.error(state.message);
     }
   }, [state, onCommentAdded]);
 
@@ -89,8 +89,6 @@ export default function CommentForm({ onCommentAdded }: CommentFormProps) {
               <Send className="text-travel-info100 w-5" />
             </button>
           </div>
-
-          {state?.ok === 0 && state.message && <p className="mt-2 text-sm text-red-500">{state.message}</p>}
         </form>
       )}
     </div>
