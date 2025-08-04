@@ -42,5 +42,6 @@ export interface ReviewReply {
 export interface ReviewLocation {
   title: string;
   contentId?: string;
+  contentTypeId?: string;
   areaCode?: string;
 }

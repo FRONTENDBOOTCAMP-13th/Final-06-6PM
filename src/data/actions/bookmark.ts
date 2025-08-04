@@ -24,12 +24,14 @@ export async function bookmarkUser(_state: ApiRes<User> | null, formData: FormDa
     const token = formData.get("userToken") as string;
     const placeTitle = formData.get("placeTitle") as string;
     const placeContentId = formData.get("placeContentId") as string;
+    const placeContentType = formData.get("placeContentTypeId") as string;
     const placeDesc = formData.get("placeDesc") as string;
     const placeImgUrl = formData.get("placeImgUrl") as string;
     const placeLocation = formData.get("placeLocation") as string;
 
     const newPlace = {
       contentId: placeContentId,
+      contentType: placeContentType,
       title: placeTitle,
       desc: placeDesc,
       imgUrl: placeImgUrl,

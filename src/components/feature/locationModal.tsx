@@ -8,7 +8,6 @@ import { KeywordTravelProps } from "@/types/travel";
 import useUserStore from "@/zustand/userStore";
 import { MapPin, X } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 interface ModalItemProps {
@@ -86,7 +85,6 @@ export default function ModalItem({ location }: ModalItemProps) {
     <>
       <button
         className="flex items-center gap-1 cursor-pointer text-14 text-travel-info100 hover:text-travel-primary100 hover:underline"
-        data-contentid={location.contentId}
         onClick={() => openModal()}
       >
         <MapPin className="size-4" />
@@ -156,7 +154,8 @@ export default function ModalItem({ location }: ModalItemProps) {
               <input type="hidden" name="userId" value={userInfo?._id} />
               <input type="hidden" name="userToken" value={userToken || ""} />
               <input type="hidden" name="placeTitle" value={modalData?.title || ""} />
-              <input type="hidden" name="placeContentId" value={location.contentId || ""} />
+              <input type="hidden" name="placeContentId" value={modalData?.contentid || ""} />
+              <input type="hidden" name="placeContentTypeId" value={modalData?.contenttypeid || ""} />
               <input type="hidden" name="placeDesc" value={modalData?.overview || ""} />
               <input type="hidden" name="placeImgUrl" value={modalData?.firstimage || ""} />
               <input type="hidden" name="placeLocation" value={modalData?.addr1 || ""} />
