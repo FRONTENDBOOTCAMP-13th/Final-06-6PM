@@ -18,7 +18,7 @@ export default function LoginForm() {
     if (userState?.ok) {
       const user = userState.item;
 
-      setToken(user.token?.accessToken || "");
+      setToken(user.token?.accessToken || "", user.token?.refreshToken || "");
       setUserInfo({
         _id: user._id,
         name: user.name,
@@ -49,25 +49,13 @@ export default function LoginForm() {
 
       {/* 비밀번호 */}
       <div className="w-full">
-        <Input
-          size="md"
-          id="password"
-          name="password"
-          type="password"
-          placeholder="password"
-        />
+        <Input size="md" id="password" name="password" type="password" placeholder="password" />
         <p className="mt-1 font-medium text-14 text-travel-fail100">
           {!userState?.ok && userState?.errors?.password?.msg}
         </p>
       </div>
 
-      <Button
-        className="w-full"
-        size="lg"
-        variant="primary"
-        type="submit"
-        disabled={isLoading}
-      >
+      <Button className="w-full" size="lg" variant="primary" type="submit" disabled={isLoading}>
         {isLoading ? "로그인 중..." : "로그인"}
       </Button>
     </form>
