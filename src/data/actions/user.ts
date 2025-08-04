@@ -135,6 +135,26 @@ export async function updateUser(_state: ApiRes<User> | null, formData: FormData
 }
 
 /**
+ * 사용자 인증 토큰을 갱신합니다.
+ *
+ * @param {string} refreshToken - 기존의 리프레시 토큰
+ * @returns 갱신된 액세스 토큰 등의 응답 데이터를 포함한 Promise 객체
+ */
+export async function refreshTokenUser(refreshToken: string) {
+  const res = await fetch(`${API_URL}/auth/refresh`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Client-Id": CLIENT_ID,
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  });
+
+  const data = await res.json();
+  return data;
+}
+
+/**
  * 로그인 함수
  * @param state - 이전 상태(사용하지 않음)
  * @param formData - 로그인 폼 데이터(FormData 객체)
