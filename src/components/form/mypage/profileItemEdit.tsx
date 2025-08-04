@@ -9,7 +9,7 @@ import useUserStore from "@/zustand/userStore";
 import Input from "@/components/ui/input";
 import ButtonRounded from "@/components/ui/btnRound";
 import { getUser } from "@/data/functions/user";
-import { updateUser } from "@/data/actions/user";
+import { refreshTokenUser, updateUser } from "@/data/actions/user";
 import { Camera, Loader2, ImagePlus } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -20,9 +20,11 @@ export default function ProfileItemEdit() {
   const [newImg, setNewImg] = useState<string | null>(null);
   const [selectFile, setSelectFile] = useState<File | null>(null);
 
+  const { setToken } = useUserStore.getState();
   const userInfo = useUserStore((state) => state.userInfo);
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const userToken = useUserStore((state) => state.token);
+  const refreshToken = useUserStore((state) => state.refreshToken) as string;
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 
   // useActionState로 폼 상태 관리
@@ -118,7 +120,7 @@ export default function ProfileItemEdit() {
   }, [newImg]);
 
   // 폼 제출 시 파일 추가
-  const handleFormSubmit = (formData: FormData) => {
+  const handleFormSubmit = async (formData: FormData) => {
     // 선택된 파일이 있으면 FormData에 추가
     if (selectFile) {
       formData.set("attach", selectFile);
@@ -126,6 +128,10 @@ export default function ProfileItemEdit() {
 
     // 기존 formAction 호출
     formAction(formData);
+
+    const res = await refreshTokenUser(refreshToken);
+    const data = res?.accessToken;
+    setToken(data, refreshToken);
   };
 
   // 로딩 중이거나 로그인되지 않은 상태

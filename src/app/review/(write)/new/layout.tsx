@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import "../../../../styles/globals.css";
+import LoginStatusConfirm from "@/components/feature/loginStatusConfirm";
 
 export default function NavbarLayout({
   children,
@@ -16,16 +17,15 @@ export default function NavbarLayout({
       </div>
       <div className="relative w-full px-4 pb-25">
         <div>
-          <h2 className="font-semibold text-28 text-travel-primary200">
-            여행일정
-          </h2>
-          <p className="text-16 text-travel-gray700">
-            다녀온 여행지에 대한 기록을 남겨보세요.
-          </p>
+          <h2 className="font-semibold text-28 text-travel-primary200">여행일정</h2>
+          <p className="text-16 text-travel-gray700">다녀온 여행지에 대한 기록을 남겨보세요.</p>
         </div>
         {children}
       </div>
       <Navbar />
+
+      {/* 로그인 확인 */}
+      <LoginStatusConfirm />
     </div>
   );
 }
