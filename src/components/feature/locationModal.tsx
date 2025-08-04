@@ -1,12 +1,16 @@
 "use client";
 
 import Button from "@/components/ui/btn";
+import { bookmarkUser } from "@/data/actions/bookmark";
 import { getContentData } from "@/data/functions/travel";
 import { ReviewLocation } from "@/types/review";
 import { KeywordTravelProps } from "@/types/travel";
+import useUserStore from "@/zustand/userStore";
 import { MapPin, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 interface ModalItemProps {
   location: ReviewLocation;
 }
@@ -17,16 +21,47 @@ export default function ModalItem({ location }: ModalItemProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const router = useRouter();
+  const userInfo = useUserStore((state) => state.userInfo);
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const userToken = useUserStore((state) => state.token);
+  const isLoggedIn = useUserStore((state) => state.isLoggedIn);
+
+  // useActionState로 폼 상태 관리
+  const [state, formAction] = useActionState(bookmarkUser, null);
+
+  // 로그인 체크
+  useEffect(() => {
+    if (!isLoggedIn || !userInfo?._id) {
+      router.replace("/login");
+      return;
+    }
+  }, [isLoggedIn, userInfo?._id]);
+
+  // API 응답 처리
+  useEffect(() => {
+    if (state?.ok) {
+      // API 응답에서 받은 사용자 정보로 스토어 업데이트
+      const updatedUserInfo = {
+        ...userInfo, // 기존 정보 유지
+        ...state.item, // 업데이트된 정보로 덮어쓰기
+      };
+      setUserInfo(updatedUserInfo);
+      toast.success("북마크가 성공적으로 저장되었습니다.");
+    } else if (state?.ok === 0 && !state?.errors) {
+      toast.error(state?.message);
+    }
+  }, [state]);
+
+  // useInfo 내 contentID 가 있는지 확인
+  const isBookmark = userInfo?.extra?.bookmarkPlace?.some((place) => place?.contentId === location.contentId);
+
   const openModal = () => {
     setModalOpen(true);
   };
 
   const onClose = () => {
     setModalOpen(false);
-  };
-
-  const saveBookmark = () => {
-    console.log("북마크저장하기");
   };
 
   useEffect(() => {
@@ -125,15 +160,26 @@ export default function ModalItem({ location }: ModalItemProps) {
             </div>
 
             {/* 버튼 */}
-            <Button
-              size="lg"
-              variant="primary"
-              className={`w-full mt-7 ${isLoading ? "pointer-events-none opacity-50" : ""}`}
-              disabled={isLoading}
-              onClick={() => saveBookmark()}
-            >
-              북마크 저장하기
-            </Button>
+
+            <form action={formAction} className="w-full">
+              <input type="hidden" name="userId" value={userInfo?._id} />
+              <input type="hidden" name="userToken" value={userToken || ""} />
+              <input type="hidden" name="placeTitle" value={modalData?.title || ""} />
+              <input type="hidden" name="placeContentId" value={location.contentId || ""} />
+              <input type="hidden" name="placeDesc" value={modalData?.overview || ""} />
+              <input type="hidden" name="placeImgUrl" value={modalData?.firstimage || ""} />
+              <input type="hidden" name="placeLocation" value={modalData?.addr1 || ""} />
+
+              <Button
+                size="lg"
+                variant={isBookmark ? "disable" : "primary"}
+                disabled={isBookmark}
+                className="w-full mt-7"
+                type="submit"
+              >
+                {isBookmark ? "저장된 북마크" : "북마크 저장하기"}
+              </Button>
+            </form>
           </div>
         </div>
       )}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import usePlanStore from "@/zustand/planStore";
 import { categories } from "@/lib/data/categoryList";
 import PlaceCard from "@/components/plan/placeCard";
+import PlaceCardSkeleton from "@/components/mypage/placeCardSkeleton";
 
 interface CategoryPlaceListProps {
   keyword: string;
@@ -27,9 +28,7 @@ export default function CategoryPlaceList({ keyword, isSearching, onItemClick, o
     <div className="flex flex-col gap-2">
       <div className="space-y-3">
         {isLoading ? (
-          <div className="py-8 text-center text-gray-500">
-            <p>로딩 중...</p>
-          </div>
+          <PlaceCardSkeleton />
         ) : filteredData.length > 0 ? (
           filteredData.map((data) => {
             return (
