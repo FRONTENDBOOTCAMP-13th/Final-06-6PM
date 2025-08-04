@@ -79,7 +79,7 @@ export default function SelectReview() {
   const tabData = [
     {
       id: 0,
-      title: "일정전체",
+      title: "여행별",
       icon: <LayoutList className="w-[1.25rem] h-[1.25rem]" />,
       description: reviewAll,
     },
