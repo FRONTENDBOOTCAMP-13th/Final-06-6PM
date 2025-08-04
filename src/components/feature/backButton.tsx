@@ -5,15 +5,16 @@ import { useRouter } from "next/navigation";
 
 interface BackButtonProps {
   path?: string;
-  onPrev?: () => void;
 }
 
-export default function BackButton({ path, onPrev }: BackButtonProps) {
+export default function BackButton({ path }: BackButtonProps) {
   const router = useRouter();
 
   const goBackPage = () => {
-    if (onPrev) return onPrev();
     if (path) return router.push(path);
+
+    // 기본 동작 브라우저 뒤로가기
+    router.back();
   };
 
   return (
