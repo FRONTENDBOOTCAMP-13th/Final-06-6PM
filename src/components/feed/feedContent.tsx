@@ -193,7 +193,7 @@ export default function FeedContent() {
             여행별
           </TagItem>
           <TagItem variant={currentType === "reviewDaily" ? "primary" : "outline"}>
-            <span onClick={() => handleTypeChange("reviewDaily")}>일별</span>
+            <span onClick={() => handleTypeChange("reviewDaily")}>일자별</span>
           </TagItem>
           <TagItem variant={currentType === "reviewPlace" ? "primary" : "outline"}>
             <span onClick={() => handleTypeChange("reviewPlace")}>장소별</span>

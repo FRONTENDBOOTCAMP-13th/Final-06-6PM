@@ -44,10 +44,10 @@ export default function CommentDeleteForm({ reply, onCommentDeleted }: CommentDe
       <button
         type="submit"
         disabled={isLoading}
-        className="text-travel-fail100 hover:text-travel-fail200 p-1 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="text-travel-fail100 hover:text-travel-fail200 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         title="댓글 삭제"
       >
-        <Trash2 className="w-4 h-4" />
+        <Trash2 className="size-4" />
       </button>
 
       {state?.ok === 0 && state.message && <div className="text-xs text-travel-fail100 mt-1">{state.message}</div>}

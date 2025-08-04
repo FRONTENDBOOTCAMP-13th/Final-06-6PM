@@ -66,7 +66,7 @@ export default function CommentForm({ onCommentAdded }: CommentFormProps) {
             <Link href="/login" className="text-travel-primary100 hover:underline">
               로그인
             </Link>
-            <span>후 댓글을 작성할 수 있습니다.</span>
+            <span className="ml-1">후 댓글을 작성할 수 있습니다.</span>
           </div>
         </div>
       ) : (

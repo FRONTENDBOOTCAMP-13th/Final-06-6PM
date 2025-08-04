@@ -97,7 +97,7 @@ export default function SearchAll() {
       </div>
 
       {/* 여행 검색 영역 */}
-      <div className="space-y-4 px-4">
+      <div className="space-y-4 px-4 pb-20">
         <div className="flex flex-col gap-2">
           {/* 검색 입력 + 검색 중 상태 */}
           <SearchSection

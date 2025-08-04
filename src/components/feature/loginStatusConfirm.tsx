@@ -17,5 +17,5 @@ export default function LoginStatusConfirm() {
     }
   }, [isLoggedIn, userInfo?._id]);
 
-  return <p>로그인 상태 확인</p>;
+  return <p className="sr-only">로그인 상태 확인</p>;
 }

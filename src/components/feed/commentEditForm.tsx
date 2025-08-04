@@ -72,23 +72,23 @@ export default function CommentEditForm({ reply, onCommentUpdated, isEditing, on
               disabled={isLoading}
               autoFocus
             />
-            <div className="flex gap-1 pt-1">
+            <div className="flex gap-2 items-center pt-1">
               <button
                 type="submit"
                 disabled={isLoading || !editContent.trim()}
-                className="text-travel-primary100 hover:text-travel-primary200 p-1 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-travel-primary100 hover:text-travel-primary200 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 title="수정 완료"
               >
-                <Check className="w-4 h-4" />
+                <Check className="size-4" />
               </button>
               <button
                 type="button"
                 onClick={handleCancelEdit}
                 disabled={isLoading}
-                className="text-travel-gray400 hover:text-travel-gray500 p-1 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-travel-gray400 hover:text-travel-gray500 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 title="수정 취소"
               >
-                <X className="w-4 h-4" />
+                <X className="size-4" />
               </button>
             </div>
           </div>
@@ -103,10 +103,10 @@ export default function CommentEditForm({ reply, onCommentUpdated, isEditing, on
     <button
       type="button"
       onClick={handleEditClick}
-      className="text-travel-gray400 hover:text-travel-gray500 p-1 rounded transition-colors ml-1"
+      className="text-travel-gray400 hover:text-travel-gray500 rounded transition-colors ml-1"
       title="댓글 수정"
     >
-      <Edit3 className="w-4 h-4" />
+      <Edit3 className="size-4" />
     </button>
   );
 }

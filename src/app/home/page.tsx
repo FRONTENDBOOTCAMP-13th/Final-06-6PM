@@ -17,7 +17,7 @@ export default function HomePage() {
       <div className="w-full flex-1 px-4 py-7 bg-white/65 rounded-t-2xl shadow-[0_0_8px_0_rgba(0,0,0,0.12)] flex flex-col space-y-8">
         <HomePlanItem />
         <div className="space-y-2">
-          <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
+          <div className="flex items-center gap-2 mb-3 font-bold text-18 text-travel-text100">
             <ThumbsUp className="size-6" />
             랜덤 여행지 추천
           </div>

@@ -136,15 +136,7 @@ export default function RandomItem() {
       />
       <div className="absolute inset-0 top-0 left-0 bg-black/50" />
       <div className="relative z-10 w-full p-5">
-        <div className="mb-3 space-y-1 text-white">
-          <h3 className="font-bold text-20">{travelSpot.title}</h3>
-          <p className="flex items-center gap-1 text-14">
-            <MapPin className="w-4 h-4 text-white" />
-            {getLocationString(travelSpot.addr1)}
-          </p>
-          <p className="text-14 line-clamp-3">{getDescriptionText(travelSpot)}</p>
-        </div>
-        <div className="float-right">
+        <div className="flex justify-end mb-2">
           <DrawerItem
             title={travelSpot.title}
             contentId={String(travelSpot.contentid)}
@@ -152,6 +144,14 @@ export default function RandomItem() {
             imgUrl={travelSpot.firstimage!}
             desc={getDescriptionText(travelSpot)}
           />
+        </div>
+        <div className="mb-3 space-y-1 text-white">
+          <h3 className="font-bold text-20">{travelSpot.title}</h3>
+          <p className="flex items-center gap-1 text-14">
+            <MapPin className="w-4 h-4 text-white" />
+            {getLocationString(travelSpot.addr1)}
+          </p>
+          <p className="text-14 line-clamp-3">{getDescriptionText(travelSpot)}</p>
         </div>
       </div>
     </div>

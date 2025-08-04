@@ -57,7 +57,7 @@ export default function HomePlanItem() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
+        <div className="flex items-center gap-2 font-bold text-18 text-travel-text100">
           <CalendarDays className="size-6" />
           예정된 여행
         </div>
@@ -76,8 +76,8 @@ export default function HomePlanItem() {
           </Link>
         )}
       </div>
-      <div className="space-y-3">
-        <div className="flex items-center gap-2 mb-2 font-bold text-18 text-travel-text100">
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2 font-bold text-18 text-travel-text100">
           <NotebookPen className="size-6" />
           이전에 다녀온 여행을 기록해보세요!
         </div>
