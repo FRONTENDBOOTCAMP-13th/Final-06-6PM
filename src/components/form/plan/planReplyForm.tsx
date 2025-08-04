@@ -74,11 +74,10 @@ export default function PlanReplyForm() {
         }
       }
 
-      // 데이터 초기화
-      clearAllData();
-
       // 성공 페이지로 이동
-      router.push("/plan/success");
+      router.push(`/plan/success?postId=${postId}`);
+
+      // clearAllData();
     } catch (error) {
       console.error("일정 처리 에러:", error);
       alert("네트워크 오류가 발생했습니다.");

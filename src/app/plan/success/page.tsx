@@ -1,6 +1,5 @@
-import ButtonRounded from "@/components/ui/btnRound";
 import { CircleCheckBig } from "lucide-react";
-import Link from "next/link";
+import PlanSuccessButton from "@/components/plan/planSuccessButton";
 
 export default function PlanSuccessPage() {
   return (
@@ -12,19 +11,7 @@ export default function PlanSuccessPage() {
         <p>즐거운 여행 되세요. 😊</p>
       </div>
 
-      <div className="flex flex-col gap-3 items-center w-full max-w-xs px-4">
-        <Link href="/mypage" className="w-full">
-          <ButtonRounded variant="primary" size="lg" className="w-full">
-            등록한 여행 일정 보러가기
-          </ButtonRounded>
-        </Link>
-
-        <Link href="/" className="w-full">
-          <ButtonRounded variant="outline" size="lg" className="w-full">
-            홈으로 돌아가기
-          </ButtonRounded>
-        </Link>
-      </div>
+      <PlanSuccessButton />
     </div>
   );
 }
