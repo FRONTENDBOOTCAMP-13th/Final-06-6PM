@@ -142,18 +142,11 @@ export default function ModifyScheduleContent() {
 
       <div className="flex flex-col justify-between gap-5">
         {dailyPlans.map((plan) => {
-          const daylist = plan.places.map((place) => ({
-            id: place.id,
-            title: place.name,
-            tag: place.category || "기타",
-          }));
-
           return (
             <div key={`day-${plan.day}`} className="drop-zone">
               <DayScheduleCard
                 day={plan.day}
                 date={plan.planDate}
-                // daylist={daylist}
                 isPreview={false}
                 planId={postId}
                 replyId={plan.replyId}

@@ -23,8 +23,9 @@ export default function PreviewContent() {
       </div>
 
       <div className="flex flex-col justify-between pt-7 gap-5">
+        g
         {dailyPlans.map((plan) => (
-          <DayScheduleCard key={plan.day} day={plan.day} date={plan.planDate} daylist={plan.daylist} isPreview={true} />
+          <DayScheduleCard key={plan.day} day={plan.day} date={plan.planDate} isPreview={true} />
         ))}
       </div>
     </div>
