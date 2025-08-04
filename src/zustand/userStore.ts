@@ -37,12 +37,14 @@ const useUserStore = create(
     (set) => ({
       userInfo: null, // 로그인한 사용자 정보 저장 (초기값 null)
       token: null, // 액세스 토큰 저장 (초기값 null)
+      refreshToken: null, // 리프레쉬 토큰 저장 (초기값 null)
       isLoggedIn: false, // 로그인 여부 상태 (초기값 false)
 
       // 토큰 저장 및 로그인 상태 true로 변경하는 함수
-      setToken: (token) =>
+      setToken: (token, refreshToken) =>
         set(() => ({
           token: token,
+          refreshToken: refreshToken,
           isLoggedIn: true,
         })),
 

@@ -41,10 +41,11 @@ export interface User {
 // Zustand 등 상태 관리용 사용자 상태 타입
 export interface UserState {
   token: string | null; // 현재 액세스 토큰
+  refreshToken: string | null; // 리프레쉬 토큰
   userInfo: User | null; // 현재 로그인된 사용자 정보
   isLoggedIn: boolean; // 로그인 상태 여부
 
-  setToken: (token: string) => void; // 토큰 저장 함수
+  setToken: (token: string, refreshToken: string) => void; // 토큰 저장 함수
   setUserInfo: (info: User) => void; // 사용자 정보 저장 함수
   logout: () => void; // 로그아웃 처리 함수
   updateUser: (updates: Partial<User>) => void; // 사용자 업데이트
