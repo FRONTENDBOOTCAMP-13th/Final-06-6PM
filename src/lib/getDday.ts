@@ -9,8 +9,13 @@
  */
 
 export function getDday(date: string): number {
+  // 파싱 함수 추가
+  const parseDate = (dateString: string): Date => {
+    return new Date(dateString.replace(/\./g, "-"));
+  };
+
   const today = new Date();
-  const travelDay = new Date(date);
+  const travelDay = parseDate(date);
 
   // 날짜를 UTC 기준으로 변환하여 시차 영향 제거
   const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
