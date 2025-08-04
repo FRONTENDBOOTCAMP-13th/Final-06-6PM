@@ -76,7 +76,7 @@ export async function getTravelList(areaCode: number, contentTypeId?: string): P
   const params: Record<string, string> = {
     serviceKey: API_KEY,
     areaCode: String(areaCode),
-    numOfRows: "10",
+    numOfRows: "20",
     pageNo: "1",
     MobileOS: "ETC",
     MobileApp: "TravelDiary",
