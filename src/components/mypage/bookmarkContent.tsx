@@ -8,6 +8,12 @@ import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data
 import useUserStore from "@/zustand/userStore";
 import { GetReviewDetailProps } from "@/types/review";
 import { BookmarkPlace } from "@/types/bookmark";
+import CategorySelect from "@/components/plan/categorySelect";
+import { useSearchReset } from "@/hook/useSearchReset";
+import { useSearchHandlers } from "@/hook/useSearchHandler";
+import usePlanStore from "@/zustand/planStore";
+import { ContentDataProps } from "@/types/travel";
+import { categories } from "@/lib/data/categoryList";
 
 type SortType = "latest" | "oldest";
 
@@ -80,22 +86,41 @@ export default function BookmarkContent() {
     } else if (tab === 1) {
       fetchBookmarkedReviews();
     }
-  }, [tab, user?._id, token]);
+  }, [tab, user?.extra?.bookmarkPlace, token]);
 
   const handleSortChange = (type: SortType) => {
     setSortType(type);
+  };
+
+  // 카테고리
+
+  const [keyword, setKeyword] = useState("");
+  const { selectedCategory, setSelectedCategory, setContentData } = usePlanStore();
+
+  // 페이지 진입 시 검색 상태, 카테고리, 컨텐츠 데이터 초기화
+  useEffect(() => {
+    setKeyword("");
+    setSelectedCategory("all");
+    setContentData({} as ContentDataProps);
+  }, [setSelectedCategory, setContentData]);
+
+  const { handleCategoryChange } = useSearchHandlers();
+
+  // 카테고리 변경 시 검색 상태 초기화
+  const handleCategoryChangeWithReset = (categoryId: string) => {
+    setKeyword("");
+    handleCategoryChange(categoryId);
   };
 
   return (
     <>
       {/* 셀렉트창 및 필터 */}
       {tab === 0 ? (
-        <div className="flex flex-wrap items-center gap-1.5 flex-start">
-          <TagItem>전체</TagItem>
-          <TagItem variant="outline">맛집</TagItem>
-          <TagItem variant="outline">행사</TagItem>
-          <TagItem variant="outline">축제</TagItem>
-        </div>
+        <CategorySelect
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={handleCategoryChangeWithReset}
+        />
       ) : (
         <DropdownItem currentSort={sortType} onSortChange={handleSortChange} />
       )}
