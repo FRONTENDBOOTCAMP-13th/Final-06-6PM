@@ -29,11 +29,11 @@ export default function PlanDetailForm() {
     formData.append("endDate", endDate);
     formData.append("selectedRegion", selectedArea.name);
 
-    console.log("전송 데이터:", {
-      startDate,
-      endDate,
-      selectedRegion: selectedArea.name,
-    });
+    // console.log("전송 데이터:", {
+    //   startDate,
+    //   endDate,
+    //   selectedRegion: selectedArea.name,
+    // });
 
     try {
       const result = await createPlanPost(formData, accessToken);
