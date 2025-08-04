@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import "../../../styles/globals.css";
+import LoginStatusConfirm from "@/components/feature/loginStatusConfirm";
 
 export default function NavbarLayout({
   children,
@@ -16,6 +17,9 @@ export default function NavbarLayout({
       </div>
       <div className="relative w-full px-4 pb-25">{children}</div>
       <Navbar />
+
+      {/* 로그인 확인 */}
+      <LoginStatusConfirm />
     </div>
   );
 }
