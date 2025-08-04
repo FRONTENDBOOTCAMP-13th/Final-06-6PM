@@ -31,11 +31,18 @@ export default function KoreaMapContainer() {
         if (res.ok && res.data) {
           const map: { [key: string]: string } = {};
           res.data.forEach(({ regionId, imageUrl }) => {
-            map[regionId] = `${process.env.NEXT_PUBLIC_API_SERVER}/${imageUrl}`;
+            // imageUrl을 문자열로 변환
+            const urlChange = String(imageUrl || "");
+
+            if (urlChange) {
+              // URL 형식 확인
+              const fullUrl = urlChange.startsWith("http")
+                ? urlChange
+                : `${process.env.NEXT_PUBLIC_API_SERVER}/${urlChange}`;
+              map[regionId] = fullUrl;
+            }
           });
           setImgMap(map);
-        } else {
-          console.error("사진을 불러올 수 없습니다.");
         }
       } catch (error) {
         console.error("포토맵 로드 실패:", error);
@@ -101,7 +108,16 @@ export default function KoreaMapContainer() {
       if (res.ok && res.data) {
         const newImgMap: Record<string, string> = {};
         res.data.forEach((photo) => {
-          newImgMap[photo.regionId] = `${process.env.NEXT_PUBLIC_API_SERVER}/${photo.imageUrl}`;
+          // imageUrl을 문자열로 변환
+          const urlString = String(photo.imageUrl || "");
+
+          if (urlString) {
+            const fullUrl = urlString.startsWith("http")
+              ? urlString
+              : `${process.env.NEXT_PUBLIC_API_SERVER}/${urlString}`;
+
+            newImgMap[photo.regionId] = fullUrl;
+          }
         });
         setImgMap(newImgMap);
       }
