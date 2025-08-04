@@ -1,4 +1,3 @@
-"use client";
 import BackButton from "@/components/feature/backButton";
 import Navbar from "@/components/Navbar";
 import PreviewContent from "@/components/plan/previewContent";
