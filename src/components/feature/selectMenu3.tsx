@@ -9,7 +9,7 @@ export default function SelectMenu3() {
   const data = [
     {
       id: 0,
-      title: "일정전체",
+      title: "여행별",
       icon: <LayoutList className="w-[1.25rem] h-[1.25rem]" />,
       description: "일정 전체 목록",
     },

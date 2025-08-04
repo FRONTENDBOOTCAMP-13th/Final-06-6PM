@@ -55,7 +55,7 @@ export default function SelectWriteReview() {
   const data = [
     {
       id: 0,
-      title: "일정전체",
+      title: "여행별",
       icon: <LayoutList className="w-[1.25rem] h-[1.25rem]" />,
     },
     {
@@ -92,7 +92,7 @@ export default function SelectWriteReview() {
         const res = await getPlanDetail(plan_id);
         console.log("res 데이터: ", res);
         if (res.ok) {
-          setPlanReply(res.item.replies); // 일정별 계획
+          setPlanReply(res.item.replies); // 여행별 계획
           setPlanReviewInfo({
             plan_id: plan_id,
             title: res.item.title,
