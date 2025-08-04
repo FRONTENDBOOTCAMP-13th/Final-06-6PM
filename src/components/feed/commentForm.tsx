@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import useUserStore from "@/zustand/userStore";
 import { createReviewReply } from "@/data/actions/reply";
 import { ReviewReply } from "@/types/review";
+import { toast } from "react-toastify";
 
 interface CommentFormProps {
   onCommentAdded: (comment: ReviewReply) => void;
@@ -29,12 +30,12 @@ export default function CommentForm({ onCommentAdded }: CommentFormProps) {
     e.preventDefault();
 
     if (!isLoggedIn || !userInfo) {
-      alert("로그인 후 이용해주세요.");
+      toast.warning("로그인 후 이용해주세요.");
       return;
     }
 
     if (!content.trim()) {
-      alert("댓글을 입력해주세요.");
+      toast.warning("댓글을 입력해주세요.");
       return;
     }
 

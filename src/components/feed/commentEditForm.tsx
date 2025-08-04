@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import useUserStore from "@/zustand/userStore";
 import { updateReviewReply } from "@/data/actions/reply";
 import { ReviewReply } from "@/types/review";
+import { toast } from "react-toastify";
 
 interface CommentEditFormProps {
   reply: ReviewReply;
@@ -44,7 +45,7 @@ export default function CommentEditForm({ reply, onCommentUpdated, isEditing, on
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (!editContent.trim()) {
       event.preventDefault();
-      alert("댓글 내용을 입력해주세요.");
+      toast.warning("댓글 내용을 입력해주세요.");
       return;
     }
   };
