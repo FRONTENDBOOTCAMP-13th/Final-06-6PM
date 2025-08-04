@@ -1,4 +1,3 @@
-"use client";
 import { MapPin, Plane, Home, Search } from "lucide-react";
 import Link from "next/link";
 
@@ -20,15 +19,9 @@ export default function NotFound() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-8xl font-bold text-travel-secondary300 mb-4">
-            404
-          </h1>
-          <h2 className="text-28 font-bold text-black mb-2">
-            길을 잃으셨나요?
-          </h2>
-          <p className="text-18 text-travel-gray700">
-            여행의 출발점으로 안내할게요!
-          </p>
+          <h1 className="text-8xl font-bold text-travel-secondary300 mb-4">404</h1>
+          <h2 className="text-28 font-bold text-black mb-2">길을 잃으셨나요?</h2>
+          <p className="text-18 text-travel-gray700">여행의 출발점으로 안내할게요!</p>
         </div>
 
         <div className="flex justify-center mb-8">
