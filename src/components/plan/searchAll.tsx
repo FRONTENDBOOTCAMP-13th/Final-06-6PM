@@ -92,7 +92,7 @@ export default function SearchAll() {
       <div className="relative w-full px-4 mb-2">
         <h2 className="text-28 text-travel-primary200 font-semibold">{selectedArea.name}</h2>
         <p className="text-16 text-travel-gray700">
-          여행일정 : {startDate} ~ {endDate}
+          {startDate} ~ {endDate}
         </p>
       </div>
 
