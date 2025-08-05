@@ -55,7 +55,22 @@ export default function ReviewSelect({ list, selected, onChange, reviewType, dis
 
   const displayList = getDisplayList();
 
-  console.log("ids", displayList);
+  useEffect(() => {
+    // 선택된 아이템이 비어 있는지 확인
+    const selectedEmpty = Array.isArray(selected.place) ? selected.place.length === 0 : false;
+
+    // selected가 비어 있고, 선택 가능한 항목이 있다면 자동 선택
+    if (selectedEmpty) {
+      const firstValidItem = displayList.find((item) => {
+        return Array.isArray(item.place) ? item.place.length > 0 : true;
+      });
+
+      if (firstValidItem) {
+        onChange(firstValidItem);
+      }
+    }
+  }, [selected, displayList, onChange]);
+
   // 위치장소 관련
   const locationItem = (place: ReviewLocation | ReviewLocation[]) => {
     if (Array.isArray(place)) {
