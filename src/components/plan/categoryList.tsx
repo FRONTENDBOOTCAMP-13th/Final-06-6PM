@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import usePlanStore from "@/zustand/planStore";
 import { categories } from "@/lib/data/categoryList";
 import PlaceCard from "@/components/plan/placeCard";
@@ -14,8 +14,23 @@ interface CategoryPlaceListProps {
 }
 
 export default function CategoryPlaceList({ keyword, isSearching, onItemClick, onItemAdd }: CategoryPlaceListProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { filteredData, selectedCategory, searchList } = usePlanStore();
+
+  // filteredData가 변경되면 로딩 완료
+  useEffect(() => {
+    if (filteredData) {
+      setIsLoading(false);
+    }
+  }, [filteredData]);
+
+  // 카테고리 변경시 잠시 로딩
+  useEffect(() => {
+    setIsLoading(true);
+    // 짧은 시간 후 로딩 완료
+    const timer = setTimeout(() => setIsLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, [selectedCategory]);
 
   const selectedCategoryInfo = categories.find((c) => c.id === selectedCategory);
 
@@ -28,8 +43,14 @@ export default function CategoryPlaceList({ keyword, isSearching, onItemClick, o
     <div className="flex flex-col gap-2">
       <div className="space-y-3">
         {isLoading ? (
-          <PlaceCardSkeleton />
-        ) : filteredData.length > 0 ? (
+          <>
+            <PlaceCardSkeleton />
+            <PlaceCardSkeleton />
+            <PlaceCardSkeleton />
+            <PlaceCardSkeleton />
+            <PlaceCardSkeleton />
+          </>
+        ) : (
           filteredData.map((data) => {
             return (
               <PlaceCard
@@ -40,12 +61,6 @@ export default function CategoryPlaceList({ keyword, isSearching, onItemClick, o
               />
             );
           })
-        ) : (
-          <div className="py-8 text-center text-gray-500">
-            <p>
-              등록된 {selectedCategoryInfo?.name === "전체" ? "장소가" : `${selectedCategoryInfo?.name}이`} 없습니다.
-            </p>
-          </div>
         )}
       </div>
     </div>
