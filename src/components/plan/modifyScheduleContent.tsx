@@ -118,7 +118,7 @@ export default function ModifyScheduleContent() {
   if (isLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
-        <p className="text-gray-500">여행 정보를 불러오는 중...</p>
+        <p className="text-gray-500">여행을 수정하는 중...</p>
       </div>
     );
   }

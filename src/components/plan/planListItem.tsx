@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import TagItem from "@/components/feature/tagItem";
 
 export type PlanListItemProps = {
@@ -5,9 +6,11 @@ export type PlanListItemProps = {
   number?: number;
   place: string;
   tag?: string;
+  showDeleteButton?: boolean;
+  onDelete?: () => void;
 };
 
-export default function PlanListItem({ number, place, tag }: PlanListItemProps) {
+export default function PlanListItem({ number, place, tag, showDeleteButton = false, onDelete }: PlanListItemProps) {
   return (
     <div className="flex items-start gap-3 text-travel-text100">
       {/* 숫자 */}
@@ -24,6 +27,16 @@ export default function PlanListItem({ number, place, tag }: PlanListItemProps) 
           )}
         </div>
       </div>
+
+      {/* X 버튼 */}
+      {showDeleteButton && onDelete && (
+        <button
+          onClick={onDelete}
+          className="flex items-center justify-center w-5 h-5 text-travel-gray400 hover:text-red-500"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      )}
     </div>
   );
 }

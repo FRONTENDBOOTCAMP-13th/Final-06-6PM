@@ -24,7 +24,7 @@ export default function PlanDetailContent() {
 
       try {
         const res = await getPlanDetail(planId);
-        console.log(res);
+        // console.log(res);
         if (res.ok && res.item) {
           setPlanData(res.item);
 
