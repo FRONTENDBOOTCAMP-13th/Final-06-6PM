@@ -32,7 +32,7 @@ export default function NaverMap({
   width = "100%",
   height = "400px",
   center = { lat: 37.5665, lng: 126.978 },
-  zoom = 20,
+  zoom = 13,
   places = [],
 }: NaverMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -79,17 +79,32 @@ export default function NaverMap({
 
           // 장소가 1개면 해당 위치로 이동, 2개 이상이면 모든 마커가 보이도록 자동 줌
           if (places.length === 1) {
-            // 해당 위치로 지도 중심 이동
+            // 해당 위치로 지도 중심 이동 (여백 없이)
             mapInstance.current.setCenter(new window.naver.maps.LatLng(places[0].lat, places[0].lng));
           } else if (places.length > 1) {
-            // 모든 마커가 보이도록 줌
+            // 모든 마커가 보이도록 줌 - 수동 여백 적용
             const bounds = new window.naver.maps.LatLngBounds();
             places.forEach((place) => {
               bounds.extend(new window.naver.maps.LatLng(place.lat, place.lng));
             });
-            mapInstance.current.fitBounds(bounds, {
-              padding: 50,
-            });
+
+            // 경계의 중심점과 모서리 좌표 계산
+            const center = bounds.getCenter();
+            const sw = bounds.getSW();
+            const ne = bounds.getNE();
+
+            // 여백을 위해 경계를 5% 확장
+            const latPadding = (ne.lat() - sw.lat()) * 0.05;
+            const lngPadding = (ne.lng() - sw.lng()) * 0.05;
+
+            // 확장된 경계 생성
+            const paddedBounds = new window.naver.maps.LatLngBounds(
+              new window.naver.maps.LatLng(sw.lat() - latPadding, sw.lng() - lngPadding),
+              new window.naver.maps.LatLng(ne.lat() + latPadding, ne.lng() + lngPadding),
+            );
+
+            // 확장된 경계로 지도 설정
+            mapInstance.current.fitBounds(paddedBounds);
           }
         } else {
           // 기본 마커
