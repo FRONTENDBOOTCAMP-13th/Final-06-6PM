@@ -129,10 +129,10 @@ export default function BookAndReview() {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      <Link href="/mypage/bookmark">
+      <Link href={`/mypage/bookmark?tab=0`}>
         <BookmarkItem type="bookmarkPlace" count={counts.bookmarkPlace} isLoading={isLoading} />
       </Link>
-      <Link href="/mypage/bookmarkPost">
+      <Link href={`/mypage/bookmark?tab=1`}>
         <BookmarkItem type="bookmarkPost" count={counts.bookmarkReview} isLoading={isLoading} />
       </Link>
       <Link href="/mypage/review">
