@@ -11,7 +11,7 @@ export default function NavbarLayout({
     <div>
       <div className="relative w-full px-4 py-5">
         <BackButton />
-        <p className="text-center">살펴보기</p>
+        <p className="text-center">여행후기</p>
       </div>
       <div className="relative w-full px-4 pb-25">{children}</div>
       <Navbar />

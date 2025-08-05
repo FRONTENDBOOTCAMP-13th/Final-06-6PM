@@ -18,7 +18,7 @@ const itemInfo = (type: itemType) => {
     case "bookmarkPost":
       return {
         icon: <Bookmark className="w-6 h-6 text-travel-text100 shrink-0" />,
-        label: "나의 게시글 북마크",
+        label: "나의 후기 북마크",
       };
     case "review":
       return {

@@ -25,7 +25,7 @@ export default function Navbar() {
         </Link>
         <Link href="/feed" className="flex flex-col items-center gap-2 text-white text-14 max-[500px]:text-12">
           <LayoutList />
-          <span className="whitespace-nowrap">살펴보기</span>
+          <span className="whitespace-nowrap">여행후기</span>
         </Link>
         <Link
           href="/review"
