@@ -1,18 +1,24 @@
 import React from "react";
-import { Bookmark, BookOpen } from "lucide-react";
+import { Bookmark, BookOpen, Loader2, MapPinned } from "lucide-react";
 
-type itemType = "bookmark" | "review";
+type itemType = "bookmarkPlace" | "bookmarkPost" | "review";
 interface BookmarkItemProps {
   type: itemType;
   count?: number;
+  isLoading?: boolean;
 }
 
 const itemInfo = (type: itemType) => {
   switch (type) {
-    case "bookmark":
+    case "bookmarkPlace":
+      return {
+        icon: <MapPinned className="w-6 h-6 text-travel-text100 shrink-0" />,
+        label: "나의 장소 북마크",
+      };
+    case "bookmarkPost":
       return {
         icon: <Bookmark className="w-6 h-6 text-travel-text100 shrink-0" />,
-        label: "나의 북마크",
+        label: "나의 게시글 북마크",
       };
     case "review":
       return {
@@ -22,7 +28,7 @@ const itemInfo = (type: itemType) => {
   }
 };
 
-export default function BookmarkItem({ type, count = 0 }: BookmarkItemProps) {
+export default function BookmarkItem({ type, count = 0, isLoading = false }: BookmarkItemProps) {
   const { icon, label } = itemInfo(type);
 
   return (
@@ -31,10 +37,10 @@ export default function BookmarkItem({ type, count = 0 }: BookmarkItemProps) {
         {icon}
         <span className="font-medium text-16 text-travel-text100">{label}</span>
       </div>
-      {count > 0 && (
-        <span className="ml-2 font-bold text-travel-fail100 text-16">
-          {count}
-        </span>
+      {isLoading ? (
+        <Loader2 className="size-5 text-travel-gray400 animate-spin" />
+      ) : (
+        <span className="ml-2 font-bold text-travel-fail100 text-16">{count}</span>
       )}
     </div>
   );

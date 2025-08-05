@@ -9,17 +9,20 @@ import useUserStore from "@/zustand/userStore";
 import { GetReviewDetailProps } from "@/types/review";
 import { BookmarkPlace } from "@/types/bookmark";
 import CategorySelect from "@/components/plan/categorySelect";
-import { useSearchReset } from "@/hook/useSearchReset";
 import { useSearchHandlers } from "@/hook/useSearchHandler";
 import usePlanStore from "@/zustand/planStore";
 import { ContentDataProps } from "@/types/travel";
 import { categories } from "@/lib/data/categoryList";
+import { useSearchParams } from "next/navigation";
 
 type SortType = "latest" | "oldest";
 
 export default function BookmarkContent() {
+  const parmas = useSearchParams();
+  const tabId = Number(parmas.get("tab"));
+
   const [sortType, setSortType] = useState<SortType>("latest");
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(tabId);
   const [loading, setLoading] = useState(false);
   const [placeBookmark, setPlaceBookmark] = useState<BookmarkPlace[]>([]);
   const [reviewBookmark, setReviewBookmark] = useState<GetReviewDetailProps[]>([]);
@@ -35,7 +38,7 @@ export default function BookmarkContent() {
     try {
       const res = await getUser(user._id);
       if (res.ok) {
-        const bookmarkPlaceItem = res.item.extra.bookmarkPlace || [];
+        const bookmarkPlaceItem = res.item?.extra?.bookmarkPlace || [];
         setPlaceBookmark(bookmarkPlaceItem);
       }
     } catch (error) {
@@ -88,18 +91,16 @@ export default function BookmarkContent() {
     }
   }, [tab, user?.extra?.bookmarkPlace, token]);
 
+  // 후기북마크 정렬
   const handleSortChange = (type: SortType) => {
     setSortType(type);
   };
 
-  // 카테고리
-
-  const [keyword, setKeyword] = useState("");
+  // 카테고리 정렬
   const { selectedCategory, setSelectedCategory, setContentData } = usePlanStore();
 
   // 페이지 진입 시 검색 상태, 카테고리, 컨텐츠 데이터 초기화
   useEffect(() => {
-    setKeyword("");
     setSelectedCategory("all");
     setContentData({} as ContentDataProps);
   }, [setSelectedCategory, setContentData]);
@@ -108,9 +109,13 @@ export default function BookmarkContent() {
 
   // 카테고리 변경 시 검색 상태 초기화
   const handleCategoryChangeWithReset = (categoryId: string) => {
-    setKeyword("");
     handleCategoryChange(categoryId);
   };
+
+  const filterPlaceBookmark =
+    selectedCategory === "all"
+      ? placeBookmark
+      : placeBookmark.filter((place) => String(place.contentType) === selectedCategory);
 
   return (
     <>
@@ -130,7 +135,7 @@ export default function BookmarkContent() {
           tab={tab}
           setTab={setTab}
           loading={loading}
-          placeBookmark={placeBookmark}
+          placeBookmark={filterPlaceBookmark}
           reviewBookmark={reviewBookmark}
         />
       </div>

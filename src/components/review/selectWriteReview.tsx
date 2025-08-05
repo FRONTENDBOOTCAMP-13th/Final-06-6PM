@@ -110,6 +110,10 @@ export default function SelectWriteReview() {
     }
   }, [plan_id]);
 
+  const hasLocation = useMemo(() => {
+    return planReply.some((day) => day.locations && day.locations.length > 0);
+  }, [planReply]);
+
   return (
     <div>
       {/* 탭 네비게이션 */}
@@ -133,7 +137,7 @@ export default function SelectWriteReview() {
       {/* 컨텐츠 영역 */}
       {tab === 0 && <ReviewFormAll planReviewInfo={planReviewInfo} />}
 
-      {tab === 1 && selectItem && reviewDaily.length > 0 && (
+      {tab === 1 && selectItem && hasLocation && (
         <ReviewDetailForm
           list={reviewDaily}
           selected={selectItem}
@@ -152,12 +156,12 @@ export default function SelectWriteReview() {
       )}
 
       {/* 로딩 상태나 빈 데이터 처리 */}
-      {tab === 1 && reviewDaily.length === 0 && (
-        <div className="p-4 text-center text-travel-gray400">일자별 데이터가 없습니다.</div>
+      {tab === 1 && !hasLocation && (
+        <div className="p-4 text-center text-travel-gray400 min-h-30 content-center">일자별 데이터가 없습니다.</div>
       )}
 
       {tab === 2 && reviewPlace.length === 0 && (
-        <div className="p-4 text-center text-travel-gray400">장소별 데이터가 없습니다.</div>
+        <div className="p-4 text-center text-travel-gray400 min-h-30 content-center">장소별 데이터가 없습니다.</div>
       )}
     </div>
   );
