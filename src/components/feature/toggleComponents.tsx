@@ -1,18 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Star, Bookmark } from "lucide-react";
+import { Star, Bookmark, Heart } from "lucide-react";
 import useUserStore from "@/zustand/userStore";
 import { addBookmark, deleteBookmark, getBookmarks } from "@/data/functions/bookmark";
 
 interface ToggleIconProps {
-  type: "star" | "book";
   reviewId: number;
   myBookmarkId?: number;
   onBookmarkChange?: (isBookmarked: boolean) => void; //북마크 상태 변경
 }
 
-export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkChange }: ToggleIconProps) {
+export default function ToggleIcon({ reviewId, myBookmarkId, onBookmarkChange }: ToggleIconProps) {
   const token = useUserStore((state) => state.token);
   const [toggle, setIsToggle] = useState(!!myBookmarkId);
   const [loading, setLoading] = useState(false);
@@ -52,12 +51,11 @@ export default function ToggleIcon({ type, reviewId, myBookmarkId, onBookmarkCha
       setLoading(false);
     }
   };
-  const Icon = type === "star" ? Star : Bookmark;
 
   return (
     <button onClick={toggleClick} disabled={loading}>
-      <Icon
-        className={`size-7 ${toggle ? "text-amber-300" : "text-travel-gray400"} ${loading ? "opacity-50" : ""}`}
+      <Heart
+        className={`size-7 ${toggle ? "text-travel-fail100" : "text-travel-gray400"} ${loading ? "opacity-50" : ""}`}
         //함수가 돌아가면서 시간이 생각보다 꽤 걸려서 사용자가 당황할까봐 로딩중이라는 것을 알리기 위해 넣어둠
         fill="currentColor"
       />
