@@ -1,7 +1,7 @@
 "use client";
 
 import DayItem from "@/components/ui/dayItem";
-import DropdownItem from "@/components/feature/dropdownItem";
+import ReviewDropdownItem from "@/components/feature/reviewdropdownItem";
 import { useEffect, useState } from "react";
 import useUserStore from "@/zustand/userStore";
 import { getPlanListUser } from "@/lib/api/plan";
@@ -118,7 +118,7 @@ export default function ReviewNew() {
   return (
     <>
       <div className="relative flex flex-row-reverse my-3">
-        <DropdownItem currentSort={sortType} onSortChange={handleSortChange} />
+        <ReviewDropdownItem currentSort={sortType} onSortChange={handleSortChange} />
       </div>
 
       <div className="flex flex-col gap-4">{renderTravelPlan()}</div>
