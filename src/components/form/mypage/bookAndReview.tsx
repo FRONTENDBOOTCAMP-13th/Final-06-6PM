@@ -6,6 +6,7 @@ import useUserStore from "@/zustand/userStore";
 import BookmarkItem from "@/components/mypage/bookmarkItem";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
 import { getReviewAllUser, getReviewDailyUser, getReviewPlaceUser } from "@/lib/api/review";
+import { getUser } from "@/data/functions/user";
 
 interface ReviewItem {
   myBookmarkId?: number | null;
@@ -17,14 +18,31 @@ interface ReviewResponse {
 }
 
 export default function BookAndReview() {
-  const { token } = useUserStore();
+  const { token, userInfo } = useUserStore();
+
+  console.log(userInfo);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!userInfo?._id || !token) return;
+
+      try {
+        const res = await getUser(userInfo._id);
+        console.log(res.item.extra.bookmarkPlace.length);
+      } catch (error) {
+        console.error("데이터 로딩 오류:", error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   // 데이터 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
 
   // 나의 북마크/리뷰
   const [counts, setCounts] = useState({
-    bookmark: 0,
+    bookmarkPlace: 0,
+    bookmarkReview: 0,
     review: 0,
   });
 
@@ -79,12 +97,12 @@ export default function BookAndReview() {
       ).length;
 
       setCounts({
-        bookmark: bookmarkCount,
+        bookmarkReview: bookmarkCount,
         review: reviewData.totalCount,
       });
     } catch (error) {
       console.error("카운트 조회 에러:", error);
-      setCounts({ bookmark: 0, review: 0 });
+      setCounts({ bookmarkReview: 0, review: 0 });
     } finally {
       setIsLoading(false);
     }
@@ -95,14 +113,17 @@ export default function BookAndReview() {
       fetchCounts();
     } else {
       // 토큰이 없으면 카운트 초기화
-      setCounts({ bookmark: 0, review: 0 });
+      setCounts({ bookmarkReview: 0, review: 0 });
     }
   }, [token, fetchCounts]);
 
   return (
     <div className="flex flex-col w-full gap-4">
       <Link href="/mypage/bookmark">
-        <BookmarkItem type="bookmark" count={counts?.bookmark} isLoading={isLoading} />
+        <BookmarkItem type="bookmarkPlace" count={counts?.bookmarkPlace} isLoading={isLoading} />
+      </Link>
+      <Link href="/mypage/bookmarkPost">
+        <BookmarkItem type="bookmarkPost" count={counts?.bookmarkReview} isLoading={isLoading} />
       </Link>
       <Link href="/mypage/review">
         <BookmarkItem type="review" count={counts?.review} isLoading={isLoading} />
