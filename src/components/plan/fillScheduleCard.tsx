@@ -97,7 +97,7 @@ export default function FillScheduleCard({ day, onAddPlace, isPreview = false }:
     <div className="w-full space-y-4 overflow-hidden rounded-2xl">
       {/* 네이버 지도 */}
       <div className="w-full rounded-2xl overflow-hidden">
-        <NaverMap height="240px" places={mapPlaces} zoom={daylist.length > 1 ? 10 : 14} />
+        <NaverMap height="240px" places={mapPlaces} />
       </div>
 
       {/* planListItem 컴포넌트 사용 - 미리보기가 아닐 때만 X 버튼 표시 */}
