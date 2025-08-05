@@ -26,16 +26,25 @@ export default function SelectMypage() {
 
   // D-day 기준으로 데이터 필터링
   const FilterPlanData = (tabId: number) => {
-    return plan.filter((item) => {
-      const dday = getDday(item.extra?.startDate);
-      if (tabId === 0) {
-        return dday >= 0;
-      } else {
-        return dday < 0;
-      }
-    });
+    return plan
+      .filter((item) => {
+        const dday = getDday(item.extra?.startDate);
+        if (tabId === 0) {
+          return dday >= 0;
+        } else {
+          return dday < 0;
+        }
+      })
+      .sort((a, b) => {
+        const dday1 = getDday(a.extra?.startDate);
+        const dday2 = getDday(b.extra?.startDate);
+        if (tabId === 0) {
+          return dday1 - dday2; // 다가오는 여행: 오름차순 정렬
+        } else {
+          return dday2 - dday1; // 완료된 여행: 내림차순 정렬
+        }
+      });
   };
-
   const tabData = [
     {
       id: 0,
