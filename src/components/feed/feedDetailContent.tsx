@@ -161,8 +161,8 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
 
       <div className="mt-6">
         {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment._id}>
+          comments.map((comment, idx) => (
+            <div key={`${idx}-${comment._id}`}>
               <hr className="my-6 text-travel-gray200" />
               <CommentItem
                 imgUrl={comment.user?.image}

@@ -62,13 +62,18 @@ export default function ReviewSelect({ list, selected, onChange, reviewType, dis
         <span
           key={location.contentId}
           data-contentid={location.contentId}
+          data-contenttype={location.contentTypeId}
           className="after:content-[','] mr-0.5 last:after:content-[''] last:mr-0"
         >
           {location.title}
         </span>
       ));
     } else {
-      return <span data-contentid={place.contentId}>{place.title}</span>;
+      return (
+        <span data-contentid={place.contentId} data-contenttype={place.contentTypeId}>
+          {place.title}
+        </span>
+      );
     }
   };
 

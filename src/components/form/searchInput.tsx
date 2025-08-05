@@ -75,12 +75,18 @@ export default function SearchInput({
         value={inputValue}
         onChange={handleChange}
         disabled={isSubmitting}
-        className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${inputSize[size]} ${className} focus:outline-travel-primary-light100 focus:bg-travel-gray100 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 ${
+          inputSize[size]
+        } ${className} focus:outline-travel-primary-light100 focus:text-travel-primary200 ${
+          isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       />
       <button
         type="submit"
         disabled={isSubmitting}
-        className={`absolute -translate-y-1/2 cursor-pointer right-3 top-1/2 text-travel-text100 hover:text-travel-primary200 transition-colors ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`absolute -translate-y-1/2 cursor-pointer right-3 top-1/2 text-travel-text100 hover:text-travel-primary200 transition-colors ${
+          isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       >
         <Search className={`${iconSize[size]} stroke-2`} />
       </button>

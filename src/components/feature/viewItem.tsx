@@ -39,7 +39,9 @@ export default function ViewItem({
 
   // 경로가 '/feed' 일때만 스타일 적용 (/feed와 /feed/view 구분을 위함)
   const isDetailView = pathname.startsWith("/feed/");
-  const listClass = `relative w-full space-y-2 ${isDetailView ? "" : "rounded-xl bg-white shadow p-4"}`;
+  const listClass = `relative w-full space-y-2 ${
+    isDetailView ? "" : "rounded-xl bg-white shadow-md border border-travel-gray100/50 p-4"
+  }`;
   const listTextClass = `text-14 text-travel-text100 ${isDetailView ? "" : "line-clamp-3"}`;
 
   const [bookmarkCount, setBookmarkCount] = useState(bookmarks || 0);
@@ -101,7 +103,9 @@ export default function ViewItem({
 
   return (
     <div
-      className={`${listClass} ${!isDetailView ? "cursor-pointer hover:shadow-lg transition-shadow" : ""}`}
+      className={`${listClass} ${
+        !isDetailView ? "cursor-pointer hover:border-travel-gray200/60 hover:shadow-lg transition-shadow" : ""
+      }`}
       onClick={handleItemClick}
     >
       <div className="flex items-center justify-between">
@@ -150,12 +154,12 @@ export default function ViewItem({
       <div className="space-y-2 text-14">
         {isDetailView ? (
           // 게시물 상세페이지일 때 보이는 이미지
-          <Swiper pagination={true} modules={[Pagination]} className="rounded-lg overflow-hidden">
+          <Swiper pagination={true} modules={[Pagination]} className="overflow-hidden rounded-lg">
             {showImg.map((img, idx) => (
               <SwiperSlide key={idx}>
-                <div className="aspect-[3/2] bg-travel-gray200">
+                <div className="aspect-square bg-travel-gray200">
                   <Image
-                    width={600}
+                    width={400}
                     height={400}
                     src={img}
                     alt={`Review image ${idx + 1}`}
@@ -186,8 +190,8 @@ export default function ViewItem({
                     className="object-cover w-full h-full"
                   />
                   {!isDetailView && overlay && (
-                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                      <span className="text-white font-bold text-20">+{moreCount}</span>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                      <span className="font-bold text-white text-20">+{moreCount}</span>
                     </div>
                   )}
                 </div>

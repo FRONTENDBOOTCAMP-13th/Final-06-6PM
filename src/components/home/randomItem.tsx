@@ -116,7 +116,7 @@ export default function RandomItem() {
   if (error || !travelSpot) {
     return (
       <div className="relative rounded-xl overflow-hidden shadow-md w-full flex items-center justify-center min-h-[220px] bg-white/80 border border-travel-gray500/30">
-        <div className="text-center flex flex-col items-center gap-2 text-travel-gray700">
+        <div className="flex flex-col items-center gap-2 text-center text-travel-gray700">
           <MapPinX />
           <p className="font-medium">현재 추천할 수 있는 여행지가 없습니다.</p>
         </div>
@@ -140,6 +140,7 @@ export default function RandomItem() {
           <DrawerItem
             title={travelSpot.title}
             contentId={String(travelSpot.contentid)}
+            contentTypeId={String(travelSpot.contenttypeid)}
             location={getLocationString(travelSpot.addr1)}
             imgUrl={travelSpot.firstimage!}
             desc={getDescriptionText(travelSpot)}

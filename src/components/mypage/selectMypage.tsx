@@ -2,7 +2,7 @@
 
 import { MapPinned } from "lucide-react";
 import { useEffect, useState } from "react";
-import DayItem, { DayItemProps } from "../ui/dayItem";
+import DayItem from "../ui/dayItem";
 import { GetPlanDetailProps } from "@/types/plan";
 import { getPlanListUser } from "@/lib/api/plan";
 import useUserStore from "@/zustand/userStore";
@@ -68,7 +68,7 @@ export default function SelectMypage() {
         ))}
       </div>
 
-      <div className="py-6 px-4">
+      <div className="py-6 px-3 xs:px-4">
         {tabData[tab].description.length > 0 ? (
           tabData[tab].description.map((item) => {
             const dday = getDday(item.extra?.startDate);

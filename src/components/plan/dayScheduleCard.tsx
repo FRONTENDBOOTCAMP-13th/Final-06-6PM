@@ -37,9 +37,8 @@ export default function DayScheduleCard({ day, date, isPreview = false, planId }
         <h2 className="text-18 font-semibold">{day}일차</h2>
         <p className="text-14">({date})</p>
       </div>
-
       {hasPlaces ? (
-        <FillScheduleCard day={day} onAddPlace={isPreview ? undefined : handleAddPlace} />
+        <FillScheduleCard day={day} onAddPlace={isPreview ? undefined : handleAddPlace} isPreview={isPreview} />
       ) : isPreview ? (
         <div className="text-travel-gray500 text-center py-4">등록된 일정이 없습니다.</div>
       ) : (
