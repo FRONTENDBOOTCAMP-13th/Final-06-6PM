@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { getPlanListUser } from "@/lib/api/plan";
 import { GetPlanDetailProps } from "@/types/plan";
 import { ChevronDown } from "lucide-react";
+import { getDday } from "@/lib/getDday";
 
 export default function SelectReviewTab() {
   const token = useUserStore((state) => state.token);
@@ -60,11 +61,16 @@ export default function SelectReviewTab() {
         <option value="" className="text-travel-gray500">
           필터링하고 싶은 여행을 선택하세요
         </option>
-        {userPlan.map((plan) => (
-          <option key={plan._id} value={String(plan._id)} className="py-2">
-            {plan.title} ({plan.extra.startDate} ~ {plan.extra.endDate})
-          </option>
-        ))}
+        {userPlan.map((plan) => {
+          const dday = getDday(plan.extra?.startDate);
+          if (dday >= 0) return null;
+
+          return (
+            <option key={plan._id} value={String(plan._id)} className="py-2">
+              {plan.title} ({plan.extra.startDate} ~ {plan.extra.endDate})
+            </option>
+          );
+        })}
       </select>
       <div className="absolute top-4 right-0 flex items-center px-3 pointer-events-none">
         <ChevronDown className="w-4 h-4 text-travel-gray600" />
