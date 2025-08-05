@@ -29,7 +29,7 @@ export default function ProfileItem({
 
   const user = useUserStore((state) => state.userInfo);
   const token = useUserStore((state) => state.token);
-  const imgUrl = user?.image || "/uploadFiles/user-default.webp";
+  const imgUrl = user?.image || "/images/user-default.webp";
 
   // 회원 정보 및 통계
   useEffect(() => {
@@ -66,15 +66,13 @@ export default function ProfileItem({
 
       {/* 프로필이미지 */}
       <div className="overflow-hidden rounded-full w-25 h-25 bg-travel-gray200 aspect-square">
-        {imgUrl && (
-          <Image
-            width={100}
-            height={100}
-            src={imgUrl}
-            alt={user?.name || "사용자"}
-            className="object-cover w-full h-full"
-          />
-        )}
+        <Image
+          width={100}
+          height={100}
+          src={imgUrl}
+          alt={user?.name || "사용자"}
+          className="object-cover w-full h-full"
+        />
       </div>
 
       {/* 프로필기본내용 */}

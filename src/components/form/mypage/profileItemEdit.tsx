@@ -167,7 +167,7 @@ export default function ProfileItemEdit() {
               }}
             />
           ) : (
-            <div className="flex items-center justify-center w-full h-full border-2 border-dashed border-travel-gray300 rounded-full">
+            <div className="flex items-center justify-center w-full h-full border-2 border-dashed rounded-full border-travel-gray300">
               <ImagePlus className="w-10 h-10 text-travel-gray400" />
             </div>
           )}
@@ -175,7 +175,7 @@ export default function ProfileItemEdit() {
 
         {/* 호버 오버레이 */}
         <div
-          className="absolute inset-0 flex items-center justify-center transition-opacity opacity-0 bg-black/60 group-hover:opacity-100 rounded-full"
+          className="absolute inset-0 flex items-center justify-center transition-opacity rounded-full bg-black/60 group-hover:opacity-100"
           onClick={handleImgClick}
         >
           <Camera className="text-white size-7" />
@@ -191,7 +191,7 @@ export default function ProfileItemEdit() {
           placeholder="닉네임을 입력하세요"
           defaultValue={userInfo.name || ""}
         />
-        <p className="mt-1 text-14 font-medium text-travel-fail100">{state?.ok === 0 && state.errors?.name?.msg}</p>
+        <p className="mt-1 font-medium text-14 text-travel-fail100">{state?.ok === 0 && state.errors?.name?.msg}</p>
       </div>
 
       {/* 한줄소개 입력 필드 */}
