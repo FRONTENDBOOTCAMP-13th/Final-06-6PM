@@ -1,68 +1,16 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { usePlanDetail } from "@/hook/usePlanDetail";
 import DayScheduleCard from "@/components/plan/dayScheduleCard";
-import { getPlanDetail } from "@/data/functions/plan";
-import { GetPlanDetailProps } from "@/types/plan";
+import ScheduleCreateButton from "@/components/plan/scheduleCreateButton";
 import DrawerPlanBtn from "@/components/plan/drawerPlanBtn";
 import usePlanStore from "@/zustand/planStore";
 
 export default function PlanDetailContent() {
   const params = useParams();
-  const planId = Number(params?.id);
-
-  const [planData, setPlanData] = useState<GetPlanDetailProps | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const { setDailyPlans, clearAllData } = usePlanStore();
-
-  // API 데이터 로드
-  useEffect(() => {
-    const fetchPlanData = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const res = await getPlanDetail(planId);
-        // console.log(res);
-        if (res.ok && res.item) {
-          setPlanData(res.item);
-
-          const dailyPlansData =
-            res.item.replies?.map((reply) => ({
-              day: reply.day,
-              planDate: reply.planDate,
-              places: reply.locations.map((location) => ({
-                id: parseInt(location.contentId),
-                name: location.title,
-                category: location.types,
-                mapx: location.mapx ? Number(location.mapx) : undefined,
-                mapy: location.mapy ? Number(location.mapy) : undefined,
-              })),
-            })) || [];
-
-          setDailyPlans(dailyPlansData);
-        } else {
-          const errorMessage = "message" in res ? res.message : "여행일정을 불러올 수 없습니다.";
-          setError(errorMessage);
-        }
-      } catch (error) {
-        console.error("Plan 데이터 로드 실패:", error);
-        setError("네트워크 오류가 발생했습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (planId) {
-      clearAllData();
-      fetchPlanData();
-    }
-
-    return () => {
-      clearAllData();
-    };
-  }, [planId, setDailyPlans, clearAllData]);
+  const postId = Number(params?.id);
+  const { planData, isLoading, hasReplies } = usePlanDetail(postId);
+  const dailyPlans = usePlanStore((state) => state.dailyPlans);
 
   if (isLoading) {
     return (
@@ -72,10 +20,10 @@ export default function PlanDetailContent() {
     );
   }
 
-  if (error || !planData) {
+  if (!planData) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
-        <p className="text-gray-500">{error || "여행일정을 불러올 수 없습니다."}</p>
+        <p className="text-gray-500">여행일정을 불러올 수 없습니다.</p>
       </div>
     );
   }
@@ -86,17 +34,31 @@ export default function PlanDetailContent() {
         <div>
           <h2 className="text-28 text-travel-primary200 font-semibold">{planData.title}</h2>
           <p className="text-16 text-travel-gray700">
-            {planData.extra.startDate} ~ {planData.extra.endDate}
+            {planData.extra?.startDate} ~ {planData.extra?.endDate}
           </p>
         </div>
-        <DrawerPlanBtn reviewId={planId} />
+        <DrawerPlanBtn reviewId={postId} />
       </div>
 
-      <div className="flex flex-col justify-between pt-7 gap-5">
-        {planData.replies?.map((reply) => (
-          <DayScheduleCard key={reply.day} day={reply.day} date={reply.planDate} isPreview={true} planId={planId} />
-        ))}
-      </div>
+      {!hasReplies ? (
+        <div className="pt-7">
+          <ScheduleCreateButton planData={planData} />
+        </div>
+      ) : (
+        <div className="flex flex-col justify-between pt-7 gap-5">
+          {dailyPlans.map((plan) => (
+            <div key={`day-${plan.day}`}>
+              <DayScheduleCard
+                day={plan.day}
+                date={plan.planDate}
+                isPreview={true}
+                planId={postId}
+                replyId={plan.replyId}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

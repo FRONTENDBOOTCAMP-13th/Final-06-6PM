@@ -9,7 +9,6 @@ export default function PlanDetailPage() {
         <BackButton path="/mypage" />
         <p className="text-center">여행일정 살펴보기</p>
       </div>
-
       <PlanDetailContent />
       <Navbar />
     </div>
