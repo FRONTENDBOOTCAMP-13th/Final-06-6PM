@@ -20,8 +20,8 @@ export default function DayItem({
   const placeImg = filterPlaceImg(place);
 
   return (
-    <div className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-[0_0_6px_rgba(0,0,0,0.3)]">
-      <div className="flex gap-3 items-center">
+    <div className="grid grid-cols-[1fr_auto] items-center justify-between w-full p-4 bg-white rounded-lg shadow-[0_0_6px_rgba(0,0,0,0.3)]">
+      <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
         <div className="w-[50px] h-[50px] rounded-full bg-travel-gray200 overflow-hidden aspect-square">
           {placeImg && (
             <Image width={100} height={100} src={placeImg} alt={place} className="object-cover w-full h-full" />
@@ -29,13 +29,13 @@ export default function DayItem({
         </div>
         <div className="space-y-1 text-travel-text100">
           <p className="font-semibold">{place}</p>
-          <p className="text-14">{period}</p>
+          <p className="text-12 xs:text-14">{period}</p>
         </div>
       </div>
 
       {dday !== undefined && (
         <div
-          className={`px-4 py-1 text-center text-white text-14 rounded-3xl min-w-14 ${
+          className={`px-2.5 xs:px-4 py-1 text-center whitespace-nowrap text-white text-12 xs:text-14 rounded-3xl min-w-14 ${
             dday < 0 ? "bg-travel-gray500" : "bg-travel-primary100"
           }`}
         >

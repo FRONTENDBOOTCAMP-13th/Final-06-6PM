@@ -10,10 +10,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { categories } from "@/lib/data/categoryList";
 
 export default function PlaceItem({
   title = "지역명",
   contentId = "",
+  contentType = "",
   location = "주소",
   imgUrl = "/images/user2.png",
   desc = "",
@@ -66,9 +68,15 @@ export default function PlaceItem({
     e.stopPropagation();
   };
 
+  // 카테고리 타입 매핑
+  const getCategory = (contentType: string) => {
+    return categories.find((item) => item.id === contentType)?.name || "기타";
+  };
+
   const placeData: BookmarkPlace = {
     title,
     contentId,
+    contentType,
     location,
     imgUrl,
     desc,
@@ -83,22 +91,21 @@ export default function PlaceItem({
         <input type="hidden" name="placeContentId" value={contentId} />
 
         <div
-          className="w-full bg-white rounded-2xl shadow-[0_0_6px_rgba(0,0,0,0.3)] py-4 px-3 grid grid-cols-[auto_1fr_auto] items-center gap-2 cursor-pointer hover:shadow-lg transition-shadow"
+          className="w-full bg-white rounded-2xl shadow-md border border-travel-gray100/70 hover:border-travel-gray200/80 py-4 px-3 grid grid-cols-[auto_1fr_auto] items-center gap-2 cursor-pointer hover:shadow-lg transition-shadow"
           data-contentid={contentId}
+          data-type={contentType}
           onClick={handleCardClick}
         >
           {/* 이미지 삽입 */}
-          <div className="w-[70px] h-[70px] rounded-2xl bg-travel-gray200 overflow-hidden aspect-square">
-            {imgUrl && (
-              <Image width={100} height={100} src={imgUrl} alt={title} className="object-cover w-full h-full" />
-            )}
+          <div className="w-14 h-14 xs:w-[70px] xs:h-[70px] rounded-lg xs:rounded-2xl bg-travel-gray200 overflow-hidden aspect-square">
+            {imgUrl && <Image width={80} height={80} src={imgUrl} alt={title} className="object-cover w-full h-full" />}
           </div>
 
           <div className="max-w-[240px] xs:max-w-[270px] text-travel-text100 overflow-hidden">
             <div className="w-full grid grid-cols-[1fr_auto] items-center gap-2">
               <h2 className="font-bold line-clamp-2">{title}</h2>
               <TagItem variant="primary" size="sm">
-                관광지
+                {getCategory(contentType)}
               </TagItem>
             </div>
 

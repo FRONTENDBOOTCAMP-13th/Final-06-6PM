@@ -11,6 +11,7 @@ import { bookmarkUser } from "@/data/actions/bookmark";
 
 interface DrawerItemProps {
   contentId: string;
+  contentTypeId: string;
   title: string;
   location: string;
   imgUrl?: string;
@@ -19,6 +20,7 @@ interface DrawerItemProps {
 
 export default function DrawerItem({
   contentId = "",
+  contentTypeId = "",
   title = "관광지",
   location = "주소",
   imgUrl,
@@ -110,6 +112,7 @@ export default function DrawerItem({
             <input type="hidden" name="userToken" value={userToken || ""} />
             <input type="hidden" name="placeTitle" value={title || ""} />
             <input type="hidden" name="placeContentId" value={contentId || ""} />
+            <input type="hidden" name="placeContentTypeId" value={contentTypeId || ""} />
             <input type="hidden" name="placeDesc" value={desc || ""} />
             <input type="hidden" name="placeImgUrl" value={imgUrl || ""} />
             <input type="hidden" name="placeLocation" value={location || ""} />
