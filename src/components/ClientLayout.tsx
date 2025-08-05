@@ -47,7 +47,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
             <div className="mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/logo.svg"
                   alt="여행도감 로고"
                   width={200}
                   height={200}
