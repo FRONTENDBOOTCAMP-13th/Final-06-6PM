@@ -12,7 +12,6 @@ export default function LoginForm() {
   const { setToken, setUserInfo } = useUserStore.getState();
   const router = useRouter();
   const [userState, formAction, isLoading] = useActionState(login, null);
-  // const redirect = useSearchParams().get("redirect");
 
   useEffect(() => {
     if (userState?.ok) {
@@ -41,7 +40,7 @@ export default function LoginForm() {
     >
       {/* 이메일 */}
       <div className="w-full">
-        <Input size="md" id="email" name="email" placeholder="test@email.com" />
+        <Input size="md" id="email" name="email" placeholder="test@email.com" defaultValue="tripdiary@trip.diary" />
         <p className="mt-1 font-medium text-14 text-travel-fail100">
           {!userState?.ok && userState?.errors?.email?.msg}
         </p>
@@ -49,7 +48,7 @@ export default function LoginForm() {
 
       {/* 비밀번호 */}
       <div className="w-full">
-        <Input size="md" id="password" name="password" type="password" placeholder="password" />
+        <Input size="md" id="password" name="password" type="password" placeholder="password" defaultValue="11111111" />
         <p className="mt-1 font-medium text-14 text-travel-fail100">
           {!userState?.ok && userState?.errors?.password?.msg}
         </p>

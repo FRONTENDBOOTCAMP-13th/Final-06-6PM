@@ -77,7 +77,7 @@ export default function SelectMypage() {
         ))}
       </div>
 
-      <div className="py-6 px-3 xs:px-4">
+      <div className="px-3 py-6 xs:px-4">
         {tabData[tab].description.length > 0 ? (
           tabData[tab].description.map((item) => {
             const dday = getDday(item.extra?.startDate);
