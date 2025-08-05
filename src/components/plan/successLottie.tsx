@@ -16,8 +16,6 @@ export default function SuccessLottie({ width = 70, height = 70, className }: Su
       style={{
         width,
         height,
-        filter:
-          "brightness(0) saturate(100%) invert(30%) sepia(97%) saturate(1352%) hue-rotate(204deg) brightness(95%) contrast(101%)",
       }}
       loop={false}
       className={className}
