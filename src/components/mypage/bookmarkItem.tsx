@@ -1,7 +1,7 @@
 import React from "react";
-import { Bookmark, BookOpen, Loader2 } from "lucide-react";
+import { Bookmark, BookOpen, Loader2, MapPinned } from "lucide-react";
 
-type itemType = "bookmark" | "review";
+type itemType = "bookmarkPlace" | "bookmarkPost" | "review";
 interface BookmarkItemProps {
   type: itemType;
   count?: number;
@@ -10,10 +10,15 @@ interface BookmarkItemProps {
 
 const itemInfo = (type: itemType) => {
   switch (type) {
-    case "bookmark":
+    case "bookmarkPlace":
+      return {
+        icon: <MapPinned className="w-6 h-6 text-travel-text100 shrink-0" />,
+        label: "나의 장소 북마크",
+      };
+    case "bookmarkPost":
       return {
         icon: <Bookmark className="w-6 h-6 text-travel-text100 shrink-0" />,
-        label: "나의 북마크",
+        label: "나의 게시글 북마크",
       };
     case "review":
       return {
