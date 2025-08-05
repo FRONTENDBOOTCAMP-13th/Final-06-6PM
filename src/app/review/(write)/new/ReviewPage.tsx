@@ -50,21 +50,16 @@ export default function ReviewNew() {
     const dday = getDday(item.extra?.startDate);
 
     return (
-      <div key={item._id} className="relative rounded-xl overflow-hidden border border-travel-gray300/50 shadow-md">
+      <div key={item._id} className="relative overflow-hidden border shadow-md rounded-xl border-travel-gray300/50">
         <div className="opacity-50 pointer-events-none">
           <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} dday={dday} />
         </div>
 
-        <div className="absolute inset-0 flex items-center gap-2 justify-center bg-travel-gray100/10 backdrop-blur-xs px-4 text-center">
-          <p className="text-14 font-medium">
-            다녀온 여행지의 경우에만
-            <br />
-            여행 후기 기록이 가능합니다
-          </p>
-          <TagItem variant="fill" className="min-w-[54px]">
-            D-{dday}
-          </TagItem>
-        </div>
+        <p className="absolute inset-0 content-center px-4 font-medium text-center text-white bg-travel-gray700/35 backdrop-blur-xs text-14">
+          다녀온 여행지의 경우에만
+          <br />
+          여행 후기 기록이 가능합니다
+        </p>
       </div>
     );
   };
