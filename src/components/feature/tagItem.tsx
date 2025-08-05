@@ -3,20 +3,14 @@
 import { X } from "lucide-react";
 
 interface TagItemProps {
-  variant?:
-    | "info"
-    | "warn"
-    | "fail"
-    | "success"
-    | "outline"
-    | "fill"
-    | "primary";
+  variant?: "info" | "warn" | "fail" | "success" | "outline" | "fill" | "primary";
   size?: "sm" | "md";
   children: React.ReactNode;
   className?: string;
   closeIcon?: boolean;
   onRemove?: () => void;
   onClick?: () => void;
+  clickable?: boolean;
 }
 
 export default function TagItem({
@@ -27,6 +21,7 @@ export default function TagItem({
   closeIcon = false,
   onRemove,
   onClick,
+  clickable = true,
 }: TagItemProps) {
   const btnType = {
     info: "bg-travel-info100 border border-travel-info200 text-white",
@@ -43,9 +38,11 @@ export default function TagItem({
     md: "py-1.5 px-3 text-[13px]",
   };
 
+  const cursorClass = clickable ? "cursor-pointer" : "cursor-default";
+
   return (
     <div
-      className={`${btnType[variant]}  ${btnSize[size]} ${className}  rounded-2xl cursor-pointer font-sans grid grid-cols-[1fr_auto] items-center leading-none`}
+      className={`${btnType[variant]} ${btnSize[size]} ${cursorClass} ${className} rounded-2xl font-sans grid grid-cols-[1fr_auto] items-center leading-none`}
       onClick={onClick}
     >
       {children}

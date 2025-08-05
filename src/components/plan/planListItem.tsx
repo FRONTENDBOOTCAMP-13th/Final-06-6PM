@@ -21,7 +21,7 @@ export default function PlanListItem({ number, place, tag, showDeleteButton = fa
         <div className="flex items-center gap-1 flex-wrap">
           <span className="font-medium text-16">{place}</span>
           {tag && (
-            <TagItem variant="primary" size="sm">
+            <TagItem variant="primary" size="sm" clickable={false}>
               {tag}
             </TagItem>
           )}
