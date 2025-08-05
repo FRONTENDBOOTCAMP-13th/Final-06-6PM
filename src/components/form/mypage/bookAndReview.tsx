@@ -20,22 +20,6 @@ interface ReviewResponse {
 export default function BookAndReview() {
   const { token, userInfo } = useUserStore();
 
-  console.log(userInfo);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!userInfo?._id || !token) return;
-
-      try {
-        const res = await getUser(userInfo._id);
-        console.log(res.item.extra.bookmarkPlace.length);
-      } catch (error) {
-        console.error("데이터 로딩 오류:", error);
-      }
-    };
-    fetchUserData();
-  }, []);
-
   // 데이터 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,6 +29,22 @@ export default function BookAndReview() {
     bookmarkReview: 0,
     review: 0,
   });
+
+  // 북마크 장소 데이터 함수
+  const fetchBookmarkPlace = useCallback(async () => {
+    if (!userInfo?._id || !token) return 0;
+
+    try {
+      const res = await getUser(userInfo._id);
+      if (res?.ok === 1 && res.item?.extra?.bookmarkPlace) {
+        return res.item.extra.bookmarkPlace.length;
+      }
+      return 0;
+    } catch (error) {
+      console.error("북마크 장소 조회 에러:", error);
+      return 0;
+    }
+  }, [userInfo?._id, token]);
 
   // 리뷰 데이터 가져오는 공통 함수
   const fetchReviewData = useCallback(async (reviewFunctions: (() => Promise<ReviewResponse>)[]) => {
@@ -68,16 +68,18 @@ export default function BookAndReview() {
     }
   }, []);
 
-  // 북마크 및 리뷰 카운트 조회
-  const fetchCounts = useCallback(async () => {
+  // 모든 카운트 데이터 조회
+  const fetchAllCounts = useCallback(async () => {
     if (!token) return;
 
     setIsLoading(true);
 
     try {
-      // 병렬로 북마크와 리뷰 데이터 가져오기
-      const [bookmarkData, reviewData] = await Promise.all([
-        // 북마크 데이터 (전체 리뷰에서 북마크된 것들)
+      // 병렬로 모든 데이터 가져오기
+      const [bookmarkPlaceCount, bookmarkReviewData, reviewData] = await Promise.all([
+        // 북마크 장소 개수
+        fetchBookmarkPlace(),
+        // 북마크된 리뷰 데이터 (전체 리뷰에서 북마크된 것들)
         fetchReviewData([
           () => getReviewAllList(token),
           () => getReviewDailyList(token),
@@ -92,41 +94,49 @@ export default function BookAndReview() {
       ]);
 
       // 북마크된 리뷰 개수 계산
-      const bookmarkCount = bookmarkData.allData.filter(
+      const bookmarkReviewCount = bookmarkReviewData.allData.filter(
         (review) => review.myBookmarkId !== undefined && review.myBookmarkId !== null,
       ).length;
 
       setCounts({
-        bookmarkReview: bookmarkCount,
+        bookmarkPlace: bookmarkPlaceCount,
+        bookmarkReview: bookmarkReviewCount,
         review: reviewData.totalCount,
       });
     } catch (error) {
       console.error("카운트 조회 에러:", error);
-      setCounts({ bookmarkReview: 0, review: 0 });
+      setCounts({
+        bookmarkPlace: 0,
+        bookmarkReview: 0,
+        review: 0,
+      });
     } finally {
       setIsLoading(false);
     }
-  }, [token, fetchReviewData]);
+  }, [token, fetchReviewData, fetchBookmarkPlace]);
 
   useEffect(() => {
-    if (token) {
-      fetchCounts();
+    if (token && userInfo?._id) {
+      fetchAllCounts();
     } else {
-      // 토큰이 없으면 카운트 초기화
-      setCounts({ bookmarkReview: 0, review: 0 });
+      setCounts({
+        bookmarkPlace: 0,
+        bookmarkReview: 0,
+        review: 0,
+      });
     }
-  }, [token, fetchCounts]);
+  }, [token, userInfo?._id, fetchAllCounts]);
 
   return (
     <div className="flex flex-col w-full gap-4">
       <Link href="/mypage/bookmark">
-        <BookmarkItem type="bookmarkPlace" count={counts?.bookmarkPlace} isLoading={isLoading} />
+        <BookmarkItem type="bookmarkPlace" count={counts.bookmarkPlace} isLoading={isLoading} />
       </Link>
       <Link href="/mypage/bookmarkPost">
-        <BookmarkItem type="bookmarkPost" count={counts?.bookmarkReview} isLoading={isLoading} />
+        <BookmarkItem type="bookmarkPost" count={counts.bookmarkReview} isLoading={isLoading} />
       </Link>
       <Link href="/mypage/review">
-        <BookmarkItem type="review" count={counts?.review} isLoading={isLoading} />
+        <BookmarkItem type="review" count={counts.review} isLoading={isLoading} />
       </Link>
     </div>
   );
