@@ -13,7 +13,7 @@ export default function NavbarLayout({
         {/* <button className="absolute -translate-y-1/2 cursor-pointer left-4 top-1/2">
           <ChevronLeft />
         </button> */}
-        <p className="text-center">살펴보기</p>
+        <p className="text-center">여행후기</p>
       </div>
       <div className="relative w-full px-4 pb-25">{children}</div>
       <Navbar />

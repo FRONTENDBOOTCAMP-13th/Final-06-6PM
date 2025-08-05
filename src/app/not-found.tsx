@@ -39,7 +39,7 @@ export default function NotFound() {
             <div className="bg-travel-bg100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
               <Search className="w-6 h-6 text-travel-secondary300" />
             </div>
-            <h3 className="font-semibold text-black mb-2">리뷰 살펴보기</h3>
+            <h3 className="font-semibold text-black mb-2">여행후기 보기</h3>
             <p className="text-14 text-travel-gray700 mb-3">
               가고 싶은 여행지의 <br /> 생생한 후기
             </p>
@@ -47,7 +47,7 @@ export default function NotFound() {
               href="/feed"
               className="text-travel-secondary300 hover:text-travel-primary200 font-medium text-14 transition-colors"
             >
-              살펴보기
+              여행후기
             </Link>
           </div>
 

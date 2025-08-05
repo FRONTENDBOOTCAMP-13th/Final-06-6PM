@@ -22,7 +22,7 @@ export async function getCurrentLocationWeather() {
     if (!location) {
       throw new Error("위치 정보를 가져올 수 없습니다");
     }
-    console.log("위치 정보 획득:", location);
+    // console.log("위치 정보 획득:", location);
 
     const gridCoords = convertToGrid(location.latitude, location.longitude);
     const { nx, ny } = gridCoords;

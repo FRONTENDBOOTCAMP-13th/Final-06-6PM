@@ -36,7 +36,7 @@ export default function CommentDeleteForm({ reply, onCommentDeleted }: CommentDe
   }
 
   return (
-    <form action={formAction} onSubmit={handleSubmit} className="inline ml-2">
+    <form action={formAction} onSubmit={handleSubmit} className="leading-none inline ml-2">
       <input type="hidden" name="_id" value={reviewId} />
       <input type="hidden" name="replyId" value={reply._id} />
       <input type="hidden" name="accessToken" value={token || ""} />

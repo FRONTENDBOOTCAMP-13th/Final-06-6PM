@@ -1,6 +1,6 @@
 "use client";
 
-import { LogIn, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState, useActionState, useTransition, useEffect } from "react";
 import { useParams } from "next/navigation";
 import useUserStore from "@/zustand/userStore";
@@ -70,7 +70,7 @@ export default function CommentForm({ onCommentAdded }: CommentFormProps) {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="leading-none">
           <div className="relative">
             <input
               type="text"

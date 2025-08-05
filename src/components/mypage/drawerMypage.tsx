@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  TransitionChild,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
 import { ChevronDown, Settings } from "lucide-react";
 import Button from "@/components/ui/btn";
 import { toast } from "react-toastify";
@@ -19,7 +14,6 @@ export default function DrawerMypage() {
   const [open, setOpen] = useState(false);
 
   const userEdit = () => {
-    console.log("수정");
     router.push("/mypage/edit");
   };
 
@@ -53,27 +47,14 @@ export default function DrawerMypage() {
               aria-label="아래로 내리기"
               className="flex justify-center w-full cursor-pointer"
             >
-              <ChevronDown
-                aria-hidden="true"
-                className="size-7 text-travel-text200"
-              />
+              <ChevronDown aria-hidden="true" className="size-7 text-travel-text200" />
             </button>
           </TransitionChild>
 
-          <Button
-            size="lg"
-            variant="primary"
-            className="w-full"
-            onClick={() => userEdit()}
-          >
+          <Button size="lg" variant="primary" className="w-full" onClick={() => userEdit()}>
             회원정보 수정하기
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="w-full"
-            onClick={() => userLogout()}
-          >
+          <Button size="lg" variant="outline" className="w-full" onClick={() => userLogout()}>
             로그아웃
           </Button>
         </DialogPanel>
