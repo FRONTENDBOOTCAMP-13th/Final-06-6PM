@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Star, Bookmark, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import useUserStore from "@/zustand/userStore";
 import { addBookmark, deleteBookmark, getBookmarks } from "@/data/functions/bookmark";
 
