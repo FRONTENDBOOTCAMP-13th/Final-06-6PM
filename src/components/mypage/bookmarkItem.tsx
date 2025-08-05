@@ -1,10 +1,11 @@
 import React from "react";
-import { Bookmark, BookOpen } from "lucide-react";
+import { Bookmark, BookOpen, Loader2 } from "lucide-react";
 
 type itemType = "bookmark" | "review";
 interface BookmarkItemProps {
   type: itemType;
   count?: number;
+  isLoading?: boolean;
 }
 
 const itemInfo = (type: itemType) => {
@@ -22,7 +23,7 @@ const itemInfo = (type: itemType) => {
   }
 };
 
-export default function BookmarkItem({ type, count = 0 }: BookmarkItemProps) {
+export default function BookmarkItem({ type, count = 0, isLoading = false }: BookmarkItemProps) {
   const { icon, label } = itemInfo(type);
 
   return (
@@ -31,10 +32,10 @@ export default function BookmarkItem({ type, count = 0 }: BookmarkItemProps) {
         {icon}
         <span className="font-medium text-16 text-travel-text100">{label}</span>
       </div>
-      {count > 0 && (
-        <span className="ml-2 font-bold text-travel-fail100 text-16">
-          {count}
-        </span>
+      {isLoading ? (
+        <Loader2 className="size-5 text-travel-gray400 animate-spin" />
+      ) : (
+        count > 0 && <span className="ml-2 font-bold text-travel-fail100 text-16">{count}</span>
       )}
     </div>
   );
