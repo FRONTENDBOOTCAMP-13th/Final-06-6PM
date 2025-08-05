@@ -72,11 +72,11 @@ export default function CommentEditForm({ reply, onCommentUpdated, isEditing, on
               disabled={isLoading}
               autoFocus
             />
-            <div className="flex gap-2 items-center pt-1">
+            <div className="flex gap-2 items-center pt-1 leading-none">
               <button
                 type="submit"
                 disabled={isLoading || !editContent.trim()}
-                className="text-travel-primary100 hover:text-travel-primary200 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="leading-none text-travel-primary100 hover:text-travel-primary200 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 title="수정 완료"
               >
                 <Check className="size-4" />

@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import DropdownItem from "@/components/feature/dropdownItem";
-import TagItem from "@/components/feature/tagItem";
 import SelectBookmark from "@/components/mypage/selectBookmark";
 import { getUser } from "@/data/functions/user";
 import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";

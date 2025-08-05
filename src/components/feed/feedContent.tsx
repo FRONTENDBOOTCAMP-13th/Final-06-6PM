@@ -140,17 +140,17 @@ export default function FeedContent() {
 
   if (error) {
     return (
-      <div className="text-center py-8">
-        <div className="flex items-start gap-2 rounded-md border bg-red-50 p-3 text-red-500 mb-4">
+      <div className="py-8 text-center">
+        <div className="flex items-start gap-2 p-3 mb-4 text-red-500 border rounded-md bg-red-50">
           <AlertCircle className="size-5 shrink-0" />
-          <p className="text-14 font-medium">{error}</p>
+          <p className="font-medium text-14">{error}</p>
         </div>
 
         <Button
           variant="fill"
           size="md"
           onClick={() => fetchReviewData(currentType)}
-          className="w-full flex items-center justify-center gap-2"
+          className="flex items-center justify-center w-full gap-2"
         >
           <RotateCcw className="size-4" />
           다시 시도
@@ -176,13 +176,13 @@ export default function FeedContent() {
           title="검색내용 초기화"
           type="button"
         >
-          <RefreshCcw className="size-5 cursor-pointer text-travel-gray500 hover:text-travel-primary200 " />
+          <RefreshCcw className="cursor-pointer size-5 text-travel-gray500 hover:text-travel-primary200 " />
         </button>
       </div>
 
-      <div className="flex flex-col-reverse xs:flex-row items-end xs:items-center gap-y-3 my-3 px-0.5">
+      <div className="flex flex-col-reverse items-end gap-y-2 my-3 px-0.5">
         <DropdownItem currentSort={sortType} onSortChange={handleSortChange} />
-        <div className="flex w-full xs:w-fit flex-start items-center gap-0.5 before:hidden xs:before:block before:content-['|'] before:mx-1 before:text-travel-gray400">
+        <div className="flex items-center w-full gap-1 flex-start">
           <TagItem variant={currentType === "all" ? "primary" : "outline"}>
             <span onClick={() => handleTypeChange("all")}>전체</span>
           </TagItem>
@@ -212,7 +212,7 @@ export default function FeedContent() {
           filteredData.map((item, idx) => <ViewItem key={`${idx}-${item._id}`} {...item} onDelete={handleDelete} />)
         ) : (
           //그냥 아이템만 있으면 충돌날수도 있는데 그럼 큰일나서 앞에 타입까지 붙여줌
-          <div className="text-center py-8 text-travel-gray400">
+          <div className="py-8 text-center text-travel-gray400">
             {searchText ? "검색 결과가 없습니다." : "후기가 없습니다."}
           </div>
         )}
