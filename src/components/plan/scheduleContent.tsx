@@ -1,5 +1,6 @@
 "use client";
 import DayScheduleCard from "@/components/plan/dayScheduleCard";
+import PlanDetailContentSkeleton from "@/components/plan/planDetailContentSkeleton";
 import { usePlanSchedule } from "@/hook/usePlanSchedule";
 
 export default function ScheduleContent() {
@@ -7,8 +8,8 @@ export default function ScheduleContent() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
-        <p className="text-gray-500">여행 정보를 불러오는 중...</p>
+      <div className="h-screen w-full items-center justify-center px-4 py-1">
+        <PlanDetailContentSkeleton />
       </div>
     );
   }

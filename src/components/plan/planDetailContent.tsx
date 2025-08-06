@@ -7,6 +7,7 @@ import DrawerPlanBtn from "@/components/plan/drawerPlanBtn";
 import usePlanStore from "@/zustand/planStore";
 import ShareBtn from "@/components/feature/shareBtn";
 import useUserStore from "@/zustand/userStore";
+import PlanDetailContentSkeleton from "@/components/plan/planDetailContentSkeleton";
 
 export default function PlanDetailContent() {
   const params = useParams();
@@ -18,8 +19,8 @@ export default function PlanDetailContent() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
-        <p className="text-gray-500">여행 정보를 불러오는 중...</p>
+      <div className="h-screen w-full items-center justify-center px-4 py-1">
+        <PlanDetailContentSkeleton />
       </div>
     );
   }
