@@ -52,10 +52,15 @@ export default function ReviewTag({ name = "tags", defaultValue = [] }: ReviewTa
     <div className="space-y-1.5">
       <div className="flex items-center gap-1.5">
         <Tags className="size-5" />
-        <h3 className="font-semibold text-18">태그</h3>
+        <h3 className="font-semibold text-18" aria-hidden="true">
+          태그
+        </h3>
       </div>
-
+      <label htmlFor="formTagShow" className="sr-only">
+        태그
+      </label>
       <input
+        id="formTagShow"
         type="text"
         className="px-4 py-3 text-14 w-full rounded-lg border border-travel-gray400 bg-white text-travel-text100 placeholder-travel-gray500 focus:outline-travel-primary-light100 focus:bg-travel-gray100"
         placeholder="#태그로 감정과 분위기를 표현해보세요!(최대 10개)"
@@ -63,7 +68,6 @@ export default function ReviewTag({ name = "tags", defaultValue = [] }: ReviewTa
         onChange={(e) => setTagValue(e.target.value)}
         onKeyDown={tagKeydown}
       />
-
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
           <TagItem key={tag} closeIcon onRemove={() => removeTag(tag)} variant="outline">

@@ -22,7 +22,10 @@ export default function DayItem({
   return (
     <div className="grid grid-cols-[1fr_auto] items-center justify-between w-full p-4 bg-white rounded-lg shadow-[0_0_6px_rgba(0,0,0,0.3)]">
       <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
-        <div className="w-[50px] h-[50px] rounded-full bg-travel-gray200 overflow-hidden aspect-square">
+        <div
+          className="w-[50px] h-[50px] rounded-full bg-travel-gray200 overflow-hidden aspect-square"
+          aria-hidden="true"
+        >
           {placeImg && (
             <Image width={100} height={100} src={placeImg} alt={place} className="object-cover w-full h-full" />
           )}

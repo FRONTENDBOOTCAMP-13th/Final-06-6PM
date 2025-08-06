@@ -57,9 +57,10 @@ export default function ReviewImg({ name = "images" }: ReviewImgProps) {
       {/* 헤더 */}
       <div className="flex items-center gap-1.5">
         <Camera className="size-5" />
-        <h3 className="font-semibold text-18">사진첨부</h3>
+        <h3 className="font-semibold text-18" aria-hidden="true">
+          사진첨부
+        </h3>
       </div>
-
       {/* 이미지 그리드 */}
       <div className="grid grid-cols-4 gap-2">
         {/* 업로드 버튼 */}
@@ -72,15 +73,8 @@ export default function ReviewImg({ name = "images" }: ReviewImgProps) {
 
         {/* 업로드된 이미지들 */}
         {previewUrls.map((src, index) => (
-          <div
-            key={index}
-            className="relative p-2 bg-white border rounded-lg border-travel-gray400 min-h-21"
-          >
-            <img
-              src={src}
-              alt={`첨부이미지-${index + 1}`}
-              className="object-cover w-full h-full rounded-lg"
-            />
+          <div key={index} className="relative p-2 bg-white border rounded-lg border-travel-gray400 min-h-21">
+            <img src={src} alt={`첨부이미지-${index + 1}`} className="object-cover w-full h-full rounded-lg" />
             {/* 삭제 버튼 */}
             <button
               type="button"
@@ -93,33 +87,31 @@ export default function ReviewImg({ name = "images" }: ReviewImgProps) {
           </div>
         ))}
       </div>
-
       {/* FormData로 전송할 숨겨진 input들 */}
       {images.map((file, index) => (
-        <input
-          key={index}
-          type="file"
-          name={`image_${index}`}
-          style={{ display: "none" }}
-          ref={(input) => {
-            if (input) {
-              const dataTransfer = new DataTransfer();
-              dataTransfer.items.add(file);
-              input.files = dataTransfer.files;
-            }
-          }}
-        />
+        <>
+          <label htmlFor="formfileShow" className="sr-only">
+            파일첨부
+          </label>
+          <input
+            id="formfileShow"
+            key={index}
+            type="file"
+            name={`image_${index}`}
+            style={{ display: "none" }}
+            ref={(input) => {
+              if (input) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+              }
+            }}
+          />
+        </>
       ))}
 
       {/* 파일 선택용 숨겨진 input */}
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        ref={inputRef}
-        className="hidden"
-        onChange={uploadImg}
-      />
+      <input type="file" accept="image/*" multiple ref={inputRef} className="hidden" onChange={uploadImg} />
     </div>
   );
 }
