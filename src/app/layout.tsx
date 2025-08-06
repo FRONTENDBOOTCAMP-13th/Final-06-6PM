@@ -15,7 +15,7 @@ export const metadata = {
     siteName: "여행도감",
     images: [
       {
-        url: "/images/traveldiary.png",
+        url: "/images/travel-diary.png",
         width: 300,
         height: 300,
         alt: "여행도감 대표 이미지",
