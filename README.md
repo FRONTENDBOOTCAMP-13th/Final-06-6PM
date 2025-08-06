@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+로고 이미지 들어가기
 
-## Getting Started
+# 프로젝트 개요
 
-First, run the development server:
+> **여행 정보 기록, 보관 및 정보 공유 플랫폼 여행도감**
+>
+> **기억은 흐려져도, 기록은 선명하니까**
+>
+> [여행도감 바로가기](https://final-6-6-pm.vercel.app/home)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ <br />
+
+# 핵심 기능 및 페이지 구성
+
+- **홈 화면**
+
+  - 오늘 날짜 및 날씨 표시
+  - 예정/완료 일정 관리
+  - 랜덤 여행지 추천
+
+- **여행 일정 계획**
+
+  - 지역 및 여행 기간 선택
+  - 날짜별 방문지 추가 및 지도 기반 일정 계획
+
+- **여행지 리뷰**
+
+  - 리뷰 검색, 북마크, 댓글 기능 제공
+  - 다양한 사용자와 소통 및 정보 탐색
+
+- **기록하기**
+
+  - 여행 일정 기반 기록 작성 (장소 정보, 제목, 내용, 사진, 태그, 별점)
+
+- **나만의 여행 지도**
+
+  - 대한민국 지도에 다녀온 지역 클릭 및 여행 사진 업로드
+  - 완성된 커스텀 지도 다운로드
+
+- **마이페이지**
+  - 작성 글 조회수/좋아요 수 확인
+  - 북마크한 글, 작성 리뷰, 전체 여행 일정 관리
+
+<br />
+
+## **페이지 구성**
+
+홈화면 영상
+
+- 메인 홈화면에서 날짜 및 날씨 표시, 일정 관리 기능으로 여행 계획을 한눈에 확인할 수 있습니다.
+- 랜덤 여행지 추천 기능과 여행 일정 만들기 버튼이 하단에 있습니다.
+
+<br />
+여행 일정 계획 영상
+
+- 가고 싶은 지역과 여행 기간을 정한 뒤, 날짜별로 방문지를 검색해 추가할 수 있습니다.
+
+<br />
+리뷰 페이지 영상
+
+- 검색, 북마크 기능으로 다른 사용자의 리뷰를 자유롭게 검색하고 저장할 수 있습니다.
+- 댓글 기능으로 다른 사용자와 소통할 수 있습니다.
+
+<br />
+기록하기 영상
+
+- 여행 일정을 기반으로 완료된 여행에 대해 장소 정보, 제목, 내용, 사진, 태그, 별점을 추가하여 생생한 기록을 작성할 수 있습니다.
+
+<br />
+나만의 여행 지도 영상
+
+- 대한민국 지도에 다녀온 지역을 클릭하여 여행 사진을 업로드하고, 완성된 커스텀 지도를 다운로드 할 수 있습니다.
+
+<br />
+마이 페이지 영상
+
+- 작성한 글의 조회수와 좋아요 수 확인, 북마크한 글과 작성한 리뷰 관리, 전체 여행 일정을 한눈에 볼 수 있습니다.
+
+<br />
+
+# 팀원 소개
+
+|                                   <img src="public/images/teamprofile/sy.png" width=200 height=auto>                                   |                                 <img src="public/images/teamprofile/si.png" width=200 height=auto>                                 |                                 <img src="public/images/teamprofile/ah.png" width=200 height=auto>                                 |                                   <img src="public/images/teamprofile/hj.png" width=200 height=auto>                                   |
+| :------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                               **박선영**                                                               |                                                             **문서인**                                                             |                                                             **송아현**                                                             |                                                               **차형주**                                                               |
+|                                                               팀장 / PM                                                                |                                                                 PL                                                                 |                                                               UX/UI                                                                |                                                                  DOC                                                                   |
+| [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seonyoungg) | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/SeOinm) | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ineahe) | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyungJuCha) |
+
+<br />
+
+## 업무 분담
+
+| 이름   | 기능                                                                                                                                                                                                                                                   |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 박선영 | - 여행 후기 페이지 전반 담당<br>- 여행 후기 등록 / 수정 / 삭제 / 조회 기능 구현<br>- 회원 정보 등록 및 수정, 로그인 기능 구현<br>- 여행 일정 공유 기능 구현<br>- 메인 페이지에서 현재 위치 확인 및 주소 변환 기능 구현                                 |
+| 문서인 | - 여행 일정 페이지 전반 담당<br>- 여행 일정 등록 / 수정 / 삭제 기능 구현<br>- 여행 일자별 등록 / 수정 / 삭제 기능 구현<br>- 여행 일정 검색 페이지에 관광 API 연동<br>- 메인 페이지 랜덤 여행지 추천 기능 구현<br>- 네이버 지도 API 기반 위치 연동 처리 |
+| 송아현 | - 전체 피그마 디자인 작업<br>- 여행 후기 데이터 연동 및 필터링 기능<br>- 댓글 등록 / 수정 / 삭제 기능<br>- 404 Not Found 페이지 구성<br>- 인덱스 페이지 구성                                                                                           |
+| 차형주 | - 지도 생성 페이지 전반 담당<br>- 지역 SVG 기반 이미지 업로드 + 회원 정보 수정 연동<br>- 여행 후기 게시물 북마크 등록 / 삭제 / 조회 기능<br>- 프로젝트 README 작성<br>- GitHub Wiki 문서화                                                             |
+
+<br />
+
+# 폴더 구조
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📁 api/                              # 브루노, dbinit
+📁 public/                           # 사용한 이미지, 아이콘
+📁 src/
+├──📁 app/                           # 애플리케이션 폴더
+│   ├──📁 auth/                      # 로그인 및 회원가입 페이지
+│   ├──📁 feed/                      # 여행후기 페이지
+│   ├──📁 mypage/                    # 마이페이지
+│   ├──📁 photomap/                  # 나만의 여행지도 페이지
+│   ├──📁 plan/                      # 여행 일정 생성 페이지
+│   └──📁 review/                    # 여행 후기 작성 페이지
+│
+├──📁 components/                    # 각 페이지에 해당하는 컴포넌트
+├──📁 data/                          # 브루노 서버 요청 함수
+├──📁 hook/                          # 커스텀 훅 모음
+├──📁 lib/                           # 외부 api 호출 함수
+├──📁 lottie/                        # 성공 json코드
+├──📁 styles/                        # 전역 스타일 설정
+├──📁 types/                         # TypeScript 타입 정의
+├──📁 zustand/                       # 전역 상태 관리
+│
+└──📄 README.md                      #설명 파일
+```
