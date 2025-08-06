@@ -8,7 +8,7 @@ export default function PlanModifyPage() {
     <div>
       <div className="w-full relative py-5 px-4">
         <BackButton />
-        <p className="text-center">여행일정 수정하기</p>
+        <h1 className="text-center">여행일정 수정하기</h1>
       </div>
 
       <ModifyScheduleContent />

@@ -5,12 +5,9 @@ import PlanReplyForm from "@/components/form/plan/planReplyForm";
 export default function SchedulePage() {
   return (
     <div>
-      <h1 className="bg-white sr-only">여행 세부일정 생성</h1>
       <div className="w-full relative py-5 px-4">
         <BackButton path="/plan/dates" />
-        <p className="text-center" aria-hidden="true">
-          여행일정만들기
-        </p>
+        <h1 className="text-center">여행일정만들기</h1>
       </div>
 
       <ScheduleContent />
