@@ -57,40 +57,50 @@ export default function HomePlanItem() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 font-bold text-18 text-travel-text100">
+        <h2 className="flex items-center gap-2 font-bold text-18 text-travel-text100">
           <CalendarDays className="size-6" />
           예정된 여행
-        </div>
+        </h2>
         {showUpcomingTrips.length > 0 ? (
           showUpcomingTrips.map((item) => {
             const dday = getDday(item.extra?.startDate);
             return (
-              <Link href={`/plan/${item._id}`} key={item._id}>
+              <Link
+                href={`/plan/${item._id}`}
+                key={item._id}
+                title="여행 일정 상세보기"
+                aria-label="여행 일정 상세보기"
+              >
                 <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} dday={dday} />
               </Link>
             );
           })
         ) : (
-          <Link href="/plan">
+          <Link href="/plan" title="여행 일정만들기" aria-label="여행 일정만들기">
             <DayItem />
           </Link>
         )}
       </div>
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 font-bold text-18 text-travel-text100">
+        <h2 className="flex items-center gap-2 font-bold text-18 text-travel-text100">
           <NotebookPen className="size-6" />
           이전에 다녀온 여행을 기록해보세요!
-        </div>
+        </h2>
 
         <div className="flex flex-col gap-3">
           {showCompletedTrips.length > 0 ? (
             showCompletedTrips.map((item) => (
-              <Link href={`/review/${item._id}?place=${item.title}`} key={item._id}>
+              <Link
+                href={`/review/${item._id}?place=${item.title}`}
+                key={item._id}
+                title="여행 리뷰 작성하기"
+                aria-label="여행 리뷰 작성하기"
+              >
                 <DayItem place={item.title} period={`${item.extra?.startDate} ~ ${item.extra?.endDate}`} />
               </Link>
             ))
           ) : (
-            <Link href="/plan">
+            <Link href="/plan" title="여행 일정만들기" aria-label="여행 일정만들기">
               <DayItem place="완료된 여행이 없어요" />
             </Link>
           )}
