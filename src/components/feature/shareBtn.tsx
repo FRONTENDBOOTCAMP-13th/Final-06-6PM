@@ -15,7 +15,7 @@ export default function ShareBtn() {
   };
   return (
     <>
-      <button onClick={copyCurrentUrl}>
+      <button onClick={copyCurrentUrl} aria-label="URL 복사하기" title="현재 URL 복사하기">
         <Share2 className="cursor-pointer size-5 leading-none text-travel-gray400" />
       </button>
     </>
