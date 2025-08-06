@@ -18,7 +18,11 @@ export default function BackButton({ path }: BackButtonProps) {
   };
 
   return (
-    <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer" onClick={goBackPage}>
+    <button
+      className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer"
+      onClick={goBackPage}
+      aria-label="이전페이지로 이동"
+    >
       <ChevronLeft />
     </button>
   );

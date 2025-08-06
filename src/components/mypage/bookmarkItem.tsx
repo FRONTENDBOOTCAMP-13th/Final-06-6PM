@@ -40,7 +40,7 @@ export default function BookmarkItem({ type, count = 0, isLoading = false }: Boo
       {isLoading ? (
         <Loader2 className="size-5 text-travel-gray400 animate-spin" />
       ) : (
-        <span className="ml-2 font-bold text-travel-fail100 text-16">{count}</span>
+        <span className="ml-2 font-bold text-travel-info100 text-16">{count}</span>
       )}
     </div>
   );
