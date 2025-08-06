@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import Footer from "@/components/Footer";
+import { motion } from "framer-motion";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -44,25 +45,119 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       <>
         <div className="flex items-center justify-center h-screen">
           <div className="text-center px-8">
-            <div className="mb-12">
-              <div className="flex items-center justify-center mb-6">
+            <motion.div
+              className="mb-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut",
+              }}
+            >
+              <div className="mb-6">
+                <div className="flex items-center justify-center">
+                  <motion.span
+                    className="absolute text-2xl"
+                    initial={{
+                      x: -100,
+                      y: 150,
+                    }}
+                    animate={{
+                      x: 50,
+                      y: -50,
+                    }}
+                    transition={{
+                      delay: 0,
+                      duration: 1,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <Image
+                      src="/images/airplane.svg"
+                      alt="비행기 로고"
+                      width={100}
+                      height={100}
+                      className="object-contain"
+                      priority
+                    />
+                  </motion.span>
+
+                  <motion.span
+                    initial={{
+                      x: -100,
+                    }}
+                    animate={{
+                      x: -50,
+                    }}
+                    transition={{
+                      delay: 0,
+                      duration: 0.7,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <Image
+                      src="/images/favicon.svg"
+                      alt="여행도감 로고"
+                      width={100}
+                      height={100}
+                      className="object-contain"
+                      priority
+                    />
+                  </motion.span>
+
+                  <motion.span
+                    className="absolute text-2xl"
+                    initial={{
+                      x: 150,
+                      y: 30,
+                    }}
+                    animate={{
+                      x: 20,
+                      y: 30,
+                    }}
+                    transition={{
+                      delay: 0,
+                      duration: 0.7,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <Image
+                      src="/images/car.svg"
+                      alt="차 로고"
+                      width={100}
+                      height={100}
+                      className="object-contain"
+                      priority
+                    />
+                  </motion.span>
+                </div>
+              </div>
+
+              {/* 텍스트와 로고도 함께 등장 */}
+              <div>
+                <p className="text-20 font-medium text-black mb-2">여행의 모든 기록이 모이는 곳</p>
                 <Image
-                  src="/images/logo.svg"
-                  alt="여행도감 로고"
+                  src="/images/typo-loading.svg"
+                  alt="여행도감"
                   width={200}
                   height={200}
-                  className="object-contain animate-bounce w-[80%]"
+                  className="object-contain w-full mb-4"
                   priority
                 />
               </div>
-              <div>
-                <p className="text-20 font-medium text-black mb-2">여행의 모든 기록이 모이는 곳</p>
-                <p className="text-6xl font-extrabold text-black mb-4">여행도감</p>
-              </div>
-            </div>
-            <div className="flex justify-center">
+            </motion.div>
+
+            <motion.div
+              className="flex justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                delay: 0.8,
+                duration: 0.4,
+              }}
+            >
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-            </div>
+            </motion.div>
           </div>
         </div>
         <Footer />
