@@ -154,7 +154,11 @@ export default function ViewItem({
       <div className="space-y-2 text-14">
         {isDetailView ? (
           // 게시물 상세페이지일 때 보이는 이미지
-          <Swiper pagination={true} modules={[Pagination]} className="overflow-hidden rounded-lg">
+          <Swiper
+            pagination={true}
+            modules={[Pagination]}
+            className="overflow-hidden rounded-lg custom-swiper-pagination"
+          >
             {showImg.map((img, idx) => (
               <SwiperSlide key={idx}>
                 <div className="aspect-square bg-travel-gray200">
