@@ -114,7 +114,7 @@ export default function PlaceItem({
 
           {/* 버튼 */}
           <button aria-label="장소 북마크 삭제" type="submit" className="cursor-pointer" onClick={handleDeleteClick}>
-            <X className="size-5 text-travel-gray700" />
+            <X className="size-5 text-travel-gray700 hover:text-travel-fail100" />
           </button>
         </div>
       </form>

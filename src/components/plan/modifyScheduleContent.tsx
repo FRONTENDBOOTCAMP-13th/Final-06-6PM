@@ -28,13 +28,13 @@ export default function ModifyScheduleContent() {
 
   return (
     <div className="relative w-full px-4 pb-25">
-      <div className="mb-6">
-        <h2 className="text-2xl font-semibold text-blue-600">{planData.title}</h2>
-        <p className="text-base text-gray-700">
+      <div>
+        <h2 className="text-28 font-semibold text-travel-primary200 ">{planData.title}</h2>
+        <p className="text-16 text-gray-700">
           {planData.extra?.startDate} ~ {planData.extra?.endDate}
         </p>
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col justify-between gap-5 pt-7">
         {dailyPlans.map((plan) => (
           <div key={`day-${plan.day}`} className="drop-zone">
             <DayScheduleCard
