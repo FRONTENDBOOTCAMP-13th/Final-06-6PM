@@ -13,6 +13,7 @@ import "swiper/css/pagination";
 import { GetReviewDetailProps, ReviewLocation } from "@/types/review";
 import useUserStore from "@/zustand/userStore";
 import { useState } from "react";
+import ShareBtn from "@/components/feature/shareBtn";
 
 export type ViewItemProps = GetReviewDetailProps & {
   onClick?: () => void;

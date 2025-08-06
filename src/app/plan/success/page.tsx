@@ -1,3 +1,4 @@
+import LoginStatusConfirm from "@/components/feature/loginStatusConfirm";
 import PlanSuccessButton from "@/components/plan/planSuccessButton";
 import SuccessLottie from "@/components/plan/successLottie"; // 경로는 실제 구조에 맞게 조정
 
@@ -12,6 +13,9 @@ export default function PlanSuccessPage() {
       </div>
 
       <PlanSuccessButton />
+
+      {/* 로그인 확인 */}
+      <LoginStatusConfirm />
     </div>
   );
 }

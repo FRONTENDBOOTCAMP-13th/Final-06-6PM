@@ -7,16 +7,16 @@ export default function RandomItemSkeleton() {
       <div className="relative z-10 w-full p-5 text-travel-text100">
         <div className="mb-3 space-y-1">
           {/* 타이틀 */}
-          <div className="h-6 w-2/3 bg-white/30 rounded" />
+          <div className="h-6 w-2/3 bg-white/50 animate-pulse rounded" />
           {/* 위치 */}
           <div className="flex items-center gap-1">
-            <div className="h-4 w-1/3 bg-white/30 rounded" />
+            <div className="h-4 w-1/3 bg-white/50 animate-pulse rounded" />
           </div>
           {/* 설명 */}
           <div className="space-y-1">
-            <div className="h-4 w-full bg-white/20 rounded" />
-            <div className="h-4 w-full bg-white/20 rounded" />
-            <div className="h-4 w-3/4 bg-white/20 rounded" />
+            <div className="h-4 w-full bg-white/50 animate-pulse rounded" />
+            <div className="h-4 w-full bg-white/50 animate-pulse rounded" />
+            <div className="h-4 w-3/4 bg-white/50 animate-pulse rounded" />
           </div>
         </div>
 

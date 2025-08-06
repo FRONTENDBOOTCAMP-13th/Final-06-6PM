@@ -58,7 +58,7 @@ export default function DrawerBtn({ reviewId, reviewType, onDelete }: DrawerBtnP
   };
 
   return (
-    <>
+    <div className="flex items-center">
       <button onClick={() => setOpen(true)}>
         <EllipsisVerticalIcon className="cursor-pointer size-6 text-travel-gray400" />
       </button>
@@ -96,6 +96,6 @@ export default function DrawerBtn({ reviewId, reviewType, onDelete }: DrawerBtnP
           </form>
         </DialogPanel>
       </Dialog>
-    </>
+    </div>
   );
 }

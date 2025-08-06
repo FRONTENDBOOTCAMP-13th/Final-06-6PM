@@ -2,6 +2,7 @@ import "../../../styles/globals.css";
 import BackButton from "@/components/feature/backButton";
 import Link from "next/link";
 import PlanDetailForm from "@/components/form/plan/planDetailForm";
+import LoginStatusConfirm from "@/components/feature/loginStatusConfirm";
 
 export default function MenubarLayout({
   children,
@@ -22,6 +23,9 @@ export default function MenubarLayout({
       </div>
 
       <PlanDetailForm />
+
+      {/* 로그인 확인 */}
+      <LoginStatusConfirm />
     </>
   );
 }

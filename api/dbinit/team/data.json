@@ -35,7 +35,7 @@
       "address": "서울시 강남구 삼성동 456",
       "type": "user",
       "loginType": "email",
-      "image": "uploadFiles/user-ah.jpg"
+      "image": "uploadFiles/user-hj.png"
     }
   ],
   "product": [],
@@ -1000,7 +1000,7 @@
     {
       "type": "reviewAll",
       "user": {
-        "_id": 4,
+        "_id": 3,
         "name": "Ineahe",
         "image": "uploadFiles/user-ah.jpg"
       },
@@ -1038,7 +1038,7 @@
     {
       "type": "reviewDaily",
       "user": {
-        "_id": 4,
+        "_id": 3,
         "name": "Ineahe",
         "image": "uploadFiles/user-ah.jpg"
       },
@@ -1075,7 +1075,7 @@
     {
       "type": "reviewDaily",
       "user": {
-        "_id": 4,
+        "_id": 3,
         "name": "Ineahe",
         "image": "uploadFiles/user-ah.jpg"
       },
@@ -1112,7 +1112,7 @@
     {
       "type": "reviewPlace",
       "user": {
-        "_id": 4,
+        "_id": 3,
         "name": "Ineahe",
         "image": "uploadFiles/user-ah.jpg"
       },
@@ -1147,7 +1147,7 @@
     {
       "type": "reviewPlace",
       "user": {
-        "_id": 4,
+        "_id": 3,
         "name": "Ineahe",
         "image": "uploadFiles/user-ah.jpg"
       },

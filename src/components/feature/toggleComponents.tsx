@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import useUserStore from "@/zustand/userStore";
 import { addBookmark, deleteBookmark, getBookmarks } from "@/data/functions/bookmark";
+import { toast } from "react-toastify";
 
 interface ToggleIconProps {
   reviewId: number;
@@ -23,39 +24,42 @@ export default function ToggleIcon({ reviewId, myBookmarkId, onBookmarkChange }:
   }, [myBookmarkId]);
 
   const toggleClick = async () => {
-    if (!token) return; // 토큰없으면 무시
-    setLoading(true);
+    if (!token) {
+      toast.warn("로그인 후 이용 가능합니다.");
+    } else {
+      setLoading(true);
 
-    try {
-      const bookmarkList = await getBookmarks(token);
+      try {
+        const bookmarkList = await getBookmarks(token);
 
-      let currentBookmark = null;
-      if (bookmarkList?.ok === 1 && bookmarkList.item) {
-        // 조회되면 post._id값과 비교해서 북마크 목록에 있는지 없는지 찾기
-        currentBookmark = bookmarkList.item.find((bookmark: any) => bookmark.post?._id === reviewId);
+        let currentBookmark = null;
+        if (bookmarkList?.ok === 1 && bookmarkList.item) {
+          // 조회되면 post._id값과 비교해서 북마크 목록에 있는지 없는지 찾기
+          currentBookmark = bookmarkList.item.find((bookmark: any) => bookmark.post?._id === reviewId);
+        }
+        if (currentBookmark) {
+          //이미 되어있으면 삭제
+          await deleteBookmark(currentBookmark._id, token);
+          setIsToggle(false);
+          onBookmarkChange?.(false);
+        } else {
+          //없으면 추가
+          const addResult = await addBookmark(reviewId, token);
+          setIsToggle(true);
+          onBookmarkChange?.(true);
+        }
+      } catch (error) {
+        console.error("북마크 토글 실패:", error);
+      } finally {
+        setLoading(false);
       }
-      if (currentBookmark) {
-        //이미 되어있으면 삭제
-        await deleteBookmark(currentBookmark._id, token);
-        setIsToggle(false);
-        onBookmarkChange?.(false);
-      } else {
-        //없으면 추가
-        const addResult = await addBookmark(reviewId, token);
-        setIsToggle(true);
-        onBookmarkChange?.(true);
-      }
-    } catch (error) {
-      console.error("북마크 토글 실패:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <button onClick={toggleClick} disabled={loading}>
       <Heart
-        className={`size-7 ${toggle ? "text-travel-fail100" : "text-travel-gray400"} ${loading ? "opacity-50" : ""}`}
+        className={`size-6 ${toggle ? "text-travel-fail100" : "text-travel-gray400"} ${loading ? "opacity-50" : ""}`}
         //함수가 돌아가면서 시간이 생각보다 꽤 걸려서 사용자가 당황할까봐 로딩중이라는 것을 알리기 위해 넣어둠
         fill="currentColor"
       />
