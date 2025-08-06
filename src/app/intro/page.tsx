@@ -218,7 +218,7 @@ export default function IntroPage() {
             프로젝트 팀원 소개
           </h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-105 border-travel-primary-light100">
+            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-101 border-travel-primary-light100">
               <div className="flex flex-col items-center gap-4 px-6 sm:flex-row md:flex-col xl:flex-row">
                 <div className="relative overflow-hidden rounded-3xl w-50 aspect-square">
                   <Image src="/images/teamprofile/sy.png" alt="박선영 프로필" className="object-cover" fill />
@@ -228,12 +228,13 @@ export default function IntroPage() {
                     <span>박선영</span>
                     <TagItem size="md">팀장 / PM</TagItem>
                   </h3>
-                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-18">
+                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-14 lg:text-16">
                     <span>- 여행 후기 페이지 전반 담당</span>
                     <span>- 여행 후기 등록 / 수정 / 삭제 / 조회 기능</span>
                     <span>- 회원 정보 등록 및 수정, 로그인 기능</span>
                     <span>- 여행 일정 공유 기능</span>
                     <span>- 메인 페이지 현재 위치 및 주소 변환 기능</span>
+                    <span className="text-white">-</span>
                   </p>
                 </div>
               </div>
@@ -251,13 +252,13 @@ export default function IntroPage() {
                 href="https://github.com/seonyoungg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-110"
+                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-105"
               >
                 <Github className="text-white size-5 " />
               </Link>
             </div>
 
-            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-105 border-travel-primary-light100">
+            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-101 border-travel-primary-light100">
               <div className="flex flex-col items-center gap-4 px-6 sm:flex-row md:flex-col xl:flex-row">
                 <div className="relative overflow-hidden rounded-3xl w-50 aspect-square">
                   <Image src="/images/teamprofile/si.png" alt="문서인 프로필" className="object-cover" fill />
@@ -267,7 +268,7 @@ export default function IntroPage() {
                     <span>문서인</span>
                     <TagItem size="md">PL</TagItem>
                   </h3>
-                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-18">
+                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-14 lg:text-16">
                     <span>- 여행 일정 페이지 전반 담당</span>
                     <span>- 여행 일정 등록 / 수정 / 삭제 기능</span>
                     <span>- 여행 일차별 등록 / 수정 / 삭제 기능</span>
@@ -289,13 +290,13 @@ export default function IntroPage() {
                 href="https://github.com/SeOinm"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-110"
+                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-105"
               >
                 <Github className="text-white size-5 " />
               </Link>
             </div>
 
-            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-105 border-travel-primary-light100">
+            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-101 border-travel-primary-light100">
               <div className="flex flex-col items-center gap-4 px-6 sm:flex-row md:flex-col xl:flex-row">
                 <div className="relative overflow-hidden rounded-3xl w-50 aspect-square">
                   <Image src="/images/teamprofile/ah.png" alt="송아현 프로필" className="object-cover" fill />
@@ -305,7 +306,7 @@ export default function IntroPage() {
                     <span>송아현</span>
                     <TagItem size="md">UX/UI</TagItem>
                   </h3>
-                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-18">
+                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-14 lg:text-16">
                     <span>- 전체 피그마 디자인 담당</span>
                     <span>- 여행 후기 데이터 연동 및 필터링 기능</span>
                     <span>- 댓글 등록 / 수정 / 삭제 기능</span>
@@ -326,13 +327,13 @@ export default function IntroPage() {
                 href="https://github.com/ineahe"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-110"
+                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-105"
               >
                 <Github className="text-white size-5 " />
               </Link>
             </div>
 
-            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-105 border-travel-primary-light100">
+            <div className="relative flex flex-col gap-4 py-6 overflow-hidden transition-all duration-300 transform bg-white border-t-4 shadow-lg sm:border-l-4 sm:border-t-0 xl:border-l-4 xl:border-t-0 md:border-t-4 md:border-l-0 rounded-xl sm:rounded-2xl sm:shadow-xl hover:scale-101 border-travel-primary-light100">
               <div className="flex flex-col items-center gap-4 px-6 sm:flex-row md:flex-col xl:flex-row">
                 <div className="relative overflow-hidden rounded-3xl w-50 aspect-square">
                   <Image src="/images/teamprofile/hj.png" alt="차형주 프로필" className="object-cover" fill />
@@ -342,7 +343,7 @@ export default function IntroPage() {
                     <span>차형주</span>
                     <TagItem size="md">Documenter</TagItem>
                   </h3>
-                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-18">
+                  <p className="flex flex-col gap-1 font-medium text-travel-primary100 text-14 lg:text-16">
                     <span>- 지도 생성 페이지 전반 담당</span>
                     <span>- 지역 이미지 업로드 + 회원 정보 수정 연동</span>
                     <span>- 여행 후기 북마크 등록 / 삭제 / 조회 기능</span>
@@ -363,7 +364,7 @@ export default function IntroPage() {
                 href="https://github.com/ineahe"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-110"
+                className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-105"
               >
                 <Github className="text-white size-5 " />
               </Link>
