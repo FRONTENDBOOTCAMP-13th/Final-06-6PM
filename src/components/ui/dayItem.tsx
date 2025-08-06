@@ -36,7 +36,7 @@ export default function DayItem({
       {dday !== undefined && (
         <div
           className={`px-2.5 xs:px-4 py-1 text-center whitespace-nowrap text-white text-12 xs:text-14 rounded-3xl min-w-15 ${
-            dday < 0 ? "bg-travel-gray500" : "bg-travel-primary100"
+            dday < 0 ? "bg-travel-gray500" : "bg-travel-primary200"
           }`}
         >
           {dday > 0 && `D-${dday}`}

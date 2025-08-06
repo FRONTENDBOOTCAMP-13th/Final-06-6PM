@@ -27,7 +27,7 @@ export default function DrawerMypage() {
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="absolute top-6 right-5">
+      <button onClick={() => setOpen(true)} className="absolute top-6 right-5" aria-label="프로필 메뉴열기">
         <Settings className="size-6 text-travel-gray70" />
       </button>
       <Dialog open={open} onClose={setOpen} className="relative z-30">
@@ -44,7 +44,7 @@ export default function DrawerMypage() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="아래로 내리기"
+              aria-label="프로필 메뉴닫기"
               className="flex justify-center w-full cursor-pointer"
             >
               <ChevronDown aria-hidden="true" className="size-7 text-travel-text200" />

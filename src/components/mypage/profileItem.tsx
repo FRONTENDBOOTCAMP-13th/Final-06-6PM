@@ -84,16 +84,28 @@ export default function ProfileItem({
       {/* 작성한글/좋아요/조회수 */}
       <div className="flex items-center justify-center gap-8">
         <div className="space-y-1">
-          <p className="font-semibold text-24 text-travel-success100">{loading ? "-" : stats.postsCount}</p>
-          <p className="text-14 text-travel-gray700">작성한 글</p>
+          <p className="font-semibold text-24 text-travel-success200" aria-hidden="true">
+            {loading ? "-" : stats.postsCount}
+          </p>
+          <p className="text-14 text-travel-gray700" aria-label={`작성한 글 ${stats.postsCount}개`}>
+            작성한 글
+          </p>
         </div>
         <div className="space-y-1">
-          <p className="font-semibold text-24 text-travel-info100">{loading ? "-" : stats.totalBookmarks}</p>
-          <p className="text-14 text-travel-gray700">받은 좋아요</p>
+          <p className="font-semibold text-24 text-travel-like100" aria-hidden="true">
+            {loading ? "-" : stats.totalBookmarks}
+          </p>
+          <p className="text-14 text-travel-gray700" aria-label={`받은 좋아요 ${stats.totalBookmarks}개`}>
+            받은 좋아요
+          </p>
         </div>
         <div className="space-y-1">
-          <p className="font-semibold text-24 text-travel-warn100">{loading ? "-" : stats.totalViews}</p>
-          <p className="text-14 text-travel-gray700">총 조회수</p>
+          <p className="font-semibold text-24 text-travel-warn100" aria-hidden="true">
+            {loading ? "-" : stats.totalViews}
+          </p>
+          <p className="text-14 text-travel-gray700" aria-label={`총 조회수 ${stats.totalViews}개`}>
+            총 조회수
+          </p>
         </div>
       </div>
     </div>
