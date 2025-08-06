@@ -59,7 +59,7 @@ export default function SelectReviewTab() {
               appearance-none cursor-pointer"
       >
         <option value="" className="text-travel-gray500">
-          필터링하고 싶은 여행을 선택하세요
+          특정 여행을 선택하면 해당 후기만 보여요
         </option>
         {userPlan.map((plan) => {
           const dday = getDday(plan.extra?.startDate);
