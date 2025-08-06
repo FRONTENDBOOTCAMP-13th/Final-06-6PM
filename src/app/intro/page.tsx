@@ -234,7 +234,7 @@ export default function IntroPage() {
                     <span>- 회원 정보 등록 및 수정, 로그인 기능</span>
                     <span>- 여행 일정 공유 기능</span>
                     <span>- 메인 페이지 현재 위치 및 주소 변환 기능</span>
-                    <span className="text-white">-</span>
+                    <span className="hidden text-white md:block">-</span>
                   </p>
                 </div>
               </div>
