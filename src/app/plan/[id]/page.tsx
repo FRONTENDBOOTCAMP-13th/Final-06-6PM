@@ -6,8 +6,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   const id = params.id;
 
   return {
-    title: "친구가 공유한 여행 일정 보기",
-    description: "친구가 공유한 여행 일정을 확인해보세요. 여행지, 기간, 장소까지 한눈에!",
     openGraph: {
       title: "친구가 공유한 여행 일정 보기",
       description: "친구가 공유한 여행 일정을 확인해보세요. 여행지, 기간, 장소까지 한눈에!",
