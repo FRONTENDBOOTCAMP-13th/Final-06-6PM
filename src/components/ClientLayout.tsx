@@ -41,13 +41,12 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     );
   }
 
-  if (showIntro === false) {
+  if (showIntro === true) {
     return (
       <>
         <div className="flex items-center justify-center h-screen">
           <div className="text-center px-8">
             <motion.div
-              className="mb-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
@@ -166,7 +165,6 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
             </motion.div>
           </div>
         </div>
-        <Footer />
       </>
     );
   }
