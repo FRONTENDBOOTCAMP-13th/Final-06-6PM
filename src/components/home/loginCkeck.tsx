@@ -12,7 +12,7 @@ export default function LoginCheck() {
   const router = useRouter();
 
   const handleClick = () => {
-    console.log("로그인 상태:", isLoggedIn);
+    // console.log("로그인 상태:", isLoggedIn);
 
     if (isLoggedIn) {
       clearAllData();

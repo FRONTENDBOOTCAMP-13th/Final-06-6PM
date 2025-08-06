@@ -62,7 +62,7 @@ export default function ModalItem({ location }: ModalItemProps) {
         try {
           const res = await getContentData(locationContentId as string);
           const data = res.body.items.item;
-          console.log(data[0]);
+          // console.log(data[0]);
           setModalData(data[0]);
         } catch (error) {
           console.error("데이터 로딩 실패:", error);

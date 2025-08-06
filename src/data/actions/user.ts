@@ -26,7 +26,7 @@ export async function createUser(state: ApiRes<User> | null, formData: FormData)
     if (attach.size > 0) {
       // 파일 업로드 API 호출
       const fileRes = await uploadFile(formData);
-      console.log(`fileRes`, fileRes);
+      // console.log(`fileRes`, fileRes);
       if (fileRes.ok) {
         image = fileRes.item[0].path;
       } else {

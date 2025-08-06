@@ -33,9 +33,9 @@ export default function PlanListItem({ number, place, tag, showDeleteButton = fa
         <button
           onClick={onDelete}
           aria-label="일정 삭제하기"
-          className="flex items-center justify-center w-5 h-5 text-travel-gray400 hover:text-red-500"
+          className="flex items-center justify-center cursor-pointer text-travel-gray400 hover:text-travel-fail100"
         >
-          <X className="w-4 h-4" />
+          <X className="size-5" />
         </button>
       )}
     </div>

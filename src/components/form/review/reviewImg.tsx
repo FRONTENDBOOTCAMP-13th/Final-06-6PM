@@ -18,7 +18,7 @@ export default function ReviewImg({ name = "images" }: ReviewImgProps) {
   // 이미지 업로드
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectFiles = Array.from(e.target.files || []);
-    console.log(selectFiles);
+    // console.log(selectFiles);
 
     if (images.length + selectFiles.length > MAX_IMG) {
       toast.warning("사진은 최대 10장까지 첨부할 수 있습니다.");

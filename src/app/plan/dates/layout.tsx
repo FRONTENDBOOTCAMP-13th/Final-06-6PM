@@ -1,6 +1,5 @@
 import "../../../styles/globals.css";
 import BackButton from "@/components/feature/backButton";
-import Link from "next/link";
 import PlanDetailForm from "@/components/form/plan/planDetailForm";
 import LoginStatusConfirm from "@/components/feature/loginStatusConfirm";
 
