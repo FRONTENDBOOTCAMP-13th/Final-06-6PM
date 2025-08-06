@@ -24,7 +24,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       const timer = setTimeout(() => {
         setShowIntro(false);
         sessionStorage.setItem("introSeen", "true");
-      }, 3000);
+      }, 2500);
 
       return () => clearTimeout(timer);
     } else {
