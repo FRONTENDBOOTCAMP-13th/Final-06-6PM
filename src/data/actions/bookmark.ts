@@ -63,7 +63,7 @@ export async function bookmarkUser(_state: ApiRes<User> | null, formData: FormDa
     });
 
     data = await res.json();
-    console.log(data);
+    // console.log(data);
 
     if (!res.ok) {
       return {

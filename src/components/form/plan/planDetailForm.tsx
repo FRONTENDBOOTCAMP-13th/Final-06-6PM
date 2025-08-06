@@ -37,11 +37,11 @@ export default function PlanDetailForm() {
 
     try {
       const result = await createPlanPost(formData, accessToken);
-      console.log("서버 응답:", result);
+      // console.log("서버 응답:", result);
       if (result.ok && result.item) {
         const postId = result.item._id;
         setPostId(postId);
-        console.log("PostId:", postId);
+        // console.log("PostId:", postId);
 
         // 성공 시 다음 페이지로 이동
         router.push("/plan/edit/schedule");
