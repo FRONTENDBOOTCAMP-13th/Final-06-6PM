@@ -4,6 +4,7 @@ import SearchRegion from "@/components/plan/searchRegion";
 import { destinationList } from "@/lib/data/destinationList";
 import { useRouter } from "next/navigation";
 import usePlanStore from "@/zustand/planStore";
+import LoginStatusConfirm from "@/components/feature/loginStatusConfirm";
 
 export default function PlanRegion() {
   const router = useRouter();
@@ -24,6 +25,8 @@ export default function PlanRegion() {
   return (
     <div className="pt-3">
       <SearchRegion regions={destinationList} onRegionClick={regionClick} />
+      {/* 로그인 확인 */}
+      <LoginStatusConfirm />
     </div>
   );
 }

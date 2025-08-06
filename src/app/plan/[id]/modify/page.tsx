@@ -12,6 +12,8 @@ export default function PlanModifyPage() {
 
       <ModifyScheduleContent />
       <PlanReplyForm />
+      {/* 로그인 확인 */}
+      <LoginStatusConfirm />
     </div>
   );
 }

@@ -6,12 +6,15 @@ import ScheduleCreateButton from "@/components/plan/scheduleCreateButton";
 import DrawerPlanBtn from "@/components/plan/drawerPlanBtn";
 import usePlanStore from "@/zustand/planStore";
 import ShareBtn from "@/components/feature/shareBtn";
+import useUserStore from "@/zustand/userStore";
 
 export default function PlanDetailContent() {
   const params = useParams();
   const postId = Number(params?.id);
   const { planData, isLoading, hasReplies } = usePlanDetail(postId);
   const dailyPlans = usePlanStore((state) => state.dailyPlans);
+
+  const token = useUserStore((state) => state.token);
 
   if (isLoading) {
     return (
@@ -40,7 +43,7 @@ export default function PlanDetailContent() {
         </div>
         <div className="flex items-cnenter gap-2 -mt-3">
           <ShareBtn />
-          <DrawerPlanBtn reviewId={postId} />
+          {token && <DrawerPlanBtn reviewId={postId} />}
         </div>
       </div>
 
