@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import LoadingLottie from "@/components/home/loadingLottie";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -46,7 +47,6 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         <div className="flex items-center justify-center h-screen">
           <div className="text-center px-8">
             <motion.div
-              className="mb-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
@@ -57,14 +57,14 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
               <div className="mb-6">
                 <div className="flex items-center justify-center">
                   <motion.span
-                    className="absolute text-2xl"
+                    className="absolute text-2xl z-10"
                     initial={{
                       x: -100,
                       y: 150,
                     }}
                     animate={{
-                      x: 50,
-                      y: -50,
+                      x: 60,
+                      y: -40,
                     }}
                     transition={{
                       delay: 0,
@@ -75,8 +75,8 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                     <Image
                       src="/images/airplane.svg"
                       alt="비행기 로고"
-                      width={100}
-                      height={100}
+                      width={80}
+                      height={80}
                       className="object-contain"
                       priority
                     />
@@ -87,7 +87,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                       x: -100,
                     }}
                     animate={{
-                      x: -50,
+                      x: -30,
                     }}
                     transition={{
                       delay: 0,
@@ -112,7 +112,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                       y: 30,
                     }}
                     animate={{
-                      x: 20,
+                      x: 40,
                       y: 30,
                     }}
                     transition={{
@@ -133,20 +133,25 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                 </div>
               </div>
 
-              {/* 텍스트와 로고도 함께 등장 */}
-              <div>
-                <p className="text-20 font-medium text-black mb-2">여행의 모든 기록이 모이는 곳</p>
+              <div className="flex flex-col items-center justify-center">
                 <Image
                   src="/images/typo-loading.svg"
                   alt="여행도감"
                   width={200}
                   height={200}
-                  className="object-contain w-full mb-4"
+                  className="object-contain w-full my-4"
+                  priority
+                />
+                <Image
+                  src="/images/subtitle.svg"
+                  alt="부제목"
+                  width={100}
+                  height={100}
+                  className="object-contain w-[70%] mb-4"
                   priority
                 />
               </div>
             </motion.div>
-
             <motion.div
               className="flex justify-center"
               initial={{ opacity: 0 }}
@@ -156,11 +161,10 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                 duration: 0.4,
               }}
             >
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+              <LoadingLottie />
             </motion.div>
           </div>
         </div>
-        <Footer />
       </>
     );
   }
