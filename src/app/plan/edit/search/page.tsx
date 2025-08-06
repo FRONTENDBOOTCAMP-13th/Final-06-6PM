@@ -6,7 +6,7 @@ export default function SearchPage() {
     <div>
       <div className="relative w-full px-4 py-5">
         <BackButton path="/plan/edit/schedule" />
-        <p className="text-center">여행일정만들기</p>
+        <h1 className="text-center">여행일정만들기</h1>
       </div>
       <SearchAll />
     </div>

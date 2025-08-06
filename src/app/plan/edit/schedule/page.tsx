@@ -7,7 +7,7 @@ export default function SchedulePage() {
     <div>
       <div className="w-full relative py-5 px-4">
         <BackButton path="/plan/dates" />
-        <p className="text-center">여행일정만들기</p>
+        <h1 className="text-center">여행일정만들기</h1>
       </div>
 
       <ScheduleContent />

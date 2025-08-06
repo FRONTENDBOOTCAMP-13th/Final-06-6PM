@@ -7,7 +7,7 @@ export default function PlanDetailPage() {
     <div>
       <div className="w-full relative py-5 px-4">
         <BackButton path="/mypage" />
-        <p className="text-center">여행일정 살펴보기</p>
+        <h1 className="text-center">여행일정 살펴보기</h1>
       </div>
       <PlanDetailContent />
       <Navbar />

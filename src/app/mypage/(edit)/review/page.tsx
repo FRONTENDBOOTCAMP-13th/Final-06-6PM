@@ -5,6 +5,7 @@ import SelectReviewTab from "@/components/mypage/selectReviewTab";
 export default function MypageReviewPage() {
   return (
     <>
+      <h1 className="bg-white sr-only">나의 리뷰페이지</h1>
       <SelectReviewTab />
       <div className="bg-white rounded-2xl overflow-hidden">
         <SelectReview />

@@ -57,7 +57,7 @@ export default function ToggleIcon({ reviewId, myBookmarkId, onBookmarkChange }:
   };
 
   return (
-    <button onClick={toggleClick} disabled={loading}>
+    <button onClick={toggleClick} disabled={loading} aria-label="후기 북마크">
       <Heart
         className={`size-6 ${toggle ? "text-travel-fail100" : "text-travel-gray400"} ${loading ? "opacity-50" : ""}`}
         //함수가 돌아가면서 시간이 생각보다 꽤 걸려서 사용자가 당황할까봐 로딩중이라는 것을 알리기 위해 넣어둠

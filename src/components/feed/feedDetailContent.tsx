@@ -178,7 +178,7 @@ export default function FeedDetailContent({ reviewId, newComment }: FeedDetailCo
         ) : (
           <>
             <hr className="my-6 text-travel-gray200" />
-            <div className="text-center py-8 text-travel-gray400">첫 번째 댓글을 작성해보세요!</div>
+            <div className="text-center py-8 text-travel-gray600 text-14">첫 번째 댓글을 작성해보세요!</div>
           </>
         )}
       </div>

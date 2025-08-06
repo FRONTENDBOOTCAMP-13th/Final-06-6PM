@@ -553,7 +553,10 @@ export default function KoreaMapContainer() {
       )}
 
       {/* input은 svg뒤에 숨김 */}
-      <input type="file" accept="image/*" className="hidden" ref={inputRef} onChange={onFileChange} />
+      <label className="sr-only" htmlFor="mapFile">
+        파일첨부
+      </label>
+      <input id="mapFile" type="file" accept="image/*" className="hidden" ref={inputRef} onChange={onFileChange} />
       {/* 스타일코드 지도 선이랑 이미지 호버  */}
       <style>
         {`

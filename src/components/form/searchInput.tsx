@@ -84,6 +84,7 @@ export default function SearchInput({
       <button
         type="submit"
         disabled={isSubmitting}
+        aria-label="검색"
         className={`absolute -translate-y-1/2 cursor-pointer right-3 top-1/2 text-travel-text100 hover:text-travel-primary200 transition-colors ${
           isSubmitting ? "opacity-50 cursor-not-allowed" : ""
         }`}

@@ -66,8 +66,8 @@ export default function SelectMypage() {
             key={item.id}
             className={`text-14 flex flex-col items-center p-1.5 gap-1.5 cursor-pointer ${
               tab === item.id
-                ? "text-white bg-travel-secondary100  border-b border-b-travel-secondary200"
-                : "text-travel-gray400 bg-white border-b border-b-travel-gray200"
+                ? "text-white bg-travel-primary100  border-b border-b-travel-primary200"
+                : "text-travel-gray600 bg-white border-b border-b-travel-gray200"
             }`}
             onClick={() => setTab(item.id)}
           >

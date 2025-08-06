@@ -56,7 +56,7 @@ export default function DrawerPlanBtn({ reviewId, onDelete }: DrawerPlanBtnProps
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>
+      <button onClick={() => setOpen(true)} aria-label="일정 메뉴 열기">
         <EllipsisVerticalIcon className="cursor-pointer size-6 text-travel-gray400" />
       </button>
       <Dialog open={open} onClose={setOpen} className="relative z-30">
@@ -73,7 +73,7 @@ export default function DrawerPlanBtn({ reviewId, onDelete }: DrawerPlanBtnProps
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="아래로 내리기"
+              aria-label="일정 메뉴 닫기"
               className="flex justify-center w-full cursor-pointer"
             >
               <ChevronDown aria-hidden="true" className="size-7 text-travel-text200" />

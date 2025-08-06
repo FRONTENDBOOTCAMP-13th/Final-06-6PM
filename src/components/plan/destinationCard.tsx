@@ -9,16 +9,10 @@ interface DestinationCardProps {
   onClick: (regionName: string, areaCode: number) => void;
 }
 
-export default function DestinationCard({
-  destination,
-  onClick,
-}: DestinationCardProps) {
+export default function DestinationCard({ destination, onClick }: DestinationCardProps) {
   return (
-    <div
-      onClick={() => onClick(destination.name, destination.areaCode)}
-      className="cursor-pointer"
-    >
-      <div className="relative overflow-hidden rounded-lg aspect-square group">
+    <div onClick={() => onClick(destination.name, destination.areaCode)} className="cursor-pointer">
+      <div className="relative overflow-hidden rounded-lg aspect-square group bg-travel-gray700">
         <Image
           width={400}
           height={300}

@@ -4,6 +4,7 @@ import SelectWriteReview from "@/components/review/selectWriteReview";
 export default function ReviewDetailPage() {
   return (
     <>
+      <h1 className="bg-white sr-only">리뷰작성 상세페이지</h1>
       <div className="mt-5 overflow-hidden bg-white shadow-xl rounded-2xl">
         <SelectWriteReview />
       </div>

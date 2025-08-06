@@ -6,6 +6,7 @@ import Link from "next/link";
 export default function LoginPage() {
   return (
     <div className="flex flex-col gap-8 items-center justify-center min-h-dvh">
+      <h1 className="bg-white sr-only">로그인 페이지</h1>
       <Image
         src="/images/logo.svg"
         alt="여행로그인 로고"
@@ -17,7 +18,7 @@ export default function LoginPage() {
 
       <LoginForm />
 
-      <div className="text-travel-gray400 text-16 flex items-center gap-2">
+      <div className="text-travel-gray700 text-16 flex items-center gap-2">
         <Link href="/signup" className="hover:text-travel-primary100 transition text-travel-text100">
           회원가입
         </Link>

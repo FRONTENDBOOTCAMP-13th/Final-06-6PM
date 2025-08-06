@@ -62,8 +62,8 @@ export default function CommentForm({ onCommentAdded }: CommentFormProps) {
 
       {!isLoggedIn || !userInfo ? (
         <div className="text-center py-4 space-y-2">
-          <div className="text-travel-gray500 text-14">
-            <Link href="/login" className="text-travel-primary100 hover:underline">
+          <div className="text-travel-gray700 text-14">
+            <Link href="/login" className="text-travel-primary200 hover:underline">
               로그인
             </Link>
             <span className="ml-1">후 댓글을 작성할 수 있습니다.</span>
