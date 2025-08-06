@@ -54,7 +54,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                 ease: "easeOut",
               }}
             >
-              <div className="mb-6">
+              <div className="mb-4">
                 <div className="flex items-center justify-center">
                   <motion.span
                     className="absolute text-2xl z-10"
@@ -137,9 +137,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                 <Image
                   src="/images/typo-loading.svg"
                   alt="여행도감"
-                  width={200}
-                  height={200}
-                  className="object-contain w-full my-4"
+                  width={150}
+                  height={150}
+                  className="object-contain w-4/5 my-4"
                   priority
                 />
                 <Image
@@ -152,6 +152,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
                 />
               </div>
             </motion.div>
+
             <motion.div
               className="flex justify-center"
               initial={{ opacity: 0 }}

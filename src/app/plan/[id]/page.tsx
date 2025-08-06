@@ -2,6 +2,18 @@ import BackButton from "@/components/feature/backButton";
 import Navbar from "@/components/Navbar";
 import PlanDetailContent from "@/components/plan/planDetailContent";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const id = params.id;
+
+  return {
+    openGraph: {
+      title: "친구가 공유한 여행 일정 보기",
+      description: "친구가 공유한 여행 일정을 확인해보세요. 여행지, 기간, 장소까지 한눈에!",
+      url: `https://final-6-6-pm.vercel.app/plan/${id}`,
+    },
+  };
+}
+
 export default function PlanDetailPage() {
   return (
     <div>
