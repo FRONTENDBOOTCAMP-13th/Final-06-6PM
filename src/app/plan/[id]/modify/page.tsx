@@ -1,6 +1,7 @@
 import BackButton from "@/components/feature/backButton";
 import PlanReplyForm from "@/components/form/plan/planReplyForm";
 import ModifyScheduleContent from "@/components/plan/modifyScheduleContent";
+import LoginStatusConfirm from "@/components/feature/loginStatusConfirm";
 
 export default function PlanModifyPage() {
   return (
