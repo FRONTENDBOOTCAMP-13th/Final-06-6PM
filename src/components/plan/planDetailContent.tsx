@@ -5,6 +5,7 @@ import DayScheduleCard from "@/components/plan/dayScheduleCard";
 import ScheduleCreateButton from "@/components/plan/scheduleCreateButton";
 import DrawerPlanBtn from "@/components/plan/drawerPlanBtn";
 import usePlanStore from "@/zustand/planStore";
+import ShareBtn from "@/components/feature/shareBtn";
 
 export default function PlanDetailContent() {
   const params = useParams();
@@ -37,7 +38,10 @@ export default function PlanDetailContent() {
             {planData.extra?.startDate} ~ {planData.extra?.endDate}
           </p>
         </div>
-        <DrawerPlanBtn reviewId={postId} />
+        <div className="flex items-cnenter gap-2 -mt-3">
+          <ShareBtn />
+          <DrawerPlanBtn reviewId={postId} />
+        </div>
       </div>
 
       {!hasReplies ? (

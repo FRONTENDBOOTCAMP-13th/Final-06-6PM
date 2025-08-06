@@ -125,15 +125,12 @@ export default function ViewItem({
           </div>
         </div>
 
-        <div className="flex items-cnenter gap-2 -mt-3">
-          <ShareBtn />
-          {/* 수정/삭제 모달창 버튼*/}
-          {sameUser && (
-            <div onClick={(e) => e.stopPropagation()}>
-              <DrawerBtn reviewId={_id} reviewType={reviewType} onDelete={onDelete} />
-            </div>
-          )}
-        </div>
+        {/* 수정/삭제 모달창 버튼*/}
+        {sameUser && (
+          <div onClick={(e) => e.stopPropagation()}>
+            <DrawerBtn reviewId={_id} reviewType={reviewType} onDelete={onDelete} />
+          </div>
+        )}
       </div>
 
       {/* 방문일자 */}
