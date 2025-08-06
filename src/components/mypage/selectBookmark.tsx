@@ -1,6 +1,6 @@
 "use client";
 
-import { Bookmark, MapPinned } from "lucide-react";
+import { Bookmark, Heart } from "lucide-react";
 import { useState, useEffect } from "react";
 import ViewItem from "../feature/viewItem";
 import { GetReviewDetailProps } from "@/types/review";
@@ -50,13 +50,13 @@ export default function SelectBookmark({
     {
       id: 0,
       title: "장소 북마크",
-      icon: <MapPinned className="w-[1.25rem] h-[1.25rem]" />,
+      icon: <Bookmark className="w-[1.25rem] h-[1.25rem]" />,
       description: placeBookmark,
     },
     {
       id: 1,
-      title: "후기 북마크",
-      icon: <Bookmark className="w-[1.25rem] h-[1.25rem]" />,
+      title: "여행후기 북마크",
+      icon: <Heart className="w-[1.25rem] h-[1.25rem]" />,
       description: reviewBookmark,
     },
   ];

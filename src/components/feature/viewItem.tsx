@@ -244,7 +244,7 @@ export default function ViewItem({
         </div>
 
         <div onClick={(e) => e.stopPropagation()}>
-          <ToggleIcon type="book" onBookmarkChange={handleBookmarkChange} reviewId={_id} myBookmarkId={myBookmarkId} />
+          <ToggleIcon onBookmarkChange={handleBookmarkChange} reviewId={_id} myBookmarkId={myBookmarkId} />
         </div>
       </div>
     </div>
