@@ -22,91 +22,205 @@ export default function KoreaMapContainer() {
 
   // 지도 캡처 및 다운로드
   const onDownload = async () => {
-    // SVG 요소가 없으면 함수 종료
     if (!svgRef.current) return;
 
     try {
-      // HTML 요소를 PNG 이미지로 변환 (html-to-image 라이브러리 사용)
-      const dataUrl = await htmlToImage.toPng(svgRef.current);
+      // 더 안정적인 iOS 감지
+      const isIOS =
+        /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPad Pro 감지
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-      // 사용자의 디바이스가 iOS인지 확인 (iPad, iPhone, iPod 감지)
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      // html-to-image 옵션 개선 (iOS에서 더 안정적)
+      const options = {
+        quality: 0.95,
+        pixelRatio: 2,
+        backgroundColor: "#deefff",
+        // 폰트 렌더링 개선
+        fontEmbedCSS: "",
+        // 이미지 크기 설정 (선택사항)
+        width: svgRef.current.offsetWidth,
+        height: svgRef.current.offsetHeight,
+        // 스타일 적용 개선
+        style: {
+          transform: "scale(1)",
+          transformOrigin: "top left",
+        },
+      };
 
-      if (isIOS) {
-        // iOS 전용 처리 로직
-        // iOS Safari는 자동 다운로드를 차단하므로 새 창에서 이미지를 보여줌
+      const dataUrl = await htmlToImage.toPng(svgRef.current, options);
 
-        const newWindow = window.open(); // 새 창 열기
+      if (isIOS || isSafari) {
+        // iOS/Safari 전용 개선된 처리
+        try {
+          // 방법 1: Navigator Share API 사용 (iOS 12+)
+          if (navigator.share && navigator.canShare) {
+            // dataURL을 blob으로 변환
+            const response = await fetch(dataUrl);
+            const blob = await response.blob();
+            const file = new File([blob], "korea-map.png", { type: "image/png" });
+
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                title: "한국 지도",
+                files: [file],
+              });
+              toast.success("지도 공유가 완료되었습니다!");
+              return;
+            }
+          }
+        } catch (shareError) {
+          console.log("Share API 실패, 대체 방법 사용:", shareError);
+        }
+
+        // 방법 2: 새 창에서 이미지 표시 (기존 방법 개선)
+        const newWindow = window.open("", "_blank", "width=800,height=600,scrollbars=yes,resizable=yes");
         if (newWindow) {
-          // 새 창이 정상적으로 열린 경우
-          // HTML 템플릿을 작성하여 이미지와 저장 안내 메시지 표시
+          // 더 나은 HTML 템플릿
           newWindow.document.write(`
-          <html>
+          <!DOCTYPE html>
+          <html lang="ko">
             <head>
+              <meta charset="UTF-8">
               <title>한국 지도</title>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
               <style>
-                /* 새 창 스타일링 */
+                * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+                }
                 body { 
-                  margin: 0; 
-                  padding: 20px; 
-                  text-align: center; 
-                  background: #f5f5f5; 
                   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                  background: #f5f5f5;
+                  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+                }
+                .container {
+                  max-width: 100%;
+                  margin: 0 auto;
+                  padding: 20px;
+                  text-align: center;
+                }
+                .image-container {
+                  background: white;
+                  border-radius: 12px;
+                  padding: 20px;
+                  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+                  margin-bottom: 20px;
                 }
                 img { 
                   max-width: 100%; 
                   height: auto; 
-                  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
                   border-radius: 8px;
+                  /* iOS에서 이미지 선택을 더 쉽게 */
+                  -webkit-touch-callout: default;
+                  -webkit-user-select: auto;
+                  user-select: auto;
                 }
-                .download-info { 
-                  margin-top: 20px; 
-                  padding: 15px; 
+                .instructions { 
                   background: white; 
-                  border-radius: 8px; 
-                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                  border-radius: 12px; 
+                  padding: 20px;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                  text-align: left;
                 }
-                .instruction { 
+                .instruction-title { 
                   color: #007AFF; 
                   font-weight: 600; 
+                  font-size: 18px;
+                  margin-bottom: 15px;
+                  text-align: center;
+                }
+                .step {
+                  margin-bottom: 12px;
+                  padding-left: 25px;
+                  position: relative;
+                }
+                .step::before {
+                  content: counter(step-counter);
+                  counter-increment: step-counter;
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  background: #007AFF;
+                  color: white;
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  font-size: 12px;
+                  font-weight: bold;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                }
+                .steps {
+                  counter-reset: step-counter;
+                }
+                .tip {
+                  background: #f8f9fa;
+                  border-left: 4px solid #007AFF;
+                  padding: 15px;
+                  margin-top: 20px;
+                  border-radius: 0 8px 8px 0;
+                }
+                .tip-inner{
+                  padding-left: 1rem;
+                }
+                .tip-title {
+                  font-weight: 600;
+                  color: #007AFF;
+                  margin-bottom: 8px;
                 }
               </style>
             </head>
             <body>
-              <img src="${dataUrl}" alt="한국 지도" />
-              <div class="download-info">
-                <p class="instruction">📱 이미지 저장 방법</p>
-                <p>위 이미지를 <strong>길게 눌러서</strong> "이미지 저장"을 선택하세요.</p>
-                <p style="font-size: 14px; color: #666; margin-top: 10px;">
-                  사진 앱에서 저장된 이미지를 확인할 수 있습니다.
-                </p>
+              <div class="container">
+                <div class="image-container">
+                  <img src="${dataUrl}" alt="한국 지도" />
+                </div>
+                
+                <div class="instructions">
+                  <div class="instruction-title">📱 이미지 저장 방법</div>
+                  <div class="steps">
+                    <div class="step">위 이미지를 <strong>길게 눌러주세요</strong></div>
+                    <div class="step">나타나는 메뉴에서 <strong>"이미지 저장"</strong>을 선택하세요</div>
+                    <div class="step">사진 앱에서 저장된 이미지를 확인하세요</div>
+                  </div>
+                  
+                  <div class="tip">
+                    <div class="tip-title">💡 저장이 안 되나요?</div>
+                    <div class="tip-inner>• 브라우저 설정에서 다운로드 권한을 확인해보세요</div>
+                    <div class="tip-inner>• Safari의 경우 설정 → Safari → 다운로드에서 위치를 확인하세요</div>
+                    <div class="tip-inner>• 스크린샷을 찍어서 사용하셔도 됩니다</div>
+                  </div>
+                </div>
               </div>
             </body>
           </html>
         `);
+          newWindow.document.close();
+
+          toast.success("새 창에서 이미지를 확인하고 저장해주세요!");
+        } else {
+          // 팝업 차단된 경우
+          toast.error("팝업이 차단되었습니다. 브라우저 설정에서 팝업을 허용해주세요.");
         }
       } else {
-        // PC/Android 전용 처리 로직
-        // 기존 다운로드 방식 사용 (일반적인 브라우저에서 잘 작동)
-
+        // PC/Android 전용 처리 (기존 방식)
         const link = document.createElement("a");
-        link.download = "korea-map.png"; // 다운로드될 파일명
-        link.href = dataUrl; // 이미지 데이터 URL
+        link.download = `korea-map-${new Date().getTime()}.png`;
+        link.href = dataUrl;
+        link.style.display = "none";
 
-        // DOM에 임시 추가 후 클릭 이벤트 발생
         document.body.appendChild(link);
-        link.style.display = "none"; // 화면에 보이지 않게 숨김
-        link.click(); // 자동 다운로드 트리거
-        document.body.removeChild(link); // DOM에서 제거
-      }
+        link.click();
+        document.body.removeChild(link);
 
-      // 성공 메시지 표시
-      toast.success("지도 저장이 완료되었습니다!");
-    } catch (err) {
-      // 에러 발생 시 콘솔에 로그 출력 및 사용자에게 알림
-      console.error("지도 저장 실패:", err);
-      toast.error("저장에 실패했습니다. 다시 시도해주세요.");
+        toast.success("지도 다운로드가 완료되었습니다!");
+      }
+    } catch (error) {
+      console.error("지도 저장 실패:", error);
+      toast.error("저장에 실패했습니다. 스크린샷 기능을 이용해주세요.");
     }
   };
 
@@ -217,7 +331,7 @@ export default function KoreaMapContainer() {
     WebkitTouchCallout: "none", // 길게 눌렀을 때 컨텍스트 메뉴 방지
     WebkitUserSelect: "none", // 텍스트 선택 방지
     position: "relative" as const, // TypeScript 타입 에러 방지
-    zIndex: 9999,
+    zIndex: 10,
     minWidth: "44px",
     minHeight: "44px",
     cursor: "pointer",
