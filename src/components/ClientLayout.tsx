@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ToastContainer } from "react-toastify";
-import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import LoadingLottie from "@/components/home/loadingLottie";
 
@@ -33,12 +32,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   }, []);
 
   if (!isHydrated || showIntro === null) {
-    return (
-      <>
-        <div className="h-screen"></div>
-        <Footer />
-      </>
-    );
+    return <div className="h-screen"></div>;
   }
 
   if (showIntro === true) {
