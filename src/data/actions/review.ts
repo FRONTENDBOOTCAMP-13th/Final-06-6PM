@@ -24,19 +24,20 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || "febc13-final06-emjf";
  * }
  */
 export async function createReviewAllPost(prevState: any, formData: FormData): Promise<ActionResult> {
-  let reviewId = 0;
+  let reviewId = null;
+  let plan_id = null;
 
   try {
     // FormData에서 데이터 추출
     const token = formData.get("token") as string;
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
-    const plan_id = parseInt(formData.get("plan_id") as string);
     const starRate = parseInt(formData.get("starRate") as string);
     const place = formData.get("place") as string;
     const startDate = formData.get("startDate") as string;
     const endDate = formData.get("endDate") as string;
     const tags = JSON.parse((formData.get("tags") as string) || "[]");
+    plan_id = parseInt(formData.get("plan_id") as string);
 
     // 이미지 경로들 수집
     const imagePaths: string[] = [];
@@ -138,7 +139,7 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
   }
 
   // redirect로 페이지 이동
-  redirect(`/review/success?reviewId=${reviewId}`);
+  redirect(`/review/success?reviewId=${reviewId}&planId=${plan_id}`);
 }
 
 /**
@@ -159,12 +160,12 @@ export async function createReviewAllPost(prevState: any, formData: FormData): P
  */
 export async function createReviewDetailPost(prevState: any, formData: FormData): Promise<ActionResult> {
   let reviewId = 0;
+  let plan_id = null;
 
   try {
     // FormData에서 데이터 추출
     const token = formData.get("token") as string;
     const reviewType = formData.get("review_type") as string;
-    const plan_id = parseInt(formData.get("plan_id") as string);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
     const starRate = parseInt(formData.get("starRate") as string);
@@ -172,6 +173,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
     const place = formData.get("place") as string;
     const selectedDays = formData.get("selected_days") as string;
     const selectedPlace = formData.get("selected_place") as string;
+    plan_id = parseInt(formData.get("plan_id") as string);
 
     // 이미지 경로들 수집
     const imagePaths: string[] = [];
@@ -289,7 +291,7 @@ export async function createReviewDetailPost(prevState: any, formData: FormData)
     };
   }
 
-  redirect(`/review/success?reviewId=${reviewId}`);
+  redirect(`/review/success?reviewId=${reviewId}&planId=${plan_id}`);
 }
 
 /**
