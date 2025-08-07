@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, CSSProperties } from "react";
 import { uploadUserPhoto, fetchUserPhotos } from "@/data/functions/photoweb";
 import useUserStore from "@/zustand/userStore";
 import { ApiMsgRes, UserPhoto } from "@/types/api";
@@ -26,16 +26,17 @@ export default function KoreaMapContainer() {
     if (!svgRef.current) return;
 
     try {
-      // HTML 요소를 PNG 이미지로 변환
+      // HTML 요소를 PNG 이미지로 변환 (html-to-image 라이브러리 사용)
       const dataUrl = await htmlToImage.toPng(svgRef.current);
 
-      // 사용자의 디바이스가 iOS인지 확인
+      // 사용자의 디바이스가 iOS인지 확인 (iPad, iPhone, iPod 감지)
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
       if (isIOS) {
         // iOS 전용 처리 로직
-        const newWindow = window.open(); // 새 창 열기
+        // iOS Safari는 자동 다운로드를 차단하므로 새 창에서 이미지를 보여줌
 
+        const newWindow = window.open(); // 새 창 열기
         if (newWindow) {
           // 새 창이 정상적으로 열린 경우
           // HTML 템플릿을 작성하여 이미지와 저장 안내 메시지 표시
@@ -84,54 +85,16 @@ export default function KoreaMapContainer() {
             </body>
           </html>
         `);
-        } else {
-          // 새 창이 차단된 경우 Canvas를 이용한 다운로드 시도
-
-          const img = new Image();
-
-          // 이미지 로드 완료 시 실행될 콜백
-          img.onload = () => {
-            // Canvas 요소 생성 및 설정
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.width = img.width;
-            canvas.height = img.height;
-
-            // 이미지를 Canvas에 그리기
-            ctx?.drawImage(img, 0, 0);
-
-            // Canvas를 Blob 형태로 변환 (iOS에서 더 안정적)
-            canvas.toBlob((blob) => {
-              if (blob) {
-                // Blob URL 생성
-                const url = URL.createObjectURL(blob);
-
-                // 다운로드 링크 생성
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "korea-map.png";
-
-                // DOM에 임시로 추가 후 클릭 이벤트 발생
-                document.body.appendChild(a);
-                a.style.display = "none"; // 화면에 보이지 않게 숨김
-                a.click(); // 프로그래매틱 클릭
-
-                // 정리 작업
-                document.body.removeChild(a); // DOM에서 제거
-                URL.revokeObjectURL(url); // 메모리 해제
-              }
-            }, "image/png");
-          };
-
-          // 이미지 로드 시작
-          img.src = dataUrl;
         }
       } else {
         // PC/Android 전용 처리 로직
+        // 기존 다운로드 방식 사용 (일반적인 브라우저에서 잘 작동)
+
         const link = document.createElement("a");
         link.download = "korea-map.png"; // 다운로드될 파일명
         link.href = dataUrl; // 이미지 데이터 URL
 
+        // DOM에 임시 추가 후 클릭 이벤트 발생
         document.body.appendChild(link);
         link.style.display = "none"; // 화면에 보이지 않게 숨김
         link.click(); // 자동 다운로드 트리거
@@ -246,6 +209,18 @@ export default function KoreaMapContainer() {
     } catch (err) {
       console.error("포토맵 로드 실패:", err);
     }
+  };
+
+  const buttonStyle: CSSProperties = {
+    // iOS의 터치 이벤트 문제 해결
+    touchAction: "manipulation", // 터치 동작 최적화 (줌, 패닝 방지)
+    WebkitTouchCallout: "none", // 길게 눌렀을 때 컨텍스트 메뉴 방지
+    WebkitUserSelect: "none", // 텍스트 선택 방지
+    position: "relative" as const, // TypeScript 타입 에러 방지
+    zIndex: 9999,
+    minWidth: "44px",
+    minHeight: "44px",
+    cursor: "pointer",
   };
 
   return (
@@ -658,6 +633,7 @@ export default function KoreaMapContainer() {
         <Button
           onClick={onDownload}
           disabled={loading}
+          style={buttonStyle}
           className="float-right flex items-center gap-2 relative -translate-y-16 -translate-x-2"
         >
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
