@@ -25,6 +25,7 @@ export default function LoginForm() {
         type: user.type,
         image: user.image,
         token: user.token,
+        extra: user.extra,
       });
       toast.success("로그인이 완료되었습니다.");
       router.replace("/home");

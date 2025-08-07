@@ -51,6 +51,9 @@ export default function ViewItem({
   // console.log(user)
   const sameUser = loginUserInfo?._id === user._id;
 
+  // 여행 계획 정보
+  const plan_id = extra.plan_id;
+
   // 사용자 정보
   const userName = user.name;
   const userImgURL = user.image;
@@ -89,7 +92,7 @@ export default function ViewItem({
   // 상세페이지로 이동하는 함수
   const handleItemClick = () => {
     if (!isDetailView) {
-      router.push(`/feed/${_id}`);
+      router.push(`/feed/${_id}?planId=${plan_id}`);
     }
   };
   // 토글아이콘이랑 연결
@@ -103,6 +106,7 @@ export default function ViewItem({
 
   return (
     <div
+      data-planid={plan_id}
       className={`${listClass} ${
         !isDetailView ? "cursor-pointer hover:border-travel-gray200/60 hover:shadow-lg transition-shadow" : ""
       }`}
