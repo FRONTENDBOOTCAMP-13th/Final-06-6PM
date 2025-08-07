@@ -28,12 +28,17 @@ export default function SelectBookmark({
 }: SelectBookmarkProps) {
   const [filteredData, setFilteredData] = useState<GetReviewDetailProps[]>([]);
 
+  // 파싱함수 추가
+  const parseDate = (dateString: string): Date => {
+    return new Date(dateString.replace(/\./g, "-"));
+  };
+
   // 정렬 로직
   useEffect(() => {
     const sorted = [...reviewBookmark].sort((a, b) => {
       const getDate = (item: GetReviewDetailProps) => {
         const dateStr = item.createdAt || item.extra?.startDate || item.extra?.visitDate || "";
-        const date = new Date(dateStr);
+        const date = parseDate(dateStr);
         return isNaN(date.getTime()) ? 0 : date.getTime();
       };
 
