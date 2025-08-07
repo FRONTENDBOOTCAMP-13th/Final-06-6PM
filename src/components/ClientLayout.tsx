@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ToastContainer } from "react-toastify";
-import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import LoadingLottie from "@/components/home/loadingLottie";
 
