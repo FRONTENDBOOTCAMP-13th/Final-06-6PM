@@ -45,11 +45,15 @@ export default function FeedContent() {
           (item.content ?? "").toLowerCase().includes(lowerCaseSearch),
       );
     }
+    // 파싱함수 추가
+    const parseDate = (dateString: string): Date => {
+      return new Date(dateString.replace(/\./g, "-"));
+    };
 
     const sorted = [...filtered].sort((a, b) => {
       const getDate = (item: GetReviewDetailProps) => {
         const dateStr = item.createdAt || item.extra?.startDate || item.extra?.visitDate || "";
-        const date = new Date(dateStr);
+        const date = parseDate(dateStr);
         return isNaN(date.getTime()) ? 0 : date.getTime();
       };
 

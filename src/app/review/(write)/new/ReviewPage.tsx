@@ -8,7 +8,6 @@ import { getPlanListUser } from "@/lib/api/plan";
 import { GetPlanDetailProps } from "@/types/plan";
 import { getDday } from "@/lib/getDday";
 import Link from "next/link";
-import TagItem from "@/components/feature/tagItem";
 
 type SortType = "latest" | "oldest";
 
@@ -24,10 +23,15 @@ export default function ReviewNew() {
     setSortType(type);
   };
 
+  // 파싱함수 추가
+  const parseDate = (dateString: string): Date => {
+    return new Date(dateString.replace(/\./g, "-"));
+  };
+
   // 날짜 추출 함수
   const getDate = (item: GetPlanDetailProps) => {
     const dateStr = item.extra?.startDate || item.createdAt;
-    const date = new Date(dateStr);
+    const date = parseDate(dateStr);
     return isNaN(date.getTime()) ? 0 : date.getTime();
   };
 
