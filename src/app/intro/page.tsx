@@ -2,6 +2,7 @@ import TagItem from "@/components/feature/tagItem";
 import { Book, Home, Plane, Search, SquarePen, Map, Download, UserRound, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import IntroimgSwiper from "@/components/feature/introimgSwiper";
 
 export default function IntroPage() {
   return (
@@ -36,9 +37,10 @@ export default function IntroPage() {
 
               <div className="p-6 border border-gray-200 shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl">
                 <p className="leading-relaxed text-14 break-keep text-travel-gray70">
-                  여행도감은 사용자들이 자신의 여행 경험을 체계적으로 기록하고 보관할 수 있도록 도움으로써, 마치
-                  사용자만의 지도가 완성되는 느낌을 주는 도감 프로젝트입니다. 다양한 여행 정보와 후기를 한 곳에 모아,
-                  사용자 간의 소통과 정보 공유를 통해 신뢰할 수 있고 누구나 쉽게 여행을 계획할 수 있도록 하였습니다.
+                  사용자는 여행 일정을 시/도 단위로 계획하고, 네이버 지도 API를 통해 각 위치를 지도에서 시각적으로
+                  확인할 수 있으며, 친구들과 손쉽게 일정을 공유할 수 있습니다. 여행을 다녀온 후에는 전체 여행, 일자별,
+                  장소별로 후기를 남길 수 있어 보다 풍부한 기록이 가능하며, 이를 다른 사용자들과 나눌 수 있습니다. 또한
+                  대한민국 지도를 기반으로 지역별 사진을 첨부해 나만의 여행 지도를 만들어가는 특별한 경험도 제공합니다.
                 </p>
               </div>
 
@@ -90,10 +92,11 @@ export default function IntroPage() {
                     </p>
                   </div>
                 </div>
-                <p className="break-keep mx-auto max-w-[750px] p-6 leading-relaxed border border-gray-200 shadow-lg text-travel-gray700 bg-white/95 rounded-3xl backdrop-blur-sm">
-                  여행도감은 사용자들이 자신의 여행 경험을 체계적으로 기록하고 보관할 수 있도록 도움으로써, 마치
-                  사용자만의 지도가 완성되는 느낌을 주는 도감 프로젝트입니다. 다양한 여행 정보와 후기를 한 곳에 모아,
-                  사용자 간의 소통과 정보 공유를 통해 신뢰할 수 있고 누구나 쉽게 여행을 계획할 수 있도록 하였습니다.
+                <p className="break-keep mx-auto max-w-[800px] p-6 leading-relaxed border border-gray-200 shadow-lg text-travel-gray700 bg-white/95 rounded-3xl backdrop-blur-sm">
+                  사용자는 여행 일정을 시/도 단위로 계획하고, 네이버 지도 API를 통해 각 위치를 지도에서 시각적으로
+                  확인할 수 있으며, 친구들과 손쉽게 일정을 공유할 수 있습니다. 여행을 다녀온 후에는 전체 여행, 일자별,
+                  장소별로 후기를 남길 수 있어 보다 풍부한 기록이 가능하며, 이를 다른 사용자들과 나눌 수 있습니다. 또한
+                  대한민국 지도를 기반으로 지역별 사진을 첨부해 나만의 여행 지도를 만들어가는 특별한 경험도 제공합니다.
                 </p>
 
                 <Link
@@ -115,15 +118,8 @@ export default function IntroPage() {
             프로젝트 주요 기능
           </h2>
 
-          {/* 화면 캡처해서 스와이프 형태로 재구성 */}
           <div className="grid items-center gap-6 lg:grid-cols-5 xl:gap-10">
-            <div className="w-full mx-auto xs:w-[70%] max-w-[500px] lg:max-w-none lg:w-full order-1 lg:col-span-2">
-              <div className="transition-transform duration-300 sm:transform sm:-rotate-2 sm:hover:rotate-0">
-                <div className="relative p-2 sm:p-4 aspect-[3/5] ">
-                  <Image fill src="/images/iphone-img.png" alt="6PM 여행도감 앱 스크린샷" className="object-contain" />
-                </div>
-              </div>
-            </div>
+            <IntroimgSwiper />
 
             <div className="grid grid-cols-2 max-[500px]:grid-cols-1 order-2 mb-4 gap-x-4 lg:col-span-3 lg:grid-cols-2 sm:gap-8">
               <div className="my-2 px-4 py-8 max-[500px]:py-4 transition-all duration-300 border-l-4 shadow-lg bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl sm:shadow-2xl sm:border-l-8 border-travel-primary-light100 sm:transform sm:rotate-2 sm:hover:rotate-0">
