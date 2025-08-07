@@ -357,7 +357,7 @@ export default function IntroPage() {
                 </p>
               </div>
               <Link
-                href="https://github.com/ineahe"
+                href="https://github.com/HyungJuCha"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute p-2 transition-all duration-300 transform bg-black rounded-full top-6 right-6 bg-opacity-70 hover:bg-opacity-90 hover:scale-105"
