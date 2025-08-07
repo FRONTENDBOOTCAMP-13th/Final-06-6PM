@@ -22,18 +22,131 @@ export default function KoreaMapContainer() {
 
   // 지도 캡처 및 다운로드
   const onDownload = async () => {
+    // SVG 요소가 없으면 함수 종료
     if (!svgRef.current) return;
+
     try {
+      // HTML 요소를 PNG 이미지로 변환
       const dataUrl = await htmlToImage.toPng(svgRef.current);
-      const link = document.createElement("a");
-      link.download = `korea-map.png`;
-      link.href = dataUrl;
-      link.click();
+
+      // 사용자의 디바이스가 iOS인지 확인
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+      if (isIOS) {
+        // iOS 전용 처리 로직
+        const newWindow = window.open(); // 새 창 열기
+
+        if (newWindow) {
+          // 새 창이 정상적으로 열린 경우
+          // HTML 템플릿을 작성하여 이미지와 저장 안내 메시지 표시
+          newWindow.document.write(`
+          <html>
+            <head>
+              <title>한국 지도</title>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                /* 새 창 스타일링 */
+                body { 
+                  margin: 0; 
+                  padding: 20px; 
+                  text-align: center; 
+                  background: #f5f5f5; 
+                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                }
+                img { 
+                  max-width: 100%; 
+                  height: auto; 
+                  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                  border-radius: 8px;
+                }
+                .download-info { 
+                  margin-top: 20px; 
+                  padding: 15px; 
+                  background: white; 
+                  border-radius: 8px; 
+                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }
+                .instruction { 
+                  color: #007AFF; 
+                  font-weight: 600; 
+                }
+              </style>
+            </head>
+            <body>
+              <img src="${dataUrl}" alt="한국 지도" />
+              <div class="download-info">
+                <p class="instruction">📱 이미지 저장 방법</p>
+                <p>위 이미지를 <strong>길게 눌러서</strong> "이미지 저장"을 선택하세요.</p>
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                  사진 앱에서 저장된 이미지를 확인할 수 있습니다.
+                </p>
+              </div>
+            </body>
+          </html>
+        `);
+        } else {
+          // 새 창이 차단된 경우 Canvas를 이용한 다운로드 시도
+
+          const img = new Image();
+
+          // 이미지 로드 완료 시 실행될 콜백
+          img.onload = () => {
+            // Canvas 요소 생성 및 설정
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            // 이미지를 Canvas에 그리기
+            ctx?.drawImage(img, 0, 0);
+
+            // Canvas를 Blob 형태로 변환 (iOS에서 더 안정적)
+            canvas.toBlob((blob) => {
+              if (blob) {
+                // Blob URL 생성
+                const url = URL.createObjectURL(blob);
+
+                // 다운로드 링크 생성
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "korea-map.png";
+
+                // DOM에 임시로 추가 후 클릭 이벤트 발생
+                document.body.appendChild(a);
+                a.style.display = "none"; // 화면에 보이지 않게 숨김
+                a.click(); // 프로그래매틱 클릭
+
+                // 정리 작업
+                document.body.removeChild(a); // DOM에서 제거
+                URL.revokeObjectURL(url); // 메모리 해제
+              }
+            }, "image/png");
+          };
+
+          // 이미지 로드 시작
+          img.src = dataUrl;
+        }
+      } else {
+        // PC/Android 전용 처리 로직
+        const link = document.createElement("a");
+        link.download = "korea-map.png"; // 다운로드될 파일명
+        link.href = dataUrl; // 이미지 데이터 URL
+
+        document.body.appendChild(link);
+        link.style.display = "none"; // 화면에 보이지 않게 숨김
+        link.click(); // 자동 다운로드 트리거
+        document.body.removeChild(link); // DOM에서 제거
+      }
+
+      // 성공 메시지 표시
+      toast.success("지도 저장이 완료되었습니다!");
     } catch (err) {
-      //console.error("디버깅테스트용")
-      toast.error("저장 실패");
+      // 에러 발생 시 콘솔에 로그 출력 및 사용자에게 알림
+      console.error("지도 저장 실패:", err);
+      toast.error("저장에 실패했습니다. 다시 시도해주세요.");
     }
   };
+
   // 로그인 시 기존 사진 불러오기
   useEffect(() => {
     if (!userToken || !user?._id) {
