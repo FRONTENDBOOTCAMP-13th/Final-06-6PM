@@ -1,0 +1,41 @@
+meta {
+  name: 여행후기 수정-장소별
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{url}}/posts/:id?type=reviewPlace
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: reviewPlace
+}
+
+params:path {
+  id: 23
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "type": "reviewPlace",
+    "parent_id": 1,
+    "title": "성심당, 대전역도 감",
+    "content": "냠냠~ 굿! 좋아요",
+    "image": [
+      "files/febc13-final06-emjf/user-neo.png"
+    ],
+    "tag": ["명란바게트", "소금빵", "망고시루"],
+    "extra": {
+      "date": "2025-07-18",
+      "starRate": 5
+    }
+  }
+  
+}

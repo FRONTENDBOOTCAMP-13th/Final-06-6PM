@@ -1,0 +1,15 @@
+meta {
+  name: 여행후기 목록조회-일자별
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{url}}/posts?type=reviewDaily
+  body: none
+  auth: inherit
+}
+
+params:query {
+  type: reviewDaily
+}

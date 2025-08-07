@@ -1,0 +1,15 @@
+meta {
+  name: 사진 업로드
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/files
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  attach: @file()
+}

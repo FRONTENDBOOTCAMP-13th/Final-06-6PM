@@ -1,0 +1,222 @@
+"use client";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import ButtonRounded from "@/components/ui/btnRound";
+import TagItem from "@/components/feature/tagItem";
+import ViewItem from "@/components/feature/viewItem";
+import SearchInput from "@/components/form/searchInput";
+import { getReviewAllList, getReviewDailyList, getReviewPlaceList } from "@/data/functions/review";
+import { GetReviewDetailProps } from "@/types/review";
+import useUserStore from "@/zustand/userStore";
+import { AlertCircle, RefreshCcw, RotateCcw } from "lucide-react";
+import Button from "@/components/ui/btn";
+import ViewItemSkeleton from "@/components/feature/viewItemSkeleton";
+import DropdownItem from "@/components/feature/dropdownItem";
+
+type ReviewType = "all" | "reviewAll" | "reviewDaily" | "reviewPlace";
+type SortType = "latest" | "oldest";
+
+export default function FeedContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [reviewData, setReviewData] = useState<GetReviewDetailProps[]>([]);
+  const [filteredData, setFilteredData] = useState<GetReviewDetailProps[]>([]);
+  const [currentType, setCurrentType] = useState<ReviewType>("all");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [searchText, setSearchText] = useState("");
+  const [sortType, setSortType] = useState<SortType>("latest");
+  const token = useUserStore((state) => state.token);
+
+  // 현재 검색창의 상태 없으면 ""
+  useEffect(() => {
+    const query = searchParams.get("search") || "";
+    setSearchText(query);
+  }, [searchParams]);
+
+  // 검색어 제목+내용으로 필터링 + 정렬 기능
+  useEffect(() => {
+    let filtered = reviewData;
+    if (searchText.trim()) {
+      const lowerCaseSearch = searchText.toLowerCase();
+      filtered = reviewData.filter(
+        (item) =>
+          (item.title ?? "").toLowerCase().includes(lowerCaseSearch) ||
+          (item.content ?? "").toLowerCase().includes(lowerCaseSearch),
+      );
+    }
+
+    const sorted = [...filtered].sort((a, b) => {
+      const getDate = (item: GetReviewDetailProps) => {
+        const dateStr = item.createdAt || item.extra?.startDate || item.extra?.visitDate || "";
+        const date = new Date(dateStr);
+        return isNaN(date.getTime()) ? 0 : date.getTime();
+      };
+
+      const dateA = getDate(a);
+      const dateB = getDate(b);
+
+      return sortType === "latest" ? dateB - dateA : dateA - dateB;
+    });
+
+    setFilteredData(sorted);
+  }, [reviewData, searchText, sortType]);
+
+  const handleSearch = (value: string) => {
+    setSearchText(value); // 서치텍스트의 현재 상태 업데이트
+
+    // 새로고침 버튼
+    const params = new URLSearchParams(searchParams);
+    if (value.trim()) {
+      params.set("search", value.trim());
+    } else {
+      params.delete("search");
+    }
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  const handleSortChange = (type: SortType) => {
+    setSortType(type);
+  };
+
+  const fetchReviewData = useCallback(async (type: ReviewType = "all") => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      let allData: GetReviewDetailProps[] = [];
+
+      if (type === "all") {
+        const [reviewAllRes, reviewDailyRes, reviewPlaceRes] = await Promise.all([
+          getReviewAllList(token!),
+          getReviewDailyList(token!),
+          getReviewPlaceList(token!),
+        ]);
+
+        const reviewAllData = reviewAllRes?.ok === 1 ? reviewAllRes.item || [] : [];
+        const reviewDailyData = reviewDailyRes?.ok === 1 ? reviewDailyRes.item || [] : [];
+        const reviewPlaceData = reviewPlaceRes?.ok === 1 ? reviewPlaceRes.item || [] : [];
+
+        allData = [...reviewAllData, ...reviewDailyData, ...reviewPlaceData];
+      } else {
+        let response;
+        switch (type) {
+          case "reviewAll":
+            response = await getReviewAllList(token!);
+            break;
+          case "reviewDaily":
+            response = await getReviewDailyList(token!);
+            break;
+          case "reviewPlace":
+            response = await getReviewPlaceList(token!);
+            break;
+          default:
+            response = { ok: 0, item: [] };
+        }
+        allData = response?.ok === 1 ? response.item || [] : [];
+      }
+
+      setReviewData(allData);
+    } catch (error) {
+      console.error("데이터 로딩 실패:", error);
+      setError("데이터를 불러오는데 실패했습니다. 다시 시도해주세요.");
+      setReviewData([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handleTypeChange = (type: ReviewType) => {
+    setCurrentType(type);
+  };
+
+  const handleDelete = (reviewId: number) => {
+    setReviewData((prev) => prev.filter((item) => item._id !== reviewId));
+  };
+
+  useEffect(() => {
+    fetchReviewData(currentType);
+  }, [currentType, fetchReviewData]);
+
+  if (error) {
+    return (
+      <div className="py-8 text-center">
+        <div className="flex items-start gap-2 p-3 mb-4 text-red-500 border rounded-md bg-red-50">
+          <AlertCircle className="size-5 shrink-0" />
+          <p className="font-medium text-14">{error}</p>
+        </div>
+
+        <Button
+          variant="fill"
+          size="md"
+          onClick={() => fetchReviewData(currentType)}
+          className="flex items-center justify-center w-full gap-2"
+        >
+          <RotateCcw className="size-4" />
+          다시 시도
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* 서치인풋폼 및 기존코드  */}
+      <div className="flex items-center gap-2">
+        <SearchInput
+          size="md"
+          placeholder="가고 싶은 국내 여행지의 리뷰를 살펴보세요"
+          value={searchText} // 상태값 표시 및 업데이트
+          onSearch={handleSearch}
+        />
+
+        <button // search=으로 링크가 들어가버려서 f5눌러도 그대로라 버튼을 따로 만듬
+          onClick={() => handleSearch("")}
+          aria-label="새로고침"
+          title="검색내용 초기화"
+          type="button"
+        >
+          <RefreshCcw className="cursor-pointer size-5 text-travel-gray500 hover:text-travel-primary200 " />
+        </button>
+      </div>
+
+      <div className="flex flex-col-reverse items-end gap-y-2 my-3 px-0.5">
+        <DropdownItem currentSort={sortType} onSortChange={handleSortChange} />
+        <div className="flex items-center w-full gap-1 flex-start">
+          <TagItem variant={currentType === "all" ? "primary" : "outline"}>
+            <span onClick={() => handleTypeChange("all")}>전체</span>
+          </TagItem>
+          <TagItem
+            variant={currentType === "reviewAll" ? "primary" : "outline"}
+            onClick={() => handleTypeChange("reviewAll")}
+          >
+            여행별
+          </TagItem>
+          <TagItem variant={currentType === "reviewDaily" ? "primary" : "outline"}>
+            <span onClick={() => handleTypeChange("reviewDaily")}>일자별</span>
+          </TagItem>
+          <TagItem variant={currentType === "reviewPlace" ? "primary" : "outline"}>
+            <span onClick={() => handleTypeChange("reviewPlace")}>장소별</span>
+          </TagItem>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-6">
+        {loading ? (
+          <div className="space-y-6">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <ViewItemSkeleton key={idx} />
+            ))}
+          </div>
+        ) : filteredData.length > 0 ? (
+          filteredData.map((item, idx) => <ViewItem key={`${idx}-${item._id}`} {...item} onDelete={handleDelete} />)
+        ) : (
+          //그냥 아이템만 있으면 충돌날수도 있는데 그럼 큰일나서 앞에 타입까지 붙여줌
+          <div className="py-8 text-center text-travel-gray400">
+            {searchText ? "검색 결과가 없습니다." : "후기가 없습니다."}
+          </div>
+        )}
+      </div>
+    </>
+  );
+}

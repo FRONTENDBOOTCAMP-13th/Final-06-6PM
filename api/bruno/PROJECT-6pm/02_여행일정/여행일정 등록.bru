@@ -1,0 +1,57 @@
+meta {
+  name: 여행일정 등록
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/posts?type=plan
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: plan
+}
+
+body:json {
+  {
+    "type": "plan",
+    "title": "광주",
+    "extra": {
+      "startDate": "2025-07-23",
+      "endDate": "2025-07-23"
+    },
+    "replies": [
+      {
+        "content": "당일",
+        "day": 1,
+        "planDate": "2025-07-23",
+        "locations": [
+          {
+            "title": "수원행궁",
+            "types": "관광지",
+            "contentId": "126001",
+            "mapx": "127.1529",
+            "mapy": "35.8151"
+          },
+          {
+            "title": "통닭거리",
+            "types": "관광지",
+            "contentId": "126002",
+            "mapx": "127.1534",
+            "mapy": "35.8134"
+          },
+          {
+            "title": "수원화성",
+            "types": "관광지",
+            "contentId": "126003",
+            "mapx": "127.1409",
+            "mapy": "35.8282"
+          }
+        ]
+      }
+    ]
+  }
+  
+}

@@ -1,0 +1,44 @@
+meta {
+  name: 여행후기 수정-전체
+  type: http
+  seq: 1
+}
+
+patch {
+  url: {{url}}/posts/:id?type=reviewAll
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: reviewAll
+}
+
+params:path {
+  id: 21
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "type": "reviewAll",
+    "plan_id": 4,
+    "title": "대전 여행 당일로 간 후기",
+    "content": "성심당 굿! 명란바게트 맛있어요 좋아요",
+    "image": [
+      "files/febc13-final06-emjf/user-neo.png",
+      "files/febc13-final06-emjf/user-neo.png", 
+      "files/febc13-final06-emjf/user-neo.png"
+    ],
+    "tag": ["빵", "소보로", "한화이글스"],
+    "extra": {
+      "startDate": "2025-07-12",
+      "endDate": "2025-07-12",
+      "starRate": 4
+    }
+  }
+  
+}

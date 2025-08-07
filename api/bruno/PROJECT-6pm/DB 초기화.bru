@@ -1,0 +1,20 @@
+meta {
+  name: DB 초기화
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{url}}/db/init
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  initData: @file(C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\data.json)
+  attach: @file(C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\busan1.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\busan2.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\busan3.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\busan4.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\busan5.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\busan6.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\daejeon1.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\daejeon2.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\daejeon3.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\daejeon4.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\daejeon5.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju1.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju2.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju3.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju4.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju5.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju6.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju7.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\gyeongju8.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\seoul1.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\seoul2.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\seoul3.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\seoul4.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\seoul5.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan1.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan2.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan3.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan4.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan5.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan6.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan7.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan8.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\ulsan9.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\user-ah.jpg|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\user-default.webp|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\user-hj.png|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\user-si.png|C:\Users\SEONYOUNG\likelion-project\Final-06-6PM\api\dbinit\team\uploadFiles\user-sy.jpg)
+}
+
+settings {
+  encodeUrl: true
+}

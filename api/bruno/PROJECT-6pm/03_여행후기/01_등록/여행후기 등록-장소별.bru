@@ -1,0 +1,38 @@
+meta {
+  name: 여행후기 등록-장소별
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/posts?type=reviewPlace
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: reviewPlace
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "type": "reviewPlace",
+    "plan_id": 4,
+    "title": "한화생명볼파크",
+    "content": "한화생명볼파크~ 굿! 좋아요",
+    "image": [
+      "files/febc13-final06-emjf/user-neo.png","files/febc13-final06-emjf/user-neo.png","files/febc13-final06-emjf/user-neo.png"
+    ],
+    "location":["한화생명볼파크"],
+    "tag": ["한화", "오늘은한화이겨라", "한화1등"],
+    "extra": {
+      "visitDate": "2025-07-23",
+      "starRate": 5
+    }
+  }
+  
+}

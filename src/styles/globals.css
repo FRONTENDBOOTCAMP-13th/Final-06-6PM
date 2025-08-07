@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Pretendard Variable", sans-serif;
+
+  /* 브레이크포인트 */
+  --breakpoint-xs: 26.875rem;
+
+  /* 기본색상 */
+  --color-travel-primary100: #287fd3;
+  --color-travel-primary200: #0a69c4;
+  --color-travel-primary-light100: #4597e7;
+  --color-travel-secondary100: #57a2ea;
+  --color-travel-secondary200: #3284d4;
+  --color-travel-secondary300: #1f86ea;
+
+  --color-travel-bg100: #deefff;
+  --color-travel-bg200: #b5dbff;
+  --color-travel-text100: #1e1e1e;
+  --color-travel-text200: #000000;
+
+  /* 상태 색상 */
+  --color-travel-success100: #4ebb8e;
+  --color-travel-success200: #3da471;
+  --color-travel-fail100: #d93636;
+  --color-travel-fail200: #c73f3f;
+  --color-travel-warn100: #f7c73a;
+  --color-travel-warn200: #e0b832;
+  --color-travel-info100: #1476d2;
+  --color-travel-info200: #1056a3;
+  --color-travel-like100: #f54f7e;
+
+  /* 회색계열  */
+  --color-travel-gray100: #e9e9e9;
+  --color-travel-gray200: #e0e0e0;
+  --color-travel-gray300: #cccccc;
+  --color-travel-gray400: #b0b0b0;
+  --color-travel-gray500: #949494;
+  --color-travel-gray600: #707070;
+  --color-travel-gray700: #4d4d4d;
+
+  --text-10: 0.625rem;
+  --text-12: 0.75rem;
+  --text-14: 0.875rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-20: 1.25rem;
+  --text-24: 1.5rem;
+  --text-28: 1.75rem;
+  --text-32: 2rem;
+}
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scroll {
+  scrollbar-width: thin;
+  overflow-y: auto;
+  scrollbar-color: rgba(40, 127, 211, 0.8) #e9f3ff;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(40, 127, 211, 0.8);
+  border-radius: 9999px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #e9f3ff;
+}
+
+.custom-swiper-pagination .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.8);
+  opacity: 0.7;
+  width: 8px;
+  height: 8px;
+}
+
+.custom-swiper-pagination .swiper-pagination-bullet-active {
+  background: #ffffff;
+  opacity: 1;
+  transform: scale(1.2);
+}

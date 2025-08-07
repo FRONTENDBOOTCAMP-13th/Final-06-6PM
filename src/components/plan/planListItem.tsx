@@ -1,0 +1,43 @@
+import { X } from "lucide-react";
+import TagItem from "@/components/feature/tagItem";
+
+export type PlanListItemProps = {
+  id?: number;
+  number?: number;
+  place: string;
+  tag?: string;
+  showDeleteButton?: boolean;
+  onDelete?: () => void;
+};
+
+export default function PlanListItem({ number, place, tag, showDeleteButton = false, onDelete }: PlanListItemProps) {
+  return (
+    <div className="flex items-start gap-3 text-travel-text100">
+      {/* 숫자 */}
+      <div className="flex-shrink-0 text-center rounded-full size-5 bg-travel-gray200 text-14 mt-0.5">{number}</div>
+
+      {/* 관광지명과 태그 */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-1 flex-wrap">
+          <span className="font-medium text-16">{place}</span>
+          {tag && (
+            <TagItem variant="primary" size="sm" clickable={false}>
+              {tag}
+            </TagItem>
+          )}
+        </div>
+      </div>
+
+      {/* X 버튼 */}
+      {showDeleteButton && onDelete && (
+        <button
+          onClick={onDelete}
+          aria-label="일정 삭제하기"
+          className="flex items-center justify-center cursor-pointer text-travel-gray400 hover:text-travel-fail100"
+        >
+          <X className="size-5" />
+        </button>
+      )}
+    </div>
+  );
+}

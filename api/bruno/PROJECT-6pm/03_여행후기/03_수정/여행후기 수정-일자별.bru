@@ -1,0 +1,43 @@
+meta {
+  name: 여행후기 수정-일자별
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{url}}/posts/:id?type=reviewDaily
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: reviewDaily
+}
+
+params:path {
+  id: 22
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "type": "reviewDaily",
+    "parent_id": 1,
+    "title": "대전 당일치기 후기",
+    "content": "한화생명볼파크 롯데가 짐ㅠ",
+    "image": [
+      "files/febc13-final06-emjf/user-neo.png",
+      "files/febc13-final06-emjf/user-neo.png", 
+      "files/febc13-final06-emjf/user-neo.png"
+    ],
+    "tag": ["유후", "한화쎄다", "ㅠ"],
+    "extra": {
+      "startDate": "2025-07-12",
+      "endDate": "2025-07-12",
+      "starRate": 4
+    }
+  }
+}

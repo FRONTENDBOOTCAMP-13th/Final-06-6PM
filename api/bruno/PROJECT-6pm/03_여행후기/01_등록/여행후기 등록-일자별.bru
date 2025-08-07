@@ -1,0 +1,38 @@
+meta {
+  name: 여행후기 등록-일자별
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/posts?type=reviewDaily
+  body: json
+  auth: inherit
+}
+
+params:query {
+  type: reviewDaily
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+body:json {
+  {
+    "type": "reviewDaily",
+    "plan_id": 4,
+    "title": "대전 1일차 후기",
+    "content": "한화생명볼파크~ 굿! 좋아요",
+    "image": [
+      "files/febc13-final06-emjf/user-neo.png","files/febc13-final06-emjf/user-neo.png","files/febc13-final06-emjf/user-neo.png"
+    ],
+    "location":["볼파크","성심당","유성온천"],
+    "tag": ["한화", "롯데", "한화1등"],
+    "extra": {
+      "visitDate": "2025-07-18",
+      "starRate": 5
+    }
+  }
+  
+}
