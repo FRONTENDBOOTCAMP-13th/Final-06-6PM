@@ -21,28 +21,26 @@ export default function IntroimgSwiper() {
   ];
 
   return (
-    <div className="w-full mx-auto xs:w-[70%] max-w-[500px] lg:max-w-none lg:w-full order-1 lg:col-span-2">
-      <div className="transition-transform duration-300 sm:transform sm:-rotate-2 sm:hover:rotate-0">
-        <div className="relative p-2 sm:p-4 aspect-[3/5]">
-          <Swiper
-            spaceBetween={30}
-            centeredSlides={true}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            modules={[Autoplay, Pagination, Navigation]}
-            className="mySwiper h-full w-full"
-          >
-            {images.map((imageSrc, index) => (
-              <SwiperSlide key={index}>
-                <div className="relative w-full h-full">
-                  <Image fill src={imageSrc} alt={`6PM 여행도감 앱 스크린샷 ${index + 1}`} className="object-contain" />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+    <div className="w-full mx-auto xs:w-[70%] max-w-[300px] xs:max-w-[400px] lg:max-w-none lg:w-full order-1 lg:col-span-2">
+      <div className="relative p-2 sm:p-4 aspect-[3/5]">
+        <Swiper
+          spaceBetween={30}
+          centeredSlides={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          modules={[Autoplay, Pagination, Navigation]}
+          className="mySwiper h-full w-full"
+        >
+          {images.map((imageSrc, index) => (
+            <SwiperSlide key={index}>
+              <div className="relative w-full h-full">
+                <Image fill src={imageSrc} alt={`6PM 여행도감 앱 스크린샷 ${index + 1}`} className="object-contain" />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );
