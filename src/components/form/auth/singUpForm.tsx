@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { FormEvent, useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-toastify";
@@ -24,9 +24,42 @@ export default function SignupForm() {
     }
   }, [state]);
 
+  // 클라이언트 유효성검사 추가
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value.trim();
+    const password = (form.elements.namedItem("password") as HTMLInputElement)?.value.trim();
+    const name = (form.elements.namedItem("name") as HTMLInputElement)?.value.trim();
+
+    if (!email || email.length < 2) {
+      e.preventDefault();
+      toast.warning("이메일은 2글자 이상 입력해주세요.");
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      e.preventDefault();
+      toast.warning("유효한 이메일을 입력해주세요.");
+      return;
+    }
+
+    if (!password || password.length < 4) {
+      e.preventDefault();
+      toast.warning("비밀번호는 4글자 이상 입력해주세요.");
+      return;
+    }
+
+    if (!name || name.length < 2) {
+      e.preventDefault();
+      toast.warning("닉네임은 2글자 이상 입력해주세요.");
+      return;
+    }
+  };
+
   return (
     <form
       action={formAction}
+      onSubmit={handleSubmit}
       className="w-full bg-white rounded-xl shadow border border-travel-gray400 p-6 flex flex-col gap-4 items-center"
     >
       <input type="hidden" name="type" value="user" />
