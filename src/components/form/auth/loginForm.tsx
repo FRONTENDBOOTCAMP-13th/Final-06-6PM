@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useEffect } from "react";
+import React, { FormEvent, useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/btn";
@@ -34,9 +34,35 @@ export default function LoginForm() {
     }
   }, [userState]);
 
+  // 클라이언트 유효성검사 추가
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value.trim();
+    const password = (form.elements.namedItem("password") as HTMLInputElement)?.value.trim();
+
+    if (!email || email.length < 2) {
+      e.preventDefault();
+      toast.warning("이메일은 2글자 이상 입력해주세요.");
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      e.preventDefault();
+      toast.warning("유효한 이메일을 입력해주세요.");
+      return;
+    }
+
+    if (!password || password.length < 4) {
+      e.preventDefault();
+      toast.warning("비밀번호는 4글자 이상 입력해주세요.");
+      return;
+    }
+  };
+
   return (
     <form
       action={formAction}
+      onSubmit={handleSubmit}
       className="flex flex-col items-center w-full gap-4 p-6 bg-white border shadow rounded-xl border-travel-gray400"
     >
       {/* 이메일 */}
