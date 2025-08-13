@@ -1,5 +1,5 @@
 "use client";
-import { useActionState, useRef, useState, useEffect } from "react";
+import { useActionState, useRef, useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
 import { toast } from "react-toastify";
@@ -113,8 +113,27 @@ export default function ReviewFormAll({ initialData, planReviewInfo }: ReviewFor
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // 클라이언트 유효성검사 추가
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const title = (form.elements.namedItem("title") as HTMLInputElement)?.value.trim();
+    const content = (form.elements.namedItem("content") as HTMLTextAreaElement)?.value.trim();
+
+    if (!title || title.length < 2) {
+      e.preventDefault();
+      toast.warning("제목은 2글자 이상 입력해주세요.");
+      return;
+    }
+
+    if (!content || content.length < 2) {
+      e.preventDefault();
+      toast.warning("내용은 2글자 이상 입력해주세요.");
+      return;
+    }
+  };
+
   return (
-    <form action={formAction} className="grid grid-cols-1 gap-3 p-4 relative">
+    <form action={formAction} onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 p-4 relative">
       {/* 로딩 오버레이 */}
       {(isUploading || isPending) && (
         <div className="absolute inset-0 z-20 bg-black/70 backdrop-blur-xs flex flex-col items-center justify-center space-y-4">
